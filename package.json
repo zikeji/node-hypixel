@@ -4,6 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "engines": {
+    "node" : ">=10"
+  },
   "scripts": {
     "commit": "cz",
     "lint": "eslint --ext ts src --fix",
