@@ -1,0 +1,9 @@
+.vscode/
+docs.json
+docs/
+coverage/
+.nyc_output/
+dist/
+node_modules/
+*.tgz
+tests/**/*.ts

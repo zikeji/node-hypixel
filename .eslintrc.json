@@ -1,0 +1,33 @@
+{
+  "env": {
+      "es6": true,
+      "node": true
+  },
+  "extends": [
+      "airbnb-typescript-prettier"
+  ],
+  "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "project": "./tsconfig.json"
+  },
+  "plugins": [
+      "@typescript-eslint"
+  ],
+  "settings": {
+      "react": {
+          "version": "999.999.999"
+      }
+  },
+  "rules": {
+      "camelcase": 0,
+      "import/prefer-default-export": 0,
+      "lines-between-class-members": 0,
+      "no-shadow": 0,
+      "@typescript-eslint/no-namespace": 0,
+      "@typescript-eslint/no-shadow": 2
+  }
+}

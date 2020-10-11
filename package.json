@@ -1,0 +1,236 @@
+{
+  "name": "hypixel-skyblock",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "commit": "cz",
+    "lint": "eslint --ext ts src --fix",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p .",
+    "watch": "npm run clean && tsc -p . -w",
+    "test": "mocha tests/**/*.test.js",
+    "test:lint": "eslint --ext ts src",
+    "coverage": "nyc npm t",
+    "docs": "typedoc",
+    "test:build" : "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs"
+  },
+  "homepage": "https://hypixel-skyblock.zikeji.com/",
+  "bugs": {
+    "url": "https://github.com/zikeji/node-hypixel-skyblock/issues"
+  },
+  "repository": {
+    "url": "git@github.com:zikeji/node-hypixel-skyblock.git"
+  },
+  "keywords": [
+    "api",
+    "api-wrapper",
+    "hypixel",
+    "skyblock",
+    "minecraft",
+    "hypixel skyblock",
+    "minecraft hypixel",
+    "hypixel minecraft",
+    "hypixel minecraft skyblock",
+    "hypixel api",
+    "skyblock api",
+    "minecraft api"
+  ],
+  "files": [
+    "dist/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "release": {
+    "branches": [
+      "master"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "conventionalcommits",
+          "presetConfig": {
+            "types": [
+              {
+                "type": "feat",
+                "section": "Features"
+              },
+              {
+                "type": "fix",
+                "section": "Bug Fixes"
+              },
+              {
+                "type": "docs",
+                "section": "Documentation"
+              },
+              {
+                "type": "style",
+                "hidden": true
+              },
+              {
+                "type": "refactor",
+                "section": "Code Refactoring"
+              },
+              {
+                "type": "perf",
+                "section": "Performance Improvements"
+              },
+              {
+                "type": "test",
+                "section": "Tests"
+              },
+              {
+                "type": "build",
+                "hidden": true
+              },
+              {
+                "type": "ci",
+                "hidden": true
+              },
+              {
+                "type": "chore",
+                "section": "Miscellaneous Chores"
+              },
+              {
+                "type": "revert",
+                "section": "Reverts"
+              }
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "conventionalcommits",
+          "presetConfig": {
+            "types": [
+              {
+                "type": "feat",
+                "section": "Features"
+              },
+              {
+                "type": "fix",
+                "section": "Bug Fixes"
+              },
+              {
+                "type": "docs",
+                "section": "Documentation"
+              },
+              {
+                "type": "style",
+                "hidden": true
+              },
+              {
+                "type": "refactor",
+                "section": "Code Refactoring"
+              },
+              {
+                "type": "perf",
+                "section": "Performance Improvements"
+              },
+              {
+                "type": "test",
+                "section": "Tests"
+              },
+              {
+                "type": "build",
+                "hidden": true
+              },
+              {
+                "type": "ci",
+                "hidden": true
+              },
+              {
+                "type": "chore",
+                "section": "Miscellaneous Chores"
+              },
+              {
+                "type": "revert",
+                "section": "Reverts"
+              }
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file. See\n[Conventional Commits](https://conventionalcommits.org) for commit guidelines."
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true,
+          "tarballDir": "pack"
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assignees": [
+            "zikeji"
+          ],
+          "addReleases": "top",
+          "assets": [
+            {
+              "path": "CHANGELOG.md"
+            },
+            {
+              "path": "pack/*.tgz"
+            },
+            {
+              "path": "dist.zip",
+              "name": "dist-${nextRelease.gitTag}.zip"
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  },
+  "author": "Zikeji <me@zikeji.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "semantic-release": "^17.1.2",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/chai": "^4.2.12",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/debug": "^4.1.5",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.11.2",
+    "@types/yargs-parser": "^15.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "commitizen": "^4.2.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "conventional-changelog-conventionalcommits": "^4.4.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-typescript-prettier": "^3.1.0",
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.0.0",
+    "typedoc": "^0.19.2",
+    "typedoc-light-theme": "^1.0.1",
+    "typescript": "^4.0.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

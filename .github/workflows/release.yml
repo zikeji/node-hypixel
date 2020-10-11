@@ -1,0 +1,63 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 14.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Run eslint
+        run: npm run test:lint
+      - name: Run tests
+        run: npm run test
+        env:
+          CI: true
+      - name: Build
+        run: npm run build --if-present
+      - uses: papeloto/action-zip@v1
+        with:
+          files: package.json package-lock.json dist/
+          dest: dist.zip
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+  merge:
+    needs: [release]
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Merge master back into develop
+        uses: devmasx/merge-branch@v1.3.0
+        with:
+          type: now
+          head_to_merge: master
+          target_branch: dev
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  publish_docs:
+    needs: [release]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: npm ci
+      - run: npm run docs
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          cname: hypixel-skyblock.zikeji.com

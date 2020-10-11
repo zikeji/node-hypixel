@@ -1,0 +1,21 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "lib": ["es2015"],
+    "module": "commonjs",
+    "target": "es2015",
+    "types": ["node", "mocha"],
+    "alwaysStrict": true,
+    "incremental": true,
+    "pretty": true,
+    "strict": true,
+    "removeComments": true,
+    "stripInternal": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+  },
+  "include": ["./src/**/*.ts"]
+}

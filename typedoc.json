@@ -1,0 +1,29 @@
+{
+  "inputFiles": ["./src"],
+  "mode": "file",
+  "excludeExternals": true,
+  "excludeNotExported": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "disableSources": true,
+  "includeVersion": true,
+  "out": "./docs",
+  "json": "./docs.json",
+  "theme": "node_modules/typedoc-light-theme/src",
+  "name": "node-hypixel-skyblock",
+  "projectName": {
+    "link": true,
+    "beforeLinks": "&emsp;"
+  },
+  "links": [
+    {
+      "text": "GitHub",
+      "href": "https://github.com/zikeji/node-hypixel-skyblock"
+    },
+    {
+      "text": "NPM",
+      "href": "https://www.npmjs.com/package/hypixel-skyblock"
+    }
+  ],
+  "createFile": ".nojekyll"
+}
