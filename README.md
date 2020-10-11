@@ -17,7 +17,7 @@
 [docs]: https://hypixel-skyblock.zikeji.com
 [hypixelapi]: https://api.hypixel.net/
 
-An unopinionated async/await API wrapper for [Hypixel's Skyblock API][hypixelapi] developed in TypeScript complete with [documentation][docs], typed interfaces for all API responses, rate-limit handling, a few helpers, and support for additional endpoints.
+An unopinionated async/await API wrapper for [Hypixel's Skyblock API][hypixelapi] developed in TypeScript complete with [documentation][docs], typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.
 
 The library aims to replicate the [Hypixel API][hypixelapi] as closely as possible, and as such won't alter the results, merely offering intellisense suggestions / completion of results.
 
