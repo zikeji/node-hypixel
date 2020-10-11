@@ -24,6 +24,7 @@ jobs:
         run: npm run test
         env:
           CI: true
+          HYPIXEL_KEY: ${{ secrets.HYPIXEL_KEY }}
       - uses: papeloto/action-zip@v1
         with:
           files: package.json package-lock.json dist/
