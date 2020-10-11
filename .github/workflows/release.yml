@@ -18,12 +18,12 @@ jobs:
         run: npm ci
       - name: Run eslint
         run: npm run test:lint
+      - name: Build
+        run: npm run build --if-present
       - name: Run tests
         run: npm run test
         env:
           CI: true
-      - name: Build
-        run: npm run build --if-present
       - uses: papeloto/action-zip@v1
         with:
           files: package.json package-lock.json dist/
