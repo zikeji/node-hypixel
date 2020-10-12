@@ -1,7 +1,11 @@
+import { EventEmitter } from "events";
 import { IncomingHttpHeaders } from "http";
-import { request, RequestOptions } from "https";
+import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
+import { InvalidKeyError } from "./errors/InvalidKeyError";
+import { RateLimitError } from "./errors/RateLimitError";
 import type { Profile, ProfileWithCuteName } from "./types/Profile";
+import { Queue } from "./util/Queue";
 
 /** @hidden */
 interface APIResponse {
@@ -14,29 +18,83 @@ interface Parameters {
   [parameter: string]: string;
 }
 
-export class HypixelSkyBlock {
+/** @internal */
+interface ActionableCall<T extends APIResponse> {
+  execute: () => Promise<T>;
+  retries: number;
+}
+
+interface HypixelSkyBlockOptions {
+  /**
+   * Amount of times to retry a failed request.
+   * @default 3
+   */
+  retries?: number;
+  /**
+   * The time, in milliseconds, you want to wait before giving up on the method call.
+   * @default 10000
+   */
+  timeout?: number;
+  /**
+   * User agent the client uses when making calls to Hypixel's API
+   * @default HypixelSkyblock
+   */
+  userAgent?: string;
+  /**
+   * Custom [HTTPS agent](https://nodejs.org/api/https.html#https_class_https_agent) if desired.
+   */
+  agent?: Agent;
+}
+
+export interface HypixelSkyBlock extends EventEmitter {
+  on(event: "limited", listener: (limit: number, reset: Date) => void): this;
+  on(event: "reset", listener: () => void): this;
+
+  once(event: "limited", listener: (limit: number, reset: Date) => void): this;
+  once(event: "reset", listener: () => void): this;
+
+  off(event: "limited", listener: () => void): this;
+  off(event: "reset", listener: () => void): this;
+}
+
+export class HypixelSkyBlock extends EventEmitter {
   /** @internal */
   private static readonly endpoint = new URL(`https://api.hypixel.net`);
   /** @internal */
+  private readonly queue = new Queue();
+  /** @internal */
   private readonly key: string;
   /** @internal */
+  private readonly retries: number;
+  /** @internal */
   private readonly timeout: number;
+  /** @internal */
+  private readonly userAgent: string;
+  /** @internal */
+  private readonly agent?: Agent;
 
-  private remaining = -1;
-  private reset = -1;
-  private limit = -1;
+  /** @internal */
+  protected rateLimit = {
+    remaining: -1,
+    reset: -1,
+    limit: -1,
+  };
 
   /**
    * Create a new instance of the HypixelSkyBlock API client.
    * @param key Your Hypixel API key.
-   * @param timeout The time, in milliseconds, you want to wait before giving up on the method call.
+   * @param options Any options and customizations being applied.
    */
-  public constructor(key: string, timeout: number = 10 * 1000) {
+  public constructor(key: string, options?: HypixelSkyBlockOptions) {
+    super();
     if (!key || typeof key !== "string") {
       throw new Error("Invalid API key");
     }
     this.key = key;
-    this.timeout = timeout;
+    this.retries = options?.retries ?? 3;
+    this.timeout = options?.timeout ?? 10000;
+    this.userAgent = options?.userAgent ?? "HypixelSkyblock";
+    this.agent = options?.agent;
   }
 
   /**
@@ -89,6 +147,56 @@ export class HypixelSkyBlock {
     path: string,
     parameters: Parameters = {}
   ): Promise<T> {
+    return this.executeActionableCall(
+      this.createActionableCall(path, parameters)
+    );
+  }
+
+  private async executeActionableCall<T extends APIResponse>(
+    call: ActionableCall<T>
+  ): Promise<T> {
+    await this.queue.wait();
+    if (this.rateLimit.remaining === 0) {
+      const timeout = this.rateLimit.reset * 1000;
+      this.emit(
+        "limited",
+        this.rateLimit.limit,
+        new Date(Date.now() + this.rateLimit.reset)
+      );
+      await new Promise((resolve) => {
+        setTimeout(resolve, timeout);
+      });
+      this.emit("reset");
+    }
+    let response: T;
+    try {
+      response = await call.execute();
+    } catch (error) {
+      if (error instanceof InvalidKeyError || call.retries === this.retries) {
+        throw error;
+      }
+      call.retries += 1;
+      return this.executeActionableCall<T>(call);
+    } finally {
+      this.queue.free();
+    }
+    return response;
+  }
+
+  private createActionableCall<T extends APIResponse>(
+    path: string,
+    parameters: Parameters = {}
+  ): ActionableCall<T> {
+    return {
+      execute: this.callMethod.bind(this, path, parameters),
+      retries: 0,
+    } as ActionableCall<T>;
+  }
+
+  private callMethod<T extends APIResponse>(
+    path: string,
+    parameters: Parameters = {}
+  ): Promise<T> {
     const url = new URL(path, HypixelSkyBlock.endpoint);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
@@ -100,10 +208,14 @@ export class HypixelSkyBlock {
       method: "GET",
       timeout: this.timeout,
       headers: {
-        "User-Agent": `HypixelSkyblock`,
+        "User-Agent": this.userAgent,
         Accept: "application/json",
       },
     };
+
+    if (this.agent) {
+      options.agent = this.agent;
+    }
 
     return new Promise((resolve, reject) => {
       const clientRequest = request(url, options, (incomingMessage) => {
@@ -123,7 +235,25 @@ export class HypixelSkyBlock {
             return reject(new Error(`No response body received.`));
           }
 
+          let responseObject: T | undefined;
+          try {
+            responseObject = JSON.parse(responseBody);
+          } catch (_) {
+            // noop
+          }
+
           if (incomingMessage.statusCode !== 200) {
+            if (incomingMessage.statusCode === 429) {
+              return reject(new RateLimitError(`Hit key throttle.`));
+            }
+
+            if (
+              typeof responseObject === "object" &&
+              responseObject.cause === "Invalid API key"
+            ) {
+              throw new InvalidKeyError("Invalid API Key");
+            }
+
             return reject(
               new Error(
                 `${incomingMessage.statusCode} ${incomingMessage.statusMessage}. Response: ${responseBody}`
@@ -131,10 +261,7 @@ export class HypixelSkyBlock {
             );
           }
 
-          let responseObject: T | undefined;
-          try {
-            responseObject = JSON.parse(responseBody);
-          } catch (_) {
+          if (typeof responseObject === "undefined") {
             return reject(
               new Error(
                 `Invalid JSON response received. Response: ${responseBody}`
@@ -146,9 +273,22 @@ export class HypixelSkyBlock {
         });
       });
 
-      clientRequest.on("error", (error) => {
-        reject(error);
+      let abortError: Error;
+      clientRequest.once("abort", () => {
+        abortError = abortError ?? new Error("Client aborted this request.");
+        reject(abortError);
       });
+
+      clientRequest.once("error", (error) => {
+        abortError = error;
+        clientRequest.abort();
+      });
+
+      clientRequest.setTimeout(this.timeout, () => {
+        abortError = new Error("Hit configured timeout.");
+        clientRequest.abort();
+      });
+
       clientRequest.end();
     });
   }
@@ -166,14 +306,16 @@ export class HypixelSkyBlock {
 
   /** @internal */
   private getRateLimitHeaders(headers: IncomingHttpHeaders): void {
-    this.limit =
-      parseInt((headers?.["ratelimit-limit"] as unknown) as string, 10) ??
-      this.limit;
-    this.remaining =
-      parseInt((headers?.["ratelimit-remaining"] as unknown) as string, 10) ??
-      this.remaining;
-    this.reset =
-      parseInt((headers?.["ratelimit-reset"] as unknown) as string, 10) ??
-      this.reset;
+    Object.keys(this.rateLimit).forEach((key) => {
+      const headerKey = `ratelimit-${key}`;
+      if (headerKey in headers) {
+        this.rateLimit[key as keyof HypixelSkyBlock["rateLimit"]] = parseInt(
+          headers[headerKey] as string,
+          10
+        );
+      }
+    });
   }
 }
+
+export default HypixelSkyBlock;

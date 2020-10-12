@@ -28,6 +28,12 @@
       "lines-between-class-members": 0,
       "no-shadow": 0,
       "@typescript-eslint/no-namespace": 0,
-      "@typescript-eslint/no-shadow": 2
+      "@typescript-eslint/no-shadow": 2,
+      "no-param-reassign": [
+          2,
+          {
+              "props": false
+          }
+      ]
   }
 }
