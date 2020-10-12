@@ -39,7 +39,7 @@ Development has started, not all features are implemented and not all endpoints 
   - [ ] **Resources**
     - [ ] Collections
     - [ ] Skills
-- [ ] Add rate limiting fall off and support
+- [+] Add rate limiting support
 - [ ] Potentially add configurable caching
 
 ## Installation
