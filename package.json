@@ -1,11 +1,11 @@
 {
   "name": "hypixel-skyblock",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An unopinionated async/await API wrapper for Hypixel's Skyblock API developed in TypeScript complete with documentation, typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumted endpoints.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node" : ">=10"
+    "node": ">=10"
   },
   "scripts": {
     "commit": "cz",
@@ -17,7 +17,7 @@
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
     "docs": "typedoc",
-    "test:build" : "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs"
+    "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs"
   },
   "homepage": "https://hypixel-skyblock.zikeji.com/",
   "bugs": {
