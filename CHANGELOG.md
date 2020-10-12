@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/zikeji/node-hypixel-skyblock/compare/v1.0.0...v1.1.0) (2020-10-12)
+
+
+### Features
+
+* **ratelimit:** add rate limit queue ([707a342](https://github.com/zikeji/node-hypixel-skyblock/commit/707a342c6fac73fb4e99acdbeb072dfb27f9388a))
+
 ## 1.0.0 (2020-10-11)
 
 
