@@ -52,7 +52,7 @@ npm i --save hypixel-skyblock
 ## Usage
 
 ```javascript
-const { HypixelSkyblock } = require("hypixel-skyblock");
+import { Client as HypixelSkyblock } from "hypixel-skyblock";
 const client = new HypixelSkyblock("API_KEY");
 ```
 
