@@ -27,20 +27,19 @@ Development has started, not all features are implemented and not all endpoints 
 
 ### Roadmap
 
+- [-] Add rate limiting support
 - [ ] Add method, typing, testing, and documentation for:
-  - [ ] Auctions
-  - [ ] Auction
-  - [ ] Bazaar
-    - [ ] Product
-    - [ ] Products
   - [ ] News
   - [ ] Profile
   - [ ] Profiles
+  - [ ] Auction
+  - [ ] Auctions
+  - [ ] Bazaar
+    - [ ] Product
+    - [ ] Products
   - [ ] **Resources**
     - [ ] Collections
     - [ ] Skills
-- [+] Add rate limiting support
-- [ ] Potentially add configurable caching
 
 ## Installation
 
@@ -53,7 +52,7 @@ npm i --save hypixel-skyblock
 ## Usage
 
 ```javascript
-const { HypixelSkyblock } = require("hypixel-skyblock");
+import { Client as HypixelSkyblock } from "hypixel-skyblock";
 const client = new HypixelSkyblock("API_KEY");
 ```
 

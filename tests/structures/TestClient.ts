@@ -1,10 +1,10 @@
-import HypixelSkyBlock from "../../src";
+import { Client } from "../../src";
 
-export class TestClient extends HypixelSkyBlock {
+export class TestClient extends Client {
   private static firstResponseHeaders = {
     "ratelimit-limit": "120",
     "ratelimit-remaining": "119",
-    "ratelimit-reset": "5",
+    "ratelimit-reset": "10",
   };
 
   private simulatedResetKeyInterval: NodeJS.Timeout;
@@ -13,7 +13,7 @@ export class TestClient extends HypixelSkyBlock {
     this.simulatedResetKeyInterval = setInterval(() => {
       this.rateLimit.reset -= 1;
       if (this.rateLimit.reset === 0) {
-        this.rateLimit.reset = 5;
+        this.rateLimit.reset = 10;
         this.rateLimit.remaining = this.rateLimit.limit;
       }
     }, 1000);

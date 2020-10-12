@@ -1,39 +1,39 @@
-import type { ProfileMember } from "./ProfileMember";
+import { ProfileMember } from "./ProfileMember";
 
 /**
- * @category Profile
+ * An individual transaction in the ledger.
  */
-export interface BankTransaction {
+export interface Transaction {
   /** The amount thie transaction was for. */
   amount?: number;
   /** The unix timestamp (in milliseconds) of this transaction. */
   timestamp?: number;
   /** The type of transaction. */
   action?: "DEPOSIT" | "WITHDRAW";
-  /** The IGN of the person who created the transaction. */
-  initiator_name?: string;
+  /** The IGN of the person who created the transaction (with MC formatting, e.g. "§6Zikeji"), or if it's interst just "Bank Interest". */
+  initiator_name?: "Bank Interest" | string;
 }
 
 /**
- * @category Profile
+ * Banking information. Only shows up if the bank API is enabled.
  */
 export interface Banking {
   /** The balance of the profile's bank. */
-  balance?: number;
+  balance: number;
   /** Transactions on the profile. */
-  transactions?: BankTransaction[];
+  transactions: Transaction[];
 }
 
 /**
  * The interface describing the resulting data in a profile response.
- * @category Profile
  */
 export interface Profile {
   /** The unique ID of the profile. */
-  profile_id?: string;
+  profile_id: string;
 
-  /** Members of the profile and their individual data. */
-  members?: {
+  /** Members of the profile and their [[ProfileMember | individual data]]. */
+  members: {
+    /** The member's UUID followed by their API data. */
     [member_uuid: string]: ProfileMember;
   };
 
@@ -46,5 +46,5 @@ export interface Profile {
  */
 export interface ProfileWithCuteName extends Profile {
   /** The "cute name" of this profile. e.g. "Pomegranate" (since that's cute, apparently?) */
-  cute_name?: string;
+  cute_name: string;
 }
