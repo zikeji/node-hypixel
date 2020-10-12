@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>BankTransaction | node-hypixel-skyblock - v1.0.0</title>
+	<title>HypixelSkyBlockOptions | node-hypixel-skyblock - v1.0.0</title>
 	<meta name="description" content="Documentation for node-hypixel-skyblock - v1.0.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -101,25 +101,21 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="banktransaction.html">BankTransaction</a>
+					<a href="hypixelskyblockoptions.html">HypixelSkyBlockOptions</a>
 				</li>
 			</ul>
-			<h1>Interface BankTransaction</h1>
+			<h1>Interface HypixelSkyBlockOptions</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">BankTransaction</span>
+						<span class="target">HypixelSkyBlockOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -130,10 +126,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="banktransaction.html#action" class="tsd-kind-icon">action</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="banktransaction.html#amount" class="tsd-kind-icon">amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="banktransaction.html#initiator_name" class="tsd-kind-icon">initiator_<wbr>name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="banktransaction.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hypixelskyblockoptions.html#agent" class="tsd-kind-icon">agent</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hypixelskyblockoptions.html#retries" class="tsd-kind-icon">retries</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hypixelskyblockoptions.html#timeout" class="tsd-kind-icon">timeout</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hypixelskyblockoptions.html#useragent" class="tsd-kind-icon">user<wbr>Agent</a></li>
 							</ul>
 						</section>
 					</div>
@@ -142,51 +138,66 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="action" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> action</h3>
-					<div class="tsd-signature tsd-kind-icon">action<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"DEPOSIT"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"WITHDRAW"</span></div>
+					<a name="agent" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> agent</h3>
+					<div class="tsd-signature tsd-kind-icon">agent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Agent</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The type of transaction.</p>
+							<p>Custom <a href="https://nodejs.org/api/https.html#https_class_https_agent">HTTPS agent</a> if desired.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="amount" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> amount</h3>
-					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="retries" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> retries</h3>
+					<div class="tsd-signature tsd-kind-icon">retries<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The amount thie transaction was for.</p>
+							<p>Amount of times to retry a failed request.</p>
 						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>3</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="initiator_name" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> initiator_<wbr>name</h3>
-					<div class="tsd-signature tsd-kind-icon">initiator_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="timeout" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timeout</h3>
+					<div class="tsd-signature tsd-kind-icon">timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The IGN of the person who created the transaction.</p>
+							<p>The time, in milliseconds, you want to wait before giving up on the method call.</p>
 						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>10000</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="timestamp" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timestamp</h3>
-					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<a name="useragent" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> user<wbr>Agent</h3>
+					<div class="tsd-signature tsd-kind-icon">user<wbr>Agent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The unix timestamp (in milliseconds) of this transaction.</p>
+							<p>User agent the client uses when making calls to Hypixel&#39;s API</p>
 						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>HypixelSkyblock</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 			</section>
@@ -210,33 +221,33 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/ratelimiterror.html" class="tsd-kind-icon">Rate<wbr>Limit<wbr>Error</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="banktransaction.html" class="tsd-kind-icon">Bank<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="banking.html" class="tsd-kind-icon">Banking</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="banktransaction.html" class="tsd-kind-icon">Bank<wbr>Transaction</a>
+						<a href="hypixelskyblockoptions.html" class="tsd-kind-icon">Hypixel<wbr>Sky<wbr>Block<wbr>Options</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="banktransaction.html#action" class="tsd-kind-icon">action</a>
+								<a href="hypixelskyblockoptions.html#agent" class="tsd-kind-icon">agent</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="banktransaction.html#amount" class="tsd-kind-icon">amount</a>
+								<a href="hypixelskyblockoptions.html#retries" class="tsd-kind-icon">retries</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="banktransaction.html#initiator_name" class="tsd-kind-icon">initiator_<wbr>name</a>
+								<a href="hypixelskyblockoptions.html#timeout" class="tsd-kind-icon">timeout</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="banktransaction.html#timestamp" class="tsd-kind-icon">timestamp</a>
+								<a href="hypixelskyblockoptions.html#useragent" class="tsd-kind-icon">user<wbr>Agent</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="banking.html" class="tsd-kind-icon">Banking</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="hypixelskyblockoptions.html" class="tsd-kind-icon">Hypixel<wbr>Sky<wbr>Block<wbr>Options</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="inventorydata.html" class="tsd-kind-icon">Inventory<wbr>Data</a>
 					</li>
