@@ -1,6 +1,6 @@
-import HypixelSkyBlock from "../../src";
+import { Client } from "../../src";
 
-export class TestClient extends HypixelSkyBlock {
+export class TestClient extends Client {
   private static firstResponseHeaders = {
     "ratelimit-limit": "120",
     "ratelimit-remaining": "119",

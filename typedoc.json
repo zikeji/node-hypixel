@@ -1,6 +1,6 @@
 {
-  "inputFiles": ["./src"],
   "mode": "file",
+  "inputFiles": ["./src"],
   "excludeExternals": true,
   "excludeNotExported": true,
   "excludePrivate": true,
@@ -10,8 +10,8 @@
   "categoryOrder": ["Public", "*", "Custom"],
   "out": "./docs",
   "json": "./docs.json",
+  "name": "hypixel-skyblock",
   "theme": "node_modules/typedoc-light-theme/src",
-  "name": "node-hypixel-skyblock",
   "projectName": {
     "link": true,
     "beforeLinks": "&emsp;"

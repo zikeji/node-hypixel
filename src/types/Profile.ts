@@ -1,37 +1,27 @@
 import { ProfileMember } from "./ProfileMember";
 
-export namespace Profile {
-  /**
-   * An individual transaction in the ledger.
-   */
-  export interface Transaction {
-    /** The amount thie transaction was for. */
-    amount?: number;
-    /** The unix timestamp (in milliseconds) of this transaction. */
-    timestamp?: number;
-    /** The type of transaction. */
-    action?: "DEPOSIT" | "WITHDRAW";
-    /** The IGN of the person who created the transaction (with MC formatting, e.g. "§6Zikeji"), or if it's interst just "Bank Interest". */
-    initiator_name?: "Bank Interest" | string;
-  }
+/**
+ * An individual transaction in the ledger.
+ */
+export interface Transaction {
+  /** The amount thie transaction was for. */
+  amount?: number;
+  /** The unix timestamp (in milliseconds) of this transaction. */
+  timestamp?: number;
+  /** The type of transaction. */
+  action?: "DEPOSIT" | "WITHDRAW";
+  /** The IGN of the person who created the transaction (with MC formatting, e.g. "§6Zikeji"), or if it's interst just "Bank Interest". */
+  initiator_name?: "Bank Interest" | string;
+}
 
-  /**
-   * Banking information. Only shows up if the bank API is enabled.
-   */
-  export interface Banking {
-    /** The balance of the profile's bank. */
-    balance: number;
-    /** Transactions on the profile. */
-    transactions: Transaction[];
-  }
-
-  /**
-   * The `/skyblock/profiles` method includes the cute name with each profile.
-   */
-  export interface WithCuteName extends Profile {
-    /** The "cute name" of this profile. e.g. "Pomegranate" (since that's cute, apparently?) */
-    cute_name: string;
-  }
+/**
+ * Banking information. Only shows up if the bank API is enabled.
+ */
+export interface Banking {
+  /** The balance of the profile's bank. */
+  balance: number;
+  /** Transactions on the profile. */
+  transactions: Transaction[];
 }
 
 /**
@@ -48,5 +38,13 @@ export interface Profile {
   };
 
   /** The banking data for this profile, if it the API is enabled. */
-  banking?: Profile.Banking;
+  banking?: Banking;
+}
+
+/**
+ * The `/skyblock/profiles` method includes the cute name with each profile.
+ */
+export interface ProfileWithCuteName extends Profile {
+  /** The "cute name" of this profile. e.g. "Pomegranate" (since that's cute, apparently?) */
+  cute_name: string;
 }

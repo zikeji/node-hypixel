@@ -1,8 +1,8 @@
 import { expect } from "chai";
-import { HypixelSkyBlock } from "../src";
+import { Client } from "../src";
 import { Profile } from "../src/types/Profile";
 
-const client = new HypixelSkyBlock(process.env.HYPIXEL_KEY || "");
+const client = new Client(process.env.HYPIXEL_KEY || "");
 
 describe("Run basic call to non-SkyBlock method", function () {
   this.timeout(30000);

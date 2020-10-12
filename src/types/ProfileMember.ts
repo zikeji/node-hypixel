@@ -1,47 +1,50 @@
-export namespace ProfileMember {
-  export interface InventoryData {
-    type: number;
-    data: string;
-  }
+/**
+ * This is the doc comment for file1.ts
+ * @packageDocumentation
+ */
 
-  export interface Stats {
-    /** The statistic described. e.g. "kills_zombie" */
-    [stat: string]: number;
-  }
+export interface InventoryData {
+  type: number;
+  data: string;
+}
 
-  export interface Objective {
-    /** Whether or not the objective is complete. */
-    status?: "COMPLETE" | "ACTIVE";
-    /** Progress toward the goal of the objective. */
-    progress?: number;
-    /** Javascript timestamp of the time this objective was completed. */
-    completed_at?: number;
-    /** Generally if the objective contains extra info this will be an MC item name. */
-    (resource: string): boolean;
-  }
+export interface Stats {
+  /** The statistic described. e.g. "kills_zombie" */
+  [stat: string]: number;
+}
 
-  export interface Objectives {
-    /** The name of the objective. e.g. "complete_the_crystal_core_anything_no_return_race_3" */
-    [objective: string]: Objective;
-  }
+export interface Objective {
+  /** Whether or not the objective is complete. */
+  status?: "COMPLETE" | "ACTIVE";
+  /** Progress toward the goal of the objective. */
+  progress?: number;
+  /** Javascript timestamp of the time this objective was completed. */
+  completed_at?: number;
+  /** Generally if the objective contains extra info this will be an MC item name. */
+  (resource: string): boolean;
+}
 
-  export interface Quest {
-    /** Status of this quest. */
-    status?: "COMPLETE" | "ACTIVE";
-    /** Javascript timestamp of when the quest was started. */
-    activated_at?: number;
-    /** Unique number indicated "timestamp" within SkyBlock. */
-    activated_at_sb?: number;
-    /** Javascript timestamp of when the quest was finished. */
-    completed_at?: number;
-    /** Unique number indicated "timestamp" within SkyBlock. */
-    completed_at_sb?: number;
-  }
+export interface Objectives {
+  /** The name of the objective. e.g. "complete_the_crystal_core_anything_no_return_race_3" */
+  [objective: string]: Objective;
+}
 
-  export interface Quests {
-    /** The name of the quest. e.g. "collection_log" */
-    [quest_name: string]: Quest;
-  }
+export interface Quest {
+  /** Status of this quest. */
+  status?: "COMPLETE" | "ACTIVE";
+  /** Javascript timestamp of when the quest was started. */
+  activated_at?: number;
+  /** Unique number indicated "timestamp" within SkyBlock. */
+  activated_at_sb?: number;
+  /** Javascript timestamp of when the quest was finished. */
+  completed_at?: number;
+  /** Unique number indicated "timestamp" within SkyBlock. */
+  completed_at_sb?: number;
+}
+
+export interface Quests {
+  /** The name of the quest. e.g. "collection_log" */
+  [quest_name: string]: Quest;
 }
 
 export interface ProfileMember {
@@ -52,13 +55,13 @@ export interface ProfileMember {
   /** Javascript timestamp of the first time they played in the SkyBlock hub. */
   first_join_hub?: number;
   /** Numeric list of stats for the player on this profile. */
-  stats?: ProfileMember.Stats;
+  stats?: Stats;
   /** Objectives the profile member has completed. */
-  objectives?: ProfileMember.Objectives;
+  objectives?: Objectives;
   /** Array of strings that each describe a completed tutorial. */
   tutorial?: string[];
   /** Quests the player is doing or has completed. */
-  quests?: ProfileMember.Quests;
+  quests?: Quests;
   /** The amount of coins in their purse. */
   coin_purse?: number;
   /** Unique SkyBlock timestamp of their last death. */
@@ -108,13 +111,13 @@ export interface ProfileMember {
    * Their currently equipped armor. This is available without the inventory API being enabled.
    * @Category Public
    */
-  inv_armor?: ProfileMember.InventoryData;
+  inv_armor?: InventoryData;
 
   /**
    * The contents of their player inventory.
    * @Category Inventory API
    */
-  inv_contents?: ProfileMember.InventoryData;
+  inv_contents?: InventoryData;
   /**
    * Which slot from their wardrobe is currently equipped.
    * @Category Inventory API
@@ -124,35 +127,35 @@ export interface ProfileMember {
    * The contents of their wardrobe.
    * @Category Inventory API
    */
-  wardrobe_contents?: ProfileMember.InventoryData;
+  wardrobe_contents?: InventoryData;
   /**
    * The contents of their ender chest.
    * @Category Inventory API
    */
-  ender_chest_contents?: ProfileMember.InventoryData;
+  ender_chest_contents?: InventoryData;
   /**
    * The content of their candy inventory. This is the candy they see in their Trick or Treat bag.
    * @Category Inventory API
    */
-  candy_inventory_contents?: ProfileMember.InventoryData;
+  candy_inventory_contents?: InventoryData;
   /**
    * The contents of their talisman bag (which talismans they have equipped).
    * @Category Inventory API
    */
-  talisman_bag?: ProfileMember.InventoryData;
+  talisman_bag?: InventoryData;
   /**
    * The contents of their potion bag.
    * @Category Inventory API
    */
-  potion_bag?: ProfileMember.InventoryData;
+  potion_bag?: InventoryData;
   /**
    * The contents of their fishing bag. (e.g. bait)
    * @Category Inventory API
    */
-  fishing_bag?: ProfileMember.InventoryData;
+  fishing_bag?: InventoryData;
   /**
    * The contents of their quiver. This will usually be arrows.
    * @Category Inventory API
    */
-  quiver?: ProfileMember.InventoryData;
+  quiver?: InventoryData;
 }
