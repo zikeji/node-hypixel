@@ -1,32 +1,25 @@
-import type { ProfileMember } from "./ProfileMember";
+import type { Member } from "./ProfileMember";
 
-/**
- * @category Profile
- */
-export interface BankTransaction {
+export interface Transaction {
   /** The amount thie transaction was for. */
   amount?: number;
   /** The unix timestamp (in milliseconds) of this transaction. */
   timestamp?: number;
   /** The type of transaction. */
   action?: "DEPOSIT" | "WITHDRAW";
-  /** The IGN of the person who created the transaction. */
-  initiator_name?: string;
+  /** The IGN of the person who created the transaction (with MC formatting, e.g. "§6Zikeji"), or if it's interst just "Bank Interest". */
+  initiator_name?: "Bank Interest" | string;
 }
 
-/**
- * @category Profile
- */
 export interface Banking {
   /** The balance of the profile's bank. */
   balance?: number;
   /** Transactions on the profile. */
-  transactions?: BankTransaction[];
+  transactions?: Transaction[];
 }
 
 /**
  * The interface describing the resulting data in a profile response.
- * @category Profile
  */
 export interface Profile {
   /** The unique ID of the profile. */
@@ -34,7 +27,7 @@ export interface Profile {
 
   /** Members of the profile and their individual data. */
   members?: {
-    [member_uuid: string]: ProfileMember;
+    [member_uuid: string]: Member;
   };
 
   /** The banking data for this profile, if it the API is enabled. */
