@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Profile | hypixel-skyblock - v1.1.0</title>
+	<title>Objective | hypixel-skyblock - v1.1.0</title>
 	<meta name="description" content="Documentation for hypixel-skyblock - v1.1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -101,33 +101,45 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="profile.html">Profile</a>
+					<a href="objective.html">Objective</a>
 				</li>
 			</ul>
-			<h1>Interface Profile</h1>
+			<h1>Interface Objective</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>The interface describing the resulting data in a profile response.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Profile</span>
-						<ul class="tsd-hierarchy">
+						<span class="target">Objective</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3 class="tsd-before-signature">Callable</h3>
+				<ul class="tsd-signatures tsd-kind-interface">
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>resource<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Generally if the objective contains extra info this will be an MC item name.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
 							<li>
-								<a href="profilewithcutename.html" class="tsd-signature-type">ProfileWithCuteName</a>
+								<h5>resource: <span class="tsd-signature-type">string</span></h5>
 							</li>
 						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -138,9 +150,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="profile.html#banking" class="tsd-kind-icon">banking</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="profile.html#members" class="tsd-kind-icon">members</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="profile.html#profile_id" class="tsd-kind-icon">profile_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="objective.html#completed_at" class="tsd-kind-icon">completed_<wbr>at</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="objective.html#progress" class="tsd-kind-icon">progress</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="objective.html#status" class="tsd-kind-icon">status</a></li>
 							</ul>
 						</section>
 					</div>
@@ -149,51 +161,38 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="banking" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> banking</h3>
-					<div class="tsd-signature tsd-kind-icon">banking<span class="tsd-signature-symbol">:</span> <a href="banking.html" class="tsd-signature-type">Banking</a></div>
+					<a name="completed_at" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> completed_<wbr>at</h3>
+					<div class="tsd-signature tsd-kind-icon">completed_<wbr>at<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The banking data for this profile, if it the API is enabled.</p>
+							<p>Javascript timestamp of the time this objective was completed.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="members" class="tsd-anchor"></a>
-					<h3>members</h3>
-					<div class="tsd-signature tsd-kind-icon">members<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<a name="progress" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> progress</h3>
+					<div class="tsd-signature tsd-kind-icon">progress<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Members of the profile and their <a href="profilemember.html">individual data</a>.</p>
+							<p>Progress toward the goal of the objective.</p>
 						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>member_uuid: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="profilemember.html" class="tsd-signature-type">ProfileMember</a></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>The member&#39;s UUID followed by their API data.</p>
-									</div>
-								</div>
-							</li>
-						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="profile_id" class="tsd-anchor"></a>
-					<h3>profile_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">profile_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="status" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"COMPLETE"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"ACTIVE"</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The unique ID of the profile.</p>
+							<p>Whether or not the objective is complete.</p>
 						</div>
 					</div>
 				</section>
@@ -230,30 +229,30 @@
 					<li class=" tsd-kind-interface">
 						<a href="inventorydata.html" class="tsd-kind-icon">Inventory<wbr>Data</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="objective.html" class="tsd-kind-icon">Objective</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="objectives.html" class="tsd-kind-icon">Objectives</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="profile.html" class="tsd-kind-icon">Profile</a>
+						<a href="objective.html" class="tsd-kind-icon">Objective</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="profile.html#banking" class="tsd-kind-icon">banking</a>
+								<a href="objective.html#completed_at" class="tsd-kind-icon">completed_<wbr>at</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="profile.html#members" class="tsd-kind-icon">members</a>
+								<a href="objective.html#progress" class="tsd-kind-icon">progress</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="profile.html#profile_id" class="tsd-kind-icon">profile_<wbr>id</a>
+								<a href="objective.html#status" class="tsd-kind-icon">status</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="objectives.html" class="tsd-kind-icon">Objectives</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="profile.html" class="tsd-kind-icon">Profile</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="profilemember.html" class="tsd-kind-icon">Profile<wbr>Member</a>
 					</li>
