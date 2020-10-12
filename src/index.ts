@@ -4,7 +4,7 @@ import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { RateLimitError } from "./errors/RateLimitError";
-import type { Profile, ProfileWithCuteName } from "./types/Profile";
+import type { Profile } from "./types/Profile";
 import { Queue } from "./util/Queue";
 
 /** @hidden */
@@ -46,7 +46,7 @@ interface HypixelSkyBlockOptions {
   agent?: Agent;
 }
 
-export interface HypixelSkyBlock extends EventEmitter {
+export declare interface HypixelSkyBlock {
   on(event: "limited", listener: (limit: number, reset: Date) => void): this;
   on(event: "reset", listener: () => void): this;
 
@@ -57,6 +57,9 @@ export interface HypixelSkyBlock extends EventEmitter {
   off(event: "reset", listener: () => void): this;
 }
 
+/**
+ * @noInheritDoc
+ */
 export class HypixelSkyBlock extends EventEmitter {
   /** @internal */
   private static readonly endpoint = new URL(`https://api.hypixel.net`);
@@ -99,7 +102,7 @@ export class HypixelSkyBlock extends EventEmitter {
 
   /**
    * Return a profile by it's profile ID.
-   * @category SkyBlock Profiles
+   * @category SkyBlock Profile
    * @param profile The profile ID you are looking up.
    * @return A [[Profile | Profile interface]] object.
    */
@@ -114,13 +117,13 @@ export class HypixelSkyBlock extends EventEmitter {
 
   /**
    * Return an array of profiles for a Hypixel user.
-   * @category SkyBlock Profiles
+   * @category SkyBlock Profile
    * @param uuid The Minecraft UUID of the player who's profiles you are looking up.
    * @return An array of [[ProfileWithCuteName | Profile interface]] objects.
    */
-  public async profiles(uuid: string): Promise<ProfileWithCuteName[]> {
+  public async profiles(uuid: string): Promise<Profile.WithCuteName[]> {
     return HypixelSkyBlock.returnResponseObject(
-      await this.call<{ profiles: Profile[] } & APIResponse>(
+      await this.call<{ profiles: Profile.WithCuteName[] } & APIResponse>(
         "skyblock/profiles",
         { uuid }
       ),
@@ -293,7 +296,6 @@ export class HypixelSkyBlock extends EventEmitter {
     });
   }
 
-  /** @internal */
   private static async returnResponseObject<
     T extends APIResponse,
     K extends keyof T
@@ -304,7 +306,6 @@ export class HypixelSkyBlock extends EventEmitter {
     throw new Error(`Key "${key}" was not in the response.`);
   }
 
-  /** @internal */
   private getRateLimitHeaders(headers: IncomingHttpHeaders): void {
     Object.keys(this.rateLimit).forEach((key) => {
       const headerKey = `ratelimit-${key}`;

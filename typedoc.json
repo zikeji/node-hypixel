@@ -7,6 +7,7 @@
   "excludeProtected": true,
   "disableSources": true,
   "includeVersion": true,
+  "categoryOrder": ["Public", "*", "Custom"],
   "out": "./docs",
   "json": "./docs.json",
   "theme": "node_modules/typedoc-light-theme/src",
