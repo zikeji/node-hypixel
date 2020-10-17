@@ -17,6 +17,16 @@ describe("Run basic call to non-SkyBlock method", function () {
   });
 });
 
+describe("Query SkyBlock news", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result;
+  it("expect success", async function () {
+    result = await client.news();
+    expect(result.length).not.to.equal(0);
+  });
+});
+
 describe("Query SkyBlock profiles by mc uuid", function () {
   this.timeout(30000);
   this.slow(1000);

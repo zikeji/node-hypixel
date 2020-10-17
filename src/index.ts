@@ -1,4 +1,5 @@
 export * from "./Client";
+export * from "./types/api";
 export * from "./types/APIResponse";
 export * from "./types/ActionableCall";
 export * from "./types/Profile";
