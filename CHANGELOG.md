@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/zikeji/node-hypixel-skyblock/compare/v1.1.0...v1.2.0) (2020-10-17)
+
+
+### Features
+
+* **docs:** add new documentation using vuepress ([d9a1661](https://github.com/zikeji/node-hypixel-skyblock/commit/d9a166128985858a9e004f56fb98846f2698f876))
+
+
+### Tests
+
+* **queue:** fix reset data issue ([54ed1fd](https://github.com/zikeji/node-hypixel-skyblock/commit/54ed1fd72cdb542b9a63a3b6b0c590cb38301f7a))
+
+
+### Code Refactoring
+
+* HypixelSkyblock to "Client". Add base index to re-export all for usage on NPM. ([99401bb](https://github.com/zikeji/node-hypixel-skyblock/commit/99401bb0924bdd36ffb69e18a51a0f931a181c97))
+
+
+### Documentation
+
+* **readme:** update readme ([66b9c86](https://github.com/zikeji/node-hypixel-skyblock/commit/66b9c86c8cbabdb3f8acc53632923170812e7d26))
+* more documentation for the profile interface ([dab4a98](https://github.com/zikeji/node-hypixel-skyblock/commit/dab4a98c71b4e5dff0ab7e043d56e6c5f8c1590e))
+* more documentation tweaks, including namespacing ([4de57ee](https://github.com/zikeji/node-hypixel-skyblock/commit/4de57ee613f240de4ac3389d136acdbc747c28f7))
+
 ## [1.1.0](https://github.com/zikeji/node-hypixel-skyblock/compare/v1.0.0...v1.1.0) (2020-10-12)
 
 
