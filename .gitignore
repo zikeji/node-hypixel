@@ -1,6 +1,6 @@
 .vscode/
-docs.json
-docs/
+docs/.vuepress/dist
+docs/api
 coverage/
 .nyc_output/
 dist/

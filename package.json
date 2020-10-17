@@ -16,7 +16,8 @@
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
-    "docs": "typedoc",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs"
   },
   "homepage": "https://hypixel-skyblock.zikeji.com/",
@@ -228,9 +229,12 @@
     "semantic-release": "^17.1.2",
     "ts-node": "^9.0.0",
     "typedoc": "^0.19.2",
-    "typedoc-light-theme": "^1.0.1",
+    "typedoc-plugin-markdown": "^3.0.8",
     "typedoc-plugin-no-inherit": "^1.2.0",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "vuepress": "^1.6.0",
+    "vuepress-plugin-typedoc": "^0.1.0",
+    "vuepress-theme-hope": "^1.0.1"
   },
   "config": {
     "commitizen": {
