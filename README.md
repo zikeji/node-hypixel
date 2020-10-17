@@ -27,9 +27,9 @@ Development has started, not all features are implemented and not all endpoints 
 
 ### Roadmap
 
-- [-] Add rate limiting support
+- [x] Add rate limiting support
 - [ ] Add method, typing, testing, and documentation for:
-  - [ ] News
+  - [x] News
   - [ ] Profile
   - [ ] Profiles
   - [ ] Auction
@@ -38,7 +38,7 @@ Development has started, not all features are implemented and not all endpoints 
     - [ ] Product
     - [ ] Products
   - [ ] **Resources**
-    - [ ] Collections
+    - [x] Collections
     - [ ] Skills
 
 ## Installation

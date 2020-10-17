@@ -92,6 +92,22 @@ export class Client extends EventEmitter {
   }
 
   /**
+   * Returns the list of ingame collections.
+   * @category SkyBlock Collections
+   * @return An object of [[Collection | Collection interface]] objects.
+   */
+  public async collections(): Promise<
+    Components.Schemas.CollectionsResourceResponse["collections"]
+  > {
+    return Client.returnResponseObject(
+      await this.call<Paths.ResourcesSkyblockCollections.Get.Responses.$200>(
+        "resources/skyblock/collections"
+      ),
+      "collections"
+    );
+  }
+
+  /**
    * Returns SkyBlock news, including a title, description and a thread.
    * @category SkyBlock News
    * @return An array of [[NewsEntry | NewsEntry interface]] objects.
