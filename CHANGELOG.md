@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/zikeji/node-hypixel-skyblock/compare/v1.2.0...v1.3.0) (2020-10-17)
+
+
+### Features
+
+* **openapi:** begin implementation of OpenAPI 3.0 spec ([98dc4eb](https://github.com/zikeji/node-hypixel-skyblock/commit/98dc4eb73066355d08122aa77cfd10b61a38791a))
+
+
+### Documentation
+
+* **readme:** update shield ([756e78f](https://github.com/zikeji/node-hypixel-skyblock/commit/756e78f8ac53c0b6198866fc611836bd2c7ff1f9))
+* **vuepress:** rename typedoc generated content to ts-api ([f56e9b3](https://github.com/zikeji/node-hypixel-skyblock/commit/f56e9b3c740e9cbb4fd3ef8a76d58bfeaa642445))
+
 ## [1.2.0](https://github.com/zikeji/node-hypixel-skyblock/compare/v1.1.0...v1.2.0) (2020-10-17)
 
 
