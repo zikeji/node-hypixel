@@ -20,13 +20,13 @@ module.exports = config({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
-      { text: 'Typescript API', link: '/api/' },
+      { text: 'Typescript API', link: '/ts-api/classes/client/#constructor' },
       { text: 'NPM', link: 'https://www.npmjs.com/package/hypixel-skyblock' },
     ],
     sidebar: [
       "/",
       "/guide/",
-      ["/api/", "Typescript API"],
+      ["/ts-api/classes/client/#constructor", "Typescript API"],
     ],
     pageInfo: ["Category","Tag"],
     footer: {
@@ -51,13 +51,14 @@ module.exports = config({
       {
         mode: "file",
         inputFiles: ["src/"],
-        out: "api",
+        out: "ts-api",
         readme: "none",
         categoryOrder: ["Public", "*", "Custom", "Other"],
-        toc: [
-          "Classes",
-          "Interfaces"
-        ],
+        // toc: [
+        //   "Classes",
+        //   "Interfaces"
+        // ],
+        includeDeclarations: true,
         excludeExternals: true,
         excludeNotExported: true,
         excludePrivate: true,

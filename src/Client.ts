@@ -5,6 +5,7 @@ import { URL } from "url";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { RateLimitError } from "./errors/RateLimitError";
 import type { ActionableCall } from "./types/ActionableCall";
+import { Components, Paths } from "./types/api";
 import type { APIResponse } from "./types/APIResponse";
 import type { Profile, ProfileWithCuteName } from "./types/Profile";
 import { Queue } from "./util/Queue";
@@ -88,6 +89,18 @@ export class Client extends EventEmitter {
     this.timeout = options?.timeout ?? 10000;
     this.userAgent = options?.userAgent ?? "HypixelSkyblock";
     this.agent = options?.agent;
+  }
+
+  /**
+   * Returns SkyBlock news, including a title, description and a thread.
+   * @category SkyBlock News
+   * @return An array of [[NewsEntry | NewsEntry interface]] objects.
+   */
+  public async news(): Promise<Components.Schemas.NewsEntries> {
+    return Client.returnResponseObject(
+      await this.call<Paths.SkyblockNews.Get.Responses.$200>("skyblock/news"),
+      "items"
+    );
   }
 
   /**

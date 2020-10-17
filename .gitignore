@@ -1,6 +1,6 @@
 .vscode/
 docs/.vuepress/dist
-docs/api
+docs/ts-api
 coverage/
 .nyc_output/
 dist/
