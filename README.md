@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/hypixel-skyblock)][npm]
 [![npm bundle size](https://img.shields.io/bundlephobia/min/hypixel-skyblock)][npm]
-[![visit docs](https://img.shields.io/badge/docs-TypeDoc-informational)][docs]
+[![visit docs](https://img.shields.io/badge/docs-VuePress-green)][docs]
 [![Snyk Vulnerabilities for npm package version](https://img.shields.io/snyk/vulnerabilities/npm/hypixel-skyblock)][npm]
 [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/hypixel-skyblock)][npm]
 [![GitHub license](https://img.shields.io/github/license/zikeji/node-hypixel-skyblock)](https://github.com/zikeji/node-hypixel-skyblock/blob/master/LICENSE)
