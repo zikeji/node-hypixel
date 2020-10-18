@@ -26,6 +26,8 @@
     "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs"
   },
   "homepage": "https://node-hypixel.zikeji.com/",
+  "author": "Zikeji <me@zikeji.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zikeji/node-hypixel/issues"
   },
@@ -47,8 +49,7 @@
     "minecraft api"
   ],
   "files": [
-    "dist/*.js",
-    "dist/**/*.d.ts"
+    "dist/"
   ],
   "release": {
     "branches": [
@@ -205,8 +206,6 @@
       ]
     ]
   },
-  "author": "Zikeji <me@zikeji.com>",
-  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
