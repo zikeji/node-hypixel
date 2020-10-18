@@ -1,7 +1,7 @@
 const { config } = require("vuepress-theme-hope");
 
 module.exports = config({
-  title: "hypixel-skyblock",
+  title: "hypixelapi",
   description: "An unopinionated async/await API wrapper for Hypixel's Skyblock API developed in TypeScript complete with documentation, typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.",
   head: [
     ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png"}],
@@ -14,14 +14,14 @@ module.exports = config({
     ['meta', { name: "theme-color", content: "#9941d3"}],
   ],
   themeConfig: {
-    hostname: "https://hypixel-skyblock.zikeji.com",
+    hostname: "https://hypixelapi.zikeji.com",
     blog: false,
     logo: "/logo.svg",
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
       { text: 'Typescript API', link: '/ts-api/classes/client/#constructor' },
-      { text: 'NPM', link: 'https://www.npmjs.com/package/hypixel-skyblock' },
+      { text: 'NPM', link: 'https://www.npmjs.com/package/hypixelapi' },
     ],
     sidebar: [
       "/",
@@ -33,7 +33,7 @@ module.exports = config({
       display: true,
       copyright: "MIT Licensed | Copyright © 2020-present Zikeji",
     },
-    repo: "zikeji/node-hypixel-skyblock",
+    repo: "zikeji/node-hypixelapi",
     docsDir: "docs",
     docsBranch: "master",
     editLinks: false,

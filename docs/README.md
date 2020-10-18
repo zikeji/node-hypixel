@@ -1,6 +1,6 @@
 ---
 home: true
-heroText: hypixel-skyblock
+heroText: hypixelapi
 heroImage: /logo.svg
 tagline: NodeJS API wrapper for Hypixel's SkyBlock
 action:

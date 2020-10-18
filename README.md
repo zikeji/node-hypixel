@@ -1,20 +1,20 @@
-# hypixel-skyblock
+# hypixelapi
 
-[![npm](https://img.shields.io/npm/v/hypixel-skyblock)][npm]
-[![npm bundle size](https://img.shields.io/bundlephobia/min/hypixel-skyblock)][npm]
+[![npm](https://img.shields.io/npm/v/hypixelapi)][npm]
+[![npm bundle size](https://img.shields.io/bundlephobia/min/hypixelapi)][npm]
 [![visit docs](https://img.shields.io/badge/docs-VuePress-green)][docs]
-[![Snyk Vulnerabilities for npm package version](https://img.shields.io/snyk/vulnerabilities/npm/hypixel-skyblock)][npm]
-[![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/hypixel-skyblock)][npm]
-[![GitHub license](https://img.shields.io/github/license/zikeji/node-hypixel-skyblock)](https://github.com/zikeji/node-hypixel-skyblock/blob/master/LICENSE)
-[![GitHub last commit](https://img.shields.io/github/last-commit/zikeji/node-hypixel-skyblock)][github]
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zikeji/node-hypixel-skyblock)][github]
-[![GitHub issues](https://img.shields.io/github/issues/zikeji/node-hypixel-skyblock)](https://github.com/zikeji/node-hypixel-skyblock/issues)
-[![Coveralls github](https://img.shields.io/coveralls/github/zikeji/node-hypixel-skyblock)][github]
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zikeji/node-hypixel-skyblock/release)][github]
+[![Snyk Vulnerabilities for npm package version](https://img.shields.io/snyk/vulnerabilities/npm/hypixelapi)][npm]
+[![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/hypixelapi)][npm]
+[![GitHub license](https://img.shields.io/github/license/zikeji/node-hypixelapi)](https://github.com/zikeji/node-hypixelapi/blob/master/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/zikeji/node-hypixelapi)][github]
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zikeji/node-hypixelapi)][github]
+[![GitHub issues](https://img.shields.io/github/issues/zikeji/node-hypixelapi)](https://github.com/zikeji/node-hypixelapi/issues)
+[![Coveralls github](https://img.shields.io/coveralls/github/zikeji/node-hypixelapi)][github]
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zikeji/node-hypixelapi/release)][github]
 
-[npm]: https://www.npmjs.com/package/hypixel-skyblock
-[github]: https://github.com/zikeji/node-hypixel-skyblock
-[docs]: https://hypixel-skyblock.zikeji.com
+[npm]: https://www.npmjs.com/package/hypixelapi
+[github]: https://github.com/zikeji/node-hypixelapi
+[docs]: https://hypixelapi.zikeji.com
 [hypixelapi]: https://api.hypixel.net/
 
 An unopinionated async/await API wrapper for [Hypixel's Skyblock API][hypixelapi] developed in TypeScript complete with [documentation][docs], typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.
@@ -46,13 +46,13 @@ Development has started, not all features are implemented and not all endpoints 
 Use [npm](https://www.npmjs.com) to install this library.
 
 ```bash
-npm i --save hypixel-skyblock
+npm i --save hypixelapi
 ```
 
 ## Usage
 
 ```javascript
-import { Client as HypixelSkyblock } from "hypixel-skyblock";
+import { Client as HypixelSkyblock } from "hypixelapi";
 const client = new HypixelSkyblock("API_KEY");
 ```
 
