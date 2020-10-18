@@ -1,6 +1,6 @@
 {
-    "name": "hypixel-skyblock",
-    "short_name": "hypixel-skyblock",
+    "name": "hypixelapi",
+    "short_name": "hypixelapi",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
