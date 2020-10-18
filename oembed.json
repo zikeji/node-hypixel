@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "type": "photo",
+  "url": "https://node-hypixel.zikeji.com/social.png",
+  "width": 1280,
+  "height": 640,
+  "thumbnail_url": "https://node-hypixel.zikeji.com/apple-touch-icon.png",
+  "thumbnail_width": 180,
+  "thumbnail_height": 180,
+  "provider_name": "GitHub",
+  "provider_url": "https://github.com/zikeji/node-hypixel",
+  "title": "@zikeji/hypixel - v1.5.1",
+  "description": "An unopinionated async/await API wrapper for Hypixel's Public API developed in TypeScript complete with documentation, OpenAPI 3.0 spec, intellisense, typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.",
+  "author_name": "Zikeji",
+  "author_url": "https://github.com/zikeji"
+}
