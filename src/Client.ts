@@ -28,7 +28,7 @@ interface ClientOptions {
   timeout?: number;
   /**
    * User agent the client uses when making calls to Hypixel's API
-   * @default HypixelSkyblock
+   * @default @zikeji/hypixel
    */
   userAgent?: string;
   /**
@@ -87,7 +87,7 @@ export class Client extends EventEmitter {
     this.key = key;
     this.retries = options?.retries ?? 3;
     this.timeout = options?.timeout ?? 10000;
-    this.userAgent = options?.userAgent ?? "HypixelSkyblock";
+    this.userAgent = options?.userAgent ?? "@zikeji/hypixel";
     this.agent = options?.agent;
   }
 

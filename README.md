@@ -1,25 +1,25 @@
-# hypixelapi
+# node-hypixel
 
-[![npm](https://img.shields.io/npm/v/hypixelapi)][npm]
-[![npm bundle size](https://img.shields.io/bundlephobia/min/hypixelapi)][npm]
+[![npm](https://img.shields.io/npm/v/@zikeji/hypixel)][npm]
+[![npm bundle size](https://img.shields.io/bundlephobia/min/@zikeji/hypixel)][npm]
 [![visit docs](https://img.shields.io/badge/docs-VuePress-green)][docs]
-[![Snyk Vulnerabilities for npm package version](https://img.shields.io/snyk/vulnerabilities/npm/hypixelapi)][npm]
-[![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/hypixelapi)][npm]
-[![GitHub license](https://img.shields.io/github/license/zikeji/node-hypixelapi)](https://github.com/zikeji/node-hypixelapi/blob/master/LICENSE)
-[![GitHub last commit](https://img.shields.io/github/last-commit/zikeji/node-hypixelapi)][github]
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zikeji/node-hypixelapi)][github]
-[![GitHub issues](https://img.shields.io/github/issues/zikeji/node-hypixelapi)](https://github.com/zikeji/node-hypixelapi/issues)
-[![Coveralls github](https://img.shields.io/coveralls/github/zikeji/node-hypixelapi)][github]
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zikeji/node-hypixelapi/release)][github]
+[![Snyk Vulnerabilities for npm package version](https://img.shields.io/snyk/vulnerabilities/npm/@zikeji/hypixel)][npm]
+[![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/@zikeji/hypixel)][npm]
+[![GitHub license](https://img.shields.io/github/license/zikeji/node-hypixel)](https://github.com/zikeji/node-hypixel/blob/master/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/zikeji/node-hypixel)][github]
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zikeji/node-hypixel)][github]
+[![GitHub issues](https://img.shields.io/github/issues/zikeji/node-node-hypixel)](https://github.com/zikeji/node-hypixel/issues)
+[![Coveralls github](https://img.shields.io/coveralls/github/zikeji/node-hypixel)][github]
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zikeji/node-hypixel/release)][github]
 
-[npm]: https://www.npmjs.com/package/hypixelapi
-[github]: https://github.com/zikeji/node-hypixelapi
-[docs]: https://hypixelapi.zikeji.com
-[hypixelapi]: https://api.hypixel.net/
+[npm]: https://www.npmjs.com/package/node-hypixel
+[github]: https://github.com/zikeji/node-hypixel
+[docs]: https://node-hypixel.zikeji.com
+[hypixel]: https://api.hypixel.net/
 
-An unopinionated async/await API wrapper for [Hypixel's Skyblock API][hypixelapi] developed in TypeScript complete with [documentation][docs], typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.
+An unopinionated async/await API wrapper for [Hypixel's Public API][hypixel] developed in TypeScript complete with [documentation][docs], typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.
 
-The library aims to replicate the [Hypixel API][hypixelapi] as closely as possible, and as such won't alter the results, merely offering intellisense suggestions / completion of results.
+The library aims to replicate the [Hypixel API][hypixel] as closely as possible, and as such won't alter the results, merely offering intellisense suggestions, rate-limit handling, and helpers.
 
 ## Project Status
 
@@ -46,14 +46,14 @@ Development has started, not all features are implemented and not all endpoints 
 Use [npm](https://www.npmjs.com) to install this library.
 
 ```bash
-npm i --save hypixelapi
+npm i --save @zikeji/hypixel
 ```
 
 ## Usage
 
 ```javascript
-import { Client as HypixelSkyblock } from "hypixelapi";
-const client = new HypixelSkyblock("API_KEY");
+import { Client as Hypixel } from "@zikeji/hypixel";
+const client = new Hypixel("API_KEY");
 ```
 
 ## Contributing
