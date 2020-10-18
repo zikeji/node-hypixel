@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.5.2](https://github.com/zikeji/node-hypixel/compare/v1.5.1...v1.5.2) (2020-10-18)
+
+
+### Bug Fixes
+
+* **ci:** add logging to action in attempt to troubleshoot missing information ([c877fa4](https://github.com/zikeji/node-hypixel/commit/c877fa4716140244080c71639ad637acbc5dfe99))
+
+
+### Documentation
+
+* **meta:** add social, add embed metadata ([858895a](https://github.com/zikeji/node-hypixel/commit/858895abd91f684ed9632119593fc67614300456))
+* **readme:** point to coveralls ([1d30fe2](https://github.com/zikeji/node-hypixel/commit/1d30fe259cb5beae73719543bfcd673af0230de2))
+
 ### [1.5.1](https://github.com/zikeji/node-hypixel/compare/v1.5.0...v1.5.1) (2020-10-18)
 
 
