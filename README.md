@@ -12,7 +12,7 @@
 [![Coveralls github](https://img.shields.io/coveralls/github/zikeji/node-hypixel)][github]
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zikeji/node-hypixel/release)][github]
 
-[npm]: https://www.npmjs.com/package/node-hypixel
+[npm]: https://www.npmjs.com/package/@zikeji/hypixel
 [github]: https://github.com/zikeji/node-hypixel
 [docs]: https://node-hypixel.zikeji.com
 [hypixel]: https://api.hypixel.net/
