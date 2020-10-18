@@ -1,6 +1,6 @@
 ---
 home: true
-heroText: @zikeji/hypixel
+heroText: '@zikeji/hypixel'
 heroImage: /logo.svg
 tagline: NodeJS API wrapper for Hypixel's Public API
 action:
