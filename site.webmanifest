@@ -1,6 +1,6 @@
 {
-    "name": "hypixelapi",
-    "short_name": "hypixelapi",
+    "name": "node-hypixel",
+    "short_name": "node-hypixel",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
