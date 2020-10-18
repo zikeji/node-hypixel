@@ -8,7 +8,7 @@
 [![GitHub license](https://img.shields.io/github/license/zikeji/node-hypixel)](https://github.com/zikeji/node-hypixel/blob/master/LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/zikeji/node-hypixel)][github]
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zikeji/node-hypixel)][github]
-[![GitHub issues](https://img.shields.io/github/issues/zikeji/node-node-hypixel)](https://github.com/zikeji/node-hypixel/issues)
+[![GitHub issues](https://img.shields.io/github/issues/zikeji/node-hypixel)](https://github.com/zikeji/node-hypixel/issues)
 [![Coveralls](https://img.shields.io/coveralls/github/zikeji/node-hypixel)](https://coveralls.io/github/zikeji/node-hypixel)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zikeji/node-hypixel/release)][github]
 
@@ -23,7 +23,7 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
 
 ## Project Status
 
-Development has started, not all features are implemented and not all endpoints explored and typed. This is a relatively small project and I intend to have it done ASAP.
+`ALPHA` - this project is not ready for production use, expect breaking changes that do not follow semver. semantic-releaser bumped me to 1.0.0, I had intended to stay on 0.X.X, and use 1.0.0 as my release, but it didn't pan out. 2.0.0 will be my release once all necessary features are completed.
 
 ### Roadmap
 
