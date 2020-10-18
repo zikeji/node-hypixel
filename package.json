@@ -1,6 +1,6 @@
 {
   "name": "@zikeji/hypixel",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "An unopinionated async/await API wrapper for Hypixel's Public API developed in TypeScript complete with documentation, OpenAPI 3.0 spec, intellisense, typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
