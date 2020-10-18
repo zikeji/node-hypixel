@@ -32,6 +32,117 @@ tags:
     externalDocs:
       url: https://github.com/HypixelDev/PublicAPI/tree/master/Documentation/methods/skyblock
 paths:
+  /resources/skyblock/collections:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/resources.md
+      summary: Retrieve a list of ingame collections.
+      description: |
+        _Does not require an API key._
+        ### Sample
+        ```typescript
+        const collections = await client.collections();
+        ```
+      responses:
+        '200':
+          description: Collections response for the current existing connections.
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/CollectionsResourceResponse'
+              example: 
+                success: true
+                lastUpdated: 1595295719158
+                version: "0.8.24"
+                collections: 
+                  FARMING:
+                    name: "Farming"
+                    items: 
+                      WHEAT: 
+                        name: "Wheat"
+                        maxTiers: 10
+                        tiers: 
+                          - 
+                            tier: 1
+                            amountRequired: 50
+                            unlocks: 
+                              - "Wheat Minion Recipes"
+                          - 
+                            tier: 2
+                            amountRequired: 100
+                            unlocks: 
+                              - "Enchanted Book (Harvesting V) Recipe"
+                          - 
+                            tier: 3
+                            amountRequired: 250
+                            unlocks: 
+                              - "Farm Suit Helmet Recipe"
+                              - "Farm Suit Chestplate Recipe"
+                              - "Farm Suit Leggings Recipe"
+                              - "Farm Suit Boots Recipe"
+                      CARROT_ITEM: 
+                        name: "Carrot"
+                        maxTiers: 9
+                        tiers: 
+                          - 
+                            tier: 1
+                            amountRequired: 100
+                            unlocks: 
+                              - "Carrot Minion Recipes"
+                          - 
+                            tier: 2
+                            amountRequired: 250
+                            unlocks: 
+                              - "Simple Carrot Candy Recipe"
+                          - 
+                            tier: 3
+                            amountRequired: 500
+                            unlocks: 
+                              - "Catching Egg (COMING SOON)"
+                  FISHING: 
+                    name: "Fishing"
+                    items: 
+                      RAW_FISH: 
+                        name: "Raw Fish"
+                        maxTiers: 11
+                        tiers: 
+                          - 
+                            tier: 1
+                            amountRequired: 20
+                            unlocks: 
+                              - "Fish Hat Recipe"
+                          - 
+                            tier: 2
+                            amountRequired: 50
+                            unlocks: 
+                              - "Fishing Minion Recipes"
+                          - 
+                            tier: 3
+                            amountRequired: 100
+                            unlocks: 
+                              - "Small Fishing Bag Upgrade"
+                      RAW_FISH:1: 
+                        name: "Raw Salmon"
+                        maxTiers: 9
+                        tiers: 
+                          - 
+                            tier: 1
+                            amountRequired: 20
+                            unlocks: 
+                              - "Minnow Bait Recipe"
+                          - 
+                            tier: 2
+                            amountRequired: 50
+                            unlocks: 
+                              - "Dodge Potion Recipe"
+                          - 
+                            tier: 3
+                            amountRequired: 100
+                            unlocks: 
+                              - "Enchanted Book (Lure IV) Recipe"
+      security: []
   /skyblock/news:
     get:
       tags:
@@ -113,6 +224,7 @@ components:
       properties:
         success:
           type: boolean
+          description: Whether or not the request succeeded.
           default: true
       required:
         - success
@@ -121,12 +233,90 @@ components:
       properties:
         success:
           type: boolean
-          default: true
+          description: Whether or not the request succeeded.
+          default: false
         cause:
           type: string
+          description: 'Error message of the failure that resulted in `success: false`'
       required:
         - success
         - cause
+    ResourceResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            lastUpdated:
+              type: integer
+              description: Unix timestamp this resource was last updated.
+            version:
+              type: string
+              description: SkyBlock version this resource applies to.
+          required:
+            - success
+            - lastUpdated
+            - version
+    CollectionsResourceResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResourceResponse'
+        - type: object
+          properties:
+            collections:
+              type: object
+              description: Objects for each individual parent collection (currently FARMING, MINING, COMBAT, FORAGING, FISHING).
+              additionalProperties:
+                $ref: '#/components/schemas/ParentCollection'
+          required:
+            - success
+            - lastUpdated
+            - version
+            - collections
+    ParentCollection:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the collection group.
+        items:
+          type: object
+          description: Objects for each individual collection within the parent (e.g. WHEAT, SAND).
+          additionalProperties:
+            $ref: '#/components/schemas/Collection'
+      required:
+        - name
+        - items
+    Collection:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the collection.
+        maxTiers:
+          type: integer
+          description: The maximum tier of this collection.
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CollectionTier'
+      required:
+        - name
+        - maxTiers
+        - tiers
+    CollectionTier:
+      type: object
+      description: Individual tier within the collection.
+      properties:
+        tier:
+          type: integer
+          description: The collection tier this applies to.
+        amountRequired:
+          type: integer
+          description: The amount of the collection resource required to unlock this.
+        unlocks:
+          type: array
+          description: An array of strings describing the individual unlocks of this collection.
+          items:
+            type: string
     NewsResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

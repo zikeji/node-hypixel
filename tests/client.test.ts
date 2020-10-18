@@ -1,6 +1,13 @@
 import { expect } from "chai";
 import { Client } from "../src";
-import { Profile } from "../src/types/Profile";
+
+type AsyncReturnType<T extends (...args: any) => any> = T extends (
+  ...args: any
+) => Promise<infer U>
+  ? U
+  : T extends (...args: any) => infer U
+  ? U
+  : any;
 
 const client = new Client(process.env.HYPIXEL_KEY || "");
 
@@ -17,11 +24,20 @@ describe("Run basic call to non-SkyBlock method", function () {
   });
 });
 
+describe("Query SkyBlock collections resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.collections>;
+  it("expect not to throw", async function () {
+    result = await client.collections();
+  });
+});
+
 describe("Query SkyBlock news", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result;
-  it("expect success", async function () {
+  let result: AsyncReturnType<typeof client.news>;
+  it("expect not to throw", async function () {
     result = await client.news();
     expect(result.length).not.to.equal(0);
   });
@@ -30,7 +46,7 @@ describe("Query SkyBlock news", function () {
 describe("Query SkyBlock profiles by mc uuid", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result;
+  let result: AsyncReturnType<typeof client.profiles>;
   it("expect success", async function () {
     result = await client.profiles("ec1811e6822b4843bcd4fef82f75deb7");
     expect(result.length).not.to.equal(0);
@@ -41,7 +57,7 @@ describe("Query SkyBlock profile by mc uuid", function () {
   this.timeout(30000);
   this.slow(1000);
   let profileId = "74c72b90bdd84b668ccb5a20752030cc";
-  let result: Profile;
+  let result: AsyncReturnType<typeof client.profile>;
   it("expect not to throw", async function () {
     result = await client.profile(profileId);
   });
