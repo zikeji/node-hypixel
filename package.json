@@ -7,6 +7,10 @@
   "engines": {
     "node": ">=10"
   },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "commit": "cz",
     "lint": "eslint --ext ts src --fix",
