@@ -1,5 +1,6 @@
 .vscode/
 docs/.vuepress/dist
+docs/.vuepress/public/openapi.yaml
 docs/.vuepress/public/oembed.json
 docs/ts-api
 coverage/

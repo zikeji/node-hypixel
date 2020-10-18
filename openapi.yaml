@@ -25,7 +25,7 @@ externalDocs:
 servers:
   - url: 'https://api.hypixel.net'
 security:
-  - api_key: []
+  - apiKey: []
 tags:
   - name: skyblock
     description: Methods related to the SkyBlock game mode.
@@ -41,7 +41,7 @@ paths:
       summary: Retrieve a list of ingame collections.
       description: |
         _Does not require an API key._
-        ### Sample
+        #### Example
         ```typescript
         const collections = await client.collections();
         ```
@@ -359,7 +359,7 @@ components:
       required:
         - material
   securitySchemes:
-    api_key:
+    apiKey:
       type: apiKey
       name: key
       in: query

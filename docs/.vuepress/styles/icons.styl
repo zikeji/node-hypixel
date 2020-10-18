@@ -1,0 +1,56 @@
+use('../../../node_modules/stylus-svg/index.js')
+
+icon(path)
+  &::before
+    content svgImport(path, '
+      path
+        fill #aaa
+      ')
+    .active &
+      content svgImport(path, '
+        path
+          fill #9941d3
+        ')
+      .theme-green &
+        content svgImport(path, '
+          path
+            fill #3eaf7c
+          ')
+      .theme-blue &
+        content svgImport(path, '
+          path
+            fill #2196f3
+          ')
+
+i.iconfont
+  width 1.4em
+  height 1.4em
+  padding-right 4px
+  display inline-block
+  &::before
+    width 1.4em
+    height 1.4em
+    margin 0
+    position absolute
+    left 0
+    top 50%
+    -ms-transform translateY(-50%)
+    transform translateY(-50%)
+    .dropdown-item &
+      left unset
+  &.icon-home
+    icon('../../../node_modules/@mdi/svg/svg/home.svg')
+  &.icon-guide
+    icon('../../../node_modules/@mdi/svg/svg/arrow-right-thick.svg')
+  &.icon-api
+    icon('../../../node_modules/@mdi/svg/svg/iframe-braces.svg')
+  &.icon-typescript
+    icon('../../../node_modules/@mdi/svg/svg/language-typescript.svg')
+  &.icon-info
+    icon('../../../node_modules/@mdi/svg/svg/information.svg')
+  &.icon-npm
+    icon('../../../node_modules/@mdi/svg/svg/npm.svg')
+  &.icon-github
+    icon('../../../node_modules/@mdi/svg/svg/github.svg')
+  &.icon-changelog
+    icon('../../../node_modules/@mdi/svg/svg/text-box.svg')

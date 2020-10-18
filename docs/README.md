@@ -6,8 +6,6 @@ tagline: NodeJS API wrapper for Hypixel's Public API
 action:
   - text: Get Started →
     link: /guide/
-  - text: Typescript API 🖥️
-    link: /ts-api/classes/client/#constructor
 features:
   - title: Rate Limiting Queue
     details: Built in async rate limiting queue prevents prevents requests from failing by queueing and waiting for the queue to clear.

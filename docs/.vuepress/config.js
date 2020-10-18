@@ -1,4 +1,4 @@
-const { writeFileSync } = require("fs");
+const { writeFileSync, copyFileSync } = require("fs");
 const { resolve } = require("path");
 const { config } = require("vuepress-theme-hope");
 const { name, version, description, repository } = require("../../package.json");
@@ -24,6 +24,7 @@ const oembed = {
 };
 
 writeFileSync(resolve(__dirname, "public", "oembed.json"), JSON.stringify(oembed, null, 2));
+copyFileSync(resolve(__dirname, "../", "../", "openapi.yaml"), resolve(__dirname, "public", "openapi.yaml"));
 
 module.exports = config({
   title: name,
@@ -55,22 +56,27 @@ module.exports = config({
     blog: false,
     logo: "/logo.svg",
     nav: [
-      { text: "Home", link: "/" },
-      { text: "Guide", link: "/guide/" },
-      { text: "Typescript API", link: "/ts-api/classes/client/#constructor" },
-      { text: "NPM", link: `https://www.npmjs.com/package/${name}` },
+      { text: "Home", link: "/", icon: "home" },
+      { text: "Guide", link: "/guide/", icon: "guide" },
+      { text: "API", link: "/api/", icon: "api" },
+      { text: "Typescript API", link: "/ts-api/", icon: "typescript" },
+      {
+        text: "Info",
+        icon: "info",
+        items: [
+
+          { text: "NPM Package", link: `https://www.npmjs.com/package/${name}`, icon: "npm" },
+          { text: "GitHub Repo", link: `https://github.com/${repo}`, icon: "github" },
+          { text: "Changelog", link: `https://github.com/${repo}/blob/main/CHANGELOG.md`, icon: "changelog" },
+        ]
+      },
     ],
-    sidebar: [
-      "/",
-      "/guide/",
-      ["/ts-api/classes/client/#constructor", "Typescript API"],
-    ],
+    sidebar: "auto",
     pageInfo: ["Category", "Tag"],
     footer: {
       display: true,
       copyright: "MIT Licensed | Copyright © 2020-present Zikeji",
     },
-    repo,
     docsDir: "docs",
     docsBranch: "master",
     editLinks: false,
