@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.5.1](https://github.com/zikeji/node-hypixel/compare/v1.5.0...v1.5.1) (2020-10-18)
+
+
+### Bug Fixes
+
+* **docs:** properly escape hero text ([d3f789d](https://github.com/zikeji/node-hypixel/commit/d3f789dec489871d507a7aff5d64be37d37ea89b))
+* **publishing:** add publishconfig and explicit private ([2fd4380](https://github.com/zikeji/node-hypixel/commit/2fd4380a5e797c214575e1ea07057ebefb0ac344))
+
+
+### Documentation
+
+* **readme:** fix links ([3565628](https://github.com/zikeji/node-hypixel/commit/3565628aab334cb63bdbb00fc63f219169d19fc3))
+
 ## [1.5.0](https://github.com/zikeji/node-hypixel/compare/v1.4.0...v1.5.0) (2020-10-18)
 
 
