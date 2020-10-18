@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/zikeji/node-hypixelapi/compare/v1.3.0...v1.4.0) (2020-10-18)
+
+
+### Features
+
+* **collections:** add collections resource ([786f524](https://github.com/zikeji/node-hypixelapi/commit/786f52484d45f9c3722421651ccf4201640538fb))
+* **rebrand:** rebrand to hypixelapi ([ca3dc87](https://github.com/zikeji/node-hypixelapi/commit/ca3dc8794f8a33238ac7d4b7f39b582a392f4034))
+
 ## [1.3.0](https://github.com/zikeji/node-hypixelapi/compare/v1.2.0...v1.3.0) (2020-10-17)
 
 
