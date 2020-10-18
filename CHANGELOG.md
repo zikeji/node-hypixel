@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/zikeji/node-hypixel/compare/v1.4.0...v1.5.0) (2020-10-18)
+
+
+### Features
+
+* **rebrand:** again, rebrand, to an available package name ([6b2fe6a](https://github.com/zikeji/node-hypixel/commit/6b2fe6a7d8527008821bc780896a2bc6ab8a92b6))
+
+
+### Bug Fixes
+
+* **typo:** type in package.json ([34fa9f0](https://github.com/zikeji/node-hypixel/commit/34fa9f0dc014d0eb512d2dabcbf8e4ae9c580186))
+
+
+### Miscellaneous Chores
+
+* **lock:** update package-lock ([bcfc0db](https://github.com/zikeji/node-hypixel/commit/bcfc0dbc777c91998b32ef30f107ca84c225801c))
+
 ## [1.4.0](https://github.com/zikeji/node-hypixel/compare/v1.3.0...v1.4.0) (2020-10-18)
 
 
