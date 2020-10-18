@@ -9,7 +9,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/zikeji/node-hypixel)][github]
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zikeji/node-hypixel)][github]
 [![GitHub issues](https://img.shields.io/github/issues/zikeji/node-node-hypixel)](https://github.com/zikeji/node-hypixel/issues)
-[![Coveralls github](https://img.shields.io/coveralls/github/zikeji/node-hypixel)][github]
+[![Coveralls](https://img.shields.io/coveralls/github/zikeji/node-hypixel)](https://coveralls.io/github/zikeji/node-hypixel)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zikeji/node-hypixel/release)][github]
 
 [npm]: https://www.npmjs.com/package/@zikeji/hypixel

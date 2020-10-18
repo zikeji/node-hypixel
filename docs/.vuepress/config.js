@@ -1,39 +1,76 @@
+const { writeFileSync } = require("fs");
+const { resolve } = require("path");
 const { config } = require("vuepress-theme-hope");
+const { name, version, description, repository } = require("../../package.json");
+
+const hostname = "https://node-hypixel.zikeji.com";
+const repo = /^git@github.com:(.*).git$/.exec(repository.url)[1];
+
+const oembed = {
+  version: "1.0",
+  type: "photo",
+  url: `${hostname}/social.png`,
+  width: 1280,
+  height: 640,
+  thumbnail_url: `${hostname}/apple-touch-icon.png`,
+  thumbnail_width: 180,
+  thumbnail_height: 180,
+  provider_name: "GitHub",
+  provider_url: `https://github.com/${repo}`,
+  title: `${name} - v${version}`,
+  description: description,
+  author_name: "Zikeji",
+  author_url: `https://github.com/${repo.split('/')[0]}`
+};
+
+writeFileSync(resolve(__dirname, "public", "oembed.json"), JSON.stringify(oembed, null, 2));
 
 module.exports = config({
-  title: "@zikeji/hypixel",
-  description: "An unopinionated async/await API wrapper for Hypixel's Skyblock API developed in TypeScript complete with documentation, typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.",
+  title: name,
+  description: description,
   head: [
-    ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png"}],
-    ['link', { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png"}],
-    ['link', { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png"}],
-    ['link', { rel: "manifest", href: "/site.webmanifest"}],
-    ['link', { rel: "mask-icon", href: "/safari-pinned-tab.svg", color: "#5bbad5"}],
-    ['link', { rel: "shortcut icon", href: "favicon.ico"}],
-    ['meta', { name: "msapplication-TileColor", content: "##9f00a7"}],
-    ['meta', { name: "theme-color", content: "#9941d3"}],
+    ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
+    ['link', { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" }],
+    ['link', { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" }],
+    ['link', { rel: "manifest", href: "/site.webmanifest" }],
+    ['link', { rel: "mask-icon", href: "/safari-pinned-tab.svg", color: "#5bbad5" }],
+    ['link', { rel: "shortcut icon", href: "/favicon.ico" }],
+    ['link', { rel: "alternate", type: "application/json+oembed", href: `${hostname}/oembed.json` }],
+    ['meta', { name: "msapplication-TileColor", content: "#9f00a7" }],
+    ['meta', { name: "theme-color", content: "#9941d3" }],
+    ['meta', { name: "twitter:card", content: "summary_large_image" }],
+    ['meta', { name: "twitter:title", content: oembed.title }],
+    ['meta', { name: "twitter:description", content: oembed.description }],
+    ['meta', { name: "twitter:image", content: `${hostname}/social.png` }],
+    ['meta', { name: "og:title", content: oembed.title }],
+    ['meta', { name: "og:description", content: oembed.description }],
+    ['meta', { name: "og:image", content: `${hostname}/social.png` }],
+    ['meta', { name: "og:image:secure_url", content: `${hostname}/social.png` }],
+    ['meta', { name: "og:image:type", content: "image/png" }],
+    ['meta', { name: "og:image:width", content: 1280 }],
+    ['meta', { name: "og:image:height", content: 640 }],
   ],
   themeConfig: {
-    hostname: "https://node-hypixel.zikeji.com",
+    hostname,
     blog: false,
     logo: "/logo.svg",
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' },
-      { text: 'Typescript API', link: '/ts-api/classes/client/#constructor' },
-      { text: 'NPM', link: 'https://www.npmjs.com/package/@zikeji/hypixel' },
+      { text: "Home", link: "/" },
+      { text: "Guide", link: "/guide/" },
+      { text: "Typescript API", link: "/ts-api/classes/client/#constructor" },
+      { text: "NPM", link: `https://www.npmjs.com/package/${name}` },
     ],
     sidebar: [
       "/",
       "/guide/",
       ["/ts-api/classes/client/#constructor", "Typescript API"],
     ],
-    pageInfo: ["Category","Tag"],
+    pageInfo: ["Category", "Tag"],
     footer: {
       display: true,
       copyright: "MIT Licensed | Copyright © 2020-present Zikeji",
     },
-    repo: "zikeji/node-hypixel",
+    repo,
     docsDir: "docs",
     docsBranch: "master",
     editLinks: false,
