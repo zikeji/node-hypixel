@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.0](https://github.com/zikeji/node-hypixel/compare/v1.7.0...v1.8.0) (2020-10-19)
+
+
+### Features
+
+* **api:** add /status endpoint ([29be746](https://github.com/zikeji/node-hypixel/commit/29be746677d73f2116be1bb5f4ec066ed8d73c49))
+* **docs:** add support for code blocks in descriptions ([e8025eb](https://github.com/zikeji/node-hypixel/commit/e8025eb5618cd2e8168c44c9602ac56bd0d9c73c))
+* **docs:** revamp the schema display styles ([0aa2ab7](https://github.com/zikeji/node-hypixel/commit/0aa2ab7ef2629a4c6829b4f3eb8256270c74a05f))
+* **docs:** use webpack to load openapi yaml schema ([33bc537](https://github.com/zikeji/node-hypixel/commit/33bc537e98fef298a930f618ee5d33afcfbaff28))
+
+
+### Bug Fixes
+
+* **ci:** type in nyc command for ci coverage ([9beee2e](https://github.com/zikeji/node-hypixel/commit/9beee2e1fcc06ce91e011bc578a884f58d39e6f5))
+* **cross-env:** use a ci script ([8f1b4e1](https://github.com/zikeji/node-hypixel/commit/8f1b4e11b10a82b61a5214d5384e62ce208902ed))
+* **docs:** fix issues causing docs:build to fail ([59f0f37](https://github.com/zikeji/node-hypixel/commit/59f0f375768cab50c626bebe6c95dac278091967))
+
+
+### Documentation
+
+* **api:** style authorization dialog ([8554eca](https://github.com/zikeji/node-hypixel/commit/8554ecafa6c9c5596874e87b89595da1be225795))
+* **config:** add to watched files ([2d9283a](https://github.com/zikeji/node-hypixel/commit/2d9283a59f2e5084192dda07883a0e73c8e780fd))
+* **openapi:** add usage examples ([77b6d6c](https://github.com/zikeji/node-hypixel/commit/77b6d6c7bc0ab027b1de3157f66434dc659f93c6))
+* **readme:** update to include project readme instead of custom readme for /, fix some styling ([6f162c0](https://github.com/zikeji/node-hypixel/commit/6f162c05491466c74ebe88bd0aaccfd4238a656a))
+* **swagger:** change expand depth ([44992cb](https://github.com/zikeji/node-hypixel/commit/44992cb2510e62bcb5587114d8559478a45f0639))
+
 ## [1.7.0](https://github.com/zikeji/node-hypixel/compare/v1.6.0...v1.7.0) (2020-10-19)
 
 
