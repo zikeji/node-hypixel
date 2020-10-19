@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/zikeji/node-hypixel/compare/v1.5.2...v1.6.0) (2020-10-18)
+
+
+### Features
+
+* **docs:** add Swagger client with some styling ([7ef6f72](https://github.com/zikeji/node-hypixel/commit/7ef6f72587e197a933e63c3eed7d8727ebc74e6a))
+
+
+### Bug Fixes
+
+* include all in dist folder ([afa5044](https://github.com/zikeji/node-hypixel/commit/afa5044bbe96ba90f193f9607faadf15e2b0dadb))
+
 ### [1.5.2](https://github.com/zikeji/node-hypixel/compare/v1.5.1...v1.5.2) (2020-10-18)
 
 
