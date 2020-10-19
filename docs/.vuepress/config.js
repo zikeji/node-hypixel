@@ -34,7 +34,6 @@ module.exports = config({
       path: "/",
       filePath: resolve(__dirname, "../../README.md"),
       frontmatter: {
-        sidebar: false,
         home: true,
         heroText: "@zikeji/hypixel",
         heroImage: "/logo.svg",
@@ -65,9 +64,6 @@ module.exports = config({
     {
       path: "/changelog/",
       filePath: resolve(__dirname, "../../CHANGELOG.md"),
-      frontmatter: {
-        sidebar: false,
-      },
     },
   ],
   head: [
@@ -111,6 +107,10 @@ module.exports = config({
         ]
       },
     ],
+    sidebar: {
+      "/": [],
+      "/changelog/": [],
+    },
     pageInfo: ["Category", "Tag"],
     footer: {
       display: true,
@@ -126,6 +126,7 @@ module.exports = config({
       green: "#3eaf7c",
       blue: "#2196f3"
     },
+    addThis: "ra-5f8d724d4c77d215",
   },
   extraWatchFiles: [
     "../../README.md",
