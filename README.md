@@ -40,9 +40,15 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
   - [ ] Player Count
   - [ ] Recent Games
   - [ ] **Resources**
+    - [ ] Achievements
+    - [ ] Challenges
+    - [ ] **Guilds**
+      - [ ] Achievements
+      - [ ] Permissions
     - [ ] **SkyBlock**
       - [x] Collections
       - [ ] Skills
+    - [ ] Quests
   - [ ] **SkyBlock**
     - [x] News
     - [ ] Profile
