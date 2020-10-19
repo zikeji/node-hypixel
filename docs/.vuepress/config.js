@@ -126,10 +126,14 @@ module.exports = config({
       blue: "#2196f3"
     },
   },
+  extraWatchFiles: [
+    "../../README.md",
+    "../../openapi.yaml"
+  ],
   configureWebpack: {
     module: {
       rules: [
-        { test: /\.ya?ml$/, use: 'yaml-loader', type: 'json' }
+        { test: /\.ya?ml$/, use: "yaml-loader", type: "json" }
       ]
     }
   },
