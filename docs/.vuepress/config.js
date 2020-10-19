@@ -1,4 +1,4 @@
-const { writeFileSync, copyFileSync } = require("fs");
+const { writeFileSync } = require("fs");
 const { resolve } = require("path");
 const { config } = require("vuepress-theme-hope");
 const { name, version, description, repository } = require("../../package.json");
@@ -24,7 +24,6 @@ const oembed = {
 };
 
 writeFileSync(resolve(__dirname, "public", "oembed.json"), JSON.stringify(oembed, null, 2));
-copyFileSync(resolve(__dirname, "../", "../", "openapi.yaml"), resolve(__dirname, "public", "openapi.yaml"));
 
 module.exports = config({
   title: name,
@@ -126,6 +125,13 @@ module.exports = config({
       green: "#3eaf7c",
       blue: "#2196f3"
     },
+  },
+  configureWebpack: {
+    module: {
+      rules: [
+        { test: /\.ya?ml$/, use: 'yaml-loader', type: 'json' }
+      ]
+    }
   },
   plugins: [
     [

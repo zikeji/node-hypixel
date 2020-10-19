@@ -11,6 +11,7 @@ import prism from "prismjs";
 import "prismjs/components/prism-json";
 import "prismjs/components/prism-typescript";
 import "swagger-ui/dist/swagger-ui.css";
+import spec from "../../../openapi.yaml";
 
 const md = new Remarkable({
   html: true,
@@ -66,29 +67,6 @@ const PrismJSPlugin = function (system) {
       highlightCode: PrismJSComponent,
       Markdown: MarkdownComponent,
     },
-    // wrapComponents: {
-    //   Markdown: (Original) => (props) => {
-    //     console.log(md.render(props.source));
-    //     let result;
-    //     let newSource = props.source;
-    //     while ((result = codeRegex.exec(props.source)) !== null) {
-    //       const lang = result[1];
-    //       if (prism.languages[lang]) {
-    //         const code = prism.highlight(
-    //           result[2],
-    //           prism.languages[lang],
-    //           lang
-    //         );
-    //         newSource = newSource.replace(
-    //           result[0],
-    //           `<pre class="language-${lang}"><code>${code}</code></pre>`
-    //         );
-    //       }
-    //     }
-    //     props.source = newSource;
-    //     return Original(props);
-    //   },
-    // },
   };
 };
 
@@ -97,7 +75,7 @@ export default {
     this.$nextTick(() => {
       const domNode = document.getElementById("openapi-wrapper");
       SwaggerUI({
-        url: "/openapi.yaml",
+        spec,
         domNode,
         docExpansion: "list",
         deepLinking: false,
