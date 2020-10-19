@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.8.1](https://github.com/zikeji/node-hypixel/compare/v1.8.0...v1.8.1) (2020-10-19)
+
+
+### Bug Fixes
+
+* **docs:** checkout master and use node_env ([cad343e](https://github.com/zikeji/node-hypixel/commit/cad343ea0fc2f2417e0228cd9ba4e9c93d6c37a1))
+
+
+### Documentation
+
+* **api:** persist authorization ([c3fffd2](https://github.com/zikeji/node-hypixel/commit/c3fffd266a00a472d3f228240613be8a970fac2e))
+
 ## [1.8.0](https://github.com/zikeji/node-hypixel/compare/v1.7.0...v1.8.0) (2020-10-19)
 
 
