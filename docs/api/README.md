@@ -1,6 +1,6 @@
 ---
 layout: Custom
-footer: false
+footer: true
 ---
 <ClientOnly>
   <OpenAPI/>

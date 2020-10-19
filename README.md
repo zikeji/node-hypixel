@@ -25,9 +25,28 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
 
 `ALPHA` - this project is not ready for production use, expect breaking changes that do not follow semver. semantic-releaser bumped me to 1.0.0, I had intended to stay on 0.X.X, and use 1.0.0 as my release, but it didn't pan out. 2.0.0 will be my release once all necessary features are completed.
 
-### Roadmap
+## Installation
+
+Use [npm](https://www.npmjs.com) to install this library.
+
+```bash
+npm i --save @zikeji/hypixel
+```
+
+## Usage
+
+```javascript
+import { Client as Hypixel } from "@zikeji/hypixel";
+const client = new Hypixel("API_KEY");
+(async () => {
+  const collections = client.resources.skyblock.collections();
+})();
+```
+
+## Roadmap
 
 - [x] Add rate limiting support
+- [ ] Support not requiring an API key for resource endpoints?
 - [ ] Add method, typing, testing, and documentation for:
   - [ ] Boosters
   - [ ] Find Guild
@@ -47,7 +66,7 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
       - [ ] Permissions
     - [ ] **SkyBlock**
       - [x] Collections
-      - [ ] Skills
+      - [x] Skills
     - [ ] Quests
   - [ ] **SkyBlock**
     - [x] News
@@ -58,21 +77,6 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
     - [ ] Bazaar
   - [x] Status
   - [x] Watchdog Stats
-
-## Installation
-
-Use [npm](https://www.npmjs.com) to install this library.
-
-```bash
-npm i --save @zikeji/hypixel
-```
-
-## Usage
-
-```javascript
-import { Client as Hypixel } from "@zikeji/hypixel";
-const client = new Hypixel("API_KEY");
-```
 
 ## Contributing
 If some API result isn't documented / typed out fully, please open an issue and I can add it ASAP. Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
