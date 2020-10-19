@@ -5,9 +5,39 @@
 <script>
 import SwaggerUI from "swagger-ui";
 import React from "react";
+import { Remarkable } from "remarkable";
+import { linkify } from "remarkable/linkify";
 import prism from "prismjs";
 import "prismjs/components/prism-json";
+import "prismjs/components/prism-typescript";
 import "swagger-ui/dist/swagger-ui.css";
+import spec from "../../../openapi.yaml";
+
+const md = new Remarkable({
+  html: true,
+  typographer: true,
+  breaks: true,
+  linkTarget: "_blank",
+  highlight: function (str, lang) {
+    return prism.highlight(str, prism.languages[lang], lang);
+  },
+}).use(linkify);
+
+md.core.ruler.disable(["replacements", "smartquotes"]);
+
+class MarkdownComponent extends React.Component {
+  render() {
+    const { source, className } = this.props;
+    if (typeof source !== "string" || !source) {
+      return null;
+    }
+    return React.createElement(
+      "div",
+      { className: `${className ? `${className} ` : ""}markdown`, dangerouslySetInnerHTML: { __html: md.render(source) } },
+      null
+    );
+  }
+}
 
 class PrismJSComponent extends React.Component {
   render() {
@@ -19,21 +49,23 @@ class PrismJSComponent extends React.Component {
     return React.createElement(
       "pre",
       {
-        className: `${this.props.className} language-json`,
+        className: this.props.className,
       },
       React.createElement(
         "code",
-        { dangerouslySetInnerHTML: { __html: code } },
+        { className: "language-json", dangerouslySetInnerHTML: { __html: code } },
         null
       )
     );
   }
 }
 
+const codeRegex = /```([a-z]*)\n([\s\S]*?)\n```/g;
 const PrismJSPlugin = function (system) {
   return {
     components: {
       highlightCode: PrismJSComponent,
+      Markdown: MarkdownComponent,
     },
   };
 };
@@ -43,19 +75,16 @@ export default {
     this.$nextTick(() => {
       const domNode = document.getElementById("openapi-wrapper");
       SwaggerUI({
-        url: "/openapi.yaml",
+        spec,
         domNode,
         docExpansion: "list",
         deepLinking: false,
         syntaxHighlight: false,
+        defaultModelsExpandDepth: 3,
+        defaultModelExpandDepth: 3,
         presets: [SwaggerUI.presets.apis],
         plugins: [PrismJSPlugin],
-        onComplete() {
-          const examples = document.querySelectorAll(
-            "#openapi-wrapper pre.example.microlight"
-          );
-          // console.log(examples);
-        },
+        onComplete() {},
       });
     });
   },

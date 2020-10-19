@@ -1,4 +1,4 @@
-# node-hypixel
+# @zikeji/hypixel
 
 [![npm](https://img.shields.io/npm/v/@zikeji/hypixel)][npm]
 [![npm bundle size](https://img.shields.io/bundlephobia/min/@zikeji/hypixel)][npm]
@@ -56,7 +56,7 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
     - [ ] Auction
     - [ ] Auctions
     - [ ] Bazaar
-  - [ ] Status
+  - [x] Status
   - [x] Watchdog Stats
 
 ## Installation

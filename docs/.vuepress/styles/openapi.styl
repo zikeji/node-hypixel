@@ -8,22 +8,56 @@ source_code()
   +cache('source_code')
     font-family 'Source Code Pro', sans-serif
 
+.theme-default-content.custom
+  transform unset !important
+
 .swagger-ui
   padding 3.6rem 2rem 0
   text_color()
   source_sans()
+  input[type="text"]
+    text_color()
+    source_sans()
+    outline: unset
+    border var(--border-color)
+    background-color var(--code-bg-color)
+    box-shadow 0 1px 2px 0 var(--box-shadow-color)
+    transition background 0.2s ease-in-out
+    &[disabled]
+      background-color var(--grey12)
   select
     text_color()
     source_sans()
     outline: unset
     border var(--border-color)
-    background var(--background-color) url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13.418 7.859a.695.695 0 01.978 0 .68.68 0 010 .969l-3.908 3.83a.697.697 0 01-.979 0l-3.908-3.83a.68.68 0 010-.969.695.695 0 01.978 0L10 11l3.418-3.141z"/></svg>') right 10px center no-repeat
+    background-color var(--code-bg-color)
+    background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22M13.418%207.859a.695.695%200%2001.978%200%20.68.68%200%20010%20.969l-3.908%203.83a.697.697%200%2001-.979%200l-3.908-3.83a.68.68%200%20010-.969.695.695%200%2001.978%200L10%2011l3.418-3.141z%22%2F%3E%3C%2Fsvg%3E")
+    .theme-dark &
+      background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20fill%3D%22rgba%28158,158,158,1%29%22%20d%3D%22M13.418%207.859a.695.695%200%2001.978%200%20.68.68%200%20010%20.969l-3.908%203.83a.697.697%200%2001-.979%200l-3.908-3.83a.68.68%200%20010-.969.695.695%200%2001.978%200L10%2011l3.418-3.141z%22%2F%3E%3C%2Fsvg%3E")
     box-shadow 0 1px 2px 0 var(--box-shadow-color)
     &:focus
       border var(--border-color)
     option
       color var(--text-color)
       background-color:  var(--background-color)
+  .model
+    text_color()
+    source_sans()
+  .model-toggle
+    &::after
+      background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22M10%206L8.59%207.41%2013.17%2012l-4.58%204.59L10%2018l6-6z%22%2F%3E%3C%2Fsvg%3E")
+      .theme-dark &
+        background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%3E%3Cpath%20fill%3D%22rgba%28158,158,158,1%29%22%20d%3D%22M10%206L8.59%207.41%2013.17%2012l-4.58%204.59L10%2018l6-6z%22%2F%3E%3C%2Fsvg%3E")
+  .model-title
+    text_color()
+    source_sans()
+  .prop-type
+    color var(--accent-color)
+  section.models
+    for i in h1 h2 h3 h4 h5
+      {i}
+        text_color()
+        source_sans()
   svg use
     fill var(--text-color)
   .btn
@@ -47,9 +81,14 @@ source_code()
   code
   .code
     source_code()
-  .markdown code
-  .renderedMarkdown code
-    color var(--accent-color)
+  .renderedMarkdown
+  .markdown
+  .renderedMarkdown
+    code
+      color var(--accent-color)
+    pre
+      padding 0.5rem 0.5rem
+      background-color var(--code-bg-color)
   .markdown p
   .markdown pre
   .renderedMarkdown p
@@ -92,6 +131,14 @@ source_code()
     small
       text_color()
       source_sans()
+  .parameter__name
+  .parameter__type
+    text_color()
+  .responses-inner
+    for i in h1 h2 h3 h4 h5
+      {i}
+        text_color()
+        source_sans()
   .opblock
     .theme-dark &
       background rgba(0,0,0,0.2) !important
@@ -102,6 +149,17 @@ source_code()
         background var(--background-color)
       border 1px solid var(--border-color)
       box-shadow 0 0 3px var(--box-shadow-color)
+    .opblock-description-wrapper
+      margin-bottom 0
+      padding-bottom 0
+    .opblock-external-docs-wrapper
+      margin-top 0
+      padding-top 0
+    .opblock-description-wrapper h4
+    .opblock-external-docs-wrapper h4
+      margin 5px 0
+      font-weight bold
+      font-size 16px
     .opblock-summary-operation-id
     .opblock-summary-path
     .opblock-summary-path__deprecated
@@ -118,14 +176,33 @@ source_code()
         {i}
           text_color()
           source_sans()
-  pre.example.language-json
-    font-size 12px !important
-    overflow-y auto !important
-    max-height 400px !important
-    min-height 6em !important
+  pre.example
+    font-size 12px
+    overflow-y auto
+    max-height 400px
+    min-height 6em
   .scheme-container
     margin 0 0 20px
     padding 30px 0
     background var(--background-color)
     border 1px solid var(--border-color)
     box-shadow 0 1px 2px 0 var(--box-shadow-color)
+  section.response-controls
+    display none
+  .dialog-ux
+    .backdrop-ux
+      bottom -30px
+    .modal-ux
+      background-color var(--background-color)
+      border 1px solid var(--border-color)
+      .modal-ux-header
+        border-bottom 1px solid var(--border-color)
+        h3
+          text_color()
+          source_sans()
+      .modal-ux-content
+        p
+        h4
+        label
+          text_color()
+          source_sans()

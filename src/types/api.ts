@@ -113,6 +113,28 @@ export declare namespace Components {
        */
       version: string;
     }
+    export interface Session {
+      /**
+       * example:
+       * true
+       */
+      online: boolean;
+      /**
+       * example:
+       * SKYWARS
+       */
+      gameType?: string;
+      /**
+       * example:
+       * ranked_normal
+       */
+      mode?: string;
+      /**
+       * example:
+       * Agni Temple
+       */
+      map?: string;
+    }
   }
 }
 export declare namespace Paths {
@@ -127,6 +149,36 @@ export declare namespace Paths {
     namespace Get {
       namespace Responses {
         export type $200 = Components.Schemas.NewsResponse;
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
+  namespace Status {
+    namespace Get {
+      namespace Parameters {
+        /**
+         * example:
+         * 20934ef9488c465180a78f861586b4cf
+         */
+        export type Uuid = string;
+      }
+      export interface QueryParameters {
+        uuid: /**
+         * example:
+         * 20934ef9488c465180a78f861586b4cf
+         */
+        Parameters.Uuid;
+      }
+      namespace Responses {
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          session: Components.Schemas.Session;
+        }
         export type $400 = Components.Responses.MissingFields;
         export type $403 = Components.Responses.Unauthorized;
         export type $429 = Components.Responses.RateLimitError;

@@ -7,13 +7,38 @@ body
 code
   font-family 'Source Code Pro', monospace
 
+body.theme-dark
+body.theme-light
+  code[class*='language-']
+  pre[class*='language-']
+    font-weight lighter
+    font-family 'Source Code Pro', monospace
+
+.theme-default-content
+  pre
+  pre[class*='language-']
+    margin 0
+    padding 0.5rem 0.5rem
+  code
+    font-family 'Source Code Pro', monospace
+
 .home
+  a img ~ span
+    display none
   .features
     border-top 0 !important
   .hero
     h1
       font-family 'Comfortaa', cursive
       color var(--black)
+
+@media (min-width: 719px)
+  .nav-item > .nav-link:not([href="/"])
+    &.router-link-active
+      color var(--accent-color)
+    &:hover, &.router-link-active
+      margin-bottom -2px
+      border-bottom 2px solid var(--accent-color-l10)
 
 .navbar
   .site-name
