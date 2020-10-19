@@ -29,17 +29,29 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
 
 - [x] Add rate limiting support
 - [ ] Add method, typing, testing, and documentation for:
-  - [x] News
-  - [ ] Profile
-  - [ ] Profiles
-  - [ ] Auction
-  - [ ] Auctions
-  - [ ] Bazaar
-    - [ ] Product
-    - [ ] Products
+  - [ ] Boosters
+  - [ ] Find Guild
+  - [ ] Friends
+  - [ ] Game Counts
+  - [ ] Guild
+  - [ ] Key
+  - [ ] Leaderboards
+  - [ ] Player
+  - [ ] Player Count
+  - [ ] Recent Games
   - [ ] **Resources**
-    - [x] Collections
-    - [ ] Skills
+    - [ ] **SkyBlock**
+      - [x] Collections
+      - [ ] Skills
+  - [ ] **SkyBlock**
+    - [x] News
+    - [ ] Profile
+    - [ ] Profiles
+    - [ ] Auction
+    - [ ] Auctions
+    - [ ] Bazaar
+  - [ ] Status
+  - [x] Watchdog Stats
 
 ## Installation
 
