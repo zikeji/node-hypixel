@@ -19,8 +19,10 @@
     "types:openapi": "dtsgen --out ./src/types/api.ts --target ES2015 ./openapi.yaml && replace \"declare namespace\" \"export declare namespace\" src/types/api.ts && eslint --ext ts ./src/types/api.ts --fix",
     "watch": "npm run clean && tsc -p . -w",
     "test": "nodenv --exec npx -- mocha -r ts-node/register tests/**/*.test.ts",
+    "test:ci": "mocha -r ts-node/register tests/**/*.test.ts",
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
+    "coverage:ci": "nyc npm test:ci",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs"
