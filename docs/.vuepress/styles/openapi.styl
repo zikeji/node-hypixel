@@ -27,13 +27,34 @@ source_code()
     source_sans()
     outline: unset
     border var(--border-color)
-    background var(--background-color) url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13.418 7.859a.695.695 0 01.978 0 .68.68 0 010 .969l-3.908 3.83a.697.697 0 01-.979 0l-3.908-3.83a.68.68 0 010-.969.695.695 0 01.978 0L10 11l3.418-3.141z"/></svg>') right 10px center no-repeat
+    background-color var(--background-color)
+    background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22M13.418%207.859a.695.695%200%2001.978%200%20.68.68%200%20010%20.969l-3.908%203.83a.697.697%200%2001-.979%200l-3.908-3.83a.68.68%200%20010-.969.695.695%200%2001.978%200L10%2011l3.418-3.141z%22%2F%3E%3C%2Fsvg%3E")
+    .theme-dark &
+      background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20fill%3D%22rgba%28158,158,158,1%29%22%20d%3D%22M13.418%207.859a.695.695%200%2001.978%200%20.68.68%200%20010%20.969l-3.908%203.83a.697.697%200%2001-.979%200l-3.908-3.83a.68.68%200%20010-.969.695.695%200%2001.978%200L10%2011l3.418-3.141z%22%2F%3E%3C%2Fsvg%3E")
     box-shadow 0 1px 2px 0 var(--box-shadow-color)
     &:focus
       border var(--border-color)
     option
       color var(--text-color)
       background-color:  var(--background-color)
+  .model
+    text_color()
+    source_sans()
+  .model-toggle
+    &::after
+      background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%3E%3Cpath%20fill%3D%22black%22%20d%3D%22M10%206L8.59%207.41%2013.17%2012l-4.58%204.59L10%2018l6-6z%22%2F%3E%3C%2Fsvg%3E")
+      .theme-dark &
+        background-image url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%3E%3Cpath%20fill%3D%22rgba%28158,158,158,1%29%22%20d%3D%22M10%206L8.59%207.41%2013.17%2012l-4.58%204.59L10%2018l6-6z%22%2F%3E%3C%2Fsvg%3E")
+  .model-title
+    text_color()
+    source_sans()
+  .prop-type
+    color var(--accent-color)
+  section.models
+    for i in h1 h2 h3 h4 h5
+      {i}
+        text_color()
+        source_sans()
   svg use
     fill var(--text-color)
   .btn
