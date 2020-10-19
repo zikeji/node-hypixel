@@ -12,6 +12,16 @@ source_code()
   padding 3.6rem 2rem 0
   text_color()
   source_sans()
+  input[type="text"]
+    text_color()
+    source_sans()
+    outline: unset
+    border var(--border-color)
+    background-color var(--background-color)
+    box-shadow 0 1px 2px 0 var(--box-shadow-color)
+    transition background 0.2s ease-in-out
+    &[disabled]
+      background-color var(--grey12)
   select
     text_color()
     source_sans()
@@ -97,6 +107,14 @@ source_code()
     small
       text_color()
       source_sans()
+  .parameter__name
+  .parameter__type
+    text_color()
+  .responses-inner
+    for i in h1 h2 h3 h4 h5
+      {i}
+        text_color()
+        source_sans()
   .opblock
     .theme-dark &
       background rgba(0,0,0,0.2) !important
