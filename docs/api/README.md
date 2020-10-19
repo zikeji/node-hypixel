@@ -2,4 +2,6 @@
 layout: Custom
 footer: false
 ---
-<OpenAPI/>
+<ClientOnly>
+  <OpenAPI/>
+</ClientOnly>
