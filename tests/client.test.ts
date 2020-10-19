@@ -24,6 +24,54 @@ describe("Run basic undocumented call", function () {
   });
 });
 
+describe("Query SkyBlock collections resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.skyblock.collections>;
+  it("expect not to throw", async function () {
+    result = await client.resources.skyblock.collections();
+  });
+  it("required keys should exist", function () {
+    for (const key of Object.keys(result)) {
+      console.log(key);
+      const collection = result[key];
+      expect(collection.name).to.be.a("string").and.not.be.empty;
+      expect(collection.items).to.be.an("object");
+      expect(Object.keys(collection.items)).not.be.empty;
+      for (const itemName of Object.keys(collection.items)) {
+        const item = collection.items[itemName];
+        expect(item.name).to.be.a("string").and.not.be.empty;
+        expect(item.maxTiers).to.be.a("number");
+        expect(item.tiers).to.be.an("array").and.not.be.empty;
+      }
+    }
+  });
+});
+
+describe("Query SkyBlock skills resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.skyblock.skills>;
+  it("expect not to throw", async function () {
+    result = await client.resources.skyblock.skills();
+  });
+  it("required keys should exist", function () {
+    for (const key of Object.keys(result)) {
+      console.log(key);
+      const skill = result[key];
+      expect(skill.name).to.be.a("string").and.not.be.empty;
+      expect(skill.description).to.be.a("string").and.not.be.empty;
+      expect(skill.maxLevel).to.be.a("number");
+      expect(skill.levels).to.be.an("array").and.not.be.empty;
+      for (const level of skill.levels) {
+        expect(level.level).to.be.a("number");
+        expect(level.totalExpRequired).to.be.a("number");
+        expect(level.unlocks).to.be.an("array");
+      }
+    }
+  });
+});
+
 describe("Get player status", function () {
   this.timeout(30000);
   this.slow(1000);
@@ -52,15 +100,6 @@ describe("Get watchdog stats", function () {
     expect(result.staff_total).to.be.greaterThan(-1);
   });
 });
-
-// describe("Query SkyBlock collections resource", function () {
-//   this.timeout(30000);
-//   this.slow(1000);
-//   let result: AsyncReturnType<typeof client.collections>;
-//   it("expect not to throw", async function () {
-//     result = await client.collections();
-//   });
-// });
 
 // describe("Query SkyBlock news", function () {
 //   this.timeout(30000);

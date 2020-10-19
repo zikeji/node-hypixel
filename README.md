@@ -47,7 +47,7 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
       - [ ] Permissions
     - [ ] **SkyBlock**
       - [x] Collections
-      - [ ] Skills
+      - [x] Skills
     - [ ] Quests
   - [ ] **SkyBlock**
     - [x] News

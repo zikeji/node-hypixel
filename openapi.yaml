@@ -32,6 +32,44 @@ tags:
     externalDocs:
       url: https://github.com/HypixelDev/PublicAPI/tree/master/Documentation/methods/skyblock
 paths:
+  /skyblock/news:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
+      summary: Returns SkyBlock news, including a title, description and a thread.
+      description: |
+        #### Usage
+        ```typescript
+        const news = await client.skyblock.news();
+        ```
+      responses:
+        '200':
+          description: A object describing news items.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+              example:
+                success: true
+                items:
+                  - item:
+                      - material: EMERALD
+                    link: 'https://hypixel.net/threads/3287083/'
+                    text: 8th September 2020
+                    title: SkyBlock v0.9
+                  - item:
+                      - material: WEB
+                    link: 'https://hypixel.net/threads/3287083/'
+                    text: 7th July 2020
+                    title: SkyBlock v0.8
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /resources/skyblock/collections:
     get:
       tags:
@@ -45,13 +83,14 @@ paths:
         ```typescript
         const collections = await client.resources.skyblock.collections();
         ```
+      security: []
       responses:
         '200':
           description: Collections response for the current existing connections.
           content: 
             application/json: 
               schema:
-                $ref: '#/components/schemas/CollectionsResourceResponse'
+                $ref: '#/components/schemas/SkyBlockCollectionsResourcesResponse'
               example: 
                 success: true
                 lastUpdated: 1595295719158
@@ -142,45 +181,53 @@ paths:
                             amountRequired: 100
                             unlocks: 
                               - "Enchanted Book (Lure IV) Recipe"
-      security: []
-  /skyblock/news:
+  /resources/skyblock/skills:
     get:
       tags:
         - skyblock
       externalDocs:
-        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
-      summary: Returns SkyBlock news, including a title, description and a thread.
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/resources.md
+      summary: Retrieve a list of ingame skills.
       description: |
+        _Does not require an API key._
         #### Usage
         ```typescript
-        const news = await client.skyblock.news();
+        const skills = await client.resources.skyblock.skills();
         ```
+      security: []
       responses:
         '200':
-          description: A object describing news items.
-          content:
-            application/json:
+          description: Skills response for the current existing skills.
+          content: 
+            application/json: 
               schema:
-                $ref: '#/components/schemas/NewsResponse'
+                $ref: '#/components/schemas/SkyBlockSkillsResourcesResponse'
               example:
                 success: true
-                items:
-                  - item:
-                      - material: EMERALD
-                    link: 'https://hypixel.net/threads/3287083/'
-                    text: 8th September 2020
-                    title: SkyBlock v0.9
-                  - item:
-                      - material: WEB
-                    link: 'https://hypixel.net/threads/3287083/'
-                    text: 7th July 2020
-                    title: SkyBlock v0.8
-        '400':
-          $ref: '#/components/responses/MissingFields'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
+                lastUpdated: 1603093084720
+                version: 0.9.87
+                collections:
+                  FARMING:
+                    name: Farming
+                    description: Harvest crops and shear sheep to earn Farming XP!
+                    maxLevel: 50
+                    levels:
+                      - level: 1
+                        totalExpRequired: 50
+                        unlocks:
+                          - Farmhand I   4% chance to get double crops.
+                          - +2 HP ❤ Health
+                          - Access to The Barn
+                          - +25 Coins
+                  DUNGEONEERING:
+                    name: Dungeoneering
+                    description: Complete dungeons to level up your Dungeoneering classes!
+                    maxLevel: 50
+                    levels:
+                      - level: 1
+                        totalExpRequired: 50
+                        unlocks:
+                          - +25 Coins
   /status:
     get:
       tags:
@@ -344,7 +391,7 @@ components:
       required:
         - success
         - cause
-    ResourceResponse:
+    ResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'
         - type: object
@@ -359,22 +406,41 @@ components:
             - success
             - lastUpdated
             - version
-    CollectionsResourceResponse:
+    SkyBlockCollectionsResourcesResponse:
       allOf:
-        - $ref: '#/components/schemas/ResourceResponse'
+        - $ref: '#/components/schemas/ResourcesResponse'
         - type: object
           properties:
             collections:
-              type: object
-              description: Objects for each individual parent collection (currently FARMING, MINING, COMBAT, FORAGING, FISHING).
-              additionalProperties:
-                $ref: '#/components/schemas/ParentCollection'
+              $ref: '#/components/schemas/SkyBlockResourcesParentCollections'
           required:
             - success
             - lastUpdated
             - version
             - collections
-    ParentCollection:
+    SkyBlockResourcesParentCollections:
+      type: object
+      description: Objects for each individual parent collection.
+      properties:
+        FARMING:
+          $ref: '#/components/schemas/SkyBlockResourcesParentCollection'
+        MINING:
+          $ref: '#/components/schemas/SkyBlockResourcesParentCollection'
+        COMBAT:
+          $ref: '#/components/schemas/SkyBlockResourcesParentCollection'
+        FORAGING:
+          $ref: '#/components/schemas/SkyBlockResourcesParentCollection'
+        FISHING:
+          $ref: '#/components/schemas/SkyBlockResourcesParentCollection'
+      required:
+        - FARMING
+        - MINING
+        - COMBAT
+        - FORAGING
+        - FISHING
+      additionalProperties:
+        $ref: '#/components/schemas/SkyBlockResourcesParentCollection'
+    SkyBlockResourcesParentCollection:
       type: object
       properties:
         name:
@@ -384,11 +450,11 @@ components:
           type: object
           description: Objects for each individual collection within the parent (e.g. WHEAT, SAND).
           additionalProperties:
-            $ref: '#/components/schemas/Collection'
+            $ref: '#/components/schemas/SkyBlockResourcesCollection'
       required:
         - name
         - items
-    Collection:
+    SkyBlockResourcesCollection:
       type: object
       properties:
         name:
@@ -400,12 +466,12 @@ components:
         tiers:
           type: array
           items:
-            $ref: '#/components/schemas/CollectionTier'
+            $ref: '#/components/schemas/SkyBlockResourcesCollectionTier'
       required:
         - name
         - maxTiers
         - tiers
-    CollectionTier:
+    SkyBlockResourcesCollectionTier:
       type: object
       description: Individual tier within the collection.
       properties:
@@ -420,6 +486,99 @@ components:
           description: An array of strings describing the individual unlocks of this collection.
           items:
             type: string
+    SkyBlockSkillsResourcesResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResourcesResponse'
+        - type: object
+          properties:
+            collections:
+              $ref: '#/components/schemas/SkyBlockResourcesSkills'
+          required:
+            - success
+            - lastUpdated
+            - version
+            - collections
+    SkyBlockResourcesSkills:
+      type: object
+      description: Objects for each skill.
+      properties:
+        FARMING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        MINING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        COMBAT:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        DUNGEONEERING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        FORAGING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        FISHING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        ENCHANTING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        ALCHEMY:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        CARPENTRY:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        RUNECRAFTING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+        TAMING:
+          $ref: '#/components/schemas/SkyBlockResourcesSkill'
+      required:
+        - FARMING
+        - MINING
+        - COMBAT
+        - DUNGEONEERING
+        - FORAGING
+        - FISHING
+        - ENCHANTING
+        - ALCHEMY
+        - CARPENTRY
+        - RUNECRAFTING
+        - TAMING
+      additionalProperties:
+        $ref: '#/components/schemas/SkyBlockResourcesSkill'
+    SkyBlockResourcesSkill:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the skill.
+        description:
+          type: string
+          description: Description for the skill.
+        maxLevel:
+          type: integer
+          description: The max attainable level for the skill.
+        levels:
+          type: array
+          description: Array of skills.
+          items:
+            $ref: '#/components/schemas/SkyBlockResourcesSkillLevel'
+      required:
+        - name
+        - description
+        - maxLevel
+        - levels
+    SkyBlockResourcesSkillLevel:
+      type: object
+      properties:
+        level:
+          type: integer
+          description: The skill level this applies to.
+        totalExpRequired:
+          type: integer
+          description: The amount of EXP required to reach this level.
+        unlocks:
+          type: array
+          description: An array of strings describing what this skill unlocks.
+          items:
+            type: string
+            description: An individual unlock.
+      required:
+        - level
+        - totalExpRequired
+        - unlocks
     NewsResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

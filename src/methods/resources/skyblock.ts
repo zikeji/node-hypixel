@@ -8,7 +8,7 @@ export class SkyBlockResources extends Method {
    * @return An object of [[Collection | Collection interface]] objects.
    */
   async collections(): Promise<
-    Components.Schemas.CollectionsResourceResponse["collections"]
+    Components.Schemas.SkyBlockResourcesParentCollections
   > {
     return returnResponseObject(
       await this.client.call<
@@ -18,12 +18,12 @@ export class SkyBlockResources extends Method {
     );
   }
 
-  async skills(): Promise<boolean> {
+  async skills(): Promise<Components.Schemas.SkyBlockResourcesSkills> {
     return returnResponseObject(
-      await this.client.call<Components.Schemas.ApiSuccess>(
+      await this.client.call<Paths.ResourcesSkyblockSkills.Get.Responses.$200>(
         "resources/skyblock/skills"
       ),
-      "success"
+      "collections"
     );
   }
 }
