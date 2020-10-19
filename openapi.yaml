@@ -149,7 +149,7 @@ paths:
         - skyblock
       externalDocs:
         url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
-      summary: 'Returns SkyBlock news, including a title, description and a thread.'
+      summary: Returns SkyBlock news, including a title, description and a thread.
       responses:
         '200':
           description: A object describing news items.
@@ -170,6 +170,55 @@ paths:
                     link: 'https://hypixel.net/threads/3287083/'
                     text: 7th July 2020
                     title: SkyBlock v0.8
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /watchdogstats:
+    get:
+      tags:
+        - watchdog
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/watchdogstats.md
+      summary: Returns some statistics about Watchdog & bans.
+      responses:
+        '200':
+          description: An object describing news items.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      watchdog_lastMinute:
+                        type: integer
+                        example: 5
+                        description: Watchdog's bans in the last minute.
+                      staff_rollingDaily:
+                        type: integer
+                        example: 1356
+                        description: Staff bans in the last day.
+                      watchdog_total:
+                        type: integer
+                        example: 4924740
+                        description: Total Watchdog bans, ever.
+                      watchdog_rollingDaily: 
+                        type: integer
+                        example: 7679
+                        description: Watchdog bans in the last day.
+                      staff_total: 
+                        type: integer
+                        example: 1608360
+                        description: Total staff bans, ever.
+                    required:
+                      - watchdog_lastMinute
+                      - staff_rollingDaily
+                      - watchdog_total
+                      - watchdog_rollingDaily
+                      - staff_total
         '400':
           $ref: '#/components/responses/MissingFields'
         '403':
