@@ -1,7 +1,5 @@
 export * from "./Client";
 export * from "./types/api";
-export * from "./types/APIResponse";
-export * from "./types/ActionableCall";
 export * from "./types/Profile";
 export * from "./types/ProfileMember";
 export * from "./errors/InvalidKeyError";

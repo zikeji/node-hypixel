@@ -133,4 +133,49 @@ export declare namespace Paths {
       }
     }
   }
+  namespace Watchdogstats {
+    namespace Get {
+      namespace Responses {
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          /**
+           * Watchdog's bans in the last minute.
+           * example:
+           * 5
+           */
+          watchdog_lastMinute: number;
+          /**
+           * Staff bans in the last day.
+           * example:
+           * 1356
+           */
+          staff_rollingDaily: number;
+          /**
+           * Total Watchdog bans, ever.
+           * example:
+           * 4924740
+           */
+          watchdog_total: number;
+          /**
+           * Watchdog bans in the last day.
+           * example:
+           * 7679
+           */
+          watchdog_rollingDaily: number;
+          /**
+           * Total staff bans, ever.
+           * example:
+           * 1608360
+           */
+          staff_total: number;
+        }
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
 }

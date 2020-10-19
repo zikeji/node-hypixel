@@ -4,11 +4,19 @@ import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { RateLimitError } from "./errors/RateLimitError";
-import type { ActionableCall } from "./types/ActionableCall";
-import { Components, Paths } from "./types/api";
-import type { APIResponse } from "./types/APIResponse";
-import type { Profile, ProfileWithCuteName } from "./types/Profile";
+import { FindGuild } from "./methods/findGuild";
+import { Guild } from "./methods/guild";
+import { Resources } from "./methods/resources";
+import { SkyBlock } from "./methods/skyblock";
+import type { Components, Paths } from "./types/api";
 import { Queue } from "./util/Queue";
+import { returnResponseObject } from "./util/ReturnResponseObject";
+
+/** @internal */
+export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
+  execute: () => Promise<T>;
+  retries: number;
+}
 
 /** @hidden */
 interface Parameters {
@@ -38,13 +46,40 @@ interface ClientOptions {
 }
 
 export declare interface Client {
+  /**
+   * Listen to the "limited" event which emits when the client starts limiting your calls due to hitting the rate limit.
+   * @category Events
+   */
   on(event: "limited", listener: (limit: number, reset: Date) => void): this;
+
+  /**
+   * Listen to the "reset" event which emits when the API rate limit resets.
+   * @category Events
+   */
   on(event: "reset", listener: () => void): this;
 
+  /**
+   * Listen once to the "limited" event which emits when the client starts limiting your calls due to hitting the rate limit.
+   * @category Events
+   */
   once(event: "limited", listener: (limit: number, reset: Date) => void): this;
+
+  /**
+   * Listen once to the "reset" event which emits when the API rate limit resets.
+   * @category Events
+   */
   once(event: "reset", listener: () => void): this;
 
+  /**
+   * Remove your function listening to the "limited" event.
+   * @category Events
+   */
   off(event: "limited", listener: () => void): this;
+
+  /**
+   * Remove your function listening to the "reset" event.
+   * @category Events
+   */
   off(event: "reset", listener: () => void): this;
 }
 
@@ -57,7 +92,7 @@ export class Client extends EventEmitter {
   /** @internal */
   private readonly queue = new Queue();
   /** @internal */
-  private readonly key: string;
+  private readonly apiKey: string;
   /** @internal */
   private readonly retries: number;
   /** @internal */
@@ -75,7 +110,7 @@ export class Client extends EventEmitter {
   };
 
   /**
-   * Create a new instance of the HypixelSkyBlock API client.
+   * Create a new instance of the API client.
    * @param key Your Hypixel API key.
    * @param options Any options and customizations being applied.
    */
@@ -84,70 +119,102 @@ export class Client extends EventEmitter {
     if (!key || typeof key !== "string") {
       throw new Error("Invalid API key");
     }
-    this.key = key;
+    this.apiKey = key;
     this.retries = options?.retries ?? 3;
     this.timeout = options?.timeout ?? 10000;
     this.userAgent = options?.userAgent ?? "@zikeji/hypixel";
     this.agent = options?.agent;
   }
 
-  /**
-   * Returns the list of ingame collections.
-   * @category SkyBlock Collections
-   * @return An object of [[Collection | Collection interface]] objects.
-   */
-  public async collections(): Promise<
-    Components.Schemas.CollectionsResourceResponse["collections"]
-  > {
-    return Client.returnResponseObject(
-      await this.call<Paths.ResourcesSkyblockCollections.Get.Responses.$200>(
-        "resources/skyblock/collections"
-      ),
-      "collections"
+  async boosters(): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("boosters"),
+      "success"
+    );
+  }
+
+  public findGuild: FindGuild = new FindGuild(this);
+
+  async friends(uuid: string): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("friends", { uuid }),
+      "success"
+    );
+  }
+
+  async gameCounts(): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("gameCounts"),
+      "success"
+    );
+  }
+
+  public guild: Guild = new Guild(this);
+
+  async key(): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("key"),
+      "success"
+    );
+  }
+
+  async leaderboards(): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("leaderboards"),
+      "success"
+    );
+  }
+
+  async player(uuid: string): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("player", { uuid }),
+      "success"
+    );
+  }
+
+  async playerCount(): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("playerCount"),
+      "success"
+    );
+  }
+
+  async recentGames(uuid: string): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("recentGames", { uuid }),
+      "success"
+    );
+  }
+
+  public resources: Resources = new Resources(this);
+
+  public skyblock: SkyBlock = new SkyBlock(this);
+
+  async status(uuid: string): Promise<boolean> {
+    return returnResponseObject(
+      await this.call<Components.Schemas.ApiSuccess>("status", { uuid }),
+      "success"
     );
   }
 
   /**
-   * Returns SkyBlock news, including a title, description and a thread.
-   * @category SkyBlock News
-   * @return An array of [[NewsEntry | NewsEntry interface]] objects.
+   * Returns some statistics about Watchdog & bans.
+   * @example
+   * ```typescript
+   * const response = await client.watchdogstats();
+   * console.log(response);
+   * // {
+   * //   success: true,
+   * //   watchdog_lastMinute: 1,
+   * //   staff_rollingDaily: 3014,
+   * //   watchdog_total: 5589923,
+   * //   watchdog_rollingDaily: 4662,
+   * //   staff_total: 1874174
+   * // }
+   * ```
    */
-  public async news(): Promise<Components.Schemas.NewsEntries> {
-    return Client.returnResponseObject(
-      await this.call<Paths.SkyblockNews.Get.Responses.$200>("skyblock/news"),
-      "items"
-    );
-  }
-
-  /**
-   * Return a profile by it's profile ID.
-   * @category SkyBlock Profile
-   * @param profile The profile ID you are looking up.
-   * @return A [[Profile | Profile interface]] object.
-   */
-  public async profile(profile: string): Promise<Profile> {
-    return Client.returnResponseObject(
-      await this.call<{ profile: Profile } & APIResponse>("skyblock/profile", {
-        profile,
-      }),
-      "profile"
-    );
-  }
-
-  /**
-   * Return an array of profiles for a Hypixel user.
-   * @category SkyBlock Profile
-   * @param uuid The Minecraft UUID of the player who's profiles you are looking up.
-   * @return An array of [[ProfileWithCuteName | Profile interface]] objects.
-   */
-  public async profiles(uuid: string): Promise<ProfileWithCuteName[]> {
-    return Client.returnResponseObject(
-      await this.call<{ profiles: ProfileWithCuteName[] } & APIResponse>(
-        "skyblock/profiles",
-        { uuid }
-      ),
-      "profiles"
-    );
+  watchdogstats(): Promise<Paths.Watchdogstats.Get.Responses.$200> {
+    return this.call<Paths.Watchdogstats.Get.Responses.$200>("watchdogstats");
   }
 
   /**
@@ -165,7 +232,7 @@ export class Client extends EventEmitter {
    * // { success: true, guild: '553490650cf26f12ae5bac8f' }
    * ```
    */
-  public call<T extends APIResponse>(
+  public call<T extends Components.Schemas.ApiSuccess>(
     path: string,
     parameters: Parameters = {}
   ): Promise<T> {
@@ -174,7 +241,8 @@ export class Client extends EventEmitter {
     );
   }
 
-  private async executeActionableCall<T extends APIResponse>(
+  /** @internal */
+  private async executeActionableCall<T extends Components.Schemas.ApiSuccess>(
     call: ActionableCall<T>
   ): Promise<T> {
     await this.queue.wait();
@@ -206,7 +274,7 @@ export class Client extends EventEmitter {
   }
 
   /** @internal */
-  private createActionableCall<T extends APIResponse>(
+  private createActionableCall<T extends Components.Schemas.ApiSuccess>(
     path: string,
     parameters: Parameters = {}
   ): ActionableCall<T> {
@@ -217,16 +285,18 @@ export class Client extends EventEmitter {
   }
 
   /** @internal */
-  private callMethod<T extends APIResponse>(
-    path: string,
-    parameters: Parameters = {}
-  ): Promise<T> {
+  private callMethod<
+    T extends Components.Schemas.ApiSuccess & { cause?: string }
+  >(path: string, parameters: Parameters = {}): Promise<T> {
     const url = new URL(path, Client.endpoint);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
     });
 
-    url.searchParams.set("key", this.key);
+    // No API key needed on resources.
+    if (!path.startsWith("resources")) {
+      url.searchParams.set("key", this.apiKey);
+    }
 
     const options: RequestOptions = {
       method: "GET",
@@ -315,17 +385,6 @@ export class Client extends EventEmitter {
 
       clientRequest.end();
     });
-  }
-
-  /** @internal */
-  private static async returnResponseObject<
-    T extends APIResponse,
-    K extends keyof T
-  >(response: T, key: K): Promise<T[K]> {
-    if (key in response) {
-      return response[key];
-    }
-    throw new Error(`Key "${key}" was not in the response.`);
   }
 
   /** @internal */
