@@ -22,7 +22,7 @@
     "test:ci": "mocha -r ts-node/register tests/**/*.test.ts",
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
-    "coverage:ci": "nyc npm test:ci",
+    "coverage:ci": "nyc npm run test:ci",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs"
