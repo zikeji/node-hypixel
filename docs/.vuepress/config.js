@@ -114,6 +114,7 @@ module.exports = config({
     pageInfo: ["Category", "Tag"],
     footer: {
       display: true,
+      content: `<div class="addthis_inline_share_toolbox"></div>`,
       copyright: "MIT Licensed | Copyright © 2020-present Zikeji",
     },
     docsDir: "docs",
