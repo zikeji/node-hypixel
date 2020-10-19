@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/zikeji/node-hypixel/compare/v1.6.0...v1.7.0) (2020-10-19)
+
+
+### Features
+
+* **api:** add watchdogstats ([d6ad4b7](https://github.com/zikeji/node-hypixel/commit/d6ad4b7cb715680c36e7149c58074ee1a1219ee2))
+
+
+### Reverts
+
+* **ci:** revert runs-on as it did not solve the issue ([4022c2c](https://github.com/zikeji/node-hypixel/commit/4022c2c89b29eb7b20e7a720db85435cf4a8aa36))
+
+
+### Code Refactoring
+
+* **client:** Refactor client to closely match the methods of the API. ([66854f4](https://github.com/zikeji/node-hypixel/commit/66854f4327dfc227914d4b754360f7faeefcfc2a))
+
+
+### Documentation
+
+* **readme:** update readme ([6ce65d7](https://github.com/zikeji/node-hypixel/commit/6ce65d79d4f0670c47a5329ae2d5dd76279fec21))
+* **readme:** update roadmap ([71df72a](https://github.com/zikeji/node-hypixel/commit/71df72ac173396ce4b036801b70aa309ba319d29))
+* **readme:** update roadmap ([61e774d](https://github.com/zikeji/node-hypixel/commit/61e774dbad2fa73f9cf5a97a66ad26f23eeb737d))
+* **vuepress:** disable cache for local dev ([baea275](https://github.com/zikeji/node-hypixel/commit/baea2759957db42ec604bbac96bf67c3dc94e2e0))
+
+
+### Miscellaneous Chores
+
+* **dependencies:** update dependencies ([e257e22](https://github.com/zikeji/node-hypixel/commit/e257e224de8d23127c3458ae12e79a944dbf7b09))
+* **dependencies:** update them once again ([7b9bbae](https://github.com/zikeji/node-hypixel/commit/7b9bbae9258ef759c9b717979f29d7fc0e0d2302))
+
 ## [1.6.0](https://github.com/zikeji/node-hypixel/compare/v1.5.2...v1.6.0) (2020-10-18)
 
 
