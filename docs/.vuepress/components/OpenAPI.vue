@@ -80,6 +80,7 @@ export default {
         docExpansion: "list",
         deepLinking: false,
         syntaxHighlight: false,
+        defaultModelsExpandDepth: -1,
         presets: [SwaggerUI.presets.apis],
         plugins: [PrismJSPlugin],
         onComplete() {},
