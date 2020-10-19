@@ -2,13 +2,10 @@ name: test
 
 on:
   push:
-    branches-ignore:
-      - main
   pull_request:
 
 jobs:
   test:
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
     runs-on: ubuntu-latest
     strategy:
       matrix:
