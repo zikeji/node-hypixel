@@ -1,4 +1,4 @@
-# node-hypixel
+# @zikeji/hypixel
 
 [![npm](https://img.shields.io/npm/v/@zikeji/hypixel)][npm]
 [![npm bundle size](https://img.shields.io/bundlephobia/min/@zikeji/hypixel)][npm]
