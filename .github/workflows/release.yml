@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -39,7 +39,7 @@ jobs:
         run: npx semantic-release
   merge:
     needs: [release]
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
     steps:
       - name: Merge main back into dev
         uses: devmasx/merge-branch@v1.3.0
@@ -54,14 +54,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.2
         with:
           node-version: 14.x
       - run: npm ci 
       - run: ls -R docs/
+      - run: ls -R docs/.vuepress
       - name: Build documentation
         run: npm run docs:build
       - run: ls -R docs/
+      - run: ls -R docs/.vuepress
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

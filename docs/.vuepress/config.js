@@ -29,6 +29,7 @@ copyFileSync(resolve(__dirname, "../", "../", "openapi.yaml"), resolve(__dirname
 module.exports = config({
   title: name,
   description: description,
+  cache: process.env.NODE_ENV === "production",
   head: [
     ['link', { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
     ['link', { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" }],
