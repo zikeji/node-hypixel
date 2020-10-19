@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.0](https://github.com/zikeji/node-hypixel/compare/v1.8.1...v1.9.0) (2020-10-19)
+
+
+### Features
+
+* **api:** add skyblock skills resource endpoint ([9ee0d8a](https://github.com/zikeji/node-hypixel/commit/9ee0d8af18b43016d7a2d28fdb827ea96811c85f))
+
+
+### Bug Fixes
+
+* **ci:** main not master ([a4b4c4d](https://github.com/zikeji/node-hypixel/commit/a4b4c4d7712a295f55d9ba8164a75e8379894e5d))
+* **docs:** fix sidebar warning ([ff4e61c](https://github.com/zikeji/node-hypixel/commit/ff4e61cb9984cd72fd62159275799f0185e1e6f0))
+* **docs:** refresh addthis on reload ([fee1619](https://github.com/zikeji/node-hypixel/commit/fee1619d01c65b70232f56386d1fa5066eceb648))
+
+
+### Documentation
+
+* **readme:** update readme usage example ([8a0ef8b](https://github.com/zikeji/node-hypixel/commit/8a0ef8bfd59742d8f24cb6af7ee56864083616c7))
+* add AddThis support ([11545ca](https://github.com/zikeji/node-hypixel/commit/11545ca01106e59bdff800f7d68b5a9ec8783026))
+
 ### [1.8.1](https://github.com/zikeji/node-hypixel/compare/v1.8.0...v1.8.1) (2020-10-19)
 
 
