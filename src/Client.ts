@@ -8,6 +8,7 @@ import { FindGuild } from "./methods/findGuild";
 import { Guild } from "./methods/guild";
 import { Resources } from "./methods/resources";
 import { SkyBlock } from "./methods/skyblock";
+import { Status } from "./methods/status";
 import type { Components, Paths } from "./types/api";
 import { Queue } from "./util/Queue";
 import { returnResponseObject } from "./util/ReturnResponseObject";
@@ -190,12 +191,15 @@ export class Client extends EventEmitter {
 
   public skyblock: SkyBlock = new SkyBlock(this);
 
-  async status(uuid: string): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("status", { uuid }),
-      "success"
-    );
-  }
+  /**
+   * Returns online status information for given player, including game, mode and map when available.
+   * @example
+   * ```typescript
+   * const response = await client.status.uuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(response);
+   * ```
+   */
+  public status: Status = new Status(this);
 
   /**
    * Returns some statistics about Watchdog & bans.

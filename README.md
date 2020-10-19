@@ -56,7 +56,7 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
     - [ ] Auction
     - [ ] Auctions
     - [ ] Bazaar
-  - [ ] Status
+  - [x] Status
   - [x] Watchdog Stats
 
 ## Installation

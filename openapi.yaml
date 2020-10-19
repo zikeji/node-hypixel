@@ -181,6 +181,41 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/RateLimitError'
+  /status:
+    get:
+      tags:
+        - player
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/status.md
+      summary: Returns online status information for given player, including game, mode and map when available.
+      description: |
+        Players can disable this endpoint via in-game settings. When done so the API will return as if the player is offline.
+        #### Usage
+        ```typescript
+        const status = await client.status.uuid("20934ef9488c465180a78f861586b4cf");
+        ```
+      parameters:
+        - $ref: '#/components/parameters/PlayerUuid'
+      responses:
+        '200':
+          description: An object describing the player's status.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      session:
+                        $ref: '#/components/schemas/Session'
+                    required:
+                      - session
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /watchdogstats:
     get:
       tags:
@@ -195,7 +230,7 @@ paths:
         ```
       responses:
         '200':
-          description: An object describing news items.
+          description: An object describing the current watchdog stats.
           content:
             application/json:
               schema:
@@ -249,6 +284,15 @@ components:
       schema:
         type: integer
       description: The amount of seconds left until the ratelimit resets.
+  parameters:
+    PlayerUuid:
+      name: uuid
+      required: true
+      description: Minecraft UUID of the player.
+      in: query
+      schema:
+        type: string
+        example: 20934ef9488c465180a78f861586b4cf
   responses:
     MissingFields:
       description: Missing one or more fields
@@ -417,6 +461,23 @@ components:
           type: integer
       required:
         - material
+    Session:
+      type: object
+      properties:
+        online:
+          type: boolean
+          example: true
+        gameType:
+          type: string
+          example: SKYWARS
+        mode:
+          type: string
+          example: ranked_normal
+        map:
+          type: string
+          example: Agni Temple
+      required:
+        - online
   securitySchemes:
     apiKey:
       type: apiKey

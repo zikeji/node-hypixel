@@ -24,6 +24,18 @@ describe("Run basic undocumented call", function () {
   });
 });
 
+describe("Get player status", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.status.uuid>;
+  it("expect not to throw", async function () {
+    result = await client.status.uuid("20934ef9488c465180a78f861586b4cf");
+  });
+  it("required keys should exist", function () {
+    expect(result.online).to.be.an("boolean");
+  });
+});
+
 describe("Get watchdog stats", function () {
   this.timeout(30000);
   this.slow(1000);
