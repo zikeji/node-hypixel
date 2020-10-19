@@ -41,9 +41,9 @@ paths:
       summary: Retrieve a list of ingame collections.
       description: |
         _Does not require an API key._
-        #### Example
+        #### Usage
         ```typescript
-        const collections = await client.collections();
+        const collections = await client.resources.skyblock.collections();
         ```
       responses:
         '200':
@@ -150,6 +150,11 @@ paths:
       externalDocs:
         url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
       summary: Returns SkyBlock news, including a title, description and a thread.
+      description: |
+        #### Usage
+        ```typescript
+        const news = await client.skyblock.news();
+        ```
       responses:
         '200':
           description: A object describing news items.
@@ -183,6 +188,11 @@ paths:
       externalDocs:
         url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/watchdogstats.md
       summary: Returns some statistics about Watchdog & bans.
+      description: |
+        #### Usage
+        ```typescript
+        const stats = await client.watchdogstats();
+        ```
       responses:
         '200':
           description: An object describing news items.
