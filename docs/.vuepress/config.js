@@ -127,7 +127,7 @@ module.exports = config({
       green: "#3eaf7c",
       blue: "#2196f3"
     },
-    addThis: "ra-5f8d724d4c77d215",
+    addThis: process.env.NODE_ENV === "production" ? "ra-5f8d724d4c77d215" : null,
   },
   extraWatchFiles: [
     "../../README.md",
