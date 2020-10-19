@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.9.1](https://github.com/zikeji/node-hypixel/compare/v1.9.0...v1.9.1) (2020-10-19)
+
+
+### Bug Fixes
+
+* **ci:** run test on everything so CI updates properly ([169ba06](https://github.com/zikeji/node-hypixel/commit/169ba0625eff2eab68edcdb78bc645589f396459))
+
+
+### Documentation
+
+* add more logging and second build to see if pesky ts-api wants to work ([c7a2c16](https://github.com/zikeji/node-hypixel/commit/c7a2c16001afb5566739a0e4abfc1c7c35da7a32))
+* **readme:** update usage example ([606a46c](https://github.com/zikeji/node-hypixel/commit/606a46c2c21f92e71d42836eda49cea05959f200))
+
 ## [1.9.0](https://github.com/zikeji/node-hypixel/compare/v1.8.1...v1.9.0) (2020-10-19)
 
 
