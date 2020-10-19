@@ -80,6 +80,7 @@ export default {
         docExpansion: "list",
         deepLinking: false,
         syntaxHighlight: false,
+        persistAuthorization: true,
         defaultModelsExpandDepth: 3,
         defaultModelExpandDepth: 3,
         presets: [SwaggerUI.presets.apis],
