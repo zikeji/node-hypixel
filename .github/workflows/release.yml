@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -39,7 +39,7 @@ jobs:
         run: npx semantic-release
   merge:
     needs: [release]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Merge main back into dev
         uses: devmasx/merge-branch@v1.3.0
@@ -50,7 +50,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
   publish_docs:
     needs: [release]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
