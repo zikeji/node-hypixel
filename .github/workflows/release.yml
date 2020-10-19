@@ -59,9 +59,11 @@ jobs:
           node-version: 14.x
       - run: npm ci 
       - run: ls -R docs/
+      - run: ls -R docs/.vuepress
       - name: Build documentation
         run: npm run docs:build
       - run: ls -R docs/
+      - run: ls -R docs/.vuepress
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
