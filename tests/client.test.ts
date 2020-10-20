@@ -34,6 +34,18 @@ describe("Check SkyBlock news", function () {
   it("meta should exist, success should be true", function () {
     expect(result.meta.success).to.equal(true);
   });
+  it("required keys should exist", function () {
+    for (const news of result) {
+      expect(news.title).to.be.a("string").and.not.be.empty;
+      expect(news.link).to.be.a("string").and.not.be.empty;
+      expect(news.text).to.be.a("string").and.not.be.empty;
+      expect(news.item).to.be.an("object").and.not.be.empty;
+      expect(news.item.material).to.be.a("string").and.not.be.empty;
+      expect(news.item.data).to.satisfy(function (v: unknown) {
+        return typeof v === "undefined" || typeof v === "number";
+      });
+    }
+  });
 });
 
 describe("Query SkyBlock collections resource", function () {
