@@ -41,7 +41,7 @@ const client = new Hypixel("API_KEY");
 (async () => {
   const status = await client.status.uuid("20934ef9488c465180a78f861586b4cf"); // Minikloon
   console.log(status);
-  // { "online": false }
+  // {"online": false}
   const stats = await client.watchdogstats();
   console.log(stats);
   // {watchdog_lastMinute: 1, staff_rollingDaily: 2609, watchdog_total: 5591714, watchdog_rollingDaily: 4213, …}

@@ -71,7 +71,26 @@ module.exports = config({
       },
     ],
     pageInfo: ["Category", "Tag"],
-    sidebar: "auto",
+    sidebar: {
+      "/guide/": [
+        {
+          title: "Guide",
+          collapsable: false,
+          icon: "guide",
+          children: [
+            ""
+          ]
+        },
+        {
+          title: "Advanced",
+          collapsable: false,
+          icon: "advanced",
+          children: [
+            "metadata"
+          ]
+        }
+      ]
+    },
     footer: {
       display: true,
       content: `<div class="addthis_inline_share_toolbox"></div>`,
@@ -96,7 +115,8 @@ module.exports = config({
   configureWebpack: {
     module: {
       rules: [
-        { test: /\.ya?ml$/, use: "yaml-loader", type: "json" }
+        { test: /\.ya?ml$/, use: "yaml-loader", type: "json" },
+        { test: /\.web[pm]$/, use: "file-loader" }
       ]
     }
   },

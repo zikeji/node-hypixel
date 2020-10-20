@@ -42,8 +42,7 @@ module.exports = {
       path: "/changelog/",
       filePath: resolve(__dirname, "../", "../", "../", "CHANGELOG.md"),
       frontmatter: {
-        sidebar: "auto",
-        // sidebarDepth: 1
+        sidebar: "auto"
       }
     },
   ],
