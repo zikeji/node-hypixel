@@ -20,6 +20,13 @@ export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
 }
 
 /** @hidden */
+export interface RateLimitData {
+  remaining: number;
+  reset: number;
+  limit: number;
+}
+
+/** @hidden */
 interface Parameters {
   [parameter: string]: string;
 }
@@ -104,7 +111,7 @@ export class Client extends EventEmitter {
   private readonly agent?: Agent;
 
   /** @internal */
-  protected rateLimit = {
+  protected rateLimit: RateLimitData = {
     remaining: -1,
     reset: -1,
     limit: -1,
@@ -118,7 +125,7 @@ export class Client extends EventEmitter {
   public constructor(key: string, options?: ClientOptions) {
     super();
     if (!key || typeof key !== "string") {
-      throw new Error("Invalid API key");
+      throw new InvalidKeyError("Invalid API key");
     }
     this.apiKey = key;
     this.retries = options?.retries ?? 3;
@@ -277,6 +284,12 @@ export class Client extends EventEmitter {
       return this.executeActionableCall<T>(call);
     } finally {
       this.queue.free();
+    }
+    if (typeof response === "object") {
+      Object.defineProperty(response, "ratelimit", {
+        enumerable: false,
+        value: JSON.parse(JSON.stringify(this.rateLimit)),
+      });
     }
     return response;
   }

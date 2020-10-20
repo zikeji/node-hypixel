@@ -1,3 +1,4 @@
+import type { RateLimitData } from "..";
 import type { Components } from "../types/api";
 
 /**
@@ -14,7 +15,11 @@ import type { Components } from "../types/api";
 export type ResultArray<
   T extends Components.Schemas.ApiSuccess,
   K extends keyof T
-> = T[K] & { meta: Omit<T, K> };
+> = T[K] & {
+  meta: Omit<T, K> & {
+    ratelimit: RateLimitData;
+  };
+};
 
 /** @hidden */
 export function getResultArray<
@@ -25,6 +30,7 @@ export function getResultArray<
     throw new TypeError(`Key "${key}" was not in the response.`);
   }
   const items = response[key];
+  const { ratelimit } = (response as never) as { ratelimit: RateLimitData };
   if (!Array.isArray(items)) {
     throw new TypeError(`Key "${key}" is not an array.`);
   }
@@ -32,7 +38,7 @@ export function getResultArray<
   const arr = ([...items] as never) as ResultArray<T, K>;
   Object.defineProperty(arr, "meta", {
     enumerable: false,
-    value: response,
+    value: { ...response, ratelimit },
   });
   return arr;
 }
