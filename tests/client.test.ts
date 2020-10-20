@@ -24,6 +24,18 @@ describe("Run basic undocumented call", function () {
   });
 });
 
+describe("Check SkyBlock news", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.skyblock.news>;
+  it("expect success", async function () {
+    result = await client.skyblock.news();
+  });
+  it("meta should exist, success should be true", function () {
+    expect(result.meta.success).to.equal(true);
+  });
+});
+
 describe("Query SkyBlock collections resource", function () {
   this.timeout(30000);
   this.slow(1000);
@@ -31,9 +43,11 @@ describe("Query SkyBlock collections resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.skyblock.collections();
   });
+  it("meta should exist, success should be true", function () {
+    expect(result.meta.success).to.equal(true);
+  });
   it("required keys should exist", function () {
     for (const key of Object.keys(result)) {
-      console.log(key);
       const collection = result[key];
       expect(collection.name).to.be.a("string").and.not.be.empty;
       expect(collection.items).to.be.an("object");
@@ -55,9 +69,11 @@ describe("Query SkyBlock skills resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.skyblock.skills();
   });
+  it("meta should exist, success should be true", function () {
+    expect(result.meta.success).to.equal(true);
+  });
   it("required keys should exist", function () {
     for (const key of Object.keys(result)) {
-      console.log(key);
       const skill = result[key];
       expect(skill.name).to.be.a("string").and.not.be.empty;
       expect(skill.description).to.be.a("string").and.not.be.empty;
@@ -91,8 +107,10 @@ describe("Get watchdog stats", function () {
   it("expect not to throw", async function () {
     result = await client.watchdogstats();
   });
+  it("meta should exist, success should be true", function () {
+    expect(result.meta.success).to.equal(true);
+  });
   it("required keys should exist", function () {
-    expect(result.success).to.equal(true);
     expect(result.watchdog_lastMinute).to.be.greaterThan(-1);
     expect(result.staff_rollingDaily).to.be.greaterThan(-1);
     expect(result.watchdog_total).to.be.greaterThan(-1);
@@ -100,16 +118,6 @@ describe("Get watchdog stats", function () {
     expect(result.staff_total).to.be.greaterThan(-1);
   });
 });
-
-// describe("Query SkyBlock news", function () {
-//   this.timeout(30000);
-//   this.slow(1000);
-//   let result: AsyncReturnType<typeof client.news>;
-//   it("expect not to throw", async function () {
-//     result = await client.news();
-//     expect(result.length).not.to.equal(0);
-//   });
-// });
 
 // describe("Query SkyBlock profiles by mc uuid", function () {
 //   this.timeout(30000);

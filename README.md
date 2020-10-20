@@ -44,7 +44,7 @@ const client = new Hypixel("API_KEY");
   // { "online": false }
   const stats = await client.watchdogstats();
   console.log(stats);
-  // {success: true, watchdog_lastMinute: 1, staff_rollingDaily: 2609, watchdog_total: 5591714, watchdog_rollingDaily: 4213, …}
+  // {watchdog_lastMinute: 1, staff_rollingDaily: 2609, watchdog_total: 5591714, watchdog_rollingDaily: 4213, …}
 })();
 ```
 

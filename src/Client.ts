@@ -11,7 +11,7 @@ import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";
 import type { Components, Paths } from "./types/api";
 import { Queue } from "./util/Queue";
-import { returnResponseObject } from "./util/ReturnResponseObject";
+import { getResultObject, ResultObject } from "./util/ResultObject";
 
 /** @internal */
 export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
@@ -127,65 +127,65 @@ export class Client extends EventEmitter {
     this.agent = options?.agent;
   }
 
-  async boosters(): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("boosters"),
-      "success"
-    );
-  }
+  // async boosters(): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("boosters"),
+  //     "success"
+  //   );
+  // }
 
   public findGuild: FindGuild = new FindGuild(this);
 
-  async friends(uuid: string): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("friends", { uuid }),
-      "success"
-    );
-  }
+  // async friends(uuid: string): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("friends", { uuid }),
+  //     "success"
+  //   );
+  // }
 
-  async gameCounts(): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("gameCounts"),
-      "success"
-    );
-  }
+  // async gameCounts(): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("gameCounts"),
+  //     "success"
+  //   );
+  // }
 
   public guild: Guild = new Guild(this);
 
-  async key(): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("key"),
-      "success"
-    );
-  }
+  // async key(): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("key"),
+  //     "success"
+  //   );
+  // }
 
-  async leaderboards(): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("leaderboards"),
-      "success"
-    );
-  }
+  // async leaderboards(): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("leaderboards"),
+  //     "success"
+  //   );
+  // }
 
-  async player(uuid: string): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("player", { uuid }),
-      "success"
-    );
-  }
+  // async player(uuid: string): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("player", { uuid }),
+  //     "success"
+  //   );
+  // }
 
-  async playerCount(): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("playerCount"),
-      "success"
-    );
-  }
+  // async playerCount(): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("playerCount"),
+  //     "success"
+  //   );
+  // }
 
-  async recentGames(uuid: string): Promise<boolean> {
-    return returnResponseObject(
-      await this.call<Components.Schemas.ApiSuccess>("recentGames", { uuid }),
-      "success"
-    );
-  }
+  // async recentGames(uuid: string): Promise<boolean> {
+  //   return returnResponseObject(
+  //     await this.call<Components.Schemas.ApiSuccess>("recentGames", { uuid }),
+  //     "success"
+  //   );
+  // }
 
   public resources: Resources = new Resources(this);
 
@@ -208,7 +208,6 @@ export class Client extends EventEmitter {
    * const response = await client.watchdogstats();
    * console.log(response);
    * // {
-   * //   success: true,
    * //   watchdog_lastMinute: 1,
    * //   staff_rollingDaily: 3014,
    * //   watchdog_total: 5589923,
@@ -217,8 +216,13 @@ export class Client extends EventEmitter {
    * // }
    * ```
    */
-  watchdogstats(): Promise<Paths.Watchdogstats.Get.Responses.$200> {
-    return this.call<Paths.Watchdogstats.Get.Responses.$200>("watchdogstats");
+  async watchdogstats(): Promise<
+    ResultObject<Paths.Watchdogstats.Get.Responses.$200, "success">
+  > {
+    return getResultObject(
+      await this.call<Paths.Watchdogstats.Get.Responses.$200>("watchdogstats"),
+      "success"
+    ) as never;
   }
 
   /**
