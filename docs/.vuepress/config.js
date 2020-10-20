@@ -29,43 +29,6 @@ module.exports = config({
   title: name,
   description: description,
   cache: process.env.NODE_ENV === "production",
-  additionalPages: [
-    {
-      path: "/",
-      filePath: resolve(__dirname, "../../README.md"),
-      frontmatter: {
-        home: true,
-        heroText: "@zikeji/hypixel",
-        heroImage: "/logo.svg",
-        tagline: "NodeJS API wrapper for Hypixel's Public API",
-        action: [
-          {
-            text: "Get Started →",
-            link: "/guide/"
-          },
-        ],
-        features: [
-          {
-            title: "Rate Limiting Queue",
-            details: "Built in async rate limiting queue prevents prevents requests from failing by queueing and waiting for the queue to clear."
-          }, {
-            title: "OpenAPI 3.0 Definition",
-            details: "I've painstakingly recreated Hypixel's API methods and responses in the OpenAPI 3.0 specification.",
-            link: "/api/"
-          },
-          {
-            title: "Typescript Support",
-            details: "Full Typescript definitions for explored API methods provides intellisense in popular IDEs.",
-            link: "/ts-api/classes/client/#constructor"
-          },
-        ],
-      },
-    },
-    {
-      path: "/changelog/",
-      filePath: resolve(__dirname, "../../CHANGELOG.md"),
-    },
-  ],
   head: [
     ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
     ["link", { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" }],
@@ -107,11 +70,8 @@ module.exports = config({
         ]
       },
     ],
-    sidebar: {
-      "/": [],
-      "/changelog/": [],
-    },
     pageInfo: ["Category", "Tag"],
+    sidebar: "auto",
     footer: {
       display: true,
       content: `<div class="addthis_inline_share_toolbox"></div>`,
@@ -149,11 +109,10 @@ module.exports = config({
         out: "ts-api",
         readme: "none",
         categoryOrder: ["Public", "*", "Custom", "Other"],
-        // toc: [
-        //   "Classes",
-        //   "Interfaces"
-        // ],
-        includeDeclarations: true,
+        toc: [
+          "Classes",
+          "Interfaces"
+        ],
         excludeExternals: true,
         excludeNotExported: true,
         excludePrivate: true,
@@ -166,5 +125,6 @@ module.exports = config({
         plugin: ["typedoc-plugin-no-inherit"],
       },
     ],
+    require("./plugins/pages"),
   ],
 });
