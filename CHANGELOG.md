@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.0](https://github.com/zikeji/node-hypixel/compare/v1.9.1...v1.10.0) (2020-10-20)
+
+
+### Features
+
+* **meta:** add new unenumerable meta field to results for meta information ([4357a7a](https://github.com/zikeji/node-hypixel/commit/4357a7a984de1fa7260a10946d283a4cac409ba9))
+* **meta:** add ratelimit to meta ([3de2b7f](https://github.com/zikeji/node-hypixel/commit/3de2b7f61a9eb80e32184158e5f025f2d63cdb8e))
+
+
+### Bug Fixes
+
+* **type:** resultarray returns appropriate array type ([d8ae79e](https://github.com/zikeji/node-hypixel/commit/d8ae79e69bb4dd1f214ab01952ec79da9ece1736))
+
+
+### Tests
+
+* improve coverage, test new meta ([2933f04](https://github.com/zikeji/node-hypixel/commit/2933f04abf453712cf3db67b6e360ad311122bcd))
+* **skyblock news:** add more assertions for news test ([791b02e](https://github.com/zikeji/node-hypixel/commit/791b02e6419c0c832b6c23e10005006b4e1ecdb7))
+
+
+### Documentation
+
+* **guide:** begin fleshing out guide ([be6ac06](https://github.com/zikeji/node-hypixel/commit/be6ac064572a3c6554bebca9a24534fdd7bd167a))
+* **vuepress:** extract additionalpages to new plugin and adjust changelog sidebar headers ([41728e6](https://github.com/zikeji/node-hypixel/commit/41728e602fa766ba38104e15ced260783ca1b4b3))
+
 ### [1.9.1](https://github.com/zikeji/node-hypixel/compare/v1.9.0...v1.9.1) (2020-10-19)
 
 
