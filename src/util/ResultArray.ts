@@ -14,7 +14,7 @@ import type { Components } from "../types/api";
 export type ResultArray<
   T extends Components.Schemas.ApiSuccess,
   K extends keyof T
-> = Array<T[K]> & { meta: Omit<T, K> };
+> = T[K] & { meta: Omit<T, K> };
 
 /** @hidden */
 export function getResultArray<
@@ -29,7 +29,7 @@ export function getResultArray<
     throw new TypeError(`Key "${key}" is not an array.`);
   }
   delete response[key];
-  const arr = [...items] as ResultArray<T, K>;
+  const arr = ([...items] as never) as ResultArray<T, K>;
   Object.defineProperty(arr, "meta", {
     enumerable: false,
     value: response,
