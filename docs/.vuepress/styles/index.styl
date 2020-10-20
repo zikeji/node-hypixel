@@ -9,10 +9,14 @@ code
 
 body.theme-dark
 body.theme-light
+  code
+    padding 0.2em
   code[class*='language-']
   pre[class*='language-']
     font-weight lighter
     font-family 'Source Code Pro', monospace
+  :not(pre) > code[class*='language-']
+    font-size: 0.85em;
 
 .theme-default-content
   pre

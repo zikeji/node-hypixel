@@ -1,4 +1,4 @@
-export default ({ router }) => {
+export default ({router}) => {
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
     var _paq = window._paq = window._paq || [];
     _paq.push(['trackPageView']);

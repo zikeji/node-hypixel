@@ -1,6 +1,6 @@
-import type { Components, Paths } from "../../types/api";
+import type { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
-import { returnResponseObject } from "../../util/ReturnResponseObject";
+import { getResultObject, ResultObject } from "../../util/ResultObject";
 
 export class SkyBlockResources extends Method {
   /**
@@ -8,9 +8,12 @@ export class SkyBlockResources extends Method {
    * @return An object of [[Collection | Collection interface]] objects.
    */
   async collections(): Promise<
-    Components.Schemas.SkyBlockResourcesParentCollections
+    ResultObject<
+      Paths.ResourcesSkyblockCollections.Get.Responses.$200,
+      "collections"
+    >
   > {
-    return returnResponseObject(
+    return getResultObject(
       await this.client.call<
         Paths.ResourcesSkyblockCollections.Get.Responses.$200
       >("resources/skyblock/collections"),
@@ -18,8 +21,13 @@ export class SkyBlockResources extends Method {
     );
   }
 
-  async skills(): Promise<Components.Schemas.SkyBlockResourcesSkills> {
-    return returnResponseObject(
+  async skills(): Promise<
+    ResultObject<
+      Paths.ResourcesSkyblockSkills.Get.Responses.$200,
+      "collections"
+    >
+  > {
+    return getResultObject(
       await this.client.call<Paths.ResourcesSkyblockSkills.Get.Responses.$200>(
         "resources/skyblock/skills"
       ),

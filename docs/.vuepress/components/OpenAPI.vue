@@ -78,7 +78,7 @@ export default {
         spec,
         domNode,
         docExpansion: "list",
-        deepLinking: false,
+        deepLinking: true,
         syntaxHighlight: false,
         persistAuthorization: true,
         defaultModelsExpandDepth: 3,
