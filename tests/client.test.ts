@@ -1,5 +1,7 @@
 import { expect } from "chai";
-import { Client } from "../src";
+import { Client, Components } from "../src";
+import type { ResultArray } from "../src/util/ResultArray";
+import type { ResultObject } from "../src/util/ResultObject";
 
 type AsyncReturnType<T extends (...args: any) => any> = T extends (
   ...args: any
@@ -10,6 +12,29 @@ type AsyncReturnType<T extends (...args: any) => any> = T extends (
   : any;
 
 const client = new Client(process.env.HYPIXEL_KEY || "");
+
+const CheckMeta = (
+  data: () =>
+    | ResultArray<Components.Schemas.ApiSuccess & { n: unknown }, "n">
+    | ResultObject<Components.Schemas.ApiSuccess & { n: unknown }, "n">
+) => {
+  let result: ReturnType<typeof data>;
+  beforeEach(function () {
+    result = data();
+  });
+  it("meta should exist", function () {
+    expect(result.meta).to.be.an("object");
+  });
+  it("success should be true", function () {
+    expect(result.meta.success).to.equal(true);
+  });
+  it("ratelimit data should exist", function () {
+    expect(result.meta.ratelimit).to.be.an("object");
+    expect(result.meta.ratelimit.limit).to.be.a("number");
+    expect(result.meta.ratelimit.reset).to.be.a("number");
+    expect(result.meta.ratelimit.remaining).to.be.a("number");
+  });
+};
 
 describe("Run basic undocumented call", function () {
   this.timeout(30000);
@@ -31,9 +56,7 @@ describe("Check SkyBlock news", function () {
   it("expect success", async function () {
     result = await client.skyblock.news();
   });
-  it("meta should exist, success should be true", function () {
-    expect(result.meta.success).to.equal(true);
-  });
+  CheckMeta(() => result);
   it("required keys should exist", function () {
     for (const news of result) {
       expect(news.title).to.be.a("string").and.not.be.empty;
@@ -55,9 +78,7 @@ describe("Query SkyBlock collections resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.skyblock.collections();
   });
-  it("meta should exist, success should be true", function () {
-    expect(result.meta.success).to.equal(true);
-  });
+  CheckMeta(() => result);
   it("required keys should exist", function () {
     for (const key of Object.keys(result)) {
       const collection = result[key];
@@ -81,9 +102,7 @@ describe("Query SkyBlock skills resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.skyblock.skills();
   });
-  it("meta should exist, success should be true", function () {
-    expect(result.meta.success).to.equal(true);
-  });
+  CheckMeta(() => result);
   it("required keys should exist", function () {
     for (const key of Object.keys(result)) {
       const skill = result[key];
@@ -107,6 +126,7 @@ describe("Get player status", function () {
   it("expect not to throw", async function () {
     result = await client.status.uuid("20934ef9488c465180a78f861586b4cf");
   });
+  CheckMeta(() => result);
   it("required keys should exist", function () {
     expect(result.online).to.be.an("boolean");
   });
@@ -119,9 +139,7 @@ describe("Get watchdog stats", function () {
   it("expect not to throw", async function () {
     result = await client.watchdogstats();
   });
-  it("meta should exist, success should be true", function () {
-    expect(result.meta.success).to.equal(true);
-  });
+  CheckMeta(() => result);
   it("required keys should exist", function () {
     expect(result.watchdog_lastMinute).to.be.greaterThan(-1);
     expect(result.staff_rollingDaily).to.be.greaterThan(-1);
