@@ -49,6 +49,20 @@ describe("Run basic undocumented call", function () {
   });
 });
 
+describe("Get player recent games", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.recentGames.uuid>;
+  it("expect not to throw", async function () {
+    result = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
+  });
+  CheckMeta(() => result);
+  it("check that result is array", function () {
+    // can't reliably check array items for keys as a player's uuid can't be guaranteed to always be playing games
+    expect(result).to.be.an("array");
+  });
+});
+
 describe("Check SkyBlock news", function () {
   this.timeout(30000);
   this.slow(1000);

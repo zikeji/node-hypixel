@@ -32,6 +32,65 @@ tags:
     externalDocs:
       url: https://github.com/HypixelDev/PublicAPI/tree/master/Documentation/methods/skyblock
 paths:
+  /recentGames:
+    get:
+      tags:
+        - player
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/recentGames.md
+      summary: Returns recent games of a player. A maximum of 100 games are returned and recent games are only stored for up to 3 days at this time.
+      description: |
+        Players can disable this endpoint via in-game settings. When done so the API will return as if there is no games.
+        #### Usage
+        ```typescript
+        const status = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
+        ```
+      parameters:
+        - $ref: '#/components/parameters/PlayerUuid'
+      responses:
+        '200':
+          description: An object describing the player's status.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      games:
+                        type: array
+                        description: Watchdog's bans in the last minute.
+                        items:
+                          type: object
+                          properties:
+                            date:
+                              type: number
+                              example: 1590850836485
+                            gameType:
+                              type: string
+                              example: BEDWARS
+                            mode:
+                              type: string
+                              example: FOUR_FOUR
+                            map:
+                              type: string
+                              example: Dreamgrove
+                            ended:
+                              type: number
+                              example: 1590850919917
+                          required:
+                            - date
+                            - gameType
+                            - mode
+                            - map
+                    required:
+                      - games
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /skyblock/news:
     get:
       tags:
@@ -420,7 +479,7 @@ components:
             - collections
     SkyBlockResourcesParentCollections:
       type: object
-      description: Objects for each individual parent collection.
+      description: Objects for each individual parent collection (currently FARMING, MINING, COMBAT, FORAGING, FISHING).
       properties:
         FARMING:
           $ref: '#/components/schemas/SkyBlockResourcesParentCollection'

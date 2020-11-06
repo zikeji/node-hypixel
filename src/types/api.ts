@@ -183,7 +183,7 @@ export declare namespace Components {
       unlocks: string[];
     }
     /**
-     * Objects for each individual parent collection (currently FARMING, MINING, COMBAT, FORAGING, FISHING).
+     * Objects for each skill.
      */
     export interface SkyBlockResourcesSkills {
       [name: string]: SkyBlockResourcesSkill;
@@ -212,11 +212,56 @@ export declare namespace Components {
        * SkyBlock version this resource applies to.
        */
       version: string;
-      collections: /* Objects for each individual parent collection (currently FARMING, MINING, COMBAT, FORAGING, FISHING). */ SkyBlockResourcesSkills;
+      collections: /* Objects for each skill. */ SkyBlockResourcesSkills;
     }
   }
 }
 export declare namespace Paths {
+  namespace RecentGames {
+    namespace Get {
+      namespace Responses {
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          /**
+           * Watchdog's bans in the last minute.
+           */
+          games: {
+            /**
+             * example:
+             * 1590850836485
+             */
+            date: number;
+            /**
+             * example:
+             * BEDWARS
+             */
+            gameType: string;
+            /**
+             * example:
+             * FOUR_FOUR
+             */
+            mode: string;
+            /**
+             * example:
+             * Dreamgrove
+             */
+            map: string;
+            /**
+             * example:
+             * 1590850919917
+             */
+            ended?: number;
+          }[];
+        }
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
   namespace ResourcesSkyblockCollections {
     namespace Get {
       namespace Responses {

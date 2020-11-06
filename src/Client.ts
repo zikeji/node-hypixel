@@ -6,6 +6,7 @@ import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { RateLimitError } from "./errors/RateLimitError";
 import { FindGuild } from "./methods/findGuild";
 import { Guild } from "./methods/guild";
+import { RecentGames } from "./methods/recentGames";
 import { Resources } from "./methods/resources";
 import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";
@@ -187,12 +188,15 @@ export class Client extends EventEmitter {
   //   );
   // }
 
-  // async recentGames(uuid: string): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("recentGames", { uuid }),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns recent games of a player. A maximum of 100 games are returned and recent games are only stored for up to 3 days at this time.
+   * @example
+   * ```typescript
+   * const response = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(response);
+   * ```
+   */
+  public recentGames: RecentGames = new RecentGames(this);
 
   public resources: Resources = new Resources(this);
 
@@ -233,7 +237,7 @@ export class Client extends EventEmitter {
   }
 
   /**
-   * The raw query method used by this library. You may use this if you need to use a non-SkyBlock method with this library.
+   * The raw query method used by this library. You may use this if you need to use an undocumented method with this library.
    *
    * @category Custom
    * @param path The path on the method you want to query.
