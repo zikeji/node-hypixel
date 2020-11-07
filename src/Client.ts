@@ -135,12 +135,22 @@ export class Client extends EventEmitter {
     this.agent = options?.agent;
   }
 
-  // async boosters(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("boosters"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns list of boosters.
+   * @example
+   * ```typescript
+   * const boosters = await client.boosters();
+   * console.log(boosters);
+   * ```
+   */
+  async boosters(): Promise<
+    ResultObject<Paths.Boosters.Get.Responses.$200, "success">
+  > {
+    return getResultObject(
+      await this.call<Paths.Boosters.Get.Responses.$200>("boosters"),
+      "success"
+    ) as never;
+  }
 
   public findGuild: FindGuild = new FindGuild(this);
 

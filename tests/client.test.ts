@@ -49,6 +49,42 @@ describe("Run basic undocumented call", function () {
   });
 });
 
+describe("Get boosters", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.boosters>;
+  it("expect not to throw", async function () {
+    result = await client.boosters();
+  });
+  CheckMeta(() => result);
+  it("check that result has booster state", function () {
+    expect(result.boosterState).to.be.a("object");
+    expect(result.boosterState.decrementing).to.be.a("boolean");
+  });
+  it("required booster keys should exist", function () {
+    for (const booster of result.boosters) {
+      expect(booster._id).to.be.a("string");
+      expect(booster.amount).to.be.a("number");
+      expect(booster.dateActivated).to.be.a("number");
+      expect(booster.gameType).to.be.a("number");
+      expect(booster.length).to.be.a("number");
+      expect(booster.originalLength).to.be.a("number");
+      expect(booster.purchaserUuid).to.be.a("string");
+      expect(booster.stacked).to.satisfy(function (
+        stacked: undefined | typeof booster.stacked
+      ) {
+        return (
+          typeof stacked === "undefined" ||
+          typeof stacked === "boolean" ||
+          (typeof stacked === "object" &&
+            Array.isArray(stacked) &&
+            stacked.every((v) => typeof v === "string"))
+        );
+      });
+    }
+  });
+});
+
 describe("Get game counts", function () {
   this.timeout(30000);
   this.slow(1000);

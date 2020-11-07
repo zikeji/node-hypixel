@@ -217,6 +217,88 @@ export declare namespace Components {
   }
 }
 export declare namespace Paths {
+  namespace Boosters {
+    namespace Get {
+      namespace Responses {
+        /**
+         * example:
+         * {
+         *   "boosters": [
+         *     {
+         *       "_id": "5c197fadc8f245280926413d",
+         *       "purchaserUuid": "978ddb705a8e43618e41749178c020b0",
+         *       "amount": 2,
+         *       "originalLength": 3600,
+         *       "length": 3595,
+         *       "gameType": 24,
+         *       "stacked": true,
+         *       "dateActivated": 1545244519133
+         *     },
+         *     {
+         *       "_id": "5e8c92270cf287986cd00dbf",
+         *       "purchaserUuid": "dfe1bb0a4220421486506ba487cdb530",
+         *       "amount": 3,
+         *       "originalLength": 3600,
+         *       "length": 3600,
+         *       "gameType": 23,
+         *       "dateActivated": 1586351429371,
+         *       "stacked": true
+         *     },
+         *     {
+         *       "_id": "5fa1dc680cf24688841100c6",
+         *       "purchaserUuid": "e1b2397ee9ef4809a312fc3ee2d4bdbd",
+         *       "amount": 3,
+         *       "originalLength": 3600,
+         *       "length": 3393,
+         *       "gameType": 20,
+         *       "dateActivated": 1604443410659,
+         *       "stacked": [
+         *         "bf9afb33-c4ab-4eee-afa7-108403ba6532",
+         *         "ef0e153b-d489-435d-b5f7-0e712c1a6bf9",
+         *         "99e62635-bf44-4ca4-8fc4-380b1803bf57",
+         *         "c3eeac1a-83df-4005-acc6-84eb940cbb53"
+         *       ]
+         *     },
+         *     {
+         *       "_id": "5fa1e1180cf2468884110118",
+         *       "purchaserUuid": "7c90efd8d3724dfe9c4b5d7ff23b8691",
+         *       "amount": 2,
+         *       "originalLength": 3600,
+         *       "length": 3600,
+         *       "gameType": 20,
+         *       "dateActivated": 1604444496616
+         *     }
+         *   ],
+         *   "boosterState": {
+         *     "decrementing": true
+         *   }
+         * }
+         */
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          boosters: {
+            _id: string;
+            purchaserUuid: string;
+            amount: number;
+            originalLength: number;
+            length: number;
+            gameType: number;
+            stacked?: boolean | string[];
+            dateActivated: number;
+          }[];
+          boosterState: {
+            decrementing: boolean;
+          };
+        }
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
   namespace GameCounts {
     namespace Get {
       namespace Responses {
