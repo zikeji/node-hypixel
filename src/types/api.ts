@@ -1196,6 +1196,40 @@ export declare namespace Paths {
       }
     }
   }
+  namespace Key {
+    namespace Get {
+      namespace Responses {
+        /**
+         * example:
+         * {
+         *   "record": {
+         *     "key": "00000000-0000-0000-0000-000000000000",
+         *     "owner": "20934ef9-488c-4651-80a7-8f861586b4cf",
+         *     "limit": 120,
+         *     "queriesInPastMin": 12,
+         *     "totalQueries": 1234
+         *   }
+         * }
+         */
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          record: {
+            key: string;
+            owner: string;
+            limit: number;
+            queriesInPastMin: number;
+            totalQueries: number;
+          };
+        }
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
   namespace PlayerCount {
     namespace Get {
       namespace Responses {

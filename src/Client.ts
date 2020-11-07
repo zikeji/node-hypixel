@@ -191,14 +191,29 @@ export class Client extends EventEmitter {
     ) as never;
   }
 
+  /**
+   * Returns the guild by the requested ID if found.
+   * @example
+   * ```typescript
+   * const guild = await client.guild.id("553490650cf26f12ae5bac8f");
+   * ```
+   */
   public guild: Guild = new Guild(this);
 
-  // async key(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("key"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns information regarding given key.
+   * @example
+   * ```typescript
+   * const key = await client.key();
+   * console.log(key);
+   * ```
+   */
+  async key(): Promise<ResultObject<Paths.Key.Get.Responses.$200, "record">> {
+    return getResultObject(
+      await this.call<Paths.Key.Get.Responses.$200>("key"),
+      "record"
+    ) as never;
+  }
 
   // async leaderboards(): Promise<boolean> {
   //   return returnResponseObject(

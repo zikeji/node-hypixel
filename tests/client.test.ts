@@ -135,6 +135,31 @@ describe("Get player's friends", function () {
   });
 });
 
+describe("Get game counts", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.gameCounts>;
+  it("expect not to throw", async function () {
+    result = await client.gameCounts();
+  });
+  CheckMeta(() => result);
+  it("check that result has player count", function () {
+    expect(result.playerCount).to.be.a("number");
+  });
+  it("required keys should exist", function () {
+    for (const gameName of Object.keys(result.games)) {
+      const game = result.games[gameName];
+      expect(game.players).to.be.a("number");
+      if (game.modes) {
+        for (const modeName of Object.keys(game.modes)) {
+          const mode = game.modes[modeName];
+          expect(mode).to.be.a("number");
+        }
+      }
+    }
+  });
+});
+
 describe("Get guild by id", function () {
   this.timeout(30000);
   this.slow(1000);
@@ -148,9 +173,8 @@ describe("Get guild by id", function () {
   CheckMeta(() => results[1]);
   CheckMeta(() => results[2]);
   it("required keys should exist", function () {
-    for (const result of results) {
-      expect(result.guild).to.be.an("object");
-      const { guild } = result;
+    for (const guild of results) {
+      expect(guild).to.be.an("object");
       if (!guild) throw new Error("no guild returned");
       expect(guild._id).to.be.a("string");
       expect(guild.achievements).to.be.a("object");
@@ -239,28 +263,20 @@ describe("Get guild by id", function () {
   });
 });
 
-describe("Get game counts", function () {
+describe("Get key info", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result: AsyncReturnType<typeof client.gameCounts>;
+  let result: AsyncReturnType<typeof client.key>;
   it("expect not to throw", async function () {
-    result = await client.gameCounts();
+    result = await client.key();
   });
   CheckMeta(() => result);
-  it("check that result has player count", function () {
-    expect(result.playerCount).to.be.a("number");
-  });
   it("required keys should exist", function () {
-    for (const gameName of Object.keys(result.games)) {
-      const game = result.games[gameName];
-      expect(game.players).to.be.a("number");
-      if (game.modes) {
-        for (const modeName of Object.keys(game.modes)) {
-          const mode = game.modes[modeName];
-          expect(mode).to.be.a("number");
-        }
-      }
-    }
+    expect(result.key).to.be.a("string");
+    expect(result.limit).to.be.a("number");
+    expect(result.owner).to.be.a("string");
+    expect(result.queriesInPastMin).to.be.a("number");
+    expect(result.totalQueries).to.be.a("number");
   });
 });
 
