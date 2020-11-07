@@ -151,12 +151,22 @@ export class Client extends EventEmitter {
   //   );
   // }
 
-  // async gameCounts(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("gameCounts"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns the current player count along with the player count of each public game + mode on the server.
+   * @example
+   * ```typescript
+   * const response = await client.gameCounts();
+   * console.log(response);
+   * ```
+   */
+  async gameCounts(): Promise<
+    ResultObject<Paths.GameCounts.Get.Responses.$200, "success">
+  > {
+    return getResultObject(
+      await this.call<Paths.GameCounts.Get.Responses.$200>("gameCounts"),
+      "success"
+    ) as never;
+  }
 
   public guild: Guild = new Guild(this);
 
@@ -181,12 +191,22 @@ export class Client extends EventEmitter {
   //   );
   // }
 
-  // async playerCount(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("playerCount"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns current player count.
+   * @example
+   * ```typescript
+   * const response = await client.playerCounts();
+   * console.log(response);
+   * ```
+   */
+  async playerCount(): Promise<
+    ResultObject<Paths.PlayerCount.Get.Responses.$200, "success">
+  > {
+    return getResultObject(
+      await this.call<Paths.PlayerCount.Get.Responses.$200>("playerCount"),
+      "success"
+    ) as never;
+  }
 
   /**
    * Returns recent games of a player. A maximum of 100 games are returned and recent games are only stored for up to 3 days at this time.

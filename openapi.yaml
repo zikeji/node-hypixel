@@ -32,6 +32,982 @@ tags:
     externalDocs:
       url: https://github.com/HypixelDev/PublicAPI/tree/master/Documentation/methods/skyblock
 paths:
+  /gameCounts:
+    get:
+      tags:
+        - metadata
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/gameCounts.md
+      summary: Returns the current player count along with the player count of each public game + mode on the server.
+      description: |
+        #### Usage
+        ```typescript
+        const gameCounts = await client.gameCounts();
+        ```
+      responses:
+        '200':
+          description: An object describing the current player count on the Hypixel network.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      playerCount:
+                        type: integer
+                        example: 77238
+                        description: Total players on the network
+                      games:
+                        type: object
+                        properties:
+                          MAIN_LOBBY:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                            required:
+                              - players
+                          TOURNAMENT_LOBBY:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                            required:
+                              - players
+                          UHC:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  TEAMS:
+                                    type: integer
+                                  SOLO:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - TEAMS
+                                  - SOLO
+                            required:
+                              - players
+                              - modes
+                          SUPER_SMASH:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  1v1_normal:
+                                    type: integer
+                                  friends_normal:
+                                    type: integer
+                                  solo_normal:
+                                    type: integer
+                                  2v2_normal:
+                                    type: integer
+                                  teams_normal:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - 1v1_normal
+                                  - friends_normal
+                                  - solo_normal
+                                  - 2v2_normal
+                                  - teams_normal
+                            required:
+                              - players
+                              - modes
+                          LEGACY:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  QUAKECRAFT:
+                                    type: integer
+                                  WALLS:
+                                    type: integer
+                                  VAMPIREZ:
+                                    type: integer
+                                  ARENA:
+                                    type: integer
+                                  PAINTBALL:
+                                    type: integer
+                                  GINGERBREAD:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - QUAKECRAFT
+                                  - WALLS
+                                  - VAMPIREZ
+                                  - ARENA
+                                  - PAINTBALL
+                                  - GINGERBREAD
+                            required:
+                              - players
+                              - modes
+                          BUILD_BATTLE:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  BUILD_BATTLE_SOLO_NORMAL_LATEST:
+                                    type: integer
+                                  BUILD_BATTLE_GUESS_THE_BUILD:
+                                    type: integer
+                                  BUILD_BATTLE_TEAMS_NORMAL:
+                                    type: integer
+                                  BUILD_BATTLE_SOLO_NORMAL:
+                                    type: integer
+                                  BUILD_BATTLE_SOLO_PRO:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - BUILD_BATTLE_SOLO_NORMAL_LATEST
+                                  - BUILD_BATTLE_GUESS_THE_BUILD
+                                  - BUILD_BATTLE_TEAMS_NORMAL
+                                  - BUILD_BATTLE_SOLO_NORMAL
+                                  - BUILD_BATTLE_SOLO_PRO
+                            required:
+                              - players
+                              - modes
+                          BATTLEGROUND:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  ctf_mini:
+                                    type: integer
+                                  domination:
+                                    type: integer
+                                  team_deathmatch:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - ctf_mini
+                                  - domination
+                                  - team_deathmatch
+                            required:
+                              - players
+                              - modes
+                          WALLS3:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  standard:
+                                    type: integer
+                                  face_off:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - standard
+                                  - face_off
+                            required:
+                              - players
+                              - modes
+                          HOUSING:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                            required:
+                              - players
+                          SPEED_UHC:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  team_normal:
+                                    type: integer
+                                  solo_normal:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - team_normal
+                                  - solo_normal
+                            required:
+                              - players
+                              - modes
+                          DUELS:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  DUELS_BOWSPLEEF_DUEL:
+                                    type: integer
+                                  DUELS_BRIDGE_2V2V2V2:
+                                    type: integer
+                                  DUELS_BOW_DUEL:
+                                    type: integer
+                                  DUELS_UHC_FOUR:
+                                    type: integer
+                                  DUELS_MW_DUEL:
+                                    type: integer
+                                  DUELS_UHC_MEETUP:
+                                    type: integer
+                                  DUELS_BRIDGE_DOUBLES:
+                                    type: integer
+                                  DUELS_SW_DOUBLES:
+                                    type: integer
+                                  DUELS_UHC_DOUBLES:
+                                    type: integer
+                                  DUELS_BRIDGE_FOUR:
+                                    type: integer
+                                  DUELS_BRIDGE_3V3V3V3:
+                                    type: integer
+                                  DUELS_SUMO_DUEL:
+                                    type: integer
+                                  DUELS_UHC_DUEL:
+                                    type: integer
+                                  DUELS_OP_DOUBLES:
+                                    type: integer
+                                  DUELS_OP_DUEL:
+                                    type: integer
+                                  DUELS_MW_DOUBLES:
+                                    type: integer
+                                  DUELS_BLITZ_DUEL:
+                                    type: integer
+                                  DUELS_POTION_DUEL:
+                                    type: integer
+                                  DUELS_CLASSIC_DUEL:
+                                    type: integer
+                                  DUELS_COMBO_DUEL:
+                                    type: integer
+                                  DUELS_BRIDGE_DUEL:
+                                    type: integer
+                                  DUELS_SW_DUEL:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - DUELS_BOWSPLEEF_DUEL
+                                  - DUELS_BRIDGE_2V2V2V2
+                                  - DUELS_BOW_DUEL
+                                  - DUELS_UHC_FOUR
+                                  - DUELS_MW_DUEL
+                                  - DUELS_UHC_MEETUP
+                                  - DUELS_BRIDGE_DOUBLES
+                                  - DUELS_SW_DOUBLES
+                                  - DUELS_UHC_DOUBLES
+                                  - DUELS_BRIDGE_FOUR
+                                  - DUELS_BRIDGE_3V3V3V3
+                                  - DUELS_SUMO_DUEL
+                                  - DUELS_UHC_DUEL
+                                  - DUELS_OP_DOUBLES
+                                  - DUELS_OP_DUEL
+                                  - DUELS_MW_DOUBLES
+                                  - DUELS_BLITZ_DUEL
+                                  - DUELS_POTION_DUEL
+                                  - DUELS_CLASSIC_DUEL
+                                  - DUELS_COMBO_DUEL
+                                  - DUELS_BRIDGE_DUEL
+                                  - DUELS_SW_DUEL
+                            required:
+                              - players
+                              - modes
+                          REPLAY:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  BASE:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - BASE
+                            required:
+                              - players
+                              - modes
+                          SURVIVAL_GAMES:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  solo_normal:
+                                    type: integer
+                                  teams_normal:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - solo_normal
+                                  - teams_normal
+                            required:
+                              - players
+                              - modes
+                          PROTOTYPE:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  TOWERWARS_SOLO:
+                                    type: integer
+                                  TOWERWARS_TEAM_OF_TWO:
+                                    type: integer
+                                required:
+                                  - TOWERWARS_SOLO
+                                  - TOWERWARS_TEAM_OF_TWO
+                            required:
+                              - players
+                              - modes
+                          MURDER_MYSTERY:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  MURDER_DOUBLE_UP:
+                                    type: integer
+                                  MURDER_INFECTION:
+                                    type: integer
+                                  MURDER_ASSASSINS:
+                                    type: integer
+                                  MURDER_CLASSIC:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - MURDER_DOUBLE_UP
+                                  - MURDER_INFECTION
+                                  - MURDER_ASSASSINS
+                                  - MURDER_CLASSIC
+                            required:
+                              - players
+                              - modes
+                          MCGO:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  normal:
+                                    type: integer
+                                  normal_party:
+                                    type: integer
+                                  deathmatch:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - normal
+                                  - normal_party
+                                  - deathmatch
+                            required:
+                              - players
+                              - modes
+                          BEDWARS:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  BEDWARS_TWO_FOUR:
+                                    type: integer
+                                  BEDWARS_FOUR_THREE:
+                                    type: integer
+                                  BEDWARS_FOUR_FOUR_RUSH:
+                                    type: integer
+                                  BEDWARS_FOUR_FOUR_LUCKY:
+                                    type: integer
+                                  BEDWARS_EIGHT_ONE:
+                                    type: integer
+                                  BEDWARS_EIGHT_TWO_VOIDLESS:
+                                    type: integer
+                                  BEDWARS_EIGHT_TWO_RUSH:
+                                    type: integer
+                                  BEDWARS_FOUR_FOUR_ARMED:
+                                    type: integer
+                                  BEDWARS_EIGHT_TWO_ARMED:
+                                    type: integer
+                                  BEDWARS_FOUR_FOUR:
+                                    type: integer
+                                  BEDWARS_EIGHT_TWO:
+                                    type: integer
+                                  BEDWARS_EIGHT_TWO_LUCKY:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - BEDWARS_TWO_FOUR
+                                  - BEDWARS_FOUR_THREE
+                                  - BEDWARS_FOUR_FOUR_RUSH
+                                  - BEDWARS_FOUR_FOUR_LUCKY
+                                  - BEDWARS_EIGHT_ONE
+                                  - BEDWARS_EIGHT_TWO_VOIDLESS
+                                  - BEDWARS_EIGHT_TWO_RUSH
+                                  - BEDWARS_FOUR_FOUR_ARMED
+                                  - BEDWARS_EIGHT_TWO_ARMED
+                                  - BEDWARS_FOUR_FOUR
+                                  - BEDWARS_EIGHT_TWO
+                                  - BEDWARS_EIGHT_TWO_LUCKY
+                            required:
+                              - players
+                              - modes
+                          SKYBLOCK:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  combat_1:
+                                    type: integer
+                                  dungeon_hub:
+                                    type: integer
+                                  foraging_1:
+                                    type: integer
+                                  hub:
+                                    type: integer
+                                  mining_2:
+                                    type: integer
+                                  dungeon:
+                                    type: integer
+                                  combat_2:
+                                    type: integer
+                                  farming_2:
+                                    type: integer
+                                  mining_1:
+                                    type: integer
+                                  farming_1:
+                                    type: integer
+                                  combat_3:
+                                    type: integer
+                                  dynamic:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - combat_1
+                                  - dungeon_hub
+                                  - foraging_1
+                                  - hub
+                                  - mining_2
+                                  - dungeon
+                                  - combat_2
+                                  - farming_2
+                                  - mining_1
+                                  - farming_1
+                                  - combat_3
+                                  - dynamic
+                            required:
+                              - players
+                              - modes
+                          ARCADE:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  PARTY:
+                                    type: integer
+                                  HOLE_IN_THE_WALL:
+                                    type: integer
+                                  DEFENDER:
+                                    type: integer
+                                  MINI_WALLS:
+                                    type: integer
+                                  SIMON_SAYS:
+                                    type: integer
+                                  ZOMBIES_BAD_BLOOD:
+                                    type: integer
+                                  HIDE_AND_SEEK_PARTY_POOPER:
+                                    type: integer
+                                  DAYONE:
+                                    type: integer
+                                  DRAW_THEIR_THING:
+                                    type: integer
+                                  ZOMBIES_ALIEN_ARCADIUM:
+                                    type: integer
+                                  ONEINTHEQUIVER:
+                                    type: integer
+                                  SOCCER:
+                                    type: integer
+                                  PVP_CTW:
+                                    type: integer
+                                  THROW_OUT:
+                                    type: integer
+                                  ENDER:
+                                    type: integer
+                                  STARWARS:
+                                    type: integer
+                                  HALLOWEEN_SIMULATOR:
+                                    type: integer
+                                  DRAGONWARS2:
+                                    type: integer
+                                  ZOMBIES_DEAD_END:
+                                    type: integer
+                                  HIDE_AND_SEEK_PROP_HUNT:
+                                    type: integer
+                                  FARM_HUNT:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - PARTY
+                                  - HOLE_IN_THE_WALL
+                                  - DEFENDER
+                                  - MINI_WALLS
+                                  - SIMON_SAYS
+                                  - ZOMBIES_BAD_BLOOD
+                                  - HIDE_AND_SEEK_PARTY_POOPER
+                                  - DAYONE
+                                  - DRAW_THEIR_THING
+                                  - ZOMBIES_ALIEN_ARCADIUM
+                                  - ONEINTHEQUIVER
+                                  - SOCCER
+                                  - PVP_CTW
+                                  - THROW_OUT
+                                  - ENDER
+                                  - STARWARS
+                                  - HALLOWEEN_SIMULATOR
+                                  - DRAGONWARS2
+                                  - ZOMBIES_DEAD_END
+                                  - HIDE_AND_SEEK_PROP_HUNT
+                                  - FARM_HUNT
+                            required:
+                              - players
+                              - modes
+                          PIT:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  PIT:
+                                    type: integer
+                                required:
+                                  - PIT
+                            required:
+                              - players
+                              - modes
+                          TNTGAMES:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  PVPRUN:
+                                    type: integer
+                                  TNTAG:
+                                    type: integer
+                                  TNTRUN:
+                                    type: integer
+                                  BOWSPLEEF:
+                                    type: integer
+                                  CAPTURE:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - PVPRUN
+                                  - TNTAG
+                                  - TNTRUN
+                                  - BOWSPLEEF
+                                  - CAPTURE
+                            required:
+                              - players
+                              - modes
+                          SKYWARS:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                              modes:
+                                type: object
+                                properties:
+                                  solo_insane_lucky:
+                                    type: integer
+                                  solo_insane_slime:
+                                    type: integer
+                                  teams_insane_lucky:
+                                    type: integer
+                                  solo_normal:
+                                    type: integer
+                                  teams_insane:
+                                    type: integer
+                                  solo_insane_hunters_vs_beasts:
+                                    type: integer
+                                  ranked_normal:
+                                    type: integer
+                                  solo_insane_tnt_madness:
+                                    type: integer
+                                  mega_doubles:
+                                    type: integer
+                                  solo_insane:
+                                    type: integer
+                                  teams_insane_tnt_madness:
+                                    type: integer
+                                  teams_normal:
+                                    type: integer
+                                  mega_normal:
+                                    type: integer
+                                additionalProperties:
+                                  type: integer
+                                required:
+                                  - solo_insane_lucky
+                                  - solo_insane_slime
+                                  - teams_insane_lucky
+                                  - solo_normal
+                                  - teams_insane
+                                  - solo_insane_hunters_vs_beasts
+                                  - ranked_normal
+                                  - solo_insane_tnt_madness
+                                  - mega_doubles
+                                  - solo_insane
+                                  - teams_insane_tnt_madness
+                                  - teams_normal
+                                  - mega_normal
+                            required:
+                              - players
+                              - modes
+                          LIMBO:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                            required:
+                              - players
+                          IDLE:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                            required:
+                              - players
+                          QUEUE:
+                            type: object
+                            properties:
+                              players:
+                                type: integer
+                            required:
+                              - players
+                        example:
+                          MAIN_LOBBY:
+                            players: 400
+                          TOURNAMENT_LOBBY:
+                            players: 7
+                          UHC:
+                            players: 796
+                            modes:
+                              TEAMS: 399
+                              SOLO: 331
+                          SUPER_SMASH:
+                            players: 91
+                            modes:
+                              1v1_normal: 7
+                              friends_normal: 4
+                              solo_normal: 11
+                              2v2_normal: 32
+                              teams_normal: 8
+                          LEGACY:
+                            players: 308
+                            modes:
+                              QUAKECRAFT: 18
+                              WALLS: 83
+                              VAMPIREZ: 95
+                              ARENA: 8
+                              PAINTBALL: 37
+                              GINGERBREAD: 19
+                          BUILD_BATTLE:
+                            players: 1329
+                            modes:
+                              BUILD_BATTLE_HALLOWEEN: 32
+                              BUILD_BATTLE_SOLO_NORMAL_LATEST: 256
+                              BUILD_BATTLE_GUESS_THE_BUILD: 150
+                              BUILD_BATTLE_TEAMS_NORMAL: 478
+                              BUILD_BATTLE_SOLO_NORMAL: 171
+                              BUILD_BATTLE_SOLO_PRO: 81
+                          BATTLEGROUND:
+                            players: 80
+                            modes:
+                              ctf_mini: 60
+                              domination: 1
+                              team_deathmatch: 5
+                          WALLS3:
+                            players: 290
+                            modes:
+                              standard: 261
+                              face_off: 5
+                          HOUSING:
+                            players: 3511
+                          SPEED_UHC:
+                            players: 43
+                            modes:
+                              team_normal: 18
+                              solo_normal: 25
+                          DUELS:
+                            players: 5745
+                            modes:
+                              DUELS_BOWSPLEEF_DUEL: 61
+                              DUELS_BRIDGE_2V2V2V2: 12
+                              DUELS_BOW_DUEL: 40
+                              DUELS_UHC_FOUR: 91
+                              DUELS_MW_DUEL: 44
+                              DUELS_UHC_MEETUP: 78
+                              DUELS_BRIDGE_DOUBLES: 287
+                              DUELS_SW_DOUBLES: 224
+                              DUELS_UHC_DOUBLES: 114
+                              DUELS_BRIDGE_FOUR: 94
+                              DUELS_BRIDGE_3V3V3V3: 39
+                              DUELS_SUMO_DUEL: 184
+                              DUELS_UHC_DUEL: 583
+                              DUELS_OP_DOUBLES: 48
+                              DUELS_OP_DUEL: 132
+                              DUELS_MW_DOUBLES: 4
+                              DUELS_BLITZ_DUEL: 118
+                              DUELS_POTION_DUEL: 26
+                              DUELS_CLASSIC_DUEL: 430
+                              DUELS_COMBO_DUEL: 48
+                              DUELS_BRIDGE_DUEL: 1443
+                              DUELS_SW_DUEL: 616
+                          REPLAY:
+                            players: 18
+                            modes:
+                              BASE: 18
+                          SURVIVAL_GAMES:
+                            players: 390
+                            modes:
+                              solo_normal: 171
+                              teams_normal: 154
+                          PROTOTYPE:
+                            players: 527
+                            modes:
+                              TOWERWARS_SOLO: 33
+                              TOWERWARS_TEAM_OF_TWO: 33
+                          MURDER_MYSTERY:
+                            players: 1416
+                            modes:
+                              MURDER_DOUBLE_UP: 360
+                              MURDER_INFECTION: 120
+                              MURDER_ASSASSINS: 129
+                              MURDER_CLASSIC: 627
+                          MCGO:
+                            players: 147
+                            modes:
+                              normal: 84
+                              normal_party: 8
+                              deathmatch: 35
+                          BEDWARS:
+                            players: 23917
+                            modes:
+                              BEDWARS_TWO_FOUR: 788
+                              BEDWARS_FOUR_THREE: 4052
+                              BEDWARS_FOUR_FOUR_RUSH: 3
+                              BEDWARS_FOUR_FOUR_LUCKY: 18
+                              BEDWARS_EIGHT_ONE: 2525
+                              BEDWARS_EIGHT_TWO_VOIDLESS: 7
+                              BEDWARS_EIGHT_TWO_RUSH: 10
+                              BEDWARS_FOUR_FOUR_ARMED: 858
+                              BEDWARS_EIGHT_TWO_ARMED: 642
+                              BEDWARS_FOUR_FOUR: 5090
+                              BEDWARS_EIGHT_TWO: 6784
+                              BEDWARS_EIGHT_TWO_LUCKY: 35
+                          SKYBLOCK:
+                            players: 33850
+                            modes:
+                              combat_1: 533
+                              dungeon_hub: 1022
+                              foraging_1: 794
+                              hub: 9291
+                              mining_2: 1111
+                              dungeon: 2823
+                              combat_2: 383
+                              farming_2: 186
+                              mining_1: 351
+                              farming_1: 169
+                              combat_3: 1641
+                              dynamic: 15547
+                          ARCADE:
+                            players: 2665
+                            modes:
+                              PARTY: 583
+                              HOLE_IN_THE_WALL: 20
+                              DEFENDER: 44
+                              MINI_WALLS: 121
+                              SIMON_SAYS: 78
+                              ZOMBIES_BAD_BLOOD: 23
+                              HIDE_AND_SEEK_PARTY_POOPER: 48
+                              DAYONE: 133
+                              DRAW_THEIR_THING: 54
+                              ZOMBIES_ALIEN_ARCADIUM: 117
+                              ONEINTHEQUIVER: 49
+                              SOCCER: 37
+                              PVP_CTW: 380
+                              THROW_OUT: 14
+                              ENDER: 25
+                              STARWARS: 51
+                              HALLOWEEN_SIMULATOR: 92
+                              DRAGONWARS2: 20
+                              ZOMBIES_DEAD_END: 244
+                              HIDE_AND_SEEK_PROP_HUNT: 86
+                              FARM_HUNT: 93
+                          PIT:
+                            players: 974
+                            modes:
+                              PIT: 974
+                          TNTGAMES:
+                            players: 948
+                            modes:
+                              PVPRUN: 26
+                              TNTAG: 467
+                              TNTRUN: 246
+                              BOWSPLEEF: 64
+                              CAPTURE: 39
+                          SKYWARS:
+                            players: 6287
+                            modes:
+                              solo_insane_lucky: 233
+                              solo_insane_slime: 10
+                              teams_insane_lucky: 160
+                              solo_normal: 1416
+                              teams_insane: 607
+                              solo_insane_hunters_vs_beasts: 2
+                              ranked_normal: 264
+                              solo_insane_tnt_madness: 87
+                              mega_doubles: 8
+                              solo_insane: 1810
+                              teams_insane_tnt_madness: 3
+                              teams_normal: 631
+                              mega_normal: 89
+                          LIMBO:
+                            players: 153
+                          IDLE:
+                            players: 8475
+                          QUEUE:
+                            players: 0
+                        additionalProperties:
+                          type: object
+                          properties:
+                            players:
+                              type: integer
+                            modes:
+                              type: object
+                              additionalProperties:
+                                type: integer
+                          required:
+                            - players  
+                        required:
+                          - MAIN_LOBBY
+                          - TOURNAMENT_LOBBY
+                          - UHC
+                          - SUPER_SMASH
+                          - LEGACY
+                          - BUILD_BATTLE
+                          - BATTLEGROUND
+                          - WALLS3
+                          - HOUSING
+                          - SPEED_UHC
+                          - DUELS
+                          - REPLAY
+                          - SURVIVAL_GAMES
+                          - PROTOTYPE
+                          - MURDER_MYSTERY
+                          - MCGO
+                          - BEDWARS
+                          - SKYBLOCK
+                          - ARCADE
+                          - PIT
+                          - TNTGAMES
+                          - SKYWARS
+                          - LIMBO
+                          - IDLE
+                          - QUEUE
+                required:
+                  - playerCount
+                  - games
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /playerCount:
+    get:
+      tags:
+        - metadata
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/playerCount.md
+      summary: Returns current player count.
+      description: |
+        #### Usage
+        ```typescript
+        const playerCount = await client.playerCount();
+        ```
+      responses:
+        '200':
+          description: An object describing the current player count on the Hypixel network.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      playerCount:
+                        type: integer
+                        example: 75612
+                        description: Total players on the network
+                    required:
+                      - playerCount
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /recentGames:
     get:
       tags:
@@ -43,13 +1019,13 @@ paths:
         Players can disable this endpoint via in-game settings. When done so the API will return as if there is no games.
         #### Usage
         ```typescript
-        const status = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
+        const recentGames = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
         - $ref: '#/components/parameters/PlayerUuid'
       responses:
         '200':
-          description: An object describing the player's status.
+          description: An object describing the player's recent games.
           content:
             application/json:
               schema:

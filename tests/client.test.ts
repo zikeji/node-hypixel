@@ -49,6 +49,44 @@ describe("Run basic undocumented call", function () {
   });
 });
 
+describe("Get game counts", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.gameCounts>;
+  it("expect not to throw", async function () {
+    result = await client.gameCounts();
+  });
+  CheckMeta(() => result);
+  it("check that result has player count", function () {
+    expect(result.playerCount).to.be.a("number");
+  });
+  it("required keys should exist", function () {
+    for (const gameName of Object.keys(result.games)) {
+      const game = result.games[gameName];
+      expect(game.players).to.be.a("number");
+      if (game.modes) {
+        for (const modeName of Object.keys(game.modes)) {
+          const mode = game.modes[modeName];
+          expect(mode).to.be.a("number");
+        }
+      }
+    }
+  });
+});
+
+describe("Get player count", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.playerCount>;
+  it("expect not to throw", async function () {
+    result = await client.playerCount();
+  });
+  CheckMeta(() => result);
+  it("check that result has player count", function () {
+    expect(result.playerCount).to.be.a("number");
+  });
+});
+
 describe("Get player recent games", function () {
   this.timeout(30000);
   this.slow(1000);
