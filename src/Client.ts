@@ -2,10 +2,14 @@ import { EventEmitter } from "events";
 import { IncomingHttpHeaders } from "http";
 import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
+import { GenericHTTPError } from "./errors/GenericHTTPError";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { RateLimitError } from "./errors/RateLimitError";
 import { FindGuild } from "./methods/findGuild";
+import { Friends } from "./methods/friends";
 import { Guild } from "./methods/guild";
+import { Player } from "./methods/player";
+import { RecentGames } from "./methods/recentGames";
 import { Resources } from "./methods/resources";
 import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";
@@ -134,65 +138,138 @@ export class Client extends EventEmitter {
     this.agent = options?.agent;
   }
 
-  // async boosters(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("boosters"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns list of boosters.
+   * @example
+   * ```typescript
+   * const boosters = await client.boosters();
+   * console.log(boosters);
+   * ```
+   */
+  async boosters(): Promise<
+    ResultObject<Paths.Boosters.Get.Responses.$200, "success">
+  > {
+    return getResultObject(
+      await this.call<Paths.Boosters.Get.Responses.$200>("boosters"),
+      "success"
+    ) as never;
+  }
 
+  /**
+   * Returns the id of the requested guild if found.
+   * @example
+   * ```typescript
+   * const { guild } = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(guild);
+   * // 553490650cf26f12ae5bac8f
+   * ```
+   */
   public findGuild: FindGuild = new FindGuild(this);
 
-  // async friends(uuid: string): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("friends", { uuid }),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns friendships for given player.
+   * @example
+   * ```typescript
+   * const friends = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(friends);
+   * ```
+   */
+  public friends: Friends = new Friends(this);
 
-  // async gameCounts(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("gameCounts"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns the current player count along with the player count of each public game + mode on the server.
+   * @example
+   * ```typescript
+   * const response = await client.gameCounts();
+   * console.log(response);
+   * ```
+   */
+  async gameCounts(): Promise<
+    ResultObject<Paths.GameCounts.Get.Responses.$200, "success">
+  > {
+    return getResultObject(
+      await this.call<Paths.GameCounts.Get.Responses.$200>("gameCounts"),
+      "success"
+    ) as never;
+  }
 
+  /**
+   * Returns the guild by the requested ID if found.
+   * @example
+   * ```typescript
+   * const guild = await client.guild.id("553490650cf26f12ae5bac8f");
+   * ```
+   */
   public guild: Guild = new Guild(this);
 
-  // async key(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("key"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns information regarding given key.
+   * @example
+   * ```typescript
+   * const key = await client.key();
+   * console.log(key);
+   * ```
+   */
+  async key(): Promise<ResultObject<Paths.Key.Get.Responses.$200, "record">> {
+    return getResultObject(
+      await this.call<Paths.Key.Get.Responses.$200>("key"),
+      "record"
+    ) as never;
+  }
 
-  // async leaderboards(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("leaderboards"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns a list of the official leaderboards and their current standings for games on the network.
+   * @example
+   * ```typescript
+   * const leaderboards = await client.leaderboards();
+   * console.log(leaderboards);
+   * ```
+   */
+  async leaderboards(): Promise<
+    ResultObject<Paths.Leaderboards.Get.Responses.$200, "leaderboards">
+  > {
+    return getResultObject(
+      await this.call<Paths.Leaderboards.Get.Responses.$200>("leaderboards"),
+      "leaderboards"
+    ) as never;
+  }
 
-  // async player(uuid: string): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("player", { uuid }),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns a player's data, such as game stats.
+   * @example
+   * ```typescript
+   * const player = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(player);
+   * ```
+   */
+  public player: Player = new Player(this);
 
-  // async playerCount(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("playerCount"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns current player count.
+   * @example
+   * ```typescript
+   * const response = await client.playerCounts();
+   * console.log(response);
+   * ```
+   */
+  async playerCount(): Promise<
+    ResultObject<Paths.PlayerCount.Get.Responses.$200, "success">
+  > {
+    return getResultObject(
+      await this.call<Paths.PlayerCount.Get.Responses.$200>("playerCount"),
+      "success"
+    ) as never;
+  }
 
-  // async recentGames(uuid: string): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("recentGames", { uuid }),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns recent games of a player. A maximum of 100 games are returned and recent games are only stored for up to 3 days at this time.
+   * @example
+   * ```typescript
+   * const response = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(response);
+   * ```
+   */
+  public recentGames: RecentGames = new RecentGames(this);
 
   public resources: Resources = new Resources(this);
 
@@ -233,7 +310,7 @@ export class Client extends EventEmitter {
   }
 
   /**
-   * The raw query method used by this library. You may use this if you need to use a non-SkyBlock method with this library.
+   * The raw query method used by this library. You may use this if you need to use an undocumented method with this library.
    *
    * @category Custom
    * @param path The path on the method you want to query.
@@ -277,10 +354,17 @@ export class Client extends EventEmitter {
     try {
       response = await call.execute();
     } catch (error) {
-      if (error instanceof InvalidKeyError || call.retries === this.retries) {
+      /* istanbul ignore else */
+      if (
+        error instanceof InvalidKeyError ||
+        error instanceof GenericHTTPError ||
+        /* istanbul ignore next */ call.retries === this.retries
+      ) {
         throw error;
       }
+      /* istanbul ignore next */
       call.retries += 1;
+      /* istanbul ignore next */
       return this.executeActionableCall<T>(call);
     } finally {
       this.queue.free();
@@ -297,6 +381,7 @@ export class Client extends EventEmitter {
   /** @internal */
   private createActionableCall<T extends Components.Schemas.ApiSuccess>(
     path: string,
+    /* istanbul ignore next */
     parameters: Parameters = {}
   ): ActionableCall<T> {
     return {
@@ -308,7 +393,10 @@ export class Client extends EventEmitter {
   /** @internal */
   private callMethod<
     T extends Components.Schemas.ApiSuccess & { cause?: string }
-  >(path: string, parameters: Parameters = {}): Promise<T> {
+  >(
+    path: string,
+    /* istanbul ignore next */ parameters: Parameters = {}
+  ): Promise<T> {
     const url = new URL(path, Client.endpoint);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
@@ -343,6 +431,7 @@ export class Client extends EventEmitter {
         incomingMessage.on("end", () => {
           this.getRateLimitHeaders(incomingMessage.headers);
 
+          /* istanbul ignore next */
           if (
             typeof responseBody !== "string" ||
             responseBody.trim().length === 0
@@ -358,17 +447,32 @@ export class Client extends EventEmitter {
           }
 
           if (incomingMessage.statusCode !== 200) {
+            /* istanbul ignore next */
             if (incomingMessage.statusCode === 429) {
               return reject(new RateLimitError(`Hit key throttle.`));
             }
 
-            if (
-              typeof responseObject === "object" &&
-              responseObject.cause === "Invalid API key"
-            ) {
-              throw new InvalidKeyError("Invalid API Key");
+            if (incomingMessage.statusCode === 403) {
+              return reject(new InvalidKeyError("Invalid API Key"));
             }
 
+            /* istanbul ignore else */
+            if (
+              /* istanbul ignore next */ responseObject?.cause &&
+              typeof incomingMessage.statusCode === "number"
+            ) {
+              return reject(
+                new GenericHTTPError(
+                  incomingMessage.statusCode,
+                  responseObject.cause
+                )
+              );
+            }
+
+            /**
+             * Generic catch all that probably should never be caught.
+             */
+            /* istanbul ignore next */
             return reject(
               new Error(
                 `${incomingMessage.statusCode} ${incomingMessage.statusMessage}. Response: ${responseBody}`
@@ -376,6 +480,7 @@ export class Client extends EventEmitter {
             );
           }
 
+          /* istanbul ignore if */
           if (typeof responseObject === "undefined") {
             return reject(
               new Error(
@@ -389,11 +494,13 @@ export class Client extends EventEmitter {
       });
 
       let abortError: Error;
+      /* istanbul ignore next */
       clientRequest.once("abort", () => {
         abortError = abortError ?? new Error("Client aborted this request.");
         reject(abortError);
       });
 
+      /* istanbul ignore next */
       clientRequest.once("error", (error) => {
         abortError = error;
         clientRequest.abort();

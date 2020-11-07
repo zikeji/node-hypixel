@@ -51,25 +51,25 @@ const client = new Hypixel("API_KEY");
 ## Roadmap
 
 - [x] Add rate limiting support
-- [ ] Support not requiring an API key for resource endpoints?
+- [ ] Add cache support
 - [ ] Add method, typing, testing, and documentation for:
-  - [ ] Boosters
-  - [ ] Find Guild
-  - [ ] Friends
-  - [ ] Game Counts
-  - [ ] Guild
-  - [ ] Key
-  - [ ] Leaderboards
-  - [ ] Player
-  - [ ] Player Count
-  - [ ] Recent Games
+  - [x] Boosters
+  - [x] Find Guild
+  - [x] Friends
+  - [x] Game Counts
+  - [x] Guild
+  - [x] Key
+  - [x] Leaderboards
+  - [x] Player
+  - [x] Player Count
+  - [x] Recent Games
   - [ ] **Resources**
     - [ ] Achievements
     - [ ] Challenges
     - [ ] **Guilds**
       - [ ] Achievements
       - [ ] Permissions
-    - [ ] **SkyBlock**
+    - [x] **SkyBlock**
       - [x] Collections
       - [x] Skills
     - [ ] Quests
@@ -82,6 +82,8 @@ const client = new Hypixel("API_KEY");
     - [ ] Bazaar
   - [x] Status
   - [x] Watchdog Stats
+- [ ] Add extended documentation, and helpers for:
+  - [ ] Player endpoint, conversion of xp to levels and easily determining rank info
 
 ## Contributing
 If some API result isn't documented / typed out fully, please open an issue and I can add it ASAP. Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
