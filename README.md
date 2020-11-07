@@ -56,13 +56,13 @@ const client = new Hypixel("API_KEY");
   - [ ] Boosters
   - [ ] Find Guild
   - [ ] Friends
-  - [ ] Game Counts
+  - [x] Game Counts
   - [ ] Guild
   - [ ] Key
   - [ ] Leaderboards
   - [ ] Player
-  - [ ] Player Count
-  - [ ] Recent Games
+  - [x] Player Count
+  - [x] Recent Games
   - [ ] **Resources**
     - [ ] Achievements
     - [ ] Challenges
