@@ -45,6 +45,42 @@ export declare namespace Components {
        */
       success: boolean;
     }
+    export interface LeaderboardDataEntry {
+      path: string;
+      prefix: string;
+      title: string;
+      location: string;
+      count: number;
+      leaders: (string | null)[];
+    }
+    export interface LeaderboardsResponse {
+      leaderboards: {
+        [name: string]: LeaderboardDataEntry[];
+        ARENA: LeaderboardDataEntry[];
+        MCGO: LeaderboardDataEntry[];
+        BATTLEGROUND: LeaderboardDataEntry[];
+        SURVIVAL_GAMES: LeaderboardDataEntry[];
+        UHC: LeaderboardDataEntry[];
+        WALLS: LeaderboardDataEntry[];
+        PROTOTYPE: LeaderboardDataEntry[];
+        PAINTBALL: LeaderboardDataEntry[];
+        SKYWARS: LeaderboardDataEntry[];
+        MURDER_MYSTERY: LeaderboardDataEntry[];
+        SUPER_SMASH: LeaderboardDataEntry[];
+        DUELS: LeaderboardDataEntry[];
+        SPEED_UHC: LeaderboardDataEntry[];
+        TNTGAMES: LeaderboardDataEntry[];
+        BEDWARS: LeaderboardDataEntry[];
+        GINGERBREAD: LeaderboardDataEntry[];
+        BUILD_BATTLE: LeaderboardDataEntry[];
+        ARCADE: LeaderboardDataEntry[];
+        SKYCLASH: LeaderboardDataEntry[];
+        QUAKECRAFT: LeaderboardDataEntry[];
+        TRUE_COMBAT: LeaderboardDataEntry[];
+        WALLS3: LeaderboardDataEntry[];
+        VAMPIREZ: LeaderboardDataEntry[];
+      };
+    }
     export type NewsEntries = NewsEntry[];
     export interface NewsEntry {
       item: NewsEntryItem;
@@ -1222,6 +1258,47 @@ export declare namespace Paths {
             limit: number;
             queriesInPastMin: number;
             totalQueries: number;
+          };
+        }
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
+  namespace Leaderboards {
+    namespace Get {
+      namespace Responses {
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          leaderboards: {
+            [name: string]: Components.Schemas.LeaderboardDataEntry[];
+            ARENA: Components.Schemas.LeaderboardDataEntry[];
+            MCGO: Components.Schemas.LeaderboardDataEntry[];
+            BATTLEGROUND: Components.Schemas.LeaderboardDataEntry[];
+            SURVIVAL_GAMES: Components.Schemas.LeaderboardDataEntry[];
+            UHC: Components.Schemas.LeaderboardDataEntry[];
+            WALLS: Components.Schemas.LeaderboardDataEntry[];
+            PROTOTYPE: Components.Schemas.LeaderboardDataEntry[];
+            PAINTBALL: Components.Schemas.LeaderboardDataEntry[];
+            SKYWARS: Components.Schemas.LeaderboardDataEntry[];
+            MURDER_MYSTERY: Components.Schemas.LeaderboardDataEntry[];
+            SUPER_SMASH: Components.Schemas.LeaderboardDataEntry[];
+            DUELS: Components.Schemas.LeaderboardDataEntry[];
+            SPEED_UHC: Components.Schemas.LeaderboardDataEntry[];
+            TNTGAMES: Components.Schemas.LeaderboardDataEntry[];
+            BEDWARS: Components.Schemas.LeaderboardDataEntry[];
+            GINGERBREAD: Components.Schemas.LeaderboardDataEntry[];
+            BUILD_BATTLE: Components.Schemas.LeaderboardDataEntry[];
+            ARCADE: Components.Schemas.LeaderboardDataEntry[];
+            SKYCLASH: Components.Schemas.LeaderboardDataEntry[];
+            QUAKECRAFT: Components.Schemas.LeaderboardDataEntry[];
+            TRUE_COMBAT: Components.Schemas.LeaderboardDataEntry[];
+            WALLS3: Components.Schemas.LeaderboardDataEntry[];
+            VAMPIREZ: Components.Schemas.LeaderboardDataEntry[];
           };
         }
         export type $400 = Components.Responses.MissingFields;

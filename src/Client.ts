@@ -216,6 +216,23 @@ export class Client extends EventEmitter {
     ) as never;
   }
 
+  /**
+   * Returns a list of the official leaderboards and their current standings for games on the network.
+   * @example
+   * ```typescript
+   * const leaderboards = await client.leaderboards();
+   * console.log(leaderboards);
+   * ```
+   */
+  async leaderboards(): Promise<
+    ResultObject<Paths.Leaderboards.Get.Responses.$200, "leaderboards">
+  > {
+    return getResultObject(
+      await this.call<Paths.Leaderboards.Get.Responses.$200>("leaderboards"),
+      "leaderboards"
+    ) as never;
+  }
+
   // async leaderboards(): Promise<boolean> {
   //   return returnResponseObject(
   //     await this.call<Components.Schemas.ApiSuccess>("leaderboards"),

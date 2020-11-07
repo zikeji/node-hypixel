@@ -58,7 +58,7 @@ const client = new Hypixel("API_KEY");
   - [x] Game Counts
   - [x] Guild
   - [x] Key
-  - [ ] Leaderboards
+  - [x] Leaderboards
   - [ ] Player
   - [x] Player Count
   - [x] Recent Games

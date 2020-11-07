@@ -1679,6 +1679,799 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/RateLimitError'
+  /leaderboards:
+    get:
+      tags:
+        - metadata
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/leaderboards.md
+      summary: Returns a list of the official leaderboards and their current standings for games on the network.
+      description: |
+        #### Usage
+        ```typescript
+        const leaderboards = await client.leaderboards();
+        ```
+      responses:
+        '200':
+          description: An object describing the current leaderboards on Hypixel's network.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - $ref: '#/components/schemas/LeaderboardsResponse'
+              example:
+                success: true
+                leaderboards:
+                  ARENA:
+                    - path: arena_rating_b
+                      prefix: Overall
+                      title: Rating
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - 886ccd9d-d16d-4b8f-bf98-8b00831f9e30
+                        - 0c1f10f9-134e-4963-99b6-502270055a10
+                        - 1a02b5d6-1e95-468f-bed3-def763a75b0e
+                        - 86072b6c-1f4e-4ed7-8b03-b828a47c33d9
+                    - path: wins_1v1
+                      prefix: Overall
+                      title: 1v1 Wins
+                      location: -2554,54,715
+                      count: 10
+                      leaders:
+                        - 425fa076-cf95-4174-b3fc-c57943ebddba
+                        - 42d17101-d916-4b8a-a70b-93dc6ccbee27
+                        - 576749eb-6728-4773-a41b-b418a62f9c01
+                        - e5dcd129-69dc-479a-8d32-4fc423d755b9
+                  MCGO:
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: -2550,55,715
+                      count: 10
+                      leaders:
+                        - 7b1bb9c3-188d-4c7b-811b-90da2f670665
+                        - c8d0e91a-f6a1-42f4-94ee-c3fe21991435
+                        - da30c949-7de4-4131-ad3e-609f5f277eb9
+                        - 1266f943-0704-411b-b544-bde93fee8b14
+                    - path: normal_wins_2
+                      prefix: Monthly
+                      title: Defusal Wins
+                      location: 0,0,0
+                      count: 10
+                      leaders:
+                        - ff6b7b72-26ff-4e68-bd10-5f0c0d3ad8c7
+                        - fa0e925a-9f63-42dd-8edc-8beae92fb065
+                        - f9f7cda1-07db-4c53-896d-1857603606b2
+                        - 1ea5c6ee-7ae5-4c94-83c0-5306c7b252aa
+                    - path: normal_wins_1
+                      prefix: Weekly
+                      title: Defusal Wins
+                      location: 0,0,0
+                      count: 10
+                      leaders:
+                        - ff6b7b72-26ff-4e68-bd10-5f0c0d3ad8c7
+                        - fa0e925a-9f63-42dd-8edc-8beae92fb065
+                        - f9f7cda1-07db-4c53-896d-1857603606b2
+                        - 1ea5c6ee-7ae5-4c94-83c0-5306c7b252aa
+                    - path: deathmatch_wins_2
+                      prefix: Monthly
+                      title: Deathmatch Wins
+                      location: 0,0,0
+                      count: 10
+                      leaders:
+                        - d784e3ef-9f7a-43af-8e47-f0fe1d02474c
+                        - 9535b4f7-e59e-4ce0-b46d-7c41fe6d72fb
+                        - 38d19a8a-e577-43f1-b505-840c30a1e10d
+                        - 174856cd-5ffa-4688-9750-19a47594bbcf
+                  BATTLEGROUND:
+                    - path: wins
+                      prefix: Overall
+                      title: Wins
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - 8bb6dd7f-b3de-43ec-af7e-1be7975e7bca
+                        - 45fdbb18-52d6-4002-807d-240cdafcdab8
+                        - a61f48d2-c47f-4810-80ef-a3a6e8bf7cb6
+                        - 352ee5f2-caf3-4806-b396-a12f4a7ef8a1
+                    - path: wins_domination
+                      prefix: Overall
+                      title: DOM Wins
+                      location: -2554,53,715
+                      count: 10
+                      leaders:
+                        - f494f87c-a628-4506-bbe5-c15379cae4ec
+                        - 45fdbb18-52d6-4002-807d-240cdafcdab8
+                        - c943524c-9e81-4137-b505-2adb7971c4f5
+                        - 5f168163-ced2-4645-b424-1e48de4627a1
+                    - path: wins_teamdeathmatch
+                      prefix: Overall
+                      title: TDM Wins
+                      location: -2554,52,715
+                      count: 10
+                      leaders:
+                        - 45fdbb18-52d6-4002-807d-240cdafcdab8
+                        - 3d2fb54b-4c70-409e-a2b9-50a5c42eccc7
+                        - 73fe74a1-8ae5-475f-a527-cbaf90e394c6
+                        - 8bb6dd7f-b3de-43ec-af7e-1be7975e7bca
+                    - path: wins_capturetheflag
+                      prefix: Overall
+                      title: CTF Wins
+                      location: -2554,51,715
+                      count: 10
+                      leaders:
+                        - a61f48d2-c47f-4810-80ef-a3a6e8bf7cb6
+                        - 8bb6dd7f-b3de-43ec-af7e-1be7975e7bca
+                        - 352ee5f2-caf3-4806-b396-a12f4a7ef8a1
+                        - 01c4a20e-0a60-466f-bd98-ea71c346e5e4
+                  SURVIVAL_GAMES:
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - bba8054c-872a-4e24-a74d-858e9b9d0b13
+                        - 6c90504a-adb5-4099-9954-c23692703830
+                        - 7166de62-b38c-4733-ac33-ab7852b03ed6
+                        - fbdbf653-3723-4edd-85ae-2d28b60221f9
+                    - path: wins_solo_normal
+                      prefix: Overall
+                      title: Solo Wins
+                      location: -2554,54,715
+                      count: 10
+                      leaders:
+                        - bba8054c-872a-4e24-a74d-858e9b9d0b13
+                        - 2e7d0e70-4fe3-4d92-849a-24fcf7f9894e
+                        - 6c90504a-adb5-4099-9954-c23692703830
+                        - 9daa06c7-ad91-45ff-8cc7-9de088b6d686
+                    - path: wins_teams
+                      prefix: Overall
+                      title: Teams Wins
+                      location: -2554,53,715
+                      count: 10
+                      leaders:
+                        - 556cd0de-cd29-4962-9f1c-8b80234e4212
+                        - 2a8e54f8-2e68-489a-9ece-6cadfd24b09c
+                        - 7166de62-b38c-4733-ac33-ab7852b03ed6
+                        - 5b05d1e7-76f4-4eb0-a759-9e4d3131fe85
+                  UHC:
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: -2554,13,715
+                      count: 10
+                      leaders:
+                        - c9a3e421-9dd5-4623-bad5-d2569f546eb8
+                        - 1c1419bf-3c22-412a-8e8a-63f3f5546ff4
+                        - 692a8229-646c-4a85-99bf-f48d99c1e1f8
+                        - 64e31ca7-17d3-4707-a077-873f5cde7632
+                    - path: monthly_kills_b
+                      prefix: Monthly
+                      title: Kills
+                      location: -2554,12,715
+                      count: 10
+                      leaders:
+                        - 7040c0c7-5de4-4778-b11d-21dfe72efa0b
+                        - 46b3c68a-f795-41bd-9d6c-bfe8e4678521
+                        - a336071c-f30d-44a8-aa9c-0e3e681a6678
+                        - 09a2e8a4-42d5-4902-b3f4-a656709dc550
+                    - path: wins
+                      prefix: Overall
+                      title: Wins
+                      location: -2554,11,715
+                      count: 10
+                      leaders:
+                        - c9a3e421-9dd5-4623-bad5-d2569f546eb8
+                        - 0aa4deda-eadd-43db-ae0e-df6649f51e09
+                        - 94553984-0a4f-46e2-a138-1966e33d9f7f
+                        - c6245d4f-40f8-48be-abe8-c94faf7e0d4c
+                    - path: monthly_wins_b
+                      prefix: Monthly
+                      title: Wins
+                      location: -2554,10,715
+                      count: 10
+                      leaders:
+                        - 7040c0c7-5de4-4778-b11d-21dfe72efa0b
+                        - a336071c-f30d-44a8-aa9c-0e3e681a6678
+                        - 46b3c68a-f795-41bd-9d6c-bfe8e4678521
+                        - 09a2e8a4-42d5-4902-b3f4-a656709dc550
+                  WALLS:
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: -2555,42,710
+                      count: 10
+                      leaders:
+                        - 44ad1473-0a2a-4e91-9559-f6f614478156
+                        - b900be9d-adcf-4eb0-a953-9b5c490c23b3
+                        - d3a45b30-c6f5-4529-9fbe-23e33828354b
+                        - a4bc06cb-fb73-4d5e-a2f3-13284c2fb660
+                    - path: monthly_kills_b
+                      prefix: Monthly
+                      title: Kills
+                      location: -2555,41,710
+                      count: 10
+                      leaders:
+                        - b900be9d-adcf-4eb0-a953-9b5c490c23b3
+                        - 44ad1473-0a2a-4e91-9559-f6f614478156
+                        - d3a45b30-c6f5-4529-9fbe-23e33828354b
+                        - a4bc06cb-fb73-4d5e-a2f3-13284c2fb660
+                    - path: weekly_kills_a
+                      prefix: Weekly
+                      title: Kills
+                      location: -2555,40,710
+                      count: 10
+                      leaders:
+                        - b900be9d-adcf-4eb0-a953-9b5c490c23b3
+                        - 44ad1473-0a2a-4e91-9559-f6f614478156
+                        - d3a45b30-c6f5-4529-9fbe-23e33828354b
+                        - a4bc06cb-fb73-4d5e-a2f3-13284c2fb660
+                  PROTOTYPE:
+                  PAINTBALL:
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - 31ff3435-3b4c-451a-a0a1-4d1185e17f68
+                        - 37637353-e6b9-4e3e-94ec-d9bb46e42af3
+                        - 7c59cb3c-dcd9-4346-b958-750d3818ddb9
+                        - f025c1c7-f55a-4ea0-b8d9-3f47d17dfe0f
+                    - path: kills_b
+                      prefix: Monthly
+                      title: Kills
+                      location: -2554,54,715
+                      count: 10
+                      leaders:
+                        - a29972a6-8443-4eef-a176-3084d30142ca
+                        - 879114af-ef96-48d4-81fb-dabea482d64e
+                        - 6b3053e9-5f40-4ca4-982b-039c8a9729bb
+                        - a759fac6-2da5-4473-9150-5b50892314d4
+                    - path: kills_a
+                      prefix: Weekly
+                      title: Kills
+                      location: -2554,53,715
+                      count: 10
+                      leaders:
+                        - a29972a6-8443-4eef-a176-3084d30142ca
+                        - 879114af-ef96-48d4-81fb-dabea482d64e
+                        - 6b3053e9-5f40-4ca4-982b-039c8a9729bb
+                        - a759fac6-2da5-4473-9150-5b50892314d4
+                  SKYWARS:
+                    - path: skywars_rating_b
+                      prefix: Overall
+                      title: Rating
+                      location: -2556,56,712
+                      count: 14
+                      leaders:
+                    - path: wins
+                      prefix: Overall
+                      title: Wins
+                      location: -2556,55,712
+                      count: 14
+                      leaders:
+                        - 2afdb69c-c007-40cd-98b9-76a7554612d9
+                        - 6951ccdb-9ca7-4c8a-883b-a8d3bb81c3d2
+                        - e61044cc-c42f-439b-9ad7-817c51ae7174
+                        - 12056d8b-e2b6-4621-802f-7a581f524b53
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: -2556,54,712
+                      count: 14
+                      leaders:
+                        - 2afdb69c-c007-40cd-98b9-76a7554612d9
+                        - e61044cc-c42f-439b-9ad7-817c51ae7174
+                        - 36cef0d3-f213-46dd-ba3d-9ab3e4ecd687
+                        - 12056d8b-e2b6-4621-802f-7a581f524b53
+                    - path: kills_monthly_2
+                      prefix: Monthly
+                      title: Kills
+                      location: -2556,53,712
+                      count: 14
+                      leaders:
+                        - 20411abf-ecbc-40f1-8897-0be1ab4a0721
+                        - 12056d8b-e2b6-4621-802f-7a581f524b53
+                        - 5b9a07ae-f213-43cf-994d-939cc638fc5c
+                        - d92bd382-7ff7-42c7-8588-ff722ff7d7a0
+                  MURDER_MYSTERY:
+                    - path: wins
+                      prefix: Overall
+                      title: Wins
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - b3b18e30-da91-45b8-bd10-a767ba5f12e9
+                        - fb71c0fc-6dba-4a18-a397-f2cce59f28d7
+                        - 4aa79729-0fc2-4cc9-b81e-28cb3a1dc30c
+                        - 93862e00-6994-4fa3-885b-17db8f73cc06
+                    - path: wins_1
+                      prefix: Weekly
+                      title: Wins
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - f36bdc4f-7dab-462b-87b6-dee2e3af8490
+                        - 4aa518cc-6036-4d11-88b2-60aff0bbddf6
+                        - fb71c0fc-6dba-4a18-a397-f2cce59f28d7
+                        - 7092686b-d914-43cc-a9bb-77bef9dca36d
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - b3b18e30-da91-45b8-bd10-a767ba5f12e9
+                        - f7b61e37-0970-4dab-b57b-24c779894ca9
+                        - ea0aae8a-4209-4992-898c-b6fc319c0bfd
+                        - e295e12d-e912-4be2-baa7-ab49efd20a63
+                    - path: kills_1
+                      prefix: Weekly
+                      title: Kills
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - e957f9c3-19cd-4ef2-9dfd-13862b375b9e
+                        - f36bdc4f-7dab-462b-87b6-dee2e3af8490
+                        - 329eea92-f5f7-4580-a4b6-8ef98870c525
+                        - 4aa518cc-6036-4d11-88b2-60aff0bbddf6
+                  SUPER_SMASH:
+                    - path: smash_level_total
+                      prefix: Overall
+                      title: Smash Level
+                      location: 814,39,32
+                      count: 14
+                      leaders:
+                        - ed1296e1-54f7-49bd-beea-af405b891f31
+                        - bef402f4-1b0e-41d1-beb3-0f39aaa80661
+                        - bec9029b-efb3-4c85-925d-f2e97640cf92
+                        - be52d218-ec9a-4d99-bce8-a2ed52cdf8c9
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: 814,38,32
+                      count: 14
+                      leaders:
+                        - 2de27887-dbb9-4154-8a36-029d6de5f468
+                        - 48633e98-c618-42b1-a85f-78775ce3f4a8
+                        - 22060ff2-8f07-476d-ba5d-37efd4b6b9d3
+                        - 176ebb3a-0288-4f91-9b2b-842fee80e33c
+                    - path: kills_b
+                      prefix: Monthly
+                      title: Kills
+                      location: 814,37,32
+                      count: 14
+                      leaders:
+                        - 2e1884f6-9c29-4bd5-89e6-d7709b100298
+                        - aa365d91-a5ac-4f85-a7fa-b8f4919d5c93
+                        - ef23eebb-88ba-4f0f-978f-3161cfde2ba8
+                        - d0cdf17b-f8bd-4195-a8ab-c366bd5eb7c3
+                    - path: kills_a
+                      prefix: Weekly
+                      title: Kills
+                      location: 814,36,32
+                      count: 14
+                      leaders:
+                        - 2e1884f6-9c29-4bd5-89e6-d7709b100298
+                        - aa365d91-a5ac-4f85-a7fa-b8f4919d5c93
+                        - ef23eebb-88ba-4f0f-978f-3161cfde2ba8
+                        - d0cdf17b-f8bd-4195-a8ab-c366bd5eb7c3
+                  DUELS:
+                    - path: wins_weekly_a
+                      prefix: Weekly
+                      title: Wins
+                      location: 0,0,0
+                      count: 10
+                      leaders:
+                        - 54d7467e-5acd-48c4-9bf8-2c6f8a492f2f
+                        - fcec891c-13c9-4c96-94cf-91d757a50234
+                        - 5a690439-5dd6-4d52-8fe9-8f201c73214e
+                        - 400f42b6-b7fd-410c-b719-d24b427fbad1
+                    - path: wins_monthly_b
+                      prefix: Monthly
+                      title: Wins
+                      location: 0,0,0
+                      count: 10
+                      leaders:
+                        - 54d7467e-5acd-48c4-9bf8-2c6f8a492f2f
+                        - fcec891c-13c9-4c96-94cf-91d757a50234
+                        - 5a690439-5dd6-4d52-8fe9-8f201c73214e
+                        - 400f42b6-b7fd-410c-b719-d24b427fbad1
+                  SPEED_UHC:
+                    - path: salt
+                      prefix: Total
+                      title: Salt
+                      location: -2551,58,712
+                      count: 16
+                      leaders:
+                        - 3dd44efa-1b57-4c68-ad65-b9601ce791ff
+                        - 5409757b-8734-4c03-94b1-0bf966a2d594
+                        - 06a87689-a1c9-476c-82d7-127f25769e33
+                        - 6d04f5ca-de1f-449c-9d24-c7abd986cc64
+                    - path: kills_normal
+                      prefix: Normal
+                      title: Kills
+                      location: -2551,57,712
+                      count: 16
+                      leaders:
+                        - 3dd44efa-1b57-4c68-ad65-b9601ce791ff
+                        - b3161a77-90ad-43e6-97fd-a9e298ffb699
+                        - 2c8e1e5d-1fbd-466f-b677-0fdd65359cd5
+                        - 86de061e-00d2-4588-8c98-016283a78e31
+                    - path: wins_normal
+                      prefix: Normal
+                      title: Wins
+                      location: -2551,56,712
+                      count: 16
+                      leaders:
+                        - 3dd44efa-1b57-4c68-ad65-b9601ce791ff
+                        - b3161a77-90ad-43e6-97fd-a9e298ffb699
+                        - 2c8e1e5d-1fbd-466f-b677-0fdd65359cd5
+                        - 86de061e-00d2-4588-8c98-016283a78e31
+                    - path: kills_insane
+                      prefix: Insane
+                      title: Kills
+                      location: -2551,55,712
+                      count: 16
+                      leaders:
+                        - 3dd44efa-1b57-4c68-ad65-b9601ce791ff
+                        - f5a1122d-9ee6-4b0a-9ddb-e6c66476f103
+                        - 6d04f5ca-de1f-449c-9d24-c7abd986cc64
+                        - 83f44cd9-ca9d-4712-a6bf-9e618574f0de
+                  TNTGAMES:
+                    - path: wins_tntrun
+                      prefix: Overall
+                      title: TNT Run Wins
+                      location: -2554,57,715
+                      count: 10
+                      leaders:
+                        - aed8deec-8c35-4187-8a79-ba72ab29076d
+                        - b379f448-0f28-4eb8-af7b-a8d1ead7b80f
+                        - 141e5144-6940-46ea-a7e5-36ed70cc1595
+                        - f9fe4ed4-1242-460d-b7db-d7bfd054e082
+                    - path: wins_pvprun
+                      prefix: Overall
+                      title: PVP Run Wins
+                      location: -2554,56,715
+                      count: 10
+                      leaders:
+                        - 9e7d2bdb-3dc6-448f-9bb2-67cb76c422ac
+                        - 2acdd559-e426-4028-94fe-7077d64da2a9
+                        - 0eb1125c-9f75-4fba-87c2-116f67b7a209
+                        - 2ccb704c-71b9-42a6-b7a2-695e6d53711e
+                    - path: wins_capture
+                      prefix: Overall
+                      title: Wizards Wins
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - 3c57402d-3fd9-4ba9-abc0-e239ac13e2ba
+                        - 76dda034-88fb-4e59-8e40-126b1a7a140d
+                        - 0b1c1870-5cf5-493c-8f91-0f4581054f26
+                        - 54199f5f-a4cc-4d6d-bbfd-79d448e6102a
+                    - path: wins_tntag
+                      prefix: Overall
+                      title: TNT Tag Wins
+                      location: -2554,54,715
+                      count: 10
+                      leaders:
+                        - 16495069-13bc-4c16-869b-c49965786629
+                        - 386c874e-7b1f-4951-8e8c-293fb2cce01b
+                        - 6a9ef19c-d011-4811-9ea7-9a540044d589
+                        - 4497e0d3-3500-4183-9052-3d52d1d42e51
+                  BEDWARS:
+                    - path: bedwars_level
+                      prefix: Current
+                      title: Level
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - fe15273a-c660-4a6f-95da-ee3f9458eeba
+                        - 383a081f-6dc0-4ac0-bb95-1f8d50c3e532
+                        - 317517f7-470d-456a-a6ee-ea037425db33
+                        - 4430ab4e-56ef-4eca-987e-cdff56697930
+                    - path: wins
+                      prefix: Overall
+                      title: Wins
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - fe15273a-c660-4a6f-95da-ee3f9458eeba
+                        - 50c68641-558d-48b0-b36f-f89e94069acf
+                        - 383a081f-6dc0-4ac0-bb95-1f8d50c3e532
+                        - 9491cd6c-18a6-47e3-aea9-0178447844b0
+                    - path: wins_1
+                      prefix: Weekly
+                      title: Wins
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - f54f3af5-572f-41e6-914d-dd941971d129
+                        - e6e4990d-fcba-4cb6-8ce2-7a50348560f5
+                        - 4975c48c-4e9d-48dd-9580-45549636a10a
+                        - e8e3c4f6-9a92-4024-ac84-4306baf9a5ab
+                    - path: final_kills
+                      prefix: Overall
+                      title: Final Kills
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - fe15273a-c660-4a6f-95da-ee3f9458eeba
+                        - 317517f7-470d-456a-a6ee-ea037425db33
+                        - 24c182c6-716b-47c6-8f60-a1be9045c449
+                        - 3a5321ea-3360-4353-9f84-fa018c5de50b
+                  GINGERBREAD:
+                    - path: gold_trophy
+                      prefix: Overall
+                      title: Gold Trophies
+                      location: -114,34,-8
+                      count: 10
+                      leaders:
+                        - cdea3387-7a37-413d-a44e-365acc9f7a50
+                        - 617c7e30-149b-408f-b1d4-5d0ada9b8d1a
+                        - dd67feb4-219a-47b2-8ff5-89fed5a26b68
+                        - 944e11e3-ab42-4b73-b60c-3ff456aa3c5f
+                    - path: gold_2
+                      prefix: Monthly
+                      title: Gold Trophies
+                      location: -114,33,-8
+                      count: 10
+                      leaders:
+                        - a15d2ae2-a16a-4415-b9c4-8bf8470f9d49
+                        - cdea3387-7a37-413d-a44e-365acc9f7a50
+                        - cc3e837e-3885-4361-a99a-85b32942ae00
+                        - 6b93a19c-9bf2-4fa7-832b-7e26783366af
+                    - path: gold_1
+                      prefix: Weekly
+                      title: Gold Trophies
+                      location: -114,32,-8
+                      count: 10
+                      leaders:
+                        - a15d2ae2-a16a-4415-b9c4-8bf8470f9d49
+                        - cdea3387-7a37-413d-a44e-365acc9f7a50
+                        - cc3e837e-3885-4361-a99a-85b32942ae00
+                        - 6b93a19c-9bf2-4fa7-832b-7e26783366af
+                    - path: laps_completed
+                      prefix: Overall
+                      title: Laps Completed
+                      location: -114,31,-8
+                      count: 10
+                      leaders:
+                        - cdea3387-7a37-413d-a44e-365acc9f7a50
+                        - 617c7e30-149b-408f-b1d4-5d0ada9b8d1a
+                        - dd67feb4-219a-47b2-8ff5-89fed5a26b68
+                        - 3863e1c3-3eb3-4215-9e45-a17f16c0fb4c
+                  BUILD_BATTLE:
+                    - path: score
+                      prefix: Lifetime
+                      title: Score
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - 71842575-8b61-4639-b28f-b12157dabcf5
+                        - f9beae65-c0fc-46ee-8691-99589d1e28a3
+                        - ce38dc5e-8b53-4b77-88de-cd989bea71f6
+                        - 6dbbd744-f8bb-4a59-b783-7d8c29ac48e6
+                    - path: coins
+                      prefix: Lifetime
+                      title: Coins
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - f9beae65-c0fc-46ee-8691-99589d1e28a3
+                        - 3efd540b-06ae-4141-8616-72f6510c99e8
+                        - 7ab7ff47-2e13-4b69-82b7-fcaffe994360
+                        - bfcc0ed5-4776-4a93-8ac3-922c8aebc3d2
+                    - path: wins
+                      prefix: Lifetime
+                      title: Wins
+                      location: 0,0,0
+                      count: 14
+                      leaders:
+                        - 71842575-8b61-4639-b28f-b12157dabcf5
+                        - 6dbbd744-f8bb-4a59-b783-7d8c29ac48e6
+                        - d5f8632f-360e-4965-a5e0-c5b6c122c92f
+                        - bbc615f9-3d2b-4e3f-9d41-4a60804b196b
+                  ARCADE:
+                    - path: coins
+                      prefix: Current
+                      title: Coins
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - 125b094d-ab5b-4f72-8d06-587d09789602
+                        - 683599f6-258a-4e14-825c-c20690b2fbe2
+                        - 6211503e-3c8a-461f-ba0c-d17cd7975d1a
+                        - 0aa12772-03fc-4c67-854f-eda7249b2c07
+                    - path: weekly_coins_a
+                      prefix: Weekly
+                      title: Coins
+                      location: -2554,53,715
+                      count: 10
+                      leaders:
+                        - 683599f6-258a-4e14-825c-c20690b2fbe2
+                        - 12eaa872-8ab2-40fa-a336-02c516d09185
+                        - 4bf1106a-ec39-4859-8167-be84924abc1d
+                        - 1c319423-2a30-4d8f-9cec-5b73324d523e
+                    - path: monthly_coins_b
+                      prefix: Monthly
+                      title: Coins
+                      location: -2554,54,715
+                      count: 10
+                      leaders:
+                        - 683599f6-258a-4e14-825c-c20690b2fbe2
+                        - 12eaa872-8ab2-40fa-a336-02c516d09185
+                        - 66923dc4-3af6-44bb-a499-071739732284
+                        - 4bf1106a-ec39-4859-8167-be84924abc1d
+                  SKYCLASH:
+                    - path: kills
+                      prefix: Total
+                      title: Kills
+                      location: -5,66,-32
+                      count: 14
+                      leaders:
+                        - f14aa8f3-6cb2-4207-a9c6-80a22549f9e6
+                        - acab01d7-504b-4fa1-ad2f-b96f96afccbc
+                        - 031a3461-a56d-4459-98b6-5bed0c4cafdc
+                        - e2bf0a2f-2cf2-4fc2-9512-511ddc10201a
+                    - path: wins_solo
+                      prefix: Solo
+                      title: Wins
+                      location: -5,65,-32
+                      count: 14
+                      leaders:
+                        - f14aa8f3-6cb2-4207-a9c6-80a22549f9e6
+                        - 3c6a5574-1f89-42fa-ba37-0e6408ed86f7
+                        - b8483b6e-868e-4744-8835-def95862b271
+                        - 2d226fed-cc9f-41b0-8a3c-06099255a80c
+                    - path: wins_doubles
+                      prefix: Doubles
+                      title: Wins
+                      location: -5,64,-32
+                      count: 14
+                      leaders:
+                        - 82131e5b-7af8-4736-8b12-1786897f2af5
+                        - 90747aac-cb28-48a7-b302-27657b79480c
+                        - 840c16fb-bc94-4c5d-ba35-eec24815ff73
+                        - e61a923b-add0-456f-8750-f665172b0b13
+                    - path: wins_team_war
+                      prefix: TeamWar
+                      title: Wins
+                      location: -5,63,-32
+                      count: 14
+                      leaders:
+                        - acab01d7-504b-4fa1-ad2f-b96f96afccbc
+                        - 98f8f9c9-165d-4d4b-b672-59040a9407a7
+                        - e2bf0a2f-2cf2-4fc2-9512-511ddc10201a
+                        - 3a134c7e-b61e-490b-83d9-86f16969bf7f
+                  QUAKECRAFT:
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - 511a4cd1-138b-45b9-8d39-3680454bd6e3
+                        - d9d3cd91-d888-4d04-9193-6185d317c4c0
+                        - 7965bf44-c87f-4a86-ba9c-9c4cb395c99c
+                        - bd3492d0-1194-4159-a827-f73c2897640d
+                    - path: kills_b
+                      prefix: Monthly
+                      title: Kills
+                      location: -2554,54,715
+                      count: 10
+                      leaders:
+                    - path: kills_a
+                      prefix: Weekly
+                      title: Kills
+                      location: -2554,53,715
+                      count: 10
+                      leaders:
+                  TRUE_COMBAT:
+                    - path: wins
+                      prefix: Overall
+                      title: Wins
+                      location: 33,33,10
+                      count: 10
+                      leaders:
+                        - 8682b351-e9c2-4163-9291-935776608054
+                        - fb3d9649-8a5b-4d5b-91b7-63db14b195ad
+                        - 27a86e79-99a6-4f32-a8ae-44b2ea310fe1
+                        - 7fa3c2e8-9e3d-4348-aaf1-703bc9da970b
+                    - path: kills
+                      prefix: Overall
+                      title: Kills
+                      location: 33,32,10
+                      count: 10
+                      leaders:
+                        - fb3d9649-8a5b-4d5b-91b7-63db14b195ad
+                        - 27a86e79-99a6-4f32-a8ae-44b2ea310fe1
+                        - 8682b351-e9c2-4163-9291-935776608054
+                        - 7fa3c2e8-9e3d-4348-aaf1-703bc9da970b
+                    - path: kills_monthly_b
+                      prefix: Monthly
+                      title: Kills
+                      location: 33,31,10
+                      count: 10
+                      leaders:
+                    - path: kills_weekly_a
+                      prefix: Weekly
+                      title: Kills
+                      location: 33,30,10
+                      count: 10
+                      leaders:
+                  WALLS3:
+                    - path: finalKills
+                      prefix: Overall
+                      title: Final Kills
+                      location: -2554,54,712
+                      count: 10
+                      leaders:
+                        - f01736f9-4059-4585-895c-342c5f087464
+                        - 22bd72ab-e315-4766-8cbd-198f2bca58b4
+                        - 599ec515-b661-4f70-a509-e50fb07fdc4a
+                        - 024c5b04-f2ea-4a09-ab1c-1a1995a359f0
+                    - path: monthly_finalKills_b
+                      prefix: Monthly
+                      title: Final Kills
+                      location: -2554,53,712
+                      count: 10
+                      leaders:
+                        - ed2bf33a-c3a1-46de-a3dc-8a57eaade4c9
+                        - ac977caa-76cf-40d0-b988-047db1277da7
+                        - bd37a95f-f22c-43e1-b593-5b48519970d2
+                        - f3923c45-8bd7-4f5d-a5b1-616d0b515584
+                    - path: weekly_finalKills_a
+                      prefix: Weekly
+                      title: Final Kills
+                      location: -2554,52,712
+                      count: 10
+                      leaders:
+                        - ed2bf33a-c3a1-46de-a3dc-8a57eaade4c9
+                        - ac977caa-76cf-40d0-b988-047db1277da7
+                        - bd37a95f-f22c-43e1-b593-5b48519970d2
+                        - f3923c45-8bd7-4f5d-a5b1-616d0b515584
+                  VAMPIREZ:
+                    - path: human_wins
+                      prefix: Overall
+                      title: Human Wins
+                      location: -2554,55,715
+                      count: 10
+                      leaders:
+                        - dfaa25e4-1c05-4575-bf7f-fccf248f5c6a
+                        - cb81ee59-9012-40fc-9aa0-617907138ea7
+                        - 78bb7dfc-2754-4337-a4f3-751b9cf15bdb
+                        - dfecbaf1-3712-4543-ba13-a99f23f70382
+                    - path: human_wins_b
+                      prefix: Monthly
+                      title: Human Wins
+                      location: -2554,54,715
+                      count: 10
+                      leaders:
+                        - 27be3470-303a-4f1b-8e36-6ac44d5f56cf
+                        - bfc1fbb4-fdde-41c8-b07e-54d92c31497d
+                        - 54df6bf6-8d70-42bc-a1cb-12596ed9b57f
+                        - dbd6b99f-e00c-47d0-bc74-53bdacec035b
+                    - path: human_wins_a
+                      prefix: Weekly
+                      title: Human Wins
+                      location: -2554,53,715
+                      count: 10
+                      leaders:
+                        - 27be3470-303a-4f1b-8e36-6ac44d5f56cf
+                        - bfc1fbb4-fdde-41c8-b07e-54d92c31497d
+                        - 54df6bf6-8d70-42bc-a1cb-12596ed9b57f
+                        - dbd6b99f-e00c-47d0-bc74-53bdacec035b
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /playerCount:
     get:
       tags:
@@ -2160,6 +2953,159 @@ components:
       required:
         - success
         - cause
+    LeaderboardsResponse:
+      type: object
+      properties:
+        leaderboards:
+          type: object
+          properties:
+            ARENA:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            MCGO:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            BATTLEGROUND:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            SURVIVAL_GAMES:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            UHC:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            WALLS:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            PROTOTYPE:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            PAINTBALL:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            SKYWARS:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            MURDER_MYSTERY:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            SUPER_SMASH:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            DUELS:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            SPEED_UHC:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            TNTGAMES:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            BEDWARS:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            GINGERBREAD:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            BUILD_BATTLE:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            ARCADE:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            SKYCLASH:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            QUAKECRAFT:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            TRUE_COMBAT:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            WALLS3:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+            VAMPIREZ:
+              type: array
+              items:
+                $ref: '#/components/schemas/LeaderboardDataEntry'
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/LeaderboardDataEntry'
+          required:
+            - ARENA
+            - MCGO
+            - BATTLEGROUND
+            - SURVIVAL_GAMES
+            - UHC
+            - WALLS
+            - PROTOTYPE
+            - PAINTBALL
+            - SKYWARS
+            - MURDER_MYSTERY
+            - SUPER_SMASH
+            - DUELS
+            - SPEED_UHC
+            - TNTGAMES
+            - BEDWARS
+            - GINGERBREAD
+            - BUILD_BATTLE
+            - ARCADE
+            - SKYCLASH
+            - QUAKECRAFT
+            - TRUE_COMBAT
+            - WALLS3
+            - VAMPIREZ
+      required:
+        - leaderboards
+    LeaderboardDataEntry:
+      type: object
+      properties:
+        path:
+          type: string
+        prefix:
+          type: string
+        title:
+          type: string
+        location:
+          type: string
+        count:
+          type: number
+        leaders:
+          type: array
+          items:
+            type: string
+            nullable: true
+      required:
+        - path
+        - prefix
+        - title
+        - location
+        - count
+        - leaders
     ResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

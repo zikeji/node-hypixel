@@ -280,6 +280,34 @@ describe("Get key info", function () {
   });
 });
 
+describe("Get leaderboards", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.leaderboards>;
+  it("expect not to throw", async function () {
+    result = await client.leaderboards();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    for (const gameMode of Object.keys(result)) {
+      const leaderboard = result[gameMode];
+      expect(leaderboard).to.be.an("array");
+      for (const entry of leaderboard) {
+        expect(entry.count).to.be.a("number");
+        expect(entry.leaders)
+          .to.be.an("array")
+          .and.to.satisfy(function (leaders: (string | null)[]) {
+            return leaders.every((v) => v === null || typeof v === "string");
+          });
+        expect(entry.location).to.be.a("string");
+        expect(entry.path).to.be.a("string");
+        expect(entry.prefix).to.be.a("string");
+        expect(entry.title).to.be.a("string");
+      }
+    }
+  });
+});
+
 describe("Get player count", function () {
   this.timeout(30000);
   this.slow(1000);
