@@ -2,6 +2,7 @@ import { EventEmitter } from "events";
 import { IncomingHttpHeaders } from "http";
 import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
+import { GenericHTTPError } from "./errors/GenericHTTPError";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { RateLimitError } from "./errors/RateLimitError";
 import { FindGuild } from "./methods/findGuild";
@@ -339,10 +340,17 @@ export class Client extends EventEmitter {
     try {
       response = await call.execute();
     } catch (error) {
-      if (error instanceof InvalidKeyError || call.retries === this.retries) {
+      /* istanbul ignore else */
+      if (
+        error instanceof InvalidKeyError ||
+        error instanceof GenericHTTPError ||
+        /* istanbul ignore next */ call.retries === this.retries
+      ) {
         throw error;
       }
+      /* istanbul ignore next */
       call.retries += 1;
+      /* istanbul ignore next */
       return this.executeActionableCall<T>(call);
     } finally {
       this.queue.free();
@@ -359,6 +367,7 @@ export class Client extends EventEmitter {
   /** @internal */
   private createActionableCall<T extends Components.Schemas.ApiSuccess>(
     path: string,
+    /* istanbul ignore next */
     parameters: Parameters = {}
   ): ActionableCall<T> {
     return {
@@ -370,7 +379,10 @@ export class Client extends EventEmitter {
   /** @internal */
   private callMethod<
     T extends Components.Schemas.ApiSuccess & { cause?: string }
-  >(path: string, parameters: Parameters = {}): Promise<T> {
+  >(
+    path: string,
+    /* istanbul ignore next */ parameters: Parameters = {}
+  ): Promise<T> {
     const url = new URL(path, Client.endpoint);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
@@ -405,6 +417,7 @@ export class Client extends EventEmitter {
         incomingMessage.on("end", () => {
           this.getRateLimitHeaders(incomingMessage.headers);
 
+          /* istanbul ignore next */
           if (
             typeof responseBody !== "string" ||
             responseBody.trim().length === 0
@@ -420,17 +433,32 @@ export class Client extends EventEmitter {
           }
 
           if (incomingMessage.statusCode !== 200) {
+            /* istanbul ignore next */
             if (incomingMessage.statusCode === 429) {
               return reject(new RateLimitError(`Hit key throttle.`));
             }
 
-            if (
-              typeof responseObject === "object" &&
-              responseObject.cause === "Invalid API key"
-            ) {
-              throw new InvalidKeyError("Invalid API Key");
+            if (incomingMessage.statusCode === 403) {
+              return reject(new InvalidKeyError("Invalid API Key"));
             }
 
+            /* istanbul ignore else */
+            if (
+              /* istanbul ignore next */ responseObject?.cause &&
+              typeof incomingMessage.statusCode === "number"
+            ) {
+              return reject(
+                new GenericHTTPError(
+                  incomingMessage.statusCode,
+                  responseObject.cause
+                )
+              );
+            }
+
+            /**
+             * Generic catch all that probably should never be caught.
+             */
+            /* istanbul ignore next */
             return reject(
               new Error(
                 `${incomingMessage.statusCode} ${incomingMessage.statusMessage}. Response: ${responseBody}`
@@ -438,6 +466,7 @@ export class Client extends EventEmitter {
             );
           }
 
+          /* istanbul ignore if */
           if (typeof responseObject === "undefined") {
             return reject(
               new Error(
@@ -451,11 +480,13 @@ export class Client extends EventEmitter {
       });
 
       let abortError: Error;
+      /* istanbul ignore next */
       clientRequest.once("abort", () => {
         abortError = abortError ?? new Error("Client aborted this request.");
         reject(abortError);
       });
 
+      /* istanbul ignore next */
       clientRequest.once("error", (error) => {
         abortError = error;
         clientRequest.abort();
