@@ -32,57 +32,6 @@ tags:
     externalDocs:
       url: https://github.com/HypixelDev/PublicAPI/tree/master/Documentation/methods/skyblock
 paths:
-  /findGuild:
-    get:
-      tags:
-        - guild
-      externalDocs:
-        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/findGuild.md
-      summary: Returns the id of the requested guild.
-      description: |
-        #### Usage
-        ```typescript
-        let { guild } = await client.findGuild.byName("Mini Squid");
-        console.log(guild);
-        // 553490650cf26f12ae5bac8f
-        { guild } = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
-        console.log(guild);
-        // 553490650cf26f12ae5bac8f
-        ```
-      parameters:
-        - $ref: '#/components/parameters/byUuid'
-        - $ref: '#/components/parameters/byGuildName'
-      responses:
-        '200':
-          description: An object containing the guild ID if found, otherwise if not found the guild property will be null.
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/ApiSuccess'
-                  - type: object
-                    properties:
-                      guild:
-                        type: string
-                        nullable: true
-                        example: 5985b1930cf28d110c2dac07
-                    required:
-                      - guild
-        '400':
-          description: Missing one or more fields [byName,byUuid]
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiError'
-              example:
-                success: false
-                cause: 'Missing one or more fields [byName,byUuid]'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '422':
-          $ref: '#/components/responses/MalformedUUID'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
   /boosters:
     get:
       tags:
@@ -191,6 +140,127 @@ paths:
           $ref: '#/components/responses/MissingFields'
         '403':
           $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /findGuild:
+    get:
+      tags:
+        - guild
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/findGuild.md
+      summary: Returns the id of the requested guild.
+      description: |
+        #### Usage
+        ```typescript
+        let { guild } = await client.findGuild.byName("Mini Squid");
+        console.log(guild);
+        // 553490650cf26f12ae5bac8f
+        { guild } = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
+        console.log(guild);
+        // 553490650cf26f12ae5bac8f
+        ```
+      parameters:
+        - $ref: '#/components/parameters/byUuid'
+        - $ref: '#/components/parameters/byGuildName'
+      responses:
+        '200':
+          description: An object containing the guild ID if found, otherwise if not found the guild property will be null.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      guild:
+                        type: string
+                        nullable: true
+                        example: 5985b1930cf28d110c2dac07
+                    required:
+                      - guild
+        '400':
+          description: Missing one or more fields [byName,byUuid]
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                success: false
+                cause: 'Missing one or more fields [byName,byUuid]'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/MalformedUUID'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /friends:
+    get:
+      tags:
+        - player
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/friends.md
+      summary: Returns friendships for given player.
+      description: |
+        #### Usage
+        ```typescript
+        const friends = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
+        ```
+      parameters:
+        - $ref: '#/components/parameters/PlayerUuid'
+      responses:
+        '200':
+          description: An array containing a list of objects describing the player's friends.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                            uuidSender:
+                              type: string
+                            uuidReceiver:
+                              type: string
+                            started:
+                              type: number
+                          required:
+                            - _id
+                            - uuidSender
+                            - uuidReceiver
+                            - started
+                    example:
+                      records:
+                        - _id: 5eb97d170cf22f431e8d6170
+                          uuidSender: 20934ef9488c465180a78f861586b4cf
+                          uuidReceiver: 7486aa03aca5470e888dde8a43eb8c10
+                          started: 1589214487454
+                        - _id: 5eb97d180cf22f431e8d6171
+                          uuidSender: 20934ef9488c465180a78f861586b4cf
+                          uuidReceiver: 9926753a434e4b46a07625993a07b8ef
+                          started: 1589214488015
+                        - _id: 5eb97d180cf22f431e8d6172
+                          uuidSender: 20934ef9488c465180a78f861586b4cf
+                          uuidReceiver: b1f3957b2a1148298b55a9143548bbaa
+                          started: 1589214488334
+                        - _id: 5eb97d180cf22f431e8d6173
+                          uuidSender: 20934ef9488c465180a78f861586b4cf
+                          uuidReceiver: 4f9fceb6b17144058c6ef9ba4cfe3805
+                          started: 1589214488791
+                    required:
+                      - records
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/MalformedUUID'
         '429':
           $ref: '#/components/responses/RateLimitError'
   /gameCounts:

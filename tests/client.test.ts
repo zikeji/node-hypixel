@@ -115,6 +115,25 @@ describe("Get guild id by player uuid", function () {
   });
 });
 
+describe("Get player's friends", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.friends.uuid>;
+  it("expect not to throw", async function () {
+    result = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("array");
+    for (const friend of result) {
+      expect(friend._id).to.be.a("string");
+      expect(friend.started).to.be.a("number");
+      expect(friend.uuidReceiver).to.be.a("string");
+      expect(friend.uuidSender).to.be.a("string");
+    }
+  });
+});
+
 describe("Get game counts", function () {
   this.timeout(30000);
   this.slow(1000);

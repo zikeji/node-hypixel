@@ -55,7 +55,7 @@ const client = new Hypixel("API_KEY");
 - [ ] Add method, typing, testing, and documentation for:
   - [x] Boosters
   - [x] Find Guild
-  - [ ] Friends
+  - [x] Friends
   - [x] Game Counts
   - [ ] Guild
   - [ ] Key
@@ -69,7 +69,7 @@ const client = new Hypixel("API_KEY");
     - [ ] **Guilds**
       - [ ] Achievements
       - [ ] Permissions
-    - [ ] **SkyBlock**
+    - [x] **SkyBlock**
       - [x] Collections
       - [x] Skills
     - [ ] Quests

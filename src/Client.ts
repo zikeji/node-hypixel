@@ -5,6 +5,7 @@ import { URL } from "url";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { RateLimitError } from "./errors/RateLimitError";
 import { FindGuild } from "./methods/findGuild";
+import { Friends } from "./methods/friends";
 import { Guild } from "./methods/guild";
 import { RecentGames } from "./methods/recentGames";
 import { Resources } from "./methods/resources";
@@ -152,14 +153,26 @@ export class Client extends EventEmitter {
     ) as never;
   }
 
+  /**
+   * Returns the id of the requested guild if found.
+   * @example
+   * ```typescript
+   * const { guild } = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(guild);
+   * // 553490650cf26f12ae5bac8f
+   * ```
+   */
   public findGuild: FindGuild = new FindGuild(this);
 
-  // async friends(uuid: string): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("friends", { uuid }),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns friendships for given player.
+   * @example
+   * ```typescript
+   * const friends = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(friends);
+   * ```
+   */
+  public friends: Friends = new Friends(this);
 
   /**
    * Returns the current player count along with the player count of each public game + mode on the server.

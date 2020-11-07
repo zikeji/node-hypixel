@@ -335,6 +335,59 @@ export declare namespace Paths {
       }
     }
   }
+  namespace Friends {
+    namespace Get {
+      namespace Responses {
+        /**
+         * example:
+         * {
+         *   "records": [
+         *     {
+         *       "_id": "5eb97d170cf22f431e8d6170",
+         *       "uuidSender": "20934ef9488c465180a78f861586b4cf",
+         *       "uuidReceiver": "7486aa03aca5470e888dde8a43eb8c10",
+         *       "started": 1589214487454
+         *     },
+         *     {
+         *       "_id": "5eb97d180cf22f431e8d6171",
+         *       "uuidSender": "20934ef9488c465180a78f861586b4cf",
+         *       "uuidReceiver": "9926753a434e4b46a07625993a07b8ef",
+         *       "started": 1589214488015
+         *     },
+         *     {
+         *       "_id": "5eb97d180cf22f431e8d6172",
+         *       "uuidSender": "20934ef9488c465180a78f861586b4cf",
+         *       "uuidReceiver": "b1f3957b2a1148298b55a9143548bbaa",
+         *       "started": 1589214488334
+         *     },
+         *     {
+         *       "_id": "5eb97d180cf22f431e8d6173",
+         *       "uuidSender": "20934ef9488c465180a78f861586b4cf",
+         *       "uuidReceiver": "4f9fceb6b17144058c6ef9ba4cfe3805",
+         *       "started": 1589214488791
+         *     }
+         *   ]
+         * }
+         */
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          records: {
+            _id: string;
+            uuidSender: string;
+            uuidReceiver: string;
+            started: number;
+          }[];
+        }
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $422 = Components.Responses.MalformedUUID;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
   namespace GameCounts {
     namespace Get {
       namespace Responses {

@@ -13,7 +13,7 @@ export class FindGuild extends Method {
    * ```
    */
   async byName(
-    name: string
+    name: Components.Parameters.ByGuildName.ByName
   ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, "success">> {
     return getResultObject(
       await this.client.call<Paths.Boosters.Get.Responses.$200>("findGuild", {
@@ -32,7 +32,7 @@ export class FindGuild extends Method {
    * ```
    */
   async byUuid(
-    uuid: string
+    uuid: Components.Parameters.ByUuid.ByUuid
   ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, "success">> {
     return getResultObject(
       await this.client.call<Paths.Boosters.Get.Responses.$200>("findGuild", {
