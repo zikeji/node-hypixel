@@ -8,6 +8,7 @@ import { RateLimitError } from "./errors/RateLimitError";
 import { FindGuild } from "./methods/findGuild";
 import { Friends } from "./methods/friends";
 import { Guild } from "./methods/guild";
+import { Player } from "./methods/player";
 import { RecentGames } from "./methods/recentGames";
 import { Resources } from "./methods/resources";
 import { SkyBlock } from "./methods/skyblock";
@@ -233,19 +234,15 @@ export class Client extends EventEmitter {
     ) as never;
   }
 
-  // async leaderboards(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("leaderboards"),
-  //     "success"
-  //   );
-  // }
-
-  // async player(uuid: string): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.call<Components.Schemas.ApiSuccess>("player", { uuid }),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns a player's data, such as game stats.
+   * @example
+   * ```typescript
+   * const player = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
+   * console.log(player);
+   * ```
+   */
+  public player: Player = new Player(this);
 
   /**
    * Returns current player count.

@@ -308,6 +308,23 @@ describe("Get leaderboards", function () {
   });
 });
 
+describe("Get player", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.player.uuid>;
+  it("expect not to throw", async function () {
+    result = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result._id).to.be.a("string");
+    expect(result.uuid).to.be.a("string");
+    expect(result.firstLogin).to.be.a("number");
+    expect(result.playername).to.be.a("string");
+    expect(result.displayname).to.be.a("string");
+  });
+});
+
 describe("Get player count", function () {
   this.timeout(30000);
   this.slow(1000);

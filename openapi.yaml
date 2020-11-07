@@ -72,7 +72,7 @@ paths:
                             gameType:
                               type: number
                             stacked:
-                              oneOf:
+                              anyOf:
                                 - type: boolean
                                 - type: array
                                   items:
@@ -1294,7 +1294,7 @@ paths:
                             type: object
                             properties:
                               Base:
-                                oneOf:
+                                anyOf:
                                   - type: number
                                   - type: string
                               Patterns:
@@ -1305,7 +1305,7 @@ paths:
                                     Pattern:
                                       type: string
                                     Color:
-                                      oneOf:
+                                      anyOf:
                                         - type: number
                                         - type: string
                                   required:
@@ -2472,6 +2472,2799 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/RateLimitError'
+  /player:
+    get:
+      tags:
+        - player
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/player.md
+      summary: Returns a player's data, such as game stats.
+      description: |
+        #### Usage
+        ```typescript
+        const player = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
+        ```
+      parameters:
+        - $ref: '#/components/parameters/PlayerUuid'
+      responses:
+        '200':
+          description: An object describing the requested player.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - $ref: '#/components/schemas/PlayerResponse'
+              example:
+                player:
+                  _id: 5cd536a538200698db7973c8
+                  uuid: 20934ef9488c465180a78f861586b4cf
+                  firstLogin: 1557477031215
+                  playername: minikloon
+                  displayname: Minikloon
+                  knownAliases:
+                    - Minikloon
+                  knownAliasesLower:
+                    - minikloon
+                  achievementsOneTime:
+                    - general_first_join
+                    - general_youtuber
+                    - general_first_friend
+                    - general_friends_25
+                  rank: ADMIN
+                  parkourCheckpointBests:
+                    mainLobby2017:
+                      0: 20903
+                      1: 14855
+                      2: 6908
+                    Bedwars:
+                      0: 9880
+                      1: 7302
+                      2: 9552
+                      3: 17291
+                    Prototype:
+                      0: 7151
+                      1: 10851
+                      2: 9950
+                      3: 12950
+                      4: 6550
+                    SkywarsAug2017:
+                      0: 9701
+                      1: 7901
+                      2: 9470
+                      3: 7551
+                    Tourney:
+                      0: 24764
+                      1: 24109
+                      2: 19961
+                      3: 23764
+                    CopsnCrims:
+                      0: 20502
+                      1: 22053
+                    Housing:
+                      0: 7117
+                      1: 9954
+                      2: 8730
+                      3: 8893
+                      4: 10307
+                      5: 32182
+                      6: 32927
+                  achievementTracking:
+                  achievementPoints: 1915
+                  achievements:
+                    skywars_cages: 0
+                    bedwars_level: 200
+                    bedwars_loot_box: 212
+                    gingerbread_banker: 150
+                    arena_climb_the_ranks: 2000
+                    skywars_wins_mega: 0
+                    skywars_kills_mega: 0
+                    general_wins: 14
+                    general_challenger: 10
+                    copsandcrims_cac_banker: 9157
+                    general_coins: 10184
+                    copsandcrims_headshot_kills: 0
+                    copsandcrims_serial_killer: 0
+                    copsandcrims_hero_terrorist: 0
+                    skywars_wins_lab: 0
+                    skyblock_harvester: 50
+                    skyblock_treasury: 60
+                    skyblock_minion_lover: 149
+                    skyblock_excavator: 50
+                    skyblock_combat: 50
+                    skyblock_gatherer: 50
+                    skyblock_augmentation: 50
+                    skyblock_angler: 50
+                    skywars_kills_solo: 0
+                    duels_duels_traveller: 5
+                    duels_duels_win_streak: 3
+                    duels_duels_winner: 3
+                    skyblock_concoctor: 50
+                    walls3_jack_of_all_trades: 3
+                    blitz_kit_collector: 25
+                    copsandcrims_bomb_specialist: 0
+                    skyblock_unique_gifts: 100
+                    quake_coins: 380
+                    quake_kills: 21
+                    quake_headshots: 7
+                    quake_killing_sprees: 2
+                    pit_prestiges: 40
+                    pit_mysticism: 60
+                    pit_events: 9
+                    pit_gold: 2012205527
+                    pit_kills: 124
+                    pit_contracts: 1
+                    pit_renown: 1805
+                    blitz_looter: 2
+                    blitz_coins: 60
+                    blitz_kit_experience_collector: 6
+                    tntgames_tnt_banker: 254
+                    tntgames_block_runner: 131
+                    tntgames_tnt_triathlon: 2
+                    skyblock_domesticator: 50
+                    skyblock_slayer: 3000
+                    summer_treasure_hoarder: 16
+                    arcade_arcade_banker: 333
+                    summer_gone_fishing: 1
+                    skywars_you_re_a_star: 50
+                    skyblock_treasure_hunter: 1
+                    skyblock_dungeoneer: 8
+                  karma: 6724125
+                  networkExp: 1505039
+                  giftingMeta:
+                    realBundlesReceived: 96
+                    bundlesReceived: 96
+                  friendRequestsUuid:
+                  cooldowns:
+                    fun:
+                      event_quickmaths: 1598978365365
+                  parkourCompletions:
+                    Bedwars:
+                      - timeStart: 1557853162233
+                        timeTook: 44347
+                    mainLobby2017:
+                      - timeStart: 1558118358435
+                        timeTook: 47417
+                      - timeStart: 1558118585692
+                        timeTook: 48207
+                      - timeStart: 1567027424193
+                        timeTook: 47354
+                      - timeStart: 1569402929686
+                        timeTook: 54705
+                    Prototype:
+                      - timeStart: 1565924896955
+                        timeTook: 48198
+                    SkywarsAug2017:
+                      - timeStart: 1566169851007
+                        timeTook: 39949
+                      - timeStart: 1578123599427
+                        timeTook: 36048
+                    Tourney:
+                      - timeStart: 1572120789176
+                        timeTook: 184205
+                      - timeStart: 1572121242421
+                        timeTook: 104517
+                      - timeStart: 1572121681665
+                        timeTook: 101141
+                  newPackageRank: MVP_PLUS
+                  userLanguage: ENGLISH
+                  mcVersionRp: 1.8.9
+                  achievementSync:
+                    quake_tiered: 1
+                  onetime_achievement_menu_sort: a_to_z
+                  housingMeta:
+                    firstHouseJoinMs: 1559776192229
+                    tutorialStep: FINISH_FINISHED
+                    playerSettings:
+                      VISIBILITY: IntegerState-2
+                    given_cookies_105038:
+                      - 8356e112-4308-40c2-aae5-928dd42cf7d3
+                    given_cookies_105042:
+                      - eef21b3d-efd2-4a07-abea-2f046f6c47c0
+                    given_cookies_105044:
+                      - a5109530-57ab-4dbf-8d7d-9fa3f1a25a03
+                    plotSize: LARGE
+                    packages:
+                      - migrated_to_mongo
+                      - housing_item_flag_1
+                      - synced_cookies_v1
+                      - housing_item_flag_3
+                    allowedBlocks:
+                      - 3:0
+                      - 1:0
+                      - 5:0
+                      - 50:0
+                    selectedChannels_v3:
+                      - 
+                      - 
+                      - 
+                      - 
+                    given_cookies_105056:
+                      - caaee0b4-a192-4056-8e81-6c0442836f23
+                    given_cookies_105060:
+                      - b137e937-a7a6-4b68-9d02-534f88f9e3c9
+                    given_cookies_105065:
+                      - e631bd14-00ff-4fc2-846d-661b1d35795b
+                    given_cookies_105068:
+                      - dbac3fe2-2024-4e21-a06a-3ab54e900a71
+                      - a94ba73b-567a-4667-bb0b-9cf3cc44bd27
+                      - e34848cc-13ef-4ca9-88f4-2273117b77aa
+                  settings:
+                    partyInvitePrivacy: MAX
+                    disableDebug: true
+                    stopAbusingMe: true
+                  challenges:
+                    all_time:
+                      WALLS3__berserk_challenge: 1
+                      MCGO__killing_spree_challenge: 3
+                      MCGO__knife_challenge: 1
+                      QUAKECRAFT__killing_streak_challenge: 1
+                      SURVIVAL_GAMES__star_challenge: 4
+                  socialMedia:
+                    links:
+                      DISCORD: Minikloon#0001
+                    prompt: true
+                  claimed_solo_bank_1c0e4f84-81d1-4c9b-adcc-78f6bfb2d063: 1564025270111
+                  vanityMeta:
+                    packages:
+                      - cloak_lovely
+                      - suit_phoenix_helmet
+                      - hat_letter_m
+                      - pet_sheep_purple
+                  channel: ALL
+                  claimed_coop_bank_05c9bb60-e39e-4463-82c6-d5a7fe2fa0f0: 1568133813238
+                  petStats:
+                    LITTLE_YOU:
+                      name: §eMini§bMe
+                  petConsumables:
+                    BREAD: 1
+                    CARROT_ITEM: 4
+                    FEATHER: 4
+                    LAVA_BUCKET: 10
+                    MAGMA_CREAM: 4
+                    MELON: 1
+                    MILK_BUCKET: 5
+                    PORK: 1
+                    SLIME_BALL: 4
+                    STICK: 4
+                    WATER_BUCKET: 5
+                    WHEAT: 2
+                    WOOD_SWORD: 5
+                    BAKED_POTATO: 1
+                    COOKIE: 2
+                    GOLD_RECORD: 1
+                    HAY_BLOCK: 1
+                    LEASH: 2
+                    RAW_FISH: 1
+                    ROTTEN_FLESH: 1
+                  currentClickEffect: HEARTS
+                  tourney:
+                    first_join_lobby: 1571793992127
+                    mcgo_defusal_0:
+                      seenRPbook: true
+                      playtime: 68
+                      first_win: 1572042364354
+                      tributes_earned: 40
+                    total_tributes: 52
+                    quake_solo2_0:
+                      games_played: 1
+                      playtime: 2
+                      tributes_earned: 12
+                      first_game: 1580521766428
+                    shop_sort: highest_cost
+                  claimed_solo_bank_bf7c14fb-0189-4689-9d94-4d56e65222d2: 1572446005883
+                  onetime_achievement_menu_sort_completion_sort: no_sort
+                  snowball_fight_intro_2019: true
+                  lastAdsenseGenerateTime: 1585898148468
+                  anniversaryNPCVisited2020:
+                    - 29
+                    - 2
+                    - 11
+                  anniversaryNPCProgress2020: 1
+                  voting:
+                    last_mcmp: 1586883730869
+                    last_vote: 1586930879608
+                    secondary_mcmp: 1
+                    total: 3
+                    total_mcmp: 1
+                    votesToday: 1
+                    last_mcsl: 1586930879608
+                    secondary_mcsl: 2
+                    total_mcsl: 2
+                  currentGadget: SYNTHESIZER
+                  s:
+                    SkyWars:
+                      levelFormatted: §72⋆
+                      souls: 14
+                      packages:
+                        - update_solo_team_kits2
+                        - update_solo_team_kits_and_perks
+                        - update_solo_team_perk_levels
+                        - convertedstatstoexp
+                      hide_skywars_level: true
+                      coins: 20311
+                      games_played_skywars: 61
+                      skywars_experience: 34
+                      most_kills_game: 1
+                      most_kills_game_kit_mega_mega_default: 2
+                      fastest_win: 393
+                      fastest_win_mega_doubles: 393
+                      fastest_win_kit_mega_mega_default: 393
+                      lastMode: SOLO
+                      most_kills_game_mega_doubles: 2
+                      lab_win_lucky_blocks: 1
+                      coins_gained: 2637
+                      kills_weekly_b: 4
+                      killstreak: 2
+                      kills: 4
+                      time_played_mega_doubles: 393
+                      wins_kit_mega_mega_default: 1
+                      void_kills: 2
+                      kills_kit_mega_mega_default: 2
+                      killstreak_kit_mega_mega_default: 2
+                      winstreak_kit_mega_mega_default: 1
+                      survived_players: 50
+                      wins: 1
+                      games_mega_doubles: 1
+                      kills_mega_doubles_normal: 2
+                      wins_mega_doubles_normal: 1
+                      winstreak_mega_doubles: 1
+                      survived_players_mega_doubles: 37
+                      winstreak: 1
+                      lab_win_lucky_blocks_kit_mega_mega_default: 1
+                      kills_mega_doubles: 2
+                      time_played_kit_mega_mega_default: 393
+                      lab_win_lucky_blocks_mega_doubles: 1
+                      games_kit_mega_mega_default: 1
+                      void_kills_mega_doubles: 1
+                      souls_gathered: 4
+                      survived_players_kit_mega_mega_default: 37
+                      time_played: 567
+                      games: 1
+                      killstreak_mega_doubles: 2
+                      void_kills_kit_mega_mega_default: 1
+                      wins_mega_doubles: 1
+                      kills_monthly_a: 2
+                      skywars_chests: 13
+                      rush_explained_last: 1566927797658
+                      rush_explained: 1
+                      fastest_win_lab_kit_mining_team_default: 146
+                      fastest_win_lab_solo: 146
+                      fastest_win_lab: 146
+                      survived_players_lab_solo: 1
+                      time_played_lab_kit_mining_team_default: 146
+                      winstreak_lab_solo: 1
+                      wins_lab: 1
+                      time_played_lab_solo: 146
+                      time_played_lab: 146
+                      lab_win_rush_lab_solo: 1
+                      games_lab: 1
+                      survived_players_lab: 1
+                      coins_gained_lab: 144
+                      survived_players_lab_kit_mining_team_default: 1
+                      winstreak_lab: 1
+                      games_lab_kit_mining_team_default: 1
+                      games_lab_solo: 1
+                      wins_lab_solo: 1
+                      lab_win_rush_lab: 1
+                      winstreak_lab_kit_mining_team_default: 1
+                      blocks_placed_lab: 1
+                      lab_win_rush_lab_kit_mining_team_default: 1
+                      wins_lab_kit_mining_team_default: 1
+                      tnt_madness_explained_last: 1560499717250
+                      tnt_madness_explained: 1
+                      hunters_vs_beasts_explained: 4
+                      hunters_vs_beasts_explained_last: 1563367859850
+                      slime_explained: 1
+                      slime_explained_last: 1563367897046
+                      blocks_placed: 17
+                      chests_opened: 8
+                      chests_opened_kit_mining_team_default: 6
+                      chests_opened_solo: 6
+                      deaths: 4
+                      deaths_kit_mining_team_default: 3
+                      deaths_solo: 3
+                      deaths_solo_insane: 3
+                      egg_thrown: 24
+                      kills_kit_mining_team_default: 2
+                      kills_monthly_b: 2
+                      kills_solo: 2
+                      kills_solo_insane: 2
+                      losses: 4
+                      losses_kit_mining_team_default: 3
+                      losses_solo: 3
+                      losses_solo_insane: 3
+                      most_kills_game_kit_mining_team_default: 1
+                      most_kills_game_solo: 1
+                      quits: 4
+                      survived_players_kit_mining_team_default: 13
+                      survived_players_solo: 13
+                      time_played_kit_mining_team_default: 137
+                      time_played_solo: 137
+                      void_kills_kit_mining_team_default: 1
+                      void_kills_solo: 1
+                      win_streak: 0
+                      active_projectiletrail: projectiletrail_testing_2
+                      shop_sort: rarity_descending
+                      arrows_shot: 1
+                      arrows_shot_kit_mining_team_default: 1
+                      arrows_shot_solo: 1
+                      cosmetic_tokens: 0
+                      chests_opened_kit_ranked_ranked_default: 2
+                      chests_opened_ranked: 2
+                      deaths_kit_ranked_ranked_default: 1
+                      deaths_ranked: 1
+                      deaths_ranked_normal: 1
+                      losses_kit_ranked_ranked_default: 1
+                      losses_ranked: 1
+                      losses_ranked_normal: 1
+                      time_played_kit_ranked_ranked_default: 37
+                      time_played_ranked: 37
+                      longest_bow_kill: 2
+                      longest_bow_kill_kit_mining_team_default: 2
+                      longest_bow_kill_solo: 2
+                      melee_kills: 1
+                      melee_kills_kit_mining_team_default: 1
+                      melee_kills_solo: 1
+                    UHC:
+                      coins: 16282
+                      saved_stats: true
+                      clearup_achievement: true
+                    TNTGames:
+                      coins: 14590
+                      packages:
+                        - shop_2018
+                        - tiered_achievement_flag_3
+                      new_spleef_double_jumps: 1
+                      new_kineticwizard_regen: 1
+                      new_bloodwizard_explode: 1
+                      new_spleef_repulsor: 1
+                      new_tntag_speedy: 1
+                      new_spleef_tripleshot: 1
+                      new_witherwizard_regen: 1
+                      new_witherwizard_explode: 1
+                      new_tntrun_double_jumps: 1
+                      new_firewizard_regen: 1
+                      wins: 0
+                      new_firewizard_explode: 1
+                      new_pvprun_double_jumps: 1
+                      new_bloodwizard_regen: 1
+                      new_icewizard_regen: 1
+                      new_icewizard_explode: 1
+                      new_kineticwizard_explode: 1
+                    Arcade:
+                      coins: 44670
+                    Walls3:
+                      coins: 15755
+                      herobrine_meters_walked_standard: 90
+                      meters_fallen: 2091
+                      herobrine_losses: 2
+                      losses_standard: 2
+                      meters_walked: 15739
+                      meters_walked_standard: 15724
+                      herobrine_losses_standard: 1
+                      meters_fallen_standard: 2086
+                      losses: 3
+                      games_played_standard: 2
+                      herobrine_games_played_standard: 1
+                      herobrine_meters_fallen: 35
+                      herobrine_meters_walked: 105
+                      herobrine_meters_fallen_standard: 30
+                      games_played: 3
+                      herobrine_games_played: 2
+                      time_played: 46
+                      losses_face_off: 1
+                      herobrine_time_played_face_off: 2
+                      time_played_face_off: 2
+                      herobrine_meters_walked_face_off: 15
+                      final_deaths_face_off: 1
+                      final_deaths: 2
+                      herobrine_total_deaths: 2
+                      herobrine_final_deaths: 1
+                      total_deaths: 3
+                      herobrine_games_played_face_off: 1
+                      games_played_face_off: 1
+                      herobrine_deaths_face_off: 1
+                      herobrine_time_played: 2
+                      herobrine_meters_fallen_face_off: 5
+                      meters_fallen_face_off: 5
+                      total_deaths_face_off: 2
+                      herobrine_total_deaths_face_off: 2
+                      herobrine_deaths: 1
+                      deaths: 1
+                      deaths_face_off: 1
+                      herobrine_final_deaths_face_off: 1
+                      herobrine_losses_face_off: 1
+                      meters_walked_face_off: 15
+                      classes:
+                        herobrine:
+                          skill_level_d: 1
+                          skill_level_dChecked5: true
+                          checked4: true
+                          unlocked: false
+                        zombie:
+                          skill_level_d: 1
+                          unlocked: false
+                          checked4: true
+                          skill_level_dChecked5: true
+                        enderman:
+                          checked4: true
+                          skill_level_d: 1
+                          unlocked: false
+                          skill_level_dChecked5: true
+                        skeleton:
+                          skill_level_dChecked5: true
+                          checked4: true
+                          skill_level_d: 1
+                          unlocked: false
+                      packages:
+                        - cakes_fix_flag_2
+                        - achievement_fix_flag
+                        - legacy_achievement_a
+                      blocks_broken: 39
+                      blocks_broken_standard: 39
+                      blocks_placed: 72
+                      blocks_placed_preparation: 8
+                      blocks_placed_preparation_standard: 8
+                      blocks_placed_standard: 72
+                      coins_gained: 100
+                      final_deaths_standard: 1
+                      hunter_blocks_broken: 39
+                      hunter_blocks_broken_standard: 39
+                      hunter_blocks_placed: 72
+                      hunter_blocks_placed_preparation: 8
+                      hunter_blocks_placed_preparation_standard: 8
+                      hunter_blocks_placed_standard: 72
+                      hunter_final_deaths: 1
+                      hunter_final_deaths_standard: 1
+                      hunter_games_played: 1
+                      hunter_games_played_standard: 1
+                      hunter_losses: 1
+                      hunter_losses_standard: 1
+                      hunter_meters_fallen: 2056
+                      hunter_meters_fallen_standard: 2056
+                      hunter_meters_walked: 15634
+                      hunter_meters_walked_speed: 1518
+                      hunter_meters_walked_speed_standard: 1518
+                      hunter_meters_walked_standard: 15634
+                      hunter_time_played: 44
+                      hunter_time_played_standard: 44
+                      hunter_total_deaths: 1
+                      hunter_total_deaths_standard: 1
+                      meters_walked_speed: 1518
+                      meters_walked_speed_standard: 1518
+                      time_played_standard: 44
+                      total_deaths_standard: 1
+                    Walls:
+                      coins: 14575
+                    VampireZ:
+                      coins: 14575
+                      updated_stats: true
+                    Arena:
+                      coins: 14575
+                    Quake:
+                      coins: 14955
+                      packages:
+                        - achievement_flag_3
+                      showKillPrefix: true
+                      kills_solo_tourney: 21
+                      kills_dm_teams: 0
+                      kills: 0
+                      kills_teams: 0
+                      kills_timeattack: 0
+                      kills_dm: 0
+                      alternative_gun_cooldown_indicator: true
+                      compass_selected: true
+                      enable_sound: true
+                      messageOthers' Kills/deaths: true
+                      messageYour Kills: true
+                      highest_killstreak: 6
+                      messageCoin Messages: true
+                      messageYour Deaths: true
+                      instantRespawn: true
+                      messageKillstreaks: true
+                      showDashCooldown: true
+                      killstreaks_solo_tourney: 2
+                      headshots_solo_tourney: 7
+                      shots_fired_solo_tourney: 69
+                      kills_since_update_feb_2017_solo_tourney: 21
+                      distance_travelled_solo_tourney: 847
+                      deaths_solo_tourney: 13
+                    Paintball:
+                      coins: 14575
+                      packages:
+                        - achievement_flag_2
+                    GingerBread:
+                      coins: 14575
+                      packages:
+                        - achievementsupdatedd
+                        - helmet_1_1_unlocked
+                        - achievementsupdatedc
+                      pants_active: GOLD_PANTS
+                      skin_active: WHITE_KART;DEFAULT
+                      frame_active: '{GingerbreadPart:{PartType:FRAME,PartRarity:BASIC}}'
+                      jacket_active: GOLD_JACKET
+                      shoes_active: GOLD_SHOES
+                      helmet_active: HELMET_1_1
+                      engine_active: '{GingerbreadPart:{PartType:ENGINE,PartRarity:BASIC}}'
+                      booster_active: '{GingerbreadPart:{PartType:TURBOCHARGER,PartRarity:BASIC}}'
+                    HungerGames:
+                      coins: 11881
+                      autoarmor: true
+                      wins_teams_normal: 0
+                      wins: 0
+                      packages:
+                        - new_stats_02_2019
+                        - fixachievements3
+                        - used_kit_knight
+                        - used_killeffect_speed
+                      wins_solo_normal: 0
+                      wins_backup: 0
+                      damage: 72
+                      damage_knight: 72
+                      damage_taken: 85
+                      damage_taken_knight: 85
+                      deaths: 2
+                      games_played: 2
+                      games_played_knight: 2
+                      time_played: 285
+                      time_played_knight: 285
+                      chests_opened: 2
+                      chests_opened_knight: 2
+                      exp_knight: 2
+                    SuperSmash:
+                      coins: 8905
+                    Bedwars:
+                      first_join_7: true
+                      Experience: 974000
+                      bedwars_boxes: 14
+                      packages:
+                        - islandtopper_gapple
+                        - projectiletrail_cold
+                    Prototype:
+                      next_hype_seconds: 60
+                      total_hype: 19886
+                      pit_hype: 200
+                      hype: 19886
+                      skyblock_hype: 19686
+                    Pit:
+                      pit_stats_ptl:
+                        joins: 499
+                        playtime_minutes: 7645
+                        chat_messages: 851
+                        enchanted_tier2: 20
+                        enchanted_tier1: 27
+                        enchanted_tier3: 10
+                        cash_earned: -946245931
+                        diamond_items_purchased: 9
+                        jumped_into_pit: 362
+                        launched_by_launchers: 67
+                        left_clicks: 4734
+                        kills: 108
+                        melee_damage_dealt: 2615
+                        sword_hits: 438
+                        damage_dealt: 3513
+                        max_streak: 10
+                        damage_received: 1984
+                        melee_damage_received: 1328
+                        enderchest_opened: 7
+                        deaths: 42
+                        blocks_placed: 11
+                        lava_bucket_emptied: 3
+                        arrows_fired: 3449
+                        assists: 4
+                        arrow_hits: 89
+                        bow_damage_dealt: 130
+                        ghead_eaten: 1
+                        contracts_started: 1
+                        contracts_completed: 1
+                        blocks_broken: 4
+                        bow_damage_received: 16
+                        soups_drank: 3
+                        sewer_treasures_found: 2
+                        dark_pants_t2: 5
+                      profile:
+                        cash_during_prestige_28: 3000000
+                        cash_during_prestige_29: 6000000
+                        outgoing_offers:
+                        contract_choices: null
+                        genesis_weekly_perks_perma_gold: 0
+                        last_save: 1588969523302
+                        king_quest:
+                          kills: 329
+                          renown: 24
+                          last_completed: 1558427886708
+                          last_accepted: 1558424171397
+                        hat_color: 16711935
+                        reconessence_day: 1559572778303
+                        trade_timestamps:
+                        genesis_weekly_perks_claim_item_angel: 0
+                        cash_during_prestige_20: 4113951.832458997
+                        cash_during_prestige_21: 2000000
+                        unlocks_20:
+                          - tier: 0
+                            acquireDate: 1557600593499
+                            key: golden_heads
+                          - tier: 0
+                            acquireDate: 1557600608426
+                            key: first_strike
+                          - tier: 0
+                            acquireDate: 1557600648666
+                            key: dirty
+                          - tier: 0
+                            acquireDate: 1557600681081
+                            key: lava_bucket
+                        inv_enderchest:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        cash_during_prestige_22: 2000000
+                        cash_during_prestige_23: 2300984
+                        cash_during_prestige_24: 4000000
+                        genesis_spawn_in_base: true
+                        cash: 40005033.531645566
+                        cash_during_prestige_25: 3002007021.0003123
+                        genesis_weekly_perks_perma_xp: 0
+                        cash_during_prestige_26: 3300000
+                        cash_during_prestige_27: 3000000
+                        leaderboard_stats:
+                          Pit_raffle_tickets_2019_winter: 101
+                          Pit_rage_pit_damage_2019_winter: 0
+                          Pit_auction_bid_2019_spring: 2000000
+                          Pit_auction_bid_2020_spring: 10000000
+                          Pit_raffle_tickets_2019_spring: 101
+                          Pit_tdm_red_kills_2019_spring: 0
+                          Pit_blockhead_blocks_2019_spring: 0
+                          Pit_tdm_blue_kills_2020_spring: 0
+                          Pit_kotl_gold_2019_summer: 49
+                          Pit_blockhead_blocks_2020_spring: 0
+                          Pit_kotl_time_2019_summer: 2000
+                        genesis_perma_angel: 1
+                        selected_perk_3: null
+                        selected_perk_2: null
+                        selected_perk_1: null
+                        selected_perk_0: null
+                        last_contract: 1558551207276
+                        cash_during_prestige_3: 1000000
+                        gold_transactions:
+                          - amount: 10000
+                            timestamp: 1588097039751
+                        cash_during_prestige_2: 1000000
+                        cash_during_prestige_5: 1000000
+                        cash_during_prestige_4: 1000000
+                        genesis_allegiance: DEMON
+                        genesis_weekly_perks_claim_item_demon: 0
+                        cash_during_prestige_7: 1000000
+                        cash_during_prestige_6: 1000000
+                        cash_during_prestige_9: 1000000
+                        cash_during_prestige_8: 1000000
+                        cash_during_prestige_30: 50001096.025
+                        inv_contents:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        cash_during_prestige_31: 50000000
+                        cash_during_prestige_32: 50000000
+                        event_contest_claims:
+                          - double_rewards
+                          - blockhead
+                          - beast
+                          - dragon_egg
+                        cash_during_prestige_33: 50000000
+                        cash_during_prestige_34: 50000000
+                        cash_during_prestige_35: 50010233.531645566
+                        cash_during_prestige_1: 1000000
+                        night_quests_enabled: true
+                        cash_during_prestige_0: 1000000
+                        renown: 1342
+                        moved_achievements_1: true
+                        moved_achievements_2: true
+                        genesis_points: 10000
+                        raw_numbers_enabled: true
+                        prestiges:
+                          - index: 1
+                            xp_on_prestige: 65950
+                            timestamp: 1557600048111
+                          - index: 2
+                            xp_on_prestige: 138510
+                            timestamp: 1557600060880
+                          - index: 3
+                            xp_on_prestige: 217680
+                            timestamp: 1557600071280
+                          - index: 4
+                            xp_on_prestige: 303430
+                            timestamp: 1557600080882
+                        spire_stash_inv:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        last_lycanthropy: 1558544209530
+                        supporter_star_enabled: false
+                        cheap_milk: false
+                        zero_point_three_gold_transfer: true
+                        renown_unlocks:
+                          - tier: 0
+                            acquireDate: 1557600168917
+                            key: tenacity
+                          - tier: 1
+                            acquireDate: 1557600170483
+                            key: tenacity
+                          - tier: 0
+                            acquireDate: 1557600184928
+                            key: mysticism
+                          - tier: 1
+                            acquireDate: 1557600186884
+                            key: mysticism
+                        spire_stash_armor:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        cash_during_prestige_17: 1000000
+                        cash_during_prestige_18: 1000000
+                        cash_during_prestige_19: 1000000
+                        inv_armor:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        item_stash:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        genesis_allegiance_time: 1583391560810
+                        login_messages:
+                        hotbar_favorites:
+                          - 267
+                          - 0
+                          - 7
+                          - 335
+                        recent_kills:
+                          - victim: 2d4c44f13dab49b0a988f7ced7e6fc38
+                            timestamp: 1587552109098
+                        apollo_enabled: false
+                        xp: 71275580
+                        cash_during_prestige_10: 1000000
+                        cash_during_prestige_11: 1000000
+                        ended_contracts:
+                          - difficulty: HARD
+                            gold_reward: 2000
+                            requirements:
+                              multikill: 3
+                            progress:
+                            chunk_of_viles_reward: 1
+                            completion_date: 1558551219835
+                            remaining_ticks: 5740
+                            key: multikill
+                        cash_during_prestige_12: 1000000
+                        bounties:
+                          - amount: 100
+                            remainingTicks: 9223372036854776000
+                            issuer: fb7afb6de9ea47399893616134617808
+                            timestamp: 1585096862465
+                          - amount: 100
+                            remainingTicks: 9223372036854776000
+                            issuer: fb7afb6de9ea47399893616134617808
+                            timestamp: 1585096881059
+                          - amount: 100
+                            remainingTicks: 9223372036854776000
+                            issuer: fb7afb6de9ea47399893616134617808
+                            timestamp: 1585096881114
+                          - amount: 100
+                            remainingTicks: 9223372036854776000
+                            issuer: fb7afb6de9ea47399893616134617808
+                            timestamp: 1585096881165
+                        cash_during_prestige_13: 1000000
+                        cash_during_prestige_14: 1000000
+                        cash_during_prestige_15: 1000000
+                        cash_during_prestige_16: 1000000
+                      packages:
+                        - supporter
+                    MCGO:
+                      coins: 96282476
+                      grenade_kills: 0
+                      packages:
+                        - achievement_flag_7
+                        - neck_knife
+                        - vip_ocelot_helmet
+                        - vip_ocelot_armor
+                      kills: 20
+                      bombs_defused: 1
+                      game_wins_deathmatch: 0
+                      grenadeKills: 0
+                      game_wins: 4
+                      kills_deathmatch: 0
+                      bombs_planted: 1
+                      headshot_kills: 16
+                      pocket_change: 9
+                      cop_kills: 11
+                      shots_fired: 724
+                      round_wins: 22
+                      deaths: 16
+                      criminal_kills: 9
+                      game_wins_alleyway: 1
+                      lastTourneyAd: 1586042640677
+                      game_plays: 4
+                      game_wins_melon factory: 2
+                      deaths_deathmatch: 0
+                      knife_damage_increase: 9
+                      knife_attack_delay: 9
+                      selectedKnifeDev: NECK_KNIFE
+                      strength_training: 9
+                      bounty_hunter: 0
+                      body_armor_cost: 9
+                      selectedOcelotHelmetDev: VIP_OCELOT_HELMET
+                      selectedOcelotChestplateDev: VIP_OCELOT_ARMOR
+                      selectedCreeperChestplateDev: VIP_CREEPER_ARMOR
+                      selectedCreeperHelmetDev: VIP_CREEPER_HELMET
+                      pistol_damage_increase: 9
+                      pistol_recoil_reduction: 9
+                      pistol_reload_speed_reduction: 9
+                      selectedPistolDev: HK45
+                      magnum_damage_increase: 9
+                      magnum_reload_speed_reduction: 9
+                      magnum_recoil_reduction: 9
+                      magnum_cost_reduction: 9
+                      selectedMagnumDev: MAGNUM_REVOLVER
+                      rifle_damage_increase: 9
+                      rifle_recoil_reduction: 9
+                      rifle_reload_speed_reduction: 9
+                      rifle_cost_reduction: 9
+                      selectedRifleDev: FN_FAL
+                      game_wins_temple: 1
+                      cop_kills_tourney_mcgo_defusal_0: 31
+                      criminal_kills_tourney_mcgo_defusal_0: 38
+                      deaths_tourney_mcgo_defusal_0: 37
+                      game_plays_tourney_mcgo_defusal_0: 7
+                      headshot_kills_tourney_mcgo_defusal_0: 43
+                      kills_tourney_mcgo_defusal_0: 69
+                      round_wins_tourney_mcgo_defusal_0: 33
+                      shots_fired_tourney_mcgo_defusal_0: 2044
+                      game_wins_tourney_mcgo_defusal_0: 5
+                      game_wins_carrier: 1
+                      bombs_planted_tourney_mcgo_defusal_0: 5
+                      game_wins_sandstorm: 1
+                      bombs_defused_tourney_mcgo_defusal_0: 3
+                    Battleground:
+                      coins: 8950
+                    TrueCombat:
+                      coins: 460
+                      packages:
+                        - cw_ach_flag1
+                        - cw_ach_flag4
+                        - cw_ach_flag3
+                        - cw_ach_flag2
+                    SkyBlock:
+                      account:
+                        selected_profile: f0a2d8aa0cae4b5294d509ee89f4da75
+                        last_save: 1588999950991
+                        backed_up_collection: skyblock_zback_v0.7.0
+                        lastSaveVersion:
+                          pluginVersion: 0.7.47
+                          bootTime: 1567715745149
+                          gmVersion: 10.25.178
+                          hyVersion: 1.0.123
+                          server: mini149D
+                        lastSaveTimestamp: 1567715800962
+                        skyblock_exp: 1202
+                        migrated_to_v2: true
+                        collected_cake_years:
+                          - 14
+                        migrated_to_v3: true
+                        migrated_to_v4: true
+                        winter_gifts_collected_37:
+                          - 9
+                          - 38
+                          - 26
+                      profiles:
+                        05c9bb60e39e446382c6d5a7fe2fa0f0:
+                          profile_id: 05c9bb60e39e446382c6d5a7fe2fa0f0
+                          cute_name: Strawberry
+                          profile_version: 1
+                          stats:
+                            deaths: 3779
+                            deaths_void: 3
+                            highest_crit_damage: 1063686.21904
+                            kills: 537
+                            kills_player: 19
+                            deaths_player: 3
+                            kills_random_slime: 1
+                            kills_splitter_spider_silverfish: 4
+                            kills_splitter_spider: 1
+                            kills_wither_skeleton: 3
+                            kills_blaze: 12
+                            kills_magma_cube: 12
+                            kills_fireball_magma_cube: 5
+                            kills_ghast: 1
+                            kills_zombie: 136
+                            kills_zombie_villager: 9
+                            auctions_created: 3
+                            auctions_fees: 273
+                            auctions_bids: 3
+                            auctions_highest_bid: 30418
+                            kills_lapis_zombie: 4
+                            kills_redstone_pigman: 46
+                            kills_emerald_slime: 49
+                            kills_diamond_skeleton: 47
+                            kills_diamond_zombie: 118
+                            kills_runic_zombie: 2
+                            deaths_emerald_slime: 1
+                            deaths_diamond_skeleton: 1
+                            kills_enderman: 55
+                            kills_watcher: 2
+                            deaths_enderman: 3770
+                            kills_skeleton: 9
+                            kills_spider: 2
+                            deaths_strong_dragon: 1
+                          collection:
+                            COBBLESTONE: 143
+                            IRON_INGOT: 1
+                            COAL: 11
+                            STRING: 251
+                            BONE: 70
+                            BLAZE_ROD: 14
+                            MAGMA_CREAM: 10
+                            GHAST_TEAR: 1
+                            ROTTEN_FLESH: 164
+                            WHEAT: 5
+                            SLIME_BALL: 20
+                            SUGAR_CANE: 4
+                            ENDER_PEARL: 78
+                            ICE: 3330
+                            DIAMOND: 75210
+                          objectives:
+                            collect_log:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_guide:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564521216747
+                            public_island:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1565380679187
+                            explore_hub:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560777126618
+                            explore_village:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_librarian:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560791583565
+                            talk_to_farmer:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_blacksmith:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560790961046
+                            talk_to_lumberjack:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_event_master:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560791132339
+                            talk_to_auction_master:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560639867708
+                            talk_to_banker:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560714948098
+                            talk_to_fairy:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_fisherman_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            kill_danger_mobs:
+                              status: COMPLETE
+                              progress: 10
+                              completed_at: 1560874732153
+                            talk_to_lapis_miner:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_lazy_miner:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            increase_mining_skill_5:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560927663739
+                            talk_to_farmhand_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            increase_farming_skill_5:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560886259359
+                            deposit_coins:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560714957700
+                            mine_coal:
+                              status: COMPLETE
+                              progress: 10
+                              completed_at: 1560791034914
+                            talk_to_blacksmith_2:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560791067383
+                            increase_mining_skill:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560791067383
+                            reforge_item:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560791074765
+                            warp_gold_mine:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560927627325
+                            enchant_item:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560791626167
+                            increase_combat_skill_5:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560793726149
+                            talk_to_rick:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            warp_blazing_fortress:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560793830558
+                            talk_to_elle:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_bartender:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1567998158086
+                            increase_foraging_skill_5:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            warp_mushroom_desert:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            warp_deep_caverns:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560927673028
+                            talk_to_lift_operator:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_nocturne_1:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564462823926
+                            collect_runes:
+                              status: COMPLETE
+                              progress: 3
+                              completed_at: 1564462869130
+                            talk_to_nocturne_2:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564462888432
+                            talk_to_carpenter:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564505237119
+                            collect_wool_carpenter:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564505264591
+                            talk_to_guber_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_end_dealer:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_telekinesis_applier:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564521031211
+                            talk_to_artist_1:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564594201747
+                            talk_to_artist_2:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564594244722
+                            talk_to_artist_3:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            paint_canvas:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            fight_dragon:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564941435041
+                            increase_combat_skill:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1567998158087
+                            warp_spiders_den:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            warp_the_end:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                          quests:
+                            collect_log:
+                              status: ACTIVE
+                              activated_at: 1560639341340
+                              activated_at_sb: 363637
+                              completed_at: 0
+                              completed_at_sb: 0
+                            explore_hub:
+                              status: COMPLETE
+                              activated_at: 1560639342911
+                              activated_at_sb: 363621
+                              completed_at: 1560777126619
+                              completed_at_sb: 501425
+                            explore_village:
+                              status: ACTIVE
+                              activated_at: 1560639342911
+                              activated_at_sb: 363621
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_librarian:
+                              status: COMPLETE
+                              activated_at: 1560639342911
+                              activated_at_sb: 363621
+                              completed_at: 1560791626167
+                              completed_at_sb: 515923
+                            talk_to_farmer:
+                              status: ACTIVE
+                              activated_at: 1560639342911
+                              activated_at_sb: 363621
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_blacksmith:
+                              status: COMPLETE
+                              activated_at: 1560639342911
+                              activated_at_sb: 363621
+                              completed_at: 1560927627325
+                              completed_at_sb: 651925
+                            talk_to_lumberjack:
+                              status: ACTIVE
+                              activated_at: 1560639342911
+                              activated_at_sb: 363621
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_auction_master:
+                              status: COMPLETE
+                              activated_at: 1560639342911
+                              activated_at_sb: 363621
+                              completed_at: 1560639867708
+                              completed_at_sb: 364165
+                            talk_to_banker:
+                              status: COMPLETE
+                              activated_at: 1560639342912
+                              activated_at_sb: 363621
+                              completed_at: 1560714957700
+                              completed_at_sb: 439255
+                            kill_danger_mobs:
+                              status: ACTIVE
+                              activated_at: 1560641744901
+                              activated_at_sb: 366042
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_lapis_miner:
+                              status: ACTIVE
+                              activated_at: 1560694694482
+                              activated_at_sb: 418991
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_lazy_miner:
+                              status: ACTIVE
+                              activated_at: 1560695673768
+                              activated_at_sb: 419971
+                              completed_at: 0
+                              completed_at_sb: 0
+                            increase_mining_skill_5:
+                              status: ACTIVE
+                              activated_at: 1560695673768
+                              activated_at_sb: 419971
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_farmhand_1:
+                              status: ACTIVE
+                              activated_at: 1560704362646
+                              activated_at_sb: 428653
+                              completed_at: 0
+                              completed_at_sb: 0
+                            increase_farming_skill_5:
+                              status: COMPLETE
+                              activated_at: 1560704362646
+                              activated_at_sb: 428653
+                              completed_at: 1560886259362
+                              completed_at_sb: 610557
+                            reforge_item:
+                              status: COMPLETE
+                              activated_at: 1560791067383
+                              activated_at_sb: 515366
+                              completed_at: 1560791074765
+                              completed_at_sb: 515373
+                            increase_combat_skill_5:
+                              status: ACTIVE
+                              activated_at: 1560793725656
+                              activated_at_sb: 518025
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_rick:
+                              status: ACTIVE
+                              activated_at: 1560793725656
+                              activated_at_sb: 518025
+                              completed_at: 0
+                              completed_at_sb: 0
+                            increase_foraging_skill_5:
+                              status: ACTIVE
+                              activated_at: 1560886380028
+                              activated_at_sb: 610651
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_nocturne_1:
+                              status: COMPLETE
+                              activated_at: 1564462792790
+                              activated_at_sb: 4187090
+                              completed_at: 1564462888434
+                              completed_at_sb: 4187186
+                            talk_to_carpenter:
+                              status: COMPLETE
+                              activated_at: 1564504929006
+                              activated_at_sb: 4229227
+                              completed_at: 1564505264592
+                              completed_at_sb: 4229563
+                            talk_to_guber_1:
+                              status: ACTIVE
+                              activated_at: 1564511322460
+                              activated_at_sb: 4235617
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_end_dealer:
+                              status: ACTIVE
+                              activated_at: 1564511322460
+                              activated_at_sb: 4235617
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_artist_1:
+                              status: ACTIVE
+                              activated_at: 1564594181013
+                              activated_at_sb: 4318456
+                              completed_at: 0
+                              completed_at_sb: 0
+                          level_experience: 48555
+                          last_interest_time: 7841790
+                          first_join: 1560639341555
+                          first_join_skyblock_time: 363637
+                          inv_contents:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          inv_armor:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          held_item_slot: 4
+                          active_effects:
+                          ingame_time: 31094332013
+                          last_save: 1568122635288
+                          tutorial:
+                            - first_join
+                            - zone_village
+                            - zone_farm
+                            - zone_mine
+                          first_join_hub: 1529
+                          visited_zones:
+                            - village
+                            - farm
+                            - mine
+                            - auction_house
+                          opened_skyblock_menu_stamped: true
+                          coin_purse: 86
+                          unlocked_coll_tiers:
+                            - STRING_-1
+                            - COAL_-1
+                            - ICE_4
+                            - ICE_5
+                          death_count: 3777
+                          experience_skill_mining: 1211.8000000000002
+                          opened_recipes_menu_stamped: true
+                          used_crafting_grid_stamped: true
+                          bank_account: 1457.4032537059675
+                          bank_history:
+                            - amount: 52.28294821647614
+                              timestamp: 1567715623442
+                              action: DEPOSIT
+                              initiator_name: Bank Interest
+                            - amount: 26.928306596248376
+                              timestamp: 1567792597342
+                              action: DEPOSIT
+                              initiator_name: Bank Interest
+                            - amount: 27.466872728173257
+                              timestamp: 1567864830220
+                              action: DEPOSIT
+                              initiator_name: Bank Interest
+                            - amount: 28.016210182736813
+                              timestamp: 1567976520841
+                              action: DEPOSIT
+                              initiator_name: Bank Interest
+                          last_interest: 28.57653438639152
+                          experience_skill_enchanting: 4449.387605903042
+                          collected_coal_stamped: true
+                          experience_skill_combat: 3843955
+                          killed_first_mob_stamped: true
+                          collected_wheat_stamped: true
+                          experience_skill_farming: 1218
+                          experience_skill_foraging: 6301
+                          auction_starting_bid: 500
+                          auction_duration_ms: 21600000
+                          opened_collections_menu_stamped: true
+                          auction_placed_bid_before: true
+                          last_death: 7629479
+                          return_to_private_island_stamped: true
+                          last_checked_interest: 1568122928283
+                          lastSaveVersion:
+                            pluginVersion: 0.7.48
+                            bootTime: 1568122627184
+                            gmVersion: 10.25.185
+                            hyVersion: 1.0.124
+                            server: mini136T
+                          lastSaveTimestamp: 1568122635317
+                          playtime_minutes: 9188
+                          playtime_minutes_modes_HUB: 3886
+                          quiver:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          achievement_sync_version: 1
+                          player_id: 20934ef9488c465180a78f861586b4cf
+                          playtime_minutes_modes_DYNAMIC: 5169
+                          exploit_start_timestamp: 1568036995261
+                          exploit_block_counter: 0
+                          exploit_fish_counter: 0
+                          exploit_monster_counter: 24
+                          shop_throttle:
+                            lastUpdate: 07-29-2019
+                          claimable_rewards:
+                            - psychic
+                          playtime_minutes_modes_MINING_1: 7
+                          playtime_minutes_modes_MINING_2: 12
+                          playtime_minutes_modes_COMBAT_3: 90
+                          experience_skill_carpentry: 281600
+                          playtime_minutes_modes_FORAGING_1: 16
+                          opened_starting_minion_stamped: true
+                          private_island_spawn_location: 9.0,100.0,14.0,0.0,0.0
+                          damage_UNSTABLE_DRAGON_100: 0
+                          experience_skill_runecrafting: 30210
+                          ender_chest_contents:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          damage_STRONG_DRAGON_100: 0
+                          playtime_minutes_modes_FARMING_1: 5
+                          playtime_minutes_modes_COMBAT_1: 3
+                          slayer_quest:
+                            type: zombie
+                            tier: 0
+                            start_timestamp: 1568019333846
+                            completion_state: 0
+                            combat_xp: 609
+                            last_killed_mob_id: ZOMBIE_VILLAGER_1
+                            last_killed_timestamp: 1568021559876
+                            last_killed_mob_island: HUB
+                        e397d9ed5e44463c9d074b3cfd7f8781:
+                          profile_id: e397d9ed5e44463c9d074b3cfd7f8781
+                          cute_name: Mango
+                          coop:
+                            - 41d3abc2d749400c9090d5434d03831b
+                            - 20934ef9488c465180a78f861586b4cf
+                          profile_version: 1
+                          stats:
+                            auctions_bids: 10
+                            auctions_highest_bid: 10000
+                            auctions_won: 8
+                            auctions_bought_common: 2
+                            auctions_gold_spent: 8
+                            auctions_bought_rare: 2
+                            auctions_bought_epic: 1
+                            auctions_bought_uncommon: 1
+                            deaths: 941
+                            deaths_void: 16
+                            auctions_created: 16
+                            auctions_fees: 6678
+                            highest_crit_damage: 2147483747.0236
+                            deaths_player: 5
+                            auctions_completed: 8
+                            auctions_sold_uncommon: 1
+                            auctions_gold_earned: 221000
+                            auctions_sold_common: 7
+                            deaths_zombie: 157
+                            kills: 238
+                            kills_zombie: 21
+                            items_fished: 1
+                            items_fished_large_treasure: 1
+                            kills_enderman: 37
+                            kills_skeleton_emperor: 1
+                            kills_skeleton: 10
+                            kills_spider: 6
+                            kills_zombie_villager: 2
+                            kills_player: 29
+                            deaths_spider: 4
+                            deaths_skeleton: 758
+                            kills_zealot_enderman: 132
+                            auctions_bought_legendary: 2
+                            deaths_zombie_villager: 1
+                            auctions_no_bids: 3
+                          collection:
+                            COBBLESTONE: 217
+                            RAW_FISH: 5567
+                            RAW_FISH:1: 1
+                            PRISMARINE_CRYSTALS: 2
+                            RAW_CHICKEN: 15
+                            ROTTEN_FLESH: 26
+                            BONE: 41
+                            FEATHER: 12
+                            GOLD_INGOT: 10
+                            IRON_INGOT: 89
+                            LOG: 1018
+                            RAW_FISH:3: 5000
+                            SUGAR_CANE: 50000
+                            LEATHER: 80000
+                            LOG_2: 2230000
+                            WHEAT: 20
+                            SEEDS: 15
+                            NETHER_STALK: 10
+                            ENDER_PEARL: 441
+                            SPONGE: 2
+                            STRING: 6
+                            SPIDER_EYE: 1
+                            DIAMOND: 2
+                            MUSHROOM_COLLECTION: 6
+                            LOG_2:1: 5
+                          objectives:
+                            collect_log:
+                              status: COMPLETE
+                              progress: 1
+                              completed_at: 1561978089282
+                            talk_to_guide:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1562003623396
+                            public_island:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1561047777334
+                            explore_hub:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1561430060615
+                            explore_village:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_librarian:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1563646979965
+                            talk_to_farmer:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_blacksmith:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1562688860191
+                            talk_to_lumberjack:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_event_master:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1561643208674
+                            talk_to_auction_master:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1561001429124
+                            talk_to_banker:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560999846821
+                            talk_to_fairy:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_fisherman_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            deposit_coins:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1560999860222
+                            talk_to_lapis_miner:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_farmhand_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            increase_farming_skill_5:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            increase_foraging_skill_5:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            craft_workbench:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            increase_combat_skill_5:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1562169235699
+                            talk_to_rick:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            warp_blazing_fortress:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1562169267405
+                            talk_to_elle:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            mine_coal:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            enchant_item:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_carpenter:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_artist_1:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1563901203408
+                            talk_to_nocturne_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            collect_ink_sack:
+                              status: COMPLETE
+                              progress: 18
+                              completed_at: 1563901624726
+                            talk_to_artist_2:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1563901635629
+                            collect_dye:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_artist_3:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            paint_canvas:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_guber_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_end_dealer:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            fight_dragon:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1567029098185
+                          quests:
+                            collect_log:
+                              status: ACTIVE
+                              activated_at: 1560999703024
+                              activated_at_sb: 724001
+                              completed_at: 0
+                              completed_at_sb: 0
+                            explore_hub:
+                              status: COMPLETE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 1561430060617
+                              completed_at_sb: 1274357
+                            explore_village:
+                              status: ACTIVE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_librarian:
+                              status: ACTIVE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_farmer:
+                              status: ACTIVE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_blacksmith:
+                              status: ACTIVE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_lumberjack:
+                              status: ACTIVE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_auction_master:
+                              status: COMPLETE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 1561001429125
+                              completed_at_sb: 725725
+                            talk_to_banker:
+                              status: COMPLETE
+                              activated_at: 1560999832718
+                              activated_at_sb: 724128
+                              completed_at: 1560999860222
+                              completed_at_sb: 724158
+                            talk_to_lapis_miner:
+                              status: ACTIVE
+                              activated_at: 1561055479910
+                              activated_at_sb: 779775
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_farmhand_1:
+                              status: ACTIVE
+                              activated_at: 1561156726744
+                              activated_at_sb: 881025
+                              completed_at: 0
+                              completed_at_sb: 0
+                            increase_farming_skill_5:
+                              status: ACTIVE
+                              activated_at: 1561156726744
+                              activated_at_sb: 881025
+                              completed_at: 0
+                              completed_at_sb: 0
+                            increase_foraging_skill_5:
+                              status: ACTIVE
+                              activated_at: 1561224531672
+                              activated_at_sb: 948800
+                              completed_at: 0
+                              completed_at_sb: 0
+                            increase_combat_skill_5:
+                              status: ACTIVE
+                              activated_at: 1562169235209
+                              activated_at_sb: 1893533
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_rick:
+                              status: ACTIVE
+                              activated_at: 1562169235209
+                              activated_at_sb: 1893533
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_carpenter:
+                              status: ACTIVE
+                              activated_at: 1563892739022
+                              activated_at_sb: 3617031
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_artist_1:
+                              status: COMPLETE
+                              activated_at: 1563901099360
+                              activated_at_sb: 3625398
+                              completed_at: 1563901635629
+                              completed_at_sb: 3625935
+                            talk_to_nocturne_1:
+                              status: ACTIVE
+                              activated_at: 1563901099360
+                              activated_at_sb: 3625398
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_guber_1:
+                              status: ACTIVE
+                              activated_at: 1566522072219
+                              activated_at_sb: 6246360
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_end_dealer:
+                              status: ACTIVE
+                              activated_at: 1566522072219
+                              activated_at_sb: 6246360
+                              completed_at: 0
+                              completed_at_sb: 0
+                          coop_initiator: true
+                          coop_confirmed: true
+                          tutorial:
+                            - first_join
+                            - zone_village
+                            - zone_bank
+                            - zone_auction_house
+                          level_experience: 253154
+                          first_join: 1560999703490
+                          first_join_skyblock_time: 724001
+                          opened_skyblock_menu_stamped: true
+                          inv_contents:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          inv_armor:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          held_item_slot: 8
+                          active_effects:
+                          ingame_time: 41195106341
+                          last_save: 1568176208197
+                          first_join_hub: 50885
+                          visited_zones:
+                            - village
+                            - bank
+                            - auction_house
+                            - mine
+                          coin_purse: 62363.3
+                          last_checked_interest: 1568176274730
+                          last_interest: 4902.617091263573
+                          experience_skill_farming: 33151
+                          opened_starting_minion_stamped: true
+                          experience_skill_mining: 21.700000000000003
+                          unlocked_coll_tiers:
+                            - LOG_2
+                            - LOG_1
+                            - LOG_5
+                            - LOG_4
+                          auction_placed_bid_before: true
+                          opened_collections_menu_stamped: true
+                          last_interest_time: 1119763
+                          playtime_minutes: 18248
+                          playtime_minutes_modes_DYNAMIC: 10525
+                          playtime_minutes_modes_HUB: 6954
+                          auction_starting_bid: 500
+                          auction_duration_ms: 21600000
+                          dark_auction_items:
+                          death_count: 940
+                          used_crafting_grid_stamped: true
+                          quiver_size: 1
+                          quiver:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          talisman_bag_size: 1
+                          talisman_bag:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          playtime_minutes_modes_FARMING_1: 11
+                          return_to_private_island_stamped: true
+                          experience_skill_foraging: 3600
+                          collected_log_stamped: true
+                          last_death: 7424262
+                          achievement_sync_version: 1
+                          crafted_generators:
+                            - COBBLESTONE_1
+                            - FLOWER_1
+                          playtime_minutes_modes_DARK_AUCTION: 4
+                          opened_recipes_menu_stamped: true
+                          fishing_bag:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          experience_skill_combat: 32804
+                          killed_first_mob_stamped: true
+                          playtime_minutes_modes_COMBAT_1: 1
+                          playtime_minutes_modes_COMBAT_2: 377
+                          exploit_start_timestamp: 1563895429190
+                          exploit_block_counter: 49
+                          exploit_fish_counter: 0
+                          exploit_monster_counter: 2
+                          playtime_minutes_modes_MINING_2: 44
+                          playtime_minutes_modes_FARMING_2: 40
+                          playtime_minutes_modes_FORAGING_1: 25
+                          collected_wheat_stamped: true
+                          experience_skill_fishing: 300
+                          experience_skill_enchanting: 0
+                          damage_MAGMA_CUBE_BOSS_100: 0
+                          clicked_in_starting_minion_stamped: true
+                          lastSaveVersion:
+                            pluginVersion: 0.7.48
+                            bootTime: 1568175974089
+                            gmVersion: 10.25.185
+                            hyVersion: 1.0.124
+                            server: mini1S
+                          lastSaveTimestamp: 1568176208204
+                          ender_chest_contents:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          playtime_minutes_modes_COMBAT_3: 267
+                          player_id: 20934ef9488c465180a78f861586b4cf
+                          claimable_rewards:
+                          damage_WISE_DRAGON_100: 0
+                        ffee4d14b8b844c58debf75cc2264114:
+                          profile_id: ffee4d14b8b844c58debf75cc2264114
+                          cute_name: Cucumber
+                          coop:
+                            - 08d8787d1bc641a6ace77c39b75f86b8
+                            - 20934ef9488c465180a78f861586b4cf
+                          profile_version: 1
+                          stats:
+                            auctions_created: 1
+                            auctions_fees: 550
+                            highest_crit_damage: 27406120.8035
+                            kills: 177
+                            kills_enderman: 42
+                            kills_zealot_enderman: 70
+                            kills_endermite: 5
+                            kills_watcher: 30
+                            kills_obsidian_wither: 30
+                            deaths: 1
+                            deaths_void: 1
+                          collection:
+                            COBBLESTONE: 64
+                            ENDER_PEARL: 236
+                            OBSIDIAN: 122
+                          objectives:
+                            collect_log:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_guide:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            public_island:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            explore_hub:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            explore_village:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_librarian:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_farmer:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_blacksmith:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_lumberjack:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_event_master:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_auction_master:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1564776279116
+                            talk_to_banker:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_fairy:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_fisherman_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_carpenter:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_artist_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            paint_canvas:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_guber_1:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_end_dealer:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_lazy_miner:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            increase_mining_skill_5:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            talk_to_telekinesis_applier:
+                              status: ACTIVE
+                              progress: 0
+                              completed_at: 0
+                            fight_dragon:
+                              status: COMPLETE
+                              progress: 0
+                              completed_at: 1566843733110
+                          quests:
+                            collect_log:
+                              status: ACTIVE
+                              activated_at: 1564713551380
+                              activated_at_sb: 4437849
+                              completed_at: 0
+                              completed_at_sb: 0
+                            explore_hub:
+                              status: ACTIVE
+                              activated_at: 1564776127945
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            explore_village:
+                              status: ACTIVE
+                              activated_at: 1564776127945
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_librarian:
+                              status: ACTIVE
+                              activated_at: 1564776127945
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_farmer:
+                              status: ACTIVE
+                              activated_at: 1564776127945
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_blacksmith:
+                              status: ACTIVE
+                              activated_at: 1564776127946
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_lumberjack:
+                              status: ACTIVE
+                              activated_at: 1564776127946
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_auction_master:
+                              status: COMPLETE
+                              activated_at: 1564776127946
+                              activated_at_sb: 4500426
+                              completed_at: 1564776279116
+                              completed_at_sb: 4500576
+                            talk_to_banker:
+                              status: ACTIVE
+                              activated_at: 1564776127946
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_carpenter:
+                              status: ACTIVE
+                              activated_at: 1564776127946
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_artist_1:
+                              status: ACTIVE
+                              activated_at: 1564776127946
+                              activated_at_sb: 4500426
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_guber_1:
+                              status: ACTIVE
+                              activated_at: 1564800858904
+                              activated_at_sb: 4525157
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_end_dealer:
+                              status: ACTIVE
+                              activated_at: 1564800858904
+                              activated_at_sb: 4525157
+                              completed_at: 0
+                              completed_at_sb: 0
+                            talk_to_lazy_miner:
+                              status: ACTIVE
+                              activated_at: 1566582556697
+                              activated_at_sb: 6306855
+                              completed_at: 0
+                              completed_at_sb: 0
+                            increase_mining_skill_5:
+                              status: ACTIVE
+                              activated_at: 1566582556697
+                              activated_at_sb: 6306855
+                              completed_at: 0
+                              completed_at_sb: 0
+                          last_death: 6277622
+                          coop_initiator: true
+                          lastSaveVersion:
+                            pluginVersion: 0.7.47
+                            bootTime: 1567715745149
+                            gmVersion: 10.25.178
+                            hyVersion: 1.0.123
+                            server: mini149D
+                          lastSaveTimestamp: 1567715800962
+                          coop_confirmed: true
+                          tutorial:
+                            - first_join
+                            - zone_village
+                            - zone_auction_house
+                            - zone_mountain
+                          level_experience: 5892
+                          first_join: 1564713551429
+                          first_join_skyblock_time: 4437849
+                          inv_contents:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          inv_armor:
+                            type: 0
+                            data:
+                              - 31
+                              - -117
+                              - 8
+                              - 0
+                          held_item_slot: 8
+                          active_effects:
+                          ingame_time: 165350243
+                          last_save: 1566850056754
+                          last_checked_interest: 1566850348189
+                          achievement_sync_version: 1
+                          playtime_minutes: 523
+                          playtime_minutes_modes_DYNAMIC: 257
+                          opened_skyblock_menu_stamped: true
+                          last_interest: 0
+                          visited_zones:
+                            - dynamic_portal_island
+                            - village
+                            - auction_house
+                            - mountain
+                          opened_starting_minion_stamped: true
+                          experience_skill_mining: 6.4
+                          unlocked_coll_tiers:
+                            - OBSIDIAN_-1
+                            - ENDER_PEARL_1
+                            - ENDER_PEARL_-1
+                            - COBBLESTONE_-1
+                          first_join_hub: 24010008
+                          playtime_minutes_modes_HUB: 221
+                          auction_starting_bid: 500
+                          auction_duration_ms: 21600000
+                          coin_purse: 3429414
+                          lastAhMessage: 1564776327230
+                          experience_skill_enchanting: 0
+                          experience_skill_runecrafting: 34945
+                          exploit_start_timestamp: 1564800865260
+                          exploit_block_counter: 0
+                          exploit_fish_counter: 0
+                          exploit_monster_counter: 188
+                          experience_skill_combat: 696752
+                          killed_first_mob_stamped: true
+                          playtime_minutes_modes_COMBAT_3: 42
+                          damage_UNSTABLE_DRAGON_100: 0
+                          death_count: 1
+                          playtime_minutes_modes_MINING_1: 3
+                      packages:
+                        - visited_hub_zone_village
+                        - unlocked_collection_mining_cobblestone
+                        - visited_hub_zone_mushroom_desert
+                        - unlocked_collection_mining_iron_ingot
+                      joined_version: 0.7.364
+                      setting_profile_viewer: false
+                      setting_guest_invites: false
+                      itemDetectorAlerts: 61
+                      setting_coop_invites: false
+                      idtoken: 3294
+                      setting_double_tap_to_drop: false
+                      profiles_v2:
+                        05c9bb60e39e446382c6d5a7fe2fa0f0:
+                          profile_id: 05c9bb60e39e446382c6d5a7fe2fa0f0
+                          cute_name: Strawberry
+                        e397d9ed5e44463c9d074b3cfd7f8781:
+                          profile_id: e397d9ed5e44463c9d074b3cfd7f8781
+                          cute_name: Mango
+                        ffee4d14b8b844c58debf75cc2264114:
+                          profile_id: ffee4d14b8b844c58debf75cc2264114
+                          cute_name: Cucumber
+                        ee304bc89e7841cc9018273a26e3bac8:
+                          profile_id: ee304bc89e7841cc9018273a26e3bac8
+                          cute_name: Watermelon
+                        8142550b194545f99b9377f67281b989:
+                          profile_id: 8142550b194545f99b9377f67281b989
+                          cute_name: Orange
+                      profiles_v3:
+                        20934ef9488c465180a78f861586b4cf:
+                          profile_id: 20934ef9488c465180a78f861586b4cf
+                          cute_name: Orange
+                        59f2f4d89c8c4fd6bc9f707bc4b23ec5:
+                          profile_id: 59f2f4d89c8c4fd6bc9f707bc4b23ec5
+                          cute_name: Watermelon
+                        bfbb47836f06483fbbf460cd599ae743:
+                          profile_id: bfbb47836f06483fbbf460cd599ae743
+                          cute_name: Mango
+                        05c9bb60e39e446382c6d5a7fe2fa0f0:
+                          profile_id: 05c9bb60e39e446382c6d5a7fe2fa0f0
+                          cute_name: Strawberry
+                        6d10b93252ad419ab79e5149f30692c6:
+                          profile_id: 6d10b93252ad419ab79e5149f30692c6
+                          cute_name: Cucumber
+                      profiles_v4:
+                        bf7c14fb018946899d944d56e65222d2:
+                          profile_id: bf7c14fb018946899d944d56e65222d2
+                          cute_name: Pineapple
+                      latestUpdateSeen: skyblock-v0.7.8
+                      achievement_magma_cream_consumed: 1
+                      setting_api_skills: true
+                      setting_api_collections: true
+                      setting_api_inventory: true
+                      setting_play_music: false
+                      setting_pickup_rarity_filter: RARE
+                      setting_hide_friend_pets: false
+                    SpeedUHC:
+                      coins: 260
+                      score: 0
+                      movedOver: true
+                    MurderMystery:
+                      mm_chests: 11
+                      packages:
+                        - deathcry_dinosaur
+                    Duels:
+                      duels_chests: 11
+                      packages:
+                        - emblem_trophy
+                        - killmessages_rainbow_km
+                        - projectile_trail_note_spiral
+                        - projectile_trail_random
+                      show_lb_option: on
+                      games_played_duels: 27
+                      chat_enabled: on
+                      matchHistory2:
+                        - 'BOW_DUEL§7 - §aWIN§7 - §aMode: 0§7 - §aOverall: 0§7 - §8W[Minikloon]§7 - §8L[TiiBas_]'
+                        - 'UHC_DUEL§7 - §cLOSS§7 - §aMode: 0§7 - §aOverall: 0§7 - §8W[stayindead]§7 - §8L[Minikloon]'
+                        - 'UHC_DUEL§7 - §cLOSS§7 - §aMode: 0§7 - §aOverall: 0§7 - §8W[Xoku]§7 - §8L[Minikloon]'
+                        - 'UHC_DUEL§7 - §aWIN§7 - §aMode: 0§7 - §aOverall: 0§7 - §8W[Minikloon]§7 - §8L[remi_coasterman]'
+                      bow_duel_bow_hits: 42
+                      bow_duel_bow_shots: 156
+                      bow_duel_damage_dealt: 155
+                      bow_duel_health_regenerated: 66
+                      bow_duel_rounds_played: 9
+                      bow_hits: 74
+                      bow_shots: 242
+                      damage_dealt: 391
+                      health_regenerated: 394
+                      rounds_played: 25
+                      skywars_rookie_title_prestige: 1
+                      op_rookie_title_prestige: 1
+                      blitz_rookie_title_prestige: 1
+                      tnt_games_rookie_title_prestige: 1
+                      mega_walls_rookie_title_prestige: 1
+                      classic_rookie_title_prestige: 1
+                      no_debuff_rookie_title_prestige: 1
+                      bridge_rookie_title_prestige: 1
+                      all_modes_rookie_title_prestige: 1
+                      bow_rookie_title_prestige: 1
+                      uhc_rookie_title_prestige: 1
+                      sumo_rookie_title_prestige: 1
+                      combo_rookie_title_prestige: 1
+                      duels_recently_played2: UHC_DUEL#UHC_MEETUP#UHC_DUEL
+                      selected_1_new: sumo
+                      selected_2_new: blitz
+                      current_winstreak_mode_uhc_duel: 0
+                      maps_won_on:
+                        - Spikerock Bay
+                        - Fractal
+                        - Reef
+                        - Skyport
+                      current_winstreak: 0
+                      current_uhc_winstreak: 0
+                      coins: 1800000
+                      coins_gained: 162
+                      deaths: 4
+                      golden_apples_eaten: 15
+                      losses: 4
+                      melee_hits: 251
+                      melee_swings: 984
+                      uhc_duel_bow_hits: 31
+                      uhc_duel_bow_shots: 73
+                      uhc_duel_damage_dealt: 221
+                      uhc_duel_deaths: 4
+                      uhc_duel_golden_apples_eaten: 15
+                      uhc_duel_health_regenerated: 323
+                      uhc_duel_losses: 4
+                      uhc_duel_melee_hits: 216
+                      uhc_duel_melee_swings: 891
+                      uhc_duel_rounds_played: 12
+                      best_winstreak_mode_uhc_duel: 3
+                      best_uhc_winstreak: 3
+                      best_overall_winstreak: 3
+                      kills: 3
+                      uhc_duel_kills: 3
+                      uhc_duel_wins: 3
+                      wins: 3
+                      shop_sort: rarity_descending
+                      active_projectile_trail: projectile_trail_random
+                      blitz_duels_kit: Knight
+                      blitz_duel_damage_dealt: 9
+                      blitz_duel_health_regenerated: 4
+                      blitz_duel_melee_hits: 3
+                      blitz_duel_melee_swings: 10
+                      blitz_duel_rounds_played: 1
+                      bowspleef_duel_bow_shots: 11
+                      bowspleef_duel_rounds_played: 1
+                      sumo_duel_melee_hits: 29
+                      sumo_duel_melee_swings: 60
+                      sumo_duel_rounds_played: 1
+                      classic_duel_bow_hits: 1
+                      classic_duel_bow_shots: 2
+                      classic_duel_damage_dealt: 6
+                      classic_duel_health_regenerated: 1
+                      classic_duel_melee_hits: 3
+                      classic_duel_melee_swings: 23
+                      classic_duel_rounds_played: 1
+                    BuildBattle:
+                      packages:
+                        - knights_hall
+                        - tnt_hat
+                    Tag:
+                      mainlobby_halloween_2019_candyhunt_1: true
+                      mainlobby_easter_2020_egghunt_38_86_17: true
+                    Legacy:
+                      next_tokens_seconds: 103
+                      quakecraft_tokens: 1
+                      tokens: 1
+                      total_tokens: 1
+                  stats:
+                    Walls3:
+                      coins: 8025
+                      classes:
+                        herobrine:
+                          skill_level_d: 1
+                          skill_level_dChecked5: true
+                          unlocked: false
+                          checked4: true
+                        skeleton:
+                          skill_level_dChecked5: true
+                          skill_level_d: 1
+                          checked4: true
+                          unlocked: false
+                        enderman:
+                          skill_level_d: 1
+                          skill_level_dChecked5: true
+                          unlocked: false
+                          checked4: true
+                        zombie:
+                          skill_level_d: 1
+                          skill_level_dChecked5: true
+                          checked4: true
+                          unlocked: false
+                      packages:
+                        - legacy_achievement_a
+                        - achievement_fix_flag
+                        - cakes_fix_flag_2
+                    SkyBlock:
+                      profiles:
+                        20934ef9488c465180a78f861586b4cf:
+                          profile_id: 20934ef9488c465180a78f861586b4cf
+                          cute_name: Orange
+                        974b2a9e0d6d41819dd18a05fb228965:
+                          profile_id: 974b2a9e0d6d41819dd18a05fb228965
+                          cute_name: Banana
+                        b59f6cd9ea734a4da2ff011808855e6b:
+                          profile_id: b59f6cd9ea734a4da2ff011808855e6b
+                          cute_name: Cucumber
+                    Arena:
+                      coins: 7600
+                    GingerBread:
+                      coins: 7730
+                      lastTourneyAd: 1596834948555
+                    Paintball:
+                      coins: 7600
+                    Quake:
+                      coins: 7600
+                    VampireZ:
+                      coins: 7600
+                    Walls:
+                      coins: 7600
+                    SkyWars:
+                      coins: 10940
+                      levelFormatted: §c5§60§e✌§r
+                      souls: 10
+                      packages:
+                        - update_solo_team_kits2
+                        - update_solo_team_kits_and_perks
+                        - update_solo_team_perk_levels
+                        - update_opals_prestige
+                      skywars_experience: 395001
+                      selected_prestige_icon: sapphire_prestige
+                      opals: 9
+                    Battleground:
+                      coins: 6165
+                    TNTGames:
+                      coins: 7989
+                      wins: 0
+                      new_bloodwizard_regen: 1
+                      new_kineticwizard_explode: 1
+                      new_tntrun_double_jumps: 1
+                      new_icewizard_regen: 1
+                      new_pvprun_double_jumps: 1
+                      new_firewizard_explode: 1
+                      packages:
+                        - shop_2018
+                        - tiered_achievement_flag_3
+                        - clicked_tnt_run_npc
+                      new_bloodwizard_explode: 1
+                      new_spleef_repulsor: 1
+                      new_tntag_speedy: 1
+                      new_witherwizard_regen: 1
+                      new_firewizard_regen: 1
+                      new_spleef_double_jumps: 1
+                      new_spleef_tripleshot: 1
+                      new_icewizard_explode: 1
+                      new_witherwizard_explode: 1
+                      new_kineticwizard_regen: 1
+                      run_potions_splashed_on_players: 0
+                      record_tntrun: 41
+                      deaths_tntrun: 1
+                      winstreak: 0
+                    Arcade:
+                      coins: 20131
+                      items_found_scuba_simulator: 12
+                      total_points_scuba_simulator: 16
+                    SuperSmash:
+                      coins: 6000
+                    UHC:
+                      coins: 8025
+                      saved_stats: true
+                      clearup_achievement: true
+                    Pit:
+                      profile:
+                        renown: 60
+                        moved_achievements_1: true
+                        outgoing_offers:
+                        moved_achievements_2: true
+                        items_last_buy:
+                        last_save: 1603799021509
+                        king_quest:
+                          kills: 15
+                        reconessence_day: 1590784751615
+                        prestiges:
+                          - index: 1
+                            xp_on_prestige: 65950
+                            timestamp: 1589047801738
+                          - index: 2
+                            xp_on_prestige: 138510
+                            timestamp: 1589508928218
+                          - index: 3
+                            xp_on_prestige: 217680
+                            timestamp: 1589660792967
+                          - index: 4
+                            xp_on_prestige: 303430
+                            timestamp: 1590784724497
+                        trade_timestamps:
+                        spire_stash_inv:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        zero_point_three_gold_transfer: true
+                        unlocks_1:
+                          - tier: 0
+                            acquireDate: 1589047944446
+                            key: gladiator
+                          - tier: 0
+                            acquireDate: 1589047952114
+                            key: strength_chaining
+                        death_recaps:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        spire_stash_armor:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        cash: 1002238.44
+                        last_midfight_disconnect: 1590908934688
+                        leaderboard_stats:
+                        selected_perk_3: null
+                        selected_perk_2: null
+                        inv_armor:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        selected_perk_1: null
+                        selected_perk_0: null
+                        selected_killstreak_2: null
+                        cash_during_prestige_3: 10000000
+                        gold_transactions:
+                          - amount: 0
+                            timestamp: 1591718974646
+                        selected_killstreak_1: null
+                        cash_during_prestige_2: 100002.5
+                        login_messages:
+                        selected_killstreak_0: null
+                        hotbar_favorites:
+                          - 29
+                          - 261
+                          - 1
+                          - 7
+                        cash_during_prestige_5: 1002238.44
+                        cash_during_prestige_4: 1000702.4
+                        selected_killstreak_3: null
+                        inv_contents:
+                          type: 0
+                          data:
+                            - 31
+                            - -117
+                            - 8
+                            - 0
+                        xp: 494700
+                        bounties:
+                          - amount: 100
+                            remainingTicks: 9223372036854776000
+                            issuer: fb7afb6de9ea47399893616134617808
+                            timestamp: 1598412600946
+                        cash_during_prestige_1: 1000100384.4250002
+                        cash_during_prestige_0: 1000000000
+                      pit_stats_ptl:
+                        joins: 19
+                        cash_earned: 2012203330
+                        chat_messages: 55
+                        ingots_cash: 24
+                        ingots_picked_up: 24
+                        jumped_into_pit: 77
+                        assists: 26
+                        damage_dealt: 427
+                        damage_received: 669
+                        deaths: 17
+                        kills: 15
+                        left_clicks: 1331
+                        melee_damage_dealt: 424
+                        melee_damage_received: 610
+                        playtime_minutes: 145
+                        sword_hits: 202
+                      packages:
+                        - supporter
+                    HungerGames:
+                      coins: 7759
+                      packages:
+                        - new_stats_02_2019
+                        - fixachievements3
+                        - used_kit_knight
+                      wins_teams_normal: 0
+                      wins_solo_normal: 0
+                      autoarmor: true
+                      wins_backup: 0
+                      wins: 0
+                      deaths: 7
+                      time_played: 2222
+                      arrows_fired: 2
+                      arrows_fired_knight: 2
+                      damage_taken: 79
+                      damage_taken_knight: 79
+                      games_played: 6
+                      games_played_knight: 6
+                      time_played_knight: 2222
+                      blitz_uses: 13
+                      damage: 9
+                      damage_knight: 9
+                      exp_knight: 4
+                      lastTourneyAd: 1602982598070
+                    MCGO:
+                      coins: 5640
+                      pocket_change: 0
+                      game_wins_deathmatch: 0
+                      game_wins: 0
+                      packages:
+                        - achievement_flag_7
+                      grenade_kills: 0
+                      bombs_defused: 0
+                      headshot_kills: 0
+                      grenadeKills: 0
+                      kills_deathmatch: 0
+                      kills: 0
+                      bombs_planted: 0
+                    Duels:
+                      show_lb_option: on
+                      chat_enabled: on
+                      games_played_duels: 8
+                      all_modes_rookie_title_prestige: 1
+                      blitz_rookie_title_prestige: 1
+                      sumo_rookie_title_prestige: 1
+                      combo_rookie_title_prestige: 1
+                      tnt_games_rookie_title_prestige: 1
+                      classic_rookie_title_prestige: 1
+                      mega_walls_rookie_title_prestige: 1
+                      skywars_rookie_title_prestige: 1
+                      uhc_rookie_title_prestige: 1
+                      no_debuff_rookie_title_prestige: 1
+                      bridge_rookie_title_prestige: 1
+                      bow_rookie_title_prestige: 1
+                      op_rookie_title_prestige: 1
+                      selected_1_new: sumo
+                      selected_2_new: blitz
+                      damage_dealt: 123
+                      melee_hits: 94
+                      melee_swings: 231
+                      rounds_played: 8
+                      uhc_duel_damage_dealt: 87
+                      uhc_duel_melee_hits: 90
+                      uhc_duel_melee_swings: 221
+                      uhc_duel_rounds_played: 4
+                      sw_duels_kit_new3: kit_ranked_ranked_champion
+                      blocks_placed: 14
+                      sw_duel_blocks_placed: 14
+                      sw_duel_damage_dealt: 10
+                      sw_duel_melee_hits: 4
+                      sw_duel_melee_swings: 10
+                      sw_duel_rounds_played: 2
+                      duels_recently_played2: UHC_DUEL##
+                      current_uhc_winstreak: 0
+                      current_winstreak_mode_uhc_duel: 0
+                      current_winstreak: 0
+                      bow_hits: 17
+                      bow_shots: 59
+                      coins: 30
+                      deaths: 3
+                      golden_apples_eaten: 6
+                      health_regenerated: 87
+                      losses: 3
+                      uhc_duel_bow_hits: 10
+                      uhc_duel_bow_shots: 21
+                      uhc_duel_deaths: 2
+                      uhc_duel_golden_apples_eaten: 6
+                      uhc_duel_health_regenerated: 80
+                      uhc_duel_losses: 2
+                      bow_duel_bow_hits: 7
+                      bow_duel_bow_shots: 38
+                      bow_duel_damage_dealt: 26
+                      bow_duel_health_regenerated: 7
+                      bow_duel_rounds_played: 2
+                      current_winstreak_mode_bow_duel: 0
+                      current_bow_winstreak: 0
+                      bow_duel_deaths: 1
+                      bow_duel_losses: 1
+                    TrueCombat:
+                      coins: 30
+                    MurderMystery:
+                      packages:
+                        - displayed_youtuber_book
+                    Bedwars:
+                      Experience: 974000
+                      first_join_7: true
+                      bedwars_boxes: 1
+                  skyblock_free_cookie: 1599590573361
+                  scorpius_bribe_96: 1603235714849
+                  claimed_century_cake: 1604475415951
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /playerCount:
     get:
       tags:
@@ -3106,6 +5899,801 @@ components:
         - location
         - count
         - leaders
+    PlayerResponse:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/Player'
+      required:
+        - player
+    Player:
+      type: object
+      nullable: true
+      properties:
+        _id:
+          type: string
+        uuid:
+          type: string
+        firstLogin:
+          type: number
+        playername:
+          type: string
+        displayname:
+          type: string
+        knownAliases:
+          type: array
+          items:
+            type: string
+        knownAliasesLower:
+          type: array
+          items:
+            type: string
+        achievementsOneTime:
+          type: array
+          items:
+            type: string
+        rank:
+          type: string
+        parkourCheckpointBests:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+        achievementTracking:
+          type: array
+          items:
+            type: string
+        achievementPoints:
+          type: number
+        achievements:
+          type: object
+          additionalProperties:
+            type: number
+        karma:
+          type: number
+        networkExp:
+          type: number
+        giftingMeta:
+          type: object
+          properties:
+            realBundlesReceivedInc:
+              type: number
+            bundlesReceived:
+              type: number
+            realBundlesReceived:
+              type: number
+            giftsGiven:
+              type: number
+            bundlesGiven:
+              type: number
+            realBundlesGiven:
+              type: number
+            milestones:
+              type: array
+              items:
+                type: string
+          additionalProperties:
+            anyOf:
+              - type: object
+                nullable: true
+              - type: number
+              - type: array
+                items:
+                  type: string
+        friendRequestsUuid:
+          type: array
+          items:
+            type: string
+        cooldowns:
+          type: object
+          properties:
+            fun:
+              type: object
+              additionalProperties:
+                type: number
+        parkourCompletions:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: object
+              properties:
+                timeStart:
+                  type: number
+                timeTook:
+                  type: number
+              required:
+                - timeStart
+                - timeTook
+        newPackageRank:
+          type: string
+        userLanguage:
+          type: string
+        mcVersionRp:
+          type: string
+        achievementSync:
+          type: object
+          additionalProperties:
+            type: number
+        onetime_achievement_menu_sort:
+          type: string
+        housingMeta:
+          type: object
+          properties:
+            packages:
+              type: array
+              items:
+                type: string
+        settings:
+          type: object
+          properties:
+            allowFriendRequests:
+              type: boolean
+            allowPartyRequests:
+              type: boolean
+            autoSpawnPet:
+              type: boolean
+            bloodVisibility:
+              type: boolean
+            chatVisibility:
+              type: boolean
+            lobbySpeed:
+              type: boolean
+            lobbyProtection:
+              type: boolean
+            petVisibility:
+              type: boolean
+            legacyCompass:
+              type: boolean
+            partyInvitePrivacy:
+              type: string
+            friendRequestPrivacy:
+              type: string
+            duelInvitePrivacy:
+              type: string
+            privateMessageSounds:
+              type: boolean
+          additionalProperties:
+            anyOf:
+              - type: boolean
+              - type: string
+              - type: object
+        challenges:
+          type: object
+          properties:
+            all_time:
+              type: object
+              additionalProperties:
+                type: number
+        socialMedia:
+          type: object
+          properties:
+            TWITTER:
+              type: string
+            DISCORD:
+              type: string
+            links:
+              type: object
+              properties:
+                HYPIXEL:
+                  type: string
+                DISCORD:
+                  type: string
+                TWITTER:
+                  type: string
+              additionalProperties:
+                anyOf:
+                  - type: string
+                  - type: object
+            prompt:
+              type: boolean
+          additionalProperties:
+            anyOf:
+              - type: string
+              - type: boolean
+              - type: object
+        vanityMeta:
+          type: object
+          properties:
+            packages:
+              type: array
+              items:
+                type: string
+        channel:
+          type: string
+        petStats:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              HUNGER:
+                type: object
+                properties:
+                  timestamp:
+                    type: number
+                  value:
+                    type: number
+                required:
+                  - timestamp
+                  - value
+              THIRST:
+                type: object
+                properties:
+                  value:
+                    type: number
+                  timestamp:
+                    type: number
+                required:
+                  - value
+                  - timestamp
+              EXERCISE:
+                type: object
+                properties:
+                  timestamp:
+                    type: number
+                  value:
+                    type: number
+                required:
+                  - timestamp
+                  - value
+              experience:
+                type: number
+        petConsumables:
+          type: object
+          additionalProperties:
+            type: number
+        currentClickEffect:
+          type: string
+        tourney:
+          type: object
+          properties:
+            first_join_lobby:
+              type: number
+            quake_solo2_0:
+              type: object
+              properties:
+                games_played:
+                  type: number
+                playtime:
+                  type: number
+                first_game:
+                  type: number
+                tributes_earned:
+                  type: number
+            total_tributes:
+              type: number
+        onetime_achievement_menu_sort_completion_sort:
+          type: string
+        lastAdsenseGenerateTime:
+          type: number
+        voting:
+          type: object
+          additionalProperties:
+            type: number
+        currentGadget:
+          type: string
+        stats:
+          type: object
+          properties:
+            Arcade:
+              type: object
+              properties:
+                coins:
+                  type: number
+              additionalProperties:
+                anyOf:
+                  - type: number
+                  - type: boolean
+                  - type: object
+            SkyWars:
+              type: object
+              properties:
+                packages:
+                  type: array
+                  items:
+                    type: string
+                souls:
+                  type: number
+            GingerBread:
+              type: object
+              properties:
+                coins:
+                  type: number
+                packages:
+                  type: array
+                  items:
+                    type: string
+              additionalProperties:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: object
+            MCGO:
+              type: object
+              properties:
+                coins:
+                  type: number
+            TrueCombat:
+              type: object
+              properties:
+                win_streak:
+                  type: number
+                games:
+                  type: number
+                deaths:
+                  type: number
+                coins:
+                  type: number
+                losses:
+                  type: number
+                survived_players:
+                  type: number
+                packages:
+                  type: array
+                  items:
+                    type: string
+              additionalProperties:
+                anyOf:
+                  - type: number
+                  - type: object
+            VampireZ:
+              type: object
+              properties:
+                updated_stats:
+                  type: boolean
+            Quake:
+              type: object
+              properties:
+                packages:
+                  type: array
+                  items:
+                    type: string
+                alternative_gun_cooldown_indicator:
+                  type: boolean
+                compass_selected:
+                  type: boolean
+                enable_sound:
+                  type: boolean
+                instantRespawn:
+                  type: boolean
+                showDashCooldown:
+                  type: boolean
+                highest_killstreak:
+                  type: number
+                showKillPrefix:
+                  type: boolean
+                kills:
+                  type: number
+                headshots:
+                  type: number
+                coins:
+                  type: number
+                distance_travelled:
+                  type: number
+                shots_fired:
+                  type: number
+                deaths:
+                  type: number
+              additionalProperties:
+                anyOf:
+                  - type: number
+                  - type: boolean
+                  - type: object
+            Paintball:
+              type: object
+              properties:
+                packages:
+                  type: array
+                  items:
+                    type: string
+                kills:
+                  type: number
+                wins:
+                  type: number
+                coins:
+                  type: number
+                shots_fired:
+                  type: number
+                deaths:
+                  type: number
+                showKillPrefix:
+                  type: boolean
+                favorite_slots:
+                  type: string
+              additionalProperties: 
+                anyOf:
+                  - type: number
+                  - type: string
+                  - type: boolean
+                  - type: object
+            Legacy:
+              type: object
+              properties:
+                next_tokens_seconds:
+                  type: number
+                quakecraft_tokens:
+                  type: number
+                total_tokens:
+                  type: number
+                tokens:
+                  type: number
+                paintball_tokens:
+                  type: number
+              additionalProperties:
+                anyOf:
+                  - type: number
+                  - type: object
+            BuildBattle:
+              type: object
+              properties:
+                wins_solo_normal:
+                  type: number
+                wins:
+                  type: number
+              additionalProperties:
+                anyOf:
+                  - type: number
+                  - type: object
+            Bedwars:
+              type: object
+              properties:
+                bedwars_boxes:
+                  type: number
+                Experience:
+                  type: number
+              additionalProperties:
+                anyOf:
+                  - type: boolean
+                  - type: number
+                  - type: object
+            Pit:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  properties:
+                    renown:
+                      type: number
+            SkyBlock:
+              type: object
+              properties:
+                profiles:
+                  type: object
+                  additionalProperties:
+                    type: object
+                    description: Object key is the profile ID
+                    properties:
+                      profile_id:
+                        type: string
+                      cute_name:
+                        type: string
+            MurderMystery:
+              type: object
+              properties:
+                murdermystery_books:
+                  type: array
+                  items:
+                    type: string
+                detective_chance:
+                  type: number
+                murderer_chance:
+                  type: number
+                coins:
+                  type: number
+                coins_pickedup:
+                  type: number
+                coins_pickedup_MURDER_CLASSIC:
+                  type: number
+                coins_pickedup_skyway_pier:
+                  type: number
+                coins_pickedup_skyway_pier_MURDER_CLASSIC:
+                  type: number
+                games:
+                  type: number
+                games_MURDER_CLASSIC:
+                  type: number
+                games_skyway_pier:
+                  type: number
+                games_skyway_pier_MURDER_CLASSIC:
+                  type: number
+                wins:
+                  type: number
+                wins_MURDER_CLASSIC:
+                  type: number
+                wins_skyway_pier:
+                  type: number
+                wins_skyway_pier_MURDER_CLASSIC:
+                  type: number
+              additionalProperties:
+                anyOf:
+                  - type: number
+                  - type: object
+        lastLogin:
+          type: number
+        lastLogout:
+          type: number
+        quickjoin_timestamp:
+          type: number
+        quickjoin_uses:
+          type: number
+        levelingReward_1:
+          type: boolean
+        network_update_book:
+          type: string
+        levelUp_VIP_PLUS:
+          type: number
+        achievementRewardsNew:
+          type: object
+          additionalProperties:
+            type: number
+        lastClaimedReward:
+          type: number
+        rewardHighScore:
+          type: number
+        rewardScore:
+          type: number
+        rewardStreak:
+          type: number
+        totalDailyRewards:
+          type: number
+        totalRewards:
+          type: number
+        eugene:
+          type: object
+          properties:
+            dailyTwoKExp:
+              type: number
+          additionalProperties:
+            anyOf:
+              - type: number
+              - type: object
+        levelUp_MVP_PLUS:
+          type: number
+        vanityFavorites:
+          type: string
+        monthlyPackageRank:
+          type: string
+        mostRecentMonthlyPackageRank:
+          type: string
+        currentPet:
+          type: string
+        quests:
+          type: object
+          additionalProperties:
+            anyOf:
+              - type: object
+        rankPlusColor:
+          type: string
+        monthlycrates:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              REGULAR:
+                type: boolean
+              VIP:
+                type: boolean
+              VIP_PLUS:
+                type: boolean
+              MVP:
+                type: boolean
+            additionalProperties:
+              anyOf:
+                - type: boolean
+                - type: object
+        monthlyRankColor:
+          type: string
+        adsense_tokens:
+          type: number
+        collectibles_menu_sort:
+          type: string
+        outfit:
+          type: object
+          properties:
+            BOOTS:
+              type: string
+            CHESTPLATE:
+              type: string
+            LEGGINGS:
+              type: string
+            HELMET:
+              type: string
+        petJourneyTimestamp:
+          type: number
+        mostRecentGameType:
+          type: string
+        timePlaying:
+          type: number
+        flashingSalePopup:
+          type: number
+        flashingSaleOpens:
+          type: number
+        flashingSalePoppedUp:
+          type: number
+        flashingSaleClicks:
+          type: number
+        fortuneBuff:
+          type: number
+        levelUp_VIP:
+          type: number
+        achievementTotem:
+          type: object
+          properties:
+            canCustomize:
+              type: boolean
+            allowed_max_height:
+              type: number
+            unlockedParts:
+              type: array
+              items:
+                type: string
+            selectedParts:
+              type: object
+              additionalProperties:
+                type: string
+            unlockedColors:
+              type: array
+              items:
+                type: string
+            selectedColors:
+              type: object
+              additionalProperties:
+                type: string
+          additionalProperties:
+            anyOf:
+              - type: boolean
+              - type: number
+              - type: array
+                items:
+                  type: string
+              - type: object
+        questSettings:
+          type: object
+          additionalProperties:
+            type: boolean
+        customFilter:
+          type: string
+        currentCloak:
+          type: string
+        auto_spawn_pet:
+          type: boolean
+        chat:
+          type: boolean
+        eulaCoins:
+          type: boolean
+        fireworkStorage:
+          type: array
+          items:
+            type: object
+            properties:
+              flight_duration:
+                type: number
+              shape:
+                type: string
+              trail:
+                type: boolean
+              twinkle:
+                type: boolean
+              colors:
+                type: string
+              fade_colors:
+                type: string
+              selected:
+                type: boolean
+        guildNotifications:
+          type: boolean
+        mostRecentMinecraftVersion:
+          type: number
+        mostRecentlyThanked:
+          type: string
+        mostRecentlyThankedUuid:
+          type: string
+        mostRecentlyTipped:
+          type: string
+        mostRecentlyTippedUuid:
+          type: string
+        notifications:
+          type: boolean
+        packageRank:
+          type: string
+        seeRequests:
+          type: boolean
+        spectators_invisible:
+          type: boolean
+        thanksReceived:
+          type: number
+        thanksSent:
+          type: number
+        tournamentTokens:
+          type: number
+        wardrobe:
+          type: string
+        gadget:
+          type: string
+        friendInvisible:
+          type: boolean
+        reverted:
+          type: boolean
+        notifiedOfStuff:
+          type: boolean
+        petUpdate:
+          type: number
+        transformation:
+          type: string
+        coins:
+          type: number
+        rewardConsumed:
+          type: boolean
+        disableSendAll:
+          type: boolean
+        vanityCraftedBoxToday:
+          type: number
+        vanityFirstCraftedBox:
+          type: number
+        vanityFirstConvertedBox:
+          type: number
+        vanityConvertedBoxToday:
+          type: number
+        flashingNewsPopup:
+          type: array
+          items:
+            type: string
+        flashingNewsPoppedUp:
+          type: number
+        flashingNewsOpens:
+          type: number
+        compassStats:
+          type: object
+          properties:
+            compass:
+              type: object
+              properties:
+                skywars:
+                  type: number
+                prototype:
+                  type: number
+                battleground:
+                  type: number
+        spec_first_person:
+          type: boolean
+        currentHat:
+          type: string
+        currentIp:
+          type: string
+        particlePack:
+          type: string
+        chatAlerts:
+          type: boolean
+        disguise:
+          type: string
+        prefix:
+          type: string
+        votesMissed:
+          type: number
+        buildTeam:
+          type: boolean
+        battlePassGlowStatus:
+          type: boolean
+        guildInvites:
+          type: array
+          items:
+            type: string
+      additionalProperties:
+        anyOf:
+          - type: boolean
+          - type: number
+          - type: string
+          - type: array
+            items:
+              type: object
+          - type: object
+      required:
+        - _id
+        - uuid
+        - firstLogin
+        - playername
+        - displayname
     ResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

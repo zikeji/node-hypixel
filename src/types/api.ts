@@ -99,6 +99,382 @@ export declare namespace Components {
       success: boolean;
       items: NewsEntries;
     }
+    export type Player = {
+      [name: string]: boolean | number | string | unknown[] | unknown;
+      _id: string;
+      uuid: string;
+      firstLogin: number;
+      playername: string;
+      displayname: string;
+      knownAliases?: string[];
+      knownAliasesLower?: string[];
+      achievementsOneTime?: string[];
+      rank?: string;
+      parkourCheckpointBests?: {
+        [name: string]: {
+          [name: string]: number;
+        };
+      };
+      achievementTracking?: string[];
+      achievementPoints?: number;
+      achievements?: {
+        [name: string]: number;
+      };
+      karma?: number;
+      networkExp?: number;
+      giftingMeta?: {
+        [name: string]: (unknown | null) | number | string[];
+        realBundlesReceivedInc?: number;
+        bundlesReceived?: number;
+        realBundlesReceived?: number;
+        giftsGiven?: number;
+        bundlesGiven?: number;
+        realBundlesGiven?: number;
+        milestones?: string[];
+      };
+      friendRequestsUuid?: string[];
+      cooldowns?: {
+        fun?: {
+          [name: string]: number;
+        };
+      };
+      parkourCompletions?: {
+        [name: string]: {
+          timeStart: number;
+          timeTook: number;
+        }[];
+      };
+      newPackageRank?: string;
+      userLanguage?: string;
+      mcVersionRp?: string;
+      achievementSync?: {
+        [name: string]: number;
+      };
+      onetime_achievement_menu_sort?: string;
+      housingMeta?: {
+        packages?: string[];
+      };
+      settings?: {
+        [name: string]: boolean | string | unknown;
+        allowFriendRequests?: boolean;
+        allowPartyRequests?: boolean;
+        autoSpawnPet?: boolean;
+        bloodVisibility?: boolean;
+        chatVisibility?: boolean;
+        lobbySpeed?: boolean;
+        lobbyProtection?: boolean;
+        petVisibility?: boolean;
+        legacyCompass?: boolean;
+        partyInvitePrivacy?: string;
+        friendRequestPrivacy?: string;
+        duelInvitePrivacy?: string;
+        privateMessageSounds?: boolean;
+      };
+      challenges?: {
+        all_time?: {
+          [name: string]: number;
+        };
+      };
+      socialMedia?: {
+        [name: string]: string | boolean | unknown;
+        TWITTER?: string;
+        DISCORD?: string;
+        links?: {
+          [name: string]: string | unknown;
+          HYPIXEL?: string;
+          DISCORD?: string;
+          TWITTER?: string;
+        };
+        prompt?: boolean;
+      };
+      vanityMeta?: {
+        packages?: string[];
+      };
+      channel?: string;
+      petStats?: {
+        [name: string]: {
+          HUNGER?: {
+            timestamp: number;
+            value: number;
+          };
+          THIRST?: {
+            value: number;
+            timestamp: number;
+          };
+          EXERCISE?: {
+            timestamp: number;
+            value: number;
+          };
+          experience?: number;
+        };
+      };
+      petConsumables?: {
+        [name: string]: number;
+      };
+      currentClickEffect?: string;
+      tourney?: {
+        first_join_lobby?: number;
+        quake_solo2_0?: {
+          games_played?: number;
+          playtime?: number;
+          first_game?: number;
+          tributes_earned?: number;
+        };
+        total_tributes?: number;
+      };
+      onetime_achievement_menu_sort_completion_sort?: string;
+      lastAdsenseGenerateTime?: number;
+      voting?: {
+        [name: string]: number;
+      };
+      currentGadget?: string;
+      stats?: {
+        Arcade?: {
+          [name: string]: number | boolean | unknown;
+          coins?: number;
+        };
+        SkyWars?: {
+          packages?: string[];
+          souls?: number;
+        };
+        GingerBread?: {
+          [name: string]: string | number | unknown;
+          coins?: number;
+          packages?: string[];
+        };
+        MCGO?: {
+          coins?: number;
+        };
+        TrueCombat?: {
+          [name: string]: number | unknown;
+          win_streak?: number;
+          games?: number;
+          deaths?: number;
+          coins?: number;
+          losses?: number;
+          survived_players?: number;
+          packages?: string[];
+        };
+        VampireZ?: {
+          updated_stats?: boolean;
+        };
+        Quake?: {
+          [name: string]: number | boolean | unknown;
+          packages?: string[];
+          alternative_gun_cooldown_indicator?: boolean;
+          compass_selected?: boolean;
+          enable_sound?: boolean;
+          instantRespawn?: boolean;
+          showDashCooldown?: boolean;
+          highest_killstreak?: number;
+          showKillPrefix?: boolean;
+          kills?: number;
+          headshots?: number;
+          coins?: number;
+          distance_travelled?: number;
+          shots_fired?: number;
+          deaths?: number;
+        };
+        Paintball?: {
+          [name: string]: number | string | boolean | unknown;
+          packages?: string[];
+          kills?: number;
+          wins?: number;
+          coins?: number;
+          shots_fired?: number;
+          deaths?: number;
+          showKillPrefix?: boolean;
+          favorite_slots?: string;
+        };
+        Legacy?: {
+          [name: string]: number | unknown;
+          next_tokens_seconds?: number;
+          quakecraft_tokens?: number;
+          total_tokens?: number;
+          tokens?: number;
+          paintball_tokens?: number;
+        };
+        BuildBattle?: {
+          [name: string]: number | unknown;
+          wins_solo_normal?: number;
+          wins?: number;
+        };
+        Bedwars?: {
+          [name: string]: boolean | number | unknown;
+          bedwars_boxes?: number;
+          Experience?: number;
+        };
+        Pit?: {
+          profile?: {
+            renown?: number;
+          };
+        };
+        SkyBlock?: {
+          profiles?: {
+            [name: string]: {
+              profile_id?: string;
+              cute_name?: string;
+            };
+          };
+        };
+        MurderMystery?: {
+          [name: string]: number | unknown;
+          murdermystery_books?: string[];
+          detective_chance?: number;
+          murderer_chance?: number;
+          coins?: number;
+          coins_pickedup?: number;
+          coins_pickedup_MURDER_CLASSIC?: number;
+          coins_pickedup_skyway_pier?: number;
+          coins_pickedup_skyway_pier_MURDER_CLASSIC?: number;
+          games?: number;
+          games_MURDER_CLASSIC?: number;
+          games_skyway_pier?: number;
+          games_skyway_pier_MURDER_CLASSIC?: number;
+          wins?: number;
+          wins_MURDER_CLASSIC?: number;
+          wins_skyway_pier?: number;
+          wins_skyway_pier_MURDER_CLASSIC?: number;
+        };
+      };
+      lastLogin?: number;
+      lastLogout?: number;
+      quickjoin_timestamp?: number;
+      quickjoin_uses?: number;
+      levelingReward_1?: boolean;
+      network_update_book?: string;
+      levelUp_VIP_PLUS?: number;
+      achievementRewardsNew?: {
+        [name: string]: number;
+      };
+      lastClaimedReward?: number;
+      rewardHighScore?: number;
+      rewardScore?: number;
+      rewardStreak?: number;
+      totalDailyRewards?: number;
+      totalRewards?: number;
+      eugene?: {
+        [name: string]: number | unknown;
+        dailyTwoKExp?: number;
+      };
+      levelUp_MVP_PLUS?: number;
+      vanityFavorites?: string;
+      monthlyPackageRank?: string;
+      mostRecentMonthlyPackageRank?: string;
+      currentPet?: string;
+      quests?: {
+        [name: string]: unknown;
+      };
+      rankPlusColor?: string;
+      monthlycrates?: {
+        [name: string]: {
+          [name: string]: boolean | unknown;
+          REGULAR?: boolean;
+          VIP?: boolean;
+          VIP_PLUS?: boolean;
+          MVP?: boolean;
+        };
+      };
+      monthlyRankColor?: string;
+      adsense_tokens?: number;
+      collectibles_menu_sort?: string;
+      outfit?: {
+        BOOTS?: string;
+        CHESTPLATE?: string;
+        LEGGINGS?: string;
+        HELMET?: string;
+      };
+      petJourneyTimestamp?: number;
+      mostRecentGameType?: string;
+      timePlaying?: number;
+      flashingSalePopup?: number;
+      flashingSaleOpens?: number;
+      flashingSalePoppedUp?: number;
+      flashingSaleClicks?: number;
+      fortuneBuff?: number;
+      levelUp_VIP?: number;
+      achievementTotem?: {
+        [name: string]: boolean | number | string[] | unknown;
+        canCustomize?: boolean;
+        allowed_max_height?: number;
+        unlockedParts?: string[];
+        selectedParts?: {
+          [name: string]: string;
+        };
+        unlockedColors?: string[];
+        selectedColors?: {
+          [name: string]: string;
+        };
+      };
+      questSettings?: {
+        [name: string]: boolean;
+      };
+      customFilter?: string;
+      currentCloak?: string;
+      auto_spawn_pet?: boolean;
+      chat?: boolean;
+      eulaCoins?: boolean;
+      fireworkStorage?: {
+        flight_duration?: number;
+        shape?: string;
+        trail?: boolean;
+        twinkle?: boolean;
+        colors?: string;
+        fade_colors?: string;
+        selected?: boolean;
+      }[];
+      guildNotifications?: boolean;
+      mostRecentMinecraftVersion?: number;
+      mostRecentlyThanked?: string;
+      mostRecentlyThankedUuid?: string;
+      mostRecentlyTipped?: string;
+      mostRecentlyTippedUuid?: string;
+      notifications?: boolean;
+      packageRank?: string;
+      seeRequests?: boolean;
+      spectators_invisible?: boolean;
+      thanksReceived?: number;
+      thanksSent?: number;
+      tournamentTokens?: number;
+      wardrobe?: string;
+      gadget?: string;
+      friendInvisible?: boolean;
+      reverted?: boolean;
+      notifiedOfStuff?: boolean;
+      petUpdate?: number;
+      transformation?: string;
+      coins?: number;
+      rewardConsumed?: boolean;
+      disableSendAll?: boolean;
+      vanityCraftedBoxToday?: number;
+      vanityFirstCraftedBox?: number;
+      vanityFirstConvertedBox?: number;
+      vanityConvertedBoxToday?: number;
+      flashingNewsPopup?: string[];
+      flashingNewsPoppedUp?: number;
+      flashingNewsOpens?: number;
+      compassStats?: {
+        compass?: {
+          skywars?: number;
+          prototype?: number;
+          battleground?: number;
+        };
+      };
+      spec_first_person?: boolean;
+      currentHat?: string;
+      currentIp?: string;
+      particlePack?: string;
+      chatAlerts?: boolean;
+      disguise?: string;
+      prefix?: string;
+      votesMissed?: number;
+      buildTeam?: boolean;
+      battlePassGlowStatus?: boolean;
+      guildInvites?: string[];
+    } | null;
+    export interface PlayerResponse {
+      player: Player;
+    }
     export interface ResourcesResponse {
       /**
        * Whether or not the request succeeded.
@@ -1300,6 +1676,22 @@ export declare namespace Paths {
             WALLS3: Components.Schemas.LeaderboardDataEntry[];
             VAMPIREZ: Components.Schemas.LeaderboardDataEntry[];
           };
+        }
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
+  namespace Player {
+    namespace Get {
+      namespace Responses {
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          player: Components.Schemas.Player;
         }
         export type $400 = Components.Responses.MissingFields;
         export type $403 = Components.Responses.Unauthorized;
