@@ -54,7 +54,7 @@ const client = new Hypixel("API_KEY");
 - [ ] Support not requiring an API key for resource endpoints?
 - [ ] Add method, typing, testing, and documentation for:
   - [x] Boosters
-  - [ ] Find Guild
+  - [x] Find Guild
   - [ ] Friends
   - [x] Game Counts
   - [ ] Guild

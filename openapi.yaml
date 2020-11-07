@@ -32,6 +32,57 @@ tags:
     externalDocs:
       url: https://github.com/HypixelDev/PublicAPI/tree/master/Documentation/methods/skyblock
 paths:
+  /findGuild:
+    get:
+      tags:
+        - guild
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/findGuild.md
+      summary: Returns the id of the requested guild.
+      description: |
+        #### Usage
+        ```typescript
+        let { guild } = await client.findGuild.byName("Mini Squid");
+        console.log(guild);
+        // 553490650cf26f12ae5bac8f
+        { guild } = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
+        console.log(guild);
+        // 553490650cf26f12ae5bac8f
+        ```
+      parameters:
+        - $ref: '#/components/parameters/byUuid'
+        - $ref: '#/components/parameters/byGuildName'
+      responses:
+        '200':
+          description: An object containing the guild ID if found, otherwise if not found the guild property will be null.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      guild:
+                        type: string
+                        nullable: true
+                        example: 5985b1930cf28d110c2dac07
+                    required:
+                      - guild
+        '400':
+          description: Missing one or more fields [byName,byUuid]
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                success: false
+                cause: 'Missing one or more fields [byName,byUuid]'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/MalformedUUID'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /boosters:
     get:
       tags:
@@ -1175,6 +1226,8 @@ paths:
           $ref: '#/components/responses/MissingFields'
         '403':
           $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/MalformedUUID'
         '429':
           $ref: '#/components/responses/RateLimitError'
   /skyblock/news:
@@ -1406,6 +1459,8 @@ paths:
           $ref: '#/components/responses/MissingFields'
         '403':
           $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/MalformedUUID'
         '429':
           $ref: '#/components/responses/RateLimitError'
   /watchdogstats:
@@ -1485,6 +1540,22 @@ components:
       schema:
         type: string
         example: 20934ef9488c465180a78f861586b4cf
+    byUuid:
+      name: byUuid
+      required: false
+      description: Minecraft UUID of the player.
+      in: query
+      schema:
+        type: string
+        example: 20934ef9488c465180a78f861586b4cf
+    byGuildName:
+      name: byName
+      required: false
+      description: Hypixel guild name.
+      in: query
+      schema:
+        type: string
+        example: Mini Squid
   responses:
     MissingFields:
       description: Missing one or more fields
@@ -1513,6 +1584,15 @@ components:
           example:
             success: false
             cause: Invalid API key
+    MalformedUUID:
+      description: Malformed UUID
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          example:
+            success: false
+            cause: Malformed UUID
   schemas:
     ApiSuccess:
       type: object

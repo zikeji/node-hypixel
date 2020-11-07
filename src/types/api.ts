@@ -1,5 +1,19 @@
 export declare namespace Components {
   namespace Parameters {
+    namespace ByGuildName {
+      /**
+       * example:
+       * Mini Squid
+       */
+      export type ByName = string;
+    }
+    namespace ByUuid {
+      /**
+       * example:
+       * 20934ef9488c465180a78f861586b4cf
+       */
+      export type ByUuid = string;
+    }
     namespace PlayerUuid {
       /**
        * example:
@@ -9,6 +23,7 @@ export declare namespace Components {
     }
   }
   namespace Responses {
+    export type MalformedUUID = Schemas.ApiError;
     export type MissingFields = Schemas.ApiError;
     export type RateLimitError = Schemas.ApiError;
     export type Unauthorized = Schemas.ApiError;
@@ -295,6 +310,27 @@ export declare namespace Paths {
         }
         export type $400 = Components.Responses.MissingFields;
         export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
+  namespace FindGuild {
+    namespace Get {
+      namespace Responses {
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          /**
+           * example:
+           * 5985b1930cf28d110c2dac07
+           */
+          guild: string | null;
+        }
+        export type $400 = Components.Schemas.ApiError;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $422 = Components.Responses.MalformedUUID;
         export type $429 = Components.Responses.RateLimitError;
       }
     }
@@ -885,6 +921,7 @@ export declare namespace Paths {
         }
         export type $400 = Components.Responses.MissingFields;
         export type $403 = Components.Responses.Unauthorized;
+        export type $422 = Components.Responses.MalformedUUID;
         export type $429 = Components.Responses.RateLimitError;
       }
     }
@@ -925,6 +962,7 @@ export declare namespace Paths {
         }
         export type $400 = Components.Responses.MissingFields;
         export type $403 = Components.Responses.Unauthorized;
+        export type $422 = Components.Responses.MalformedUUID;
         export type $429 = Components.Responses.RateLimitError;
       }
     }

@@ -85,6 +85,36 @@ describe("Get boosters", function () {
   });
 });
 
+describe("Get guild id by guild name", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.findGuild.byName>;
+  it("expect not to throw", async function () {
+    result = await client.findGuild.byName("Mini Squid");
+  });
+  CheckMeta(() => result);
+  it("check that result has the guild id", function () {
+    expect(result.guild)
+      .to.be.a("string")
+      .and.to.equal("553490650cf26f12ae5bac8f");
+  });
+});
+
+describe("Get guild id by player uuid", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.findGuild.byUuid>;
+  it("expect not to throw", async function () {
+    result = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
+  });
+  CheckMeta(() => result);
+  it("check that result has the guild id", function () {
+    expect(result.guild)
+      .to.be.a("string")
+      .and.to.equal("553490650cf26f12ae5bac8f");
+  });
+});
+
 describe("Get game counts", function () {
   this.timeout(30000);
   this.slow(1000);
