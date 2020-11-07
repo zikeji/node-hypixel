@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.0](https://github.com/zikeji/node-hypixel/compare/v1.10.0...v1.11.0) (2020-11-07)
+
+
+### Features
+
+* **api:** add /findGuild endpoint ([2539022](https://github.com/zikeji/node-hypixel/commit/25390222ad9414f5474a1fe84886729226b6e307))
+* **api:** add /friends endpoint ([04b1a9e](https://github.com/zikeji/node-hypixel/commit/04b1a9e6616b412558dbd33dffb67db824e5bc7c))
+* **api:** add /key endpoint ([7c3b0f7](https://github.com/zikeji/node-hypixel/commit/7c3b0f74eadfe1b0557027b5e75d6f25ebef7eb2))
+* **api:** add /player endpoint ([b6dd8b9](https://github.com/zikeji/node-hypixel/commit/b6dd8b947d1087a5820f985b877c2f2f5f41ab37))
+* **api:** add boosters endpoint ([a78baf6](https://github.com/zikeji/node-hypixel/commit/a78baf607e87741aab3ff810fd43ef1b0ef51c41))
+* **api:** add guild endpoint ([66ff480](https://github.com/zikeji/node-hypixel/commit/66ff4801e8a9bafdc10f1593ff6272b595fa28d4))
+* **api:** add leaderboards endpoint ([f0917c5](https://github.com/zikeji/node-hypixel/commit/f0917c5c4046b70c8b3b6a55d9a1f062c5fcd5a4))
+* **api:** add player count and game counts endpoints ([44bf47a](https://github.com/zikeji/node-hypixel/commit/44bf47a7c92ef34cbdb20d8bc74ce2c60ee46b90))
+* **api:** add recentGames endpoint ([9424309](https://github.com/zikeji/node-hypixel/commit/9424309544e61807a3b10167dac0a24ad6ae259d))
+* **error handling:** add GenericHTTPError to cover the rest of Hypixel's error types & increase code coverage to 100% ([02c92e1](https://github.com/zikeji/node-hypixel/commit/02c92e160b36c48ac6e8313146fe2a7f44dbe514))
+
+
+### Documentation
+
+* **readme:** update progress in readme ([4b7f29c](https://github.com/zikeji/node-hypixel/commit/4b7f29c6f61b0396115b651bf76b3766013366d2))
+
 ## [1.10.0](https://github.com/zikeji/node-hypixel/compare/v1.9.1...v1.10.0) (2020-10-20)
 
 
