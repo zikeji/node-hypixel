@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { Client, Components } from "../src";
+import { Guild } from "../src/methods/guild";
 import type { ResultArray } from "../src/util/ResultArray";
 import type { ResultObject } from "../src/util/ResultObject";
 
@@ -130,6 +131,110 @@ describe("Get player's friends", function () {
       expect(friend.started).to.be.a("number");
       expect(friend.uuidReceiver).to.be.a("string");
       expect(friend.uuidSender).to.be.a("string");
+    }
+  });
+});
+
+describe("Get guild by id", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let results: AsyncReturnType<typeof client.guild.id>[] = [];
+  it("expect not to throw", async function () {
+    results.push(await client.guild.id("553490650cf26f12ae5bac8f"));
+    results.push(await client.guild.player("d705483c5157460dad39712e4d74dfe1"));
+    results.push(await client.guild.name("SkyBlockZ"));
+  });
+  CheckMeta(() => results[0]);
+  CheckMeta(() => results[1]);
+  CheckMeta(() => results[2]);
+  it("required keys should exist", function () {
+    for (const result of results) {
+      expect(result.guild).to.be.an("object");
+      const { guild } = result;
+      if (!guild) throw new Error("no guild returned");
+      expect(guild._id).to.be.a("string");
+      expect(guild.achievements).to.be.a("object");
+      expect(guild.achievements.EXPERIENCE_KINGS).to.be.a("number");
+      expect(guild.achievements.ONLINE_PLAYERS).to.be.a("number");
+      expect(guild.achievements.WINNERS).to.be.a("number");
+      if (guild.banner) {
+        expect(guild.banner).to.be.a("object");
+        expect(guild.banner.Base).to.satisfy(function (base: number | string) {
+          return typeof base === "number" || typeof base === "string";
+        });
+        expect(guild.banner.Patterns).to.be.a("array");
+        for (const pattern of guild.banner.Patterns) {
+          expect(pattern.Color).to.satisfy(function (color: number | string) {
+            return typeof color === "number" || typeof color === "string";
+          });
+          expect(pattern.Pattern).to.be.a("string");
+        }
+      }
+      if (guild.chatMute) expect(guild.chatMute).to.be.a("number");
+      expect(guild.coins).to.be.a("number");
+      expect(guild.coinsEver).to.be.a("number");
+      expect(guild.created).to.be.a("number");
+      if (guild.description) expect(guild.description).to.be.a("string");
+      expect(guild.exp).to.be.a("number");
+      expect(guild.guildExpByGameType).to.be.a("object");
+      for (const gameType of Object.keys(guild.guildExpByGameType)) {
+        expect(
+          guild.guildExpByGameType[
+            gameType as keyof typeof guild.guildExpByGameType
+          ]
+        ).to.be.a("number");
+      }
+      if (guild.joinable) expect(guild.joinable).to.be.a("boolean");
+      if (guild.legacyRanking) expect(guild.legacyRanking).to.be.a("number");
+      expect(guild.members).to.be.an("array");
+      for (const member of guild.members) {
+        expect(member.expHistory).to.be.an("object");
+        for (const date of Object.keys(member.expHistory)) {
+          expect(date).to.be.not.null.and.satisfy(function (date: string) {
+            expect(new Date(date).getTime()).to.be.a("number").and.not.be.NaN;
+          });
+          expect(member.expHistory[date]).to.be.a("number");
+        }
+        expect(member.joined).to.be.a("number");
+        expect(member.mutedTill).to.satisfy(function (
+          mutedTill: undefined | number
+        ) {
+          return (
+            typeof mutedTill === "undefined" || typeof mutedTill === "number"
+          );
+        });
+        expect(member.questParticipation).to.satisfy(function (
+          questParticipation: undefined | number
+        ) {
+          return (
+            typeof questParticipation === "undefined" ||
+            typeof questParticipation === "number"
+          );
+        });
+        expect(member.rank).to.be.a("string");
+        expect(member.uuid).to.be.a("string");
+      }
+      expect(guild.name).to.be.a("string");
+      expect(guild.name_lower).to.be.a("string");
+      if (guild.preferredGames) {
+        expect(guild.preferredGames).to.be.a("array");
+        for (const game of guild.preferredGames) {
+          expect(game).to.be.a("string");
+        }
+      }
+      expect(guild.publiclyListed).to.be.a("boolean");
+      expect(guild.ranks).to.be.an("array");
+      for (const rank of guild.ranks) {
+        expect(rank.created).to.be.a("number");
+        expect(rank.default).to.be.a("boolean");
+        expect(rank.name).to.be.a("string");
+        expect(rank.priority).to.be.a("number");
+        expect(rank.tag).to.satisfy(function (tag: null | string) {
+          return tag === null || typeof tag === "string";
+        });
+      }
+      expect(guild.tag).to.be.a("string");
+      expect(guild.tagColor).to.be.a("string");
     }
   });
 });

@@ -51,13 +51,12 @@ const client = new Hypixel("API_KEY");
 ## Roadmap
 
 - [x] Add rate limiting support
-- [ ] Support not requiring an API key for resource endpoints?
 - [ ] Add method, typing, testing, and documentation for:
   - [x] Boosters
   - [x] Find Guild
   - [x] Friends
   - [x] Game Counts
-  - [ ] Guild
+  - [x] Guild
   - [ ] Key
   - [ ] Leaderboards
   - [ ] Player

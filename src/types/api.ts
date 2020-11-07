@@ -912,6 +912,290 @@ export declare namespace Paths {
       }
     }
   }
+  namespace Guild {
+    namespace Get {
+      namespace Parameters {
+        /**
+         * example:
+         * 553490650cf26f12ae5bac8f
+         */
+        export type Id = string;
+        /**
+         * example:
+         * Mini Squid
+         */
+        export type Name = string;
+        /**
+         * example:
+         * 20934ef9488c465180a78f861586b4cf
+         */
+        export type Player = string;
+      }
+      export interface QueryParameters {
+        id?: /**
+         * example:
+         * 553490650cf26f12ae5bac8f
+         */
+        Parameters.Id;
+        player?: /**
+         * example:
+         * 20934ef9488c465180a78f861586b4cf
+         */
+        Parameters.Player;
+        name?: /**
+         * example:
+         * Mini Squid
+         */
+        Parameters.Name;
+      }
+      namespace Responses {
+        export interface $200 {
+          /**
+           * Whether or not the request succeeded.
+           */
+          success: boolean;
+          /**
+           * example:
+           * {
+           *   "guild": {
+           *     "_id": "553490650cf26f12ae5bac8f",
+           *     "name": "Mini Squid",
+           *     "coins": 425310,
+           *     "coinsEver": 1835310,
+           *     "created": 1429508197967,
+           *     "members": [
+           *       {
+           *         "uuid": "20934ef9488c465180a78f861586b4cf",
+           *         "rank": "GUILDMASTER",
+           *         "joined": 1429508197967,
+           *         "questParticipation": 139,
+           *         "expHistory": {
+           *           "2020-11-06": 2226,
+           *           "2020-11-05": 0,
+           *           "2020-11-04": 4059,
+           *           "2020-11-03": 0,
+           *           "2020-11-02": 1102,
+           *           "2020-11-01": 0,
+           *           "2020-10-31": 0
+           *         }
+           *       },
+           *       {
+           *         "uuid": "6a12d6f63e134c8bbebc70d90a797281",
+           *         "rank": "Famous",
+           *         "joined": 1518021755919,
+           *         "questParticipation": 325,
+           *         "expHistory": {
+           *           "2020-11-06": 0,
+           *           "2020-11-05": 0,
+           *           "2020-11-04": 0,
+           *           "2020-11-03": 2399,
+           *           "2020-11-02": 758,
+           *           "2020-11-01": 4309,
+           *           "2020-10-31": 740
+           *         }
+           *       },
+           *       {
+           *         "uuid": "a99d9661fe2d4594a6b3d910c85cc4a4",
+           *         "rank": "MEMBER",
+           *         "joined": 1530770040736,
+           *         "questParticipation": 800,
+           *         "expHistory": {
+           *           "2020-11-06": 0,
+           *           "2020-11-05": 0,
+           *           "2020-11-04": 0,
+           *           "2020-11-03": 0,
+           *           "2020-11-02": 0,
+           *           "2020-11-01": 0,
+           *           "2020-10-31": 0
+           *         }
+           *       },
+           *       {
+           *         "uuid": "8a8bcd44c2034281a008ff7a1e0ead2f",
+           *         "rank": "MEMBER",
+           *         "joined": 1532204533230,
+           *         "questParticipation": 634,
+           *         "expHistory": {
+           *           "2020-11-06": 0,
+           *           "2020-11-05": 0,
+           *           "2020-11-04": 0,
+           *           "2020-11-03": 0,
+           *           "2020-11-02": 0,
+           *           "2020-11-01": 0,
+           *           "2020-10-31": 0
+           *         }
+           *       }
+           *     ],
+           *     "tag": "§a1§e2§c3§7",
+           *     "banner": {
+           *       "Base": 15,
+           *       "Patterns": [
+           *         {
+           *           "Pattern": "bo",
+           *           "Color": 9
+           *         },
+           *         {
+           *           "Pattern": "bri",
+           *           "Color": 5
+           *         }
+           *       ]
+           *     },
+           *     "achievements": {
+           *       "WINNERS": 1080,
+           *       "EXPERIENCE_KINGS": 316804,
+           *       "ONLINE_PLAYERS": 125
+           *     },
+           *     "exp": 274641340,
+           *     "legacyRanking": 2891,
+           *     "ranks": [
+           *       {
+           *         "name": "Famous",
+           *         "default": false,
+           *         "tag": "F",
+           *         "created": 1562382958149,
+           *         "priority": 3
+           *       },
+           *       {
+           *         "name": "Member",
+           *         "default": true,
+           *         "tag": null,
+           *         "created": 1562383012859,
+           *         "priority": 2
+           *       },
+           *       {
+           *         "name": "Big Nerd",
+           *         "default": false,
+           *         "tag": "B",
+           *         "created": 1588882422793,
+           *         "priority": 7
+           *       },
+           *       {
+           *         "name": "Notorious Nerd",
+           *         "default": false,
+           *         "tag": "NERD",
+           *         "created": 1588882818050,
+           *         "priority": 5
+           *       }
+           *     ],
+           *     "name_lower": "mini squid",
+           *     "chatMute": 0,
+           *     "preferredGames": [
+           *       "SKYWARS"
+           *     ],
+           *     "publiclyListed": true,
+           *     "tagColor": "GRAY",
+           *     "guildExpByGameType": {
+           *       "DUELS": 25270418,
+           *       "BUILD_BATTLE": 10772932,
+           *       "HOUSING": 22601152,
+           *       "GINGERBREAD": 888064,
+           *       "SURVIVAL_GAMES": 3504037,
+           *       "WALLS": 1472671,
+           *       "TNTGAMES": 7419981,
+           *       "QUAKECRAFT": 857167,
+           *       "MCGO": 1245579,
+           *       "ARENA": 300356,
+           *       "VAMPIREZ": 1497562,
+           *       "BEDWARS": 127334623,
+           *       "SKYWARS": 111325349,
+           *       "MURDER_MYSTERY": 8704331,
+           *       "SUPER_SMASH": 308906,
+           *       "SPEED_UHC": 311651,
+           *       "PIT": 0,
+           *       "SKYBLOCK": 0,
+           *       "BATTLEGROUND": 897997,
+           *       "UHC": 12670118,
+           *       "ARCADE": 10589782,
+           *       "PROTOTYPE": 206060467,
+           *       "LEGACY": 0,
+           *       "REPLAY": 0,
+           *       "WALLS3": 3467841,
+           *       "PAINTBALL": 429708
+           *     }
+           *   }
+           * }
+           */
+          guild: {
+            _id: string;
+            name: string;
+            coins: number;
+            coinsEver: number;
+            created: number;
+            members: {
+              uuid: string;
+              rank: string;
+              joined: number;
+              questParticipation?: number;
+              expHistory: {
+                [name: string]: number;
+              };
+              mutedTill?: number;
+            }[];
+            tag: string;
+            banner?: {
+              Base: number | string;
+              Patterns: {
+                Pattern: string;
+                Color: number | string;
+              }[];
+            };
+            achievements: {
+              WINNERS: number;
+              EXPERIENCE_KINGS: number;
+              ONLINE_PLAYERS: number;
+            };
+            exp: number;
+            legacyRanking?: number;
+            ranks: {
+              name: string;
+              default: boolean;
+              tag: string | null;
+              created: number;
+              priority: number;
+            }[];
+            name_lower: string;
+            chatMute?: number;
+            preferredGames?: string[];
+            publiclyListed: boolean;
+            tagColor: string;
+            guildExpByGameType: {
+              DUELS: number;
+              BUILD_BATTLE: number;
+              HOUSING: number;
+              GINGERBREAD: number;
+              SURVIVAL_GAMES: number;
+              WALLS: number;
+              TNTGAMES: number;
+              QUAKECRAFT: number;
+              MCGO: number;
+              ARENA: number;
+              VAMPIREZ: number;
+              BEDWARS: number;
+              SKYWARS: number;
+              MURDER_MYSTERY: number;
+              SUPER_SMASH: number;
+              SPEED_UHC: number;
+              PIT: number;
+              SKYBLOCK: number;
+              BATTLEGROUND: number;
+              UHC: number;
+              ARCADE: number;
+              PROTOTYPE: number;
+              LEGACY: number;
+              REPLAY: number;
+              WALLS3: number;
+              PAINTBALL: number;
+            };
+            joinable?: boolean;
+            description?: string;
+          } | null;
+        }
+        export type $400 = Components.Schemas.ApiError;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $422 = Components.Schemas.ApiError;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
   namespace PlayerCount {
     namespace Get {
       namespace Responses {

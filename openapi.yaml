@@ -263,6 +263,424 @@ paths:
           $ref: '#/components/responses/MalformedUUID'
         '429':
           $ref: '#/components/responses/RateLimitError'
+  /guild:
+    get:
+      tags:
+        - guild
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/guild.md
+      summary: Returns information about given guild.
+      description: |
+        See [resources.md](https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/resources.md) for a JSON list of guild achievements and a JSON list of guild permissions.
+        #### Usage
+        ```typescript
+        const guild = await client.guild.player("20934ef9488c465180a78f861586b4cf");
+        ```
+      parameters:
+        - name: id
+          required: false
+          description: Hypixel guild ID.
+          in: query
+          schema:
+            type: string
+            example: 553490650cf26f12ae5bac8f
+        - name: player
+          required: false
+          description: Minecraft UUID of the player you want to find the guild of.
+          in: query
+          schema:
+            type: string
+            example: 20934ef9488c465180a78f861586b4cf
+        - name: name
+          required: false
+          description: Name of the Hypixel guild.
+          in: query
+          schema:
+            type: string
+            example: Mini Squid
+      responses:
+        '200':
+          description: An array containing a list of objects describing the player's friends.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      guild:
+                        type: object
+                        nullable: true
+                        properties:
+                          _id:
+                            type: string
+                          name:
+                            type: string
+                          coins:
+                            type: number
+                          coinsEver:
+                            type: number
+                          created:
+                            type: number
+                          members:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                uuid:
+                                  type: string
+                                rank:
+                                  type: string
+                                joined:
+                                  type: number
+                                questParticipation:
+                                  type: number
+                                expHistory:
+                                  type: object
+                                  additionalProperties:
+                                    type: number
+                                mutedTill:
+                                  type: number
+                              required:
+                                - uuid
+                                - rank
+                                - joined
+                                - expHistory
+                          tag:
+                            type: string
+                          banner:
+                            type: object
+                            properties:
+                              Base:
+                                oneOf:
+                                  - type: number
+                                  - type: string
+                              Patterns:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    Pattern:
+                                      type: string
+                                    Color:
+                                      oneOf:
+                                        - type: number
+                                        - type: string
+                                  required:
+                                    - Pattern
+                                    - Color
+                            required:
+                              - Base
+                              - Patterns
+                          achievements:
+                            type: object
+                            properties:
+                              WINNERS:
+                                type: number
+                              EXPERIENCE_KINGS:
+                                type: number
+                              ONLINE_PLAYERS:
+                                type: number
+                            required:
+                              - WINNERS
+                              - EXPERIENCE_KINGS
+                              - ONLINE_PLAYERS
+                          exp:
+                            type: number
+                          legacyRanking:
+                            type: number
+                          ranks:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                default:
+                                  type: boolean
+                                tag:
+                                  type: string
+                                  nullable: true
+                                created:
+                                  type: number
+                                priority:
+                                  type: number
+                              required:
+                                - name
+                                - default
+                                - tag
+                                - created
+                                - priority
+                          name_lower:
+                            type: string
+                          chatMute:
+                            type: number
+                          preferredGames:
+                            type: array
+                            items:
+                              type: string
+                          publiclyListed:
+                            type: boolean
+                          tagColor:
+                            type: string
+                          guildExpByGameType:
+                            type: object
+                            properties:
+                              DUELS:
+                                type: number
+                              BUILD_BATTLE:
+                                type: number
+                              HOUSING:
+                                type: number
+                              GINGERBREAD:
+                                type: number
+                              SURVIVAL_GAMES:
+                                type: number
+                              WALLS:
+                                type: number
+                              TNTGAMES:
+                                type: number
+                              QUAKECRAFT:
+                                type: number
+                              MCGO:
+                                type: number
+                              ARENA:
+                                type: number
+                              VAMPIREZ:
+                                type: number
+                              BEDWARS:
+                                type: number
+                              SKYWARS:
+                                type: number
+                              MURDER_MYSTERY:
+                                type: number
+                              SUPER_SMASH:
+                                type: number
+                              SPEED_UHC:
+                                type: number
+                              PIT:
+                                type: number
+                              SKYBLOCK:
+                                type: number
+                              BATTLEGROUND:
+                                type: number
+                              UHC:
+                                type: number
+                              ARCADE:
+                                type: number
+                              PROTOTYPE:
+                                type: number
+                              LEGACY:
+                                type: number
+                              REPLAY:
+                                type: number
+                              WALLS3:
+                                type: number
+                              PAINTBALL:
+                                type: number
+                            required:
+                              - DUELS
+                              - BUILD_BATTLE
+                              - HOUSING
+                              - GINGERBREAD
+                              - SURVIVAL_GAMES
+                              - WALLS
+                              - TNTGAMES
+                              - QUAKECRAFT
+                              - MCGO
+                              - ARENA
+                              - VAMPIREZ
+                              - BEDWARS
+                              - SKYWARS
+                              - MURDER_MYSTERY
+                              - SUPER_SMASH
+                              - SPEED_UHC
+                              - PIT
+                              - SKYBLOCK
+                              - BATTLEGROUND
+                              - UHC
+                              - ARCADE
+                              - PROTOTYPE
+                              - LEGACY
+                              - REPLAY
+                              - WALLS3
+                              - PAINTBALL
+                          joinable:
+                            type: boolean
+                          description:
+                            type: string
+                        required:
+                          - _id
+                          - name
+                          - coins
+                          - coinsEver
+                          - created
+                          - members
+                          - tag
+                          - achievements
+                          - exp
+                          - ranks
+                          - name_lower
+                          - publiclyListed
+                          - tagColor
+                          - guildExpByGameType
+                        example:
+                          guild:
+                            _id: 553490650cf26f12ae5bac8f
+                            name: Mini Squid
+                            coins: 425310
+                            coinsEver: 1835310
+                            created: 1429508197967
+                            members:
+                              - uuid: 20934ef9488c465180a78f861586b4cf
+                                rank: GUILDMASTER
+                                joined: 1429508197967
+                                questParticipation: 139
+                                expHistory:
+                                  '2020-11-06': 2226
+                                  '2020-11-05': 0
+                                  '2020-11-04': 4059
+                                  '2020-11-03': 0
+                                  '2020-11-02': 1102
+                                  '2020-11-01': 0
+                                  '2020-10-31': 0
+                              - uuid: 6a12d6f63e134c8bbebc70d90a797281
+                                rank: Famous
+                                joined: 1518021755919
+                                questParticipation: 325
+                                expHistory:
+                                  '2020-11-06': 0
+                                  '2020-11-05': 0
+                                  '2020-11-04': 0
+                                  '2020-11-03': 2399
+                                  '2020-11-02': 758
+                                  '2020-11-01': 4309
+                                  '2020-10-31': 740
+                              - uuid: a99d9661fe2d4594a6b3d910c85cc4a4
+                                rank: MEMBER
+                                joined: 1530770040736
+                                questParticipation: 800
+                                expHistory:
+                                  '2020-11-06': 0
+                                  '2020-11-05': 0
+                                  '2020-11-04': 0
+                                  '2020-11-03': 0
+                                  '2020-11-02': 0
+                                  '2020-11-01': 0
+                                  '2020-10-31': 0
+                              - uuid: 8a8bcd44c2034281a008ff7a1e0ead2f
+                                rank: MEMBER
+                                joined: 1532204533230
+                                questParticipation: 634
+                                expHistory:
+                                  '2020-11-06': 0
+                                  '2020-11-05': 0
+                                  '2020-11-04': 0
+                                  '2020-11-03': 0
+                                  '2020-11-02': 0
+                                  '2020-11-01': 0
+                                  '2020-10-31': 0
+                            tag: §a1§e2§c3§7
+                            banner:
+                              Base: 15
+                              Patterns:
+                                - Pattern: bo
+                                  Color: 9
+                                - Pattern: bri
+                                  Color: 5
+                            achievements:
+                              WINNERS: 1080
+                              EXPERIENCE_KINGS: 316804
+                              ONLINE_PLAYERS: 125
+                            exp: 274641340
+                            legacyRanking: 2891
+                            ranks:
+                              - name: Famous
+                                default: false
+                                tag: F
+                                created: 1562382958149
+                                priority: 3
+                              - name: Member
+                                default: true
+                                tag: null
+                                created: 1562383012859
+                                priority: 2
+                              - name: Big Nerd
+                                default: false
+                                tag: B
+                                created: 1588882422793
+                                priority: 7
+                              - name: Notorious Nerd
+                                default: false
+                                tag: NERD
+                                created: 1588882818050
+                                priority: 5
+                            name_lower: mini squid
+                            chatMute: 0
+                            preferredGames:
+                              - SKYWARS
+                            publiclyListed: true
+                            tagColor: GRAY
+                            guildExpByGameType:
+                              DUELS: 25270418
+                              BUILD_BATTLE: 10772932
+                              HOUSING: 22601152
+                              GINGERBREAD: 888064
+                              SURVIVAL_GAMES: 3504037
+                              WALLS: 1472671
+                              TNTGAMES: 7419981
+                              QUAKECRAFT: 857167
+                              MCGO: 1245579
+                              ARENA: 300356
+                              VAMPIREZ: 1497562
+                              BEDWARS: 127334623
+                              SKYWARS: 111325349
+                              MURDER_MYSTERY: 8704331
+                              SUPER_SMASH: 308906
+                              SPEED_UHC: 311651
+                              PIT: 0
+                              SKYBLOCK: 0
+                              BATTLEGROUND: 897997
+                              UHC: 12670118
+                              ARCADE: 10589782
+                              PROTOTYPE: 206060467
+                              LEGACY: 0
+                              REPLAY: 0
+                              WALLS3: 3467841
+                              PAINTBALL: 429708
+                    required:
+                      - guild
+
+        '400':
+          description: Missing one or more fields [id,name,player]
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                success: false
+                cause: 'Missing one or more fields [id,name,player]'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Malformed parameter (player UUID or guild ID)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              examples:
+                uuid:
+                  summary: The player UUID supplied is malformed.
+                  value:
+                    success: false
+                    cause: Malformed UUID
+                guildId:
+                  summary: The guild ID supplied is malformed.
+                  value:
+                    success: false
+                    cause: Malformed guild ID
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /gameCounts:
     get:
       tags:

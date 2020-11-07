@@ -22,6 +22,7 @@ export class FindGuild extends Method {
       "success"
     ) as never;
   }
+
   /**
    * Returns the id of the requested guild if found.
    * @example
@@ -35,7 +36,7 @@ export class FindGuild extends Method {
     uuid: Components.Parameters.ByUuid.ByUuid
   ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, "success">> {
     return getResultObject(
-      await this.client.call<Paths.Boosters.Get.Responses.$200>("findGuild", {
+      await this.client.call<Paths.FindGuild.Get.Responses.$200>("findGuild", {
         byUuid: uuid,
       }),
       "success"
