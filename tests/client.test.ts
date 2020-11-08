@@ -17,7 +17,7 @@ const client = new Client(process.env.HYPIXEL_KEY || "");
 const CheckMeta = (
   data: () =>
     | ResultArray<Components.Schemas.ApiSuccess & { n: unknown }, "n">
-    | ResultObject<Components.Schemas.ApiSuccess & { n: unknown }, "n">
+    | ResultObject<Components.Schemas.ApiSuccess & { n: unknown }, ["n"]>
 ) => {
   let result: ReturnType<typeof data>;
   beforeEach(function () {
@@ -352,24 +352,189 @@ describe("Get player recent games", function () {
   });
 });
 
-describe("Check SkyBlock news", function () {
+describe("Query achievements resource", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result: AsyncReturnType<typeof client.skyblock.news>;
-  it("expect success", async function () {
-    result = await client.skyblock.news();
+  let result: AsyncReturnType<typeof client.resources.achievements>;
+  it("expect not to throw", async function () {
+    result = await client.resources.achievements();
   });
   CheckMeta(() => result);
   it("required keys should exist", function () {
-    for (const news of result) {
-      expect(news.title).to.be.a("string").and.not.be.empty;
-      expect(news.link).to.be.a("string").and.not.be.empty;
-      expect(news.text).to.be.a("string").and.not.be.empty;
-      expect(news.item).to.be.an("object").and.not.be.empty;
-      expect(news.item.material).to.be.a("string").and.not.be.empty;
-      expect(news.item.data).to.satisfy(function (v: unknown) {
-        return typeof v === "undefined" || typeof v === "number";
-      });
+    expect(result).to.be.an("object");
+    for (const gameModeName of Object.keys(result)) {
+      expect(gameModeName).to.be.a("string");
+      const gameMode = result[gameModeName];
+      expect(gameMode).to.be.an("object");
+      expect(gameMode)
+        .to.be.an("object")
+        .that.has.all.keys(
+          "one_time",
+          "tiered",
+          "total_points",
+          "total_legacy_points"
+        );
+      expect(gameMode).to.have.property("one_time").that.is.an("object");
+      for (const achievementKey of Object.keys(gameMode.one_time)) {
+        expect(achievementKey).to.be.a("string");
+        const achievement = gameMode.one_time[achievementKey];
+        expect(achievement).to.be.an("object");
+        expect(achievement.name).to.be.a("string");
+        expect(achievement.description).to.be.a("string");
+        expect(achievement.points).to.be.a("number");
+        if (achievement.secret) {
+          expect(achievement.secret).to.be.a("boolean");
+        }
+        if (achievement.legacy) {
+          expect(achievement.legacy).to.be.a("boolean");
+        }
+        if (achievement.gamePercentUnlocked) {
+          expect(achievement.gamePercentUnlocked).to.be.a("number");
+        }
+        if (achievement.globalPercentUnlocked) {
+          expect(achievement.globalPercentUnlocked).to.be.a("number");
+        }
+      }
+      expect(gameMode).to.have.property("tiered").that.is.an("object");
+      for (const achievementKey of Object.keys(gameMode.tiered)) {
+        expect(achievementKey).to.be.a("string");
+        const achievement = gameMode.tiered[achievementKey];
+        expect(achievement).to.be.an("object");
+        expect(achievement.name).to.be.a("string");
+        expect(achievement.description).to.be.a("string");
+        if (achievement.legacy) {
+          expect(achievement.legacy).to.be.a("boolean");
+        }
+        for (const tier of achievement.tiers) {
+          expect(tier.tier).to.be.a("number");
+          expect(tier.points).to.be.a("number");
+          expect(tier.amount).to.be.a("number");
+        }
+      }
+      expect(gameMode.total_points).to.be.a("number");
+      expect(gameMode.total_legacy_points).to.be.a("number");
+    }
+  });
+});
+
+describe("Query challenges resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.challenges>;
+  it("expect not to throw", async function () {
+    result = await client.resources.challenges();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("object");
+    for (const gameModeName of Object.keys(result)) {
+      expect(gameModeName).to.be.a("string");
+      const gameMode = result[gameModeName];
+      expect(gameMode).to.be.an("array");
+      for (const challenge of gameMode) {
+        expect(challenge.id).to.be.a("string");
+        expect(challenge.name).to.be.a("string");
+        expect(challenge.rewards).to.be.an("array");
+        for (const reward of challenge.rewards) {
+          expect(reward.type).to.be.a("string");
+          expect(reward.amount).to.be.a("number");
+        }
+      }
+    }
+  });
+});
+
+describe("Query quests resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.quests>;
+  it("expect not to throw", async function () {
+    result = await client.resources.quests();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("object");
+    for (const gameModeName of Object.keys(result)) {
+      expect(gameModeName).to.be.a("string");
+      const gameMode = result[gameModeName];
+      expect(gameMode).to.be.an("array");
+      for (const quest of gameMode) {
+        expect(quest.id).to.be.a("string");
+        expect(quest.name).to.be.a("string");
+        expect(quest.description).to.be.a("string");
+        expect(quest.objectives).to.be.an("array");
+        for (const objective of quest.objectives) {
+          expect(objective.id).to.be.a("string");
+          expect(objective.type).to.be.a("string");
+          if (objective.integer) expect(objective.integer).to.be.a("number");
+        }
+        expect(quest.requirements).to.be.an("array");
+        for (const requirement of quest.requirements) {
+          expect(requirement)
+            .to.be.an("object")
+            .that.has.all.keys("type")
+            .and.has.property("type")
+            .that.is.a("string");
+        }
+        expect(quest.rewards).to.be.an("array");
+        for (const reward of quest.rewards) {
+          expect(reward.type).to.be.a("string");
+          if (reward.package) expect(reward.package).to.be.a("string");
+          if (reward.amount) expect(reward.amount).to.be.a("number");
+        }
+      }
+    }
+  });
+});
+
+describe("Query guild achievements resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.guilds.achievements>;
+  it("expect not to throw", async function () {
+    result = await client.resources.guilds.achievements();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("object");
+    expect(result.one_time).to.be.an("object").that.is.empty;
+    // one_time is presently empty - we should change our approach if it ever gets filled
+    for (const achievementName of Object.keys(result.tiered)) {
+      expect(achievementName).to.be.a("string");
+      const achievement = result.tiered[achievementName];
+      expect(achievement).to.be.an("object");
+      expect(achievement.name).to.be.a("string");
+      expect(achievement.description).to.be.a("string");
+      expect(achievement.tiers).to.be.an("array");
+      for (const tier of achievement.tiers) {
+        expect(tier.amount).to.be.a("number");
+        expect(tier.tier).to.be.a("number");
+      }
+    }
+  });
+});
+
+describe("Query guild permissions resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.guilds.permissions>;
+  it("expect not to throw", async function () {
+    result = await client.resources.guilds.permissions();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("array");
+    for (const permission of result) {
+      expect(permission)
+        .to.be.an("object")
+        .that.has.property("en_us")
+        .that.is.an("object");
+      expect(permission.en_us.name).to.be.a("string");
+      expect(permission.en_us.description).to.be.a("string");
+      expect(permission.en_us.item)
+        .to.be.an("object")
+        .that.has.property("name")
+        .that.is.a("string");
     }
   });
 });
@@ -418,6 +583,28 @@ describe("Query SkyBlock skills resource", function () {
         expect(level.totalExpRequired).to.be.a("number");
         expect(level.unlocks).to.be.an("array");
       }
+    }
+  });
+});
+
+describe("Check SkyBlock news", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.skyblock.news>;
+  it("expect success", async function () {
+    result = await client.skyblock.news();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    for (const news of result) {
+      expect(news.title).to.be.a("string").and.not.be.empty;
+      expect(news.link).to.be.a("string").and.not.be.empty;
+      expect(news.text).to.be.a("string").and.not.be.empty;
+      expect(news.item).to.be.an("object").and.not.be.empty;
+      expect(news.item.material).to.be.a("string").and.not.be.empty;
+      expect(news.item.data).to.satisfy(function (v: unknown) {
+        return typeof v === "undefined" || typeof v === "number";
+      });
     }
   });
 });
