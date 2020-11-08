@@ -1,0 +1,5 @@
+
+User-agent:*
+Disallow:
+
+Sitemap: https://node-hypixel.zikeji.comsitemap.xml
