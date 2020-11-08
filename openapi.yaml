@@ -6728,6 +6728,125 @@ paths:
                       requirements:
                         - type: DailyResetQuestRequirement
                       description: Play 5 games of Duels
+  /resources/guilds/achievements:
+    get:
+      tags:
+        - guild
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/resources.md
+      summary: Retrieve a list of achievements a Hypixel guild can accomplish.
+      description: |
+        _Does not require an API key._
+        #### Usage
+        ```typescript
+        const achievements = await client.resources.guilds.achievements();
+        ```
+      security: []
+      responses:
+        '200':
+          description: An object describing achievements guilds can obtain.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuildsAchievementsResourceResponse"
+              example:
+                success: true
+                lastUpdated: 1570754198669
+                one_time: []
+                tiered:
+                  PRESTIGE:
+                    name: Prestige
+                    description: Reach Guild level %s
+                    tiers:
+                      - tier: 1
+                        amount: 20
+                      - tier: 2
+                        amount: 40
+                      - tier: 3
+                        amount: 60
+                      - tier: 4
+                        amount: 80
+                  EXPERIENCE_KINGS:
+                    name: Experience Kings
+                    description: get %s Guild Exp in one day
+                    tiers:
+                      - tier: 1
+                        amount: 50000
+                      - tier: 2
+                        amount: 100000
+                      - tier: 3
+                        amount: 150000
+                      - tier: 4
+                        amount: 200000
+                  WINNERS:
+                    name: Winners
+                    description: Win %s games as a Guild in a day
+                    tiers:
+                      - tier: 1
+                        amount: 100
+                      - tier: 2
+                        amount: 200
+                      - tier: 3
+                        amount: 300
+                      - tier: 4
+                        amount: 400
+                  ONLINE_PLAYERS:
+                    name: What are you doing here?
+                    description: Have %s guild members online at the same time!
+                    tiers:
+                      - tier: 1
+                        amount: 5
+                      - tier: 2
+                        amount: 15
+                      - tier: 3
+                        amount: 30
+                      - tier: 4
+                        amount: 40
+  /resources/guilds/permissions:
+    get:
+      tags:
+        - guild
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/resources.md
+      summary: Retrieve a list of permissions that a Hypixel guild master can use.
+      description: |
+        _Does not require an API key._
+        #### Usage
+        ```typescript
+        const permissions = await client.resources.guilds.permissions();
+        ```
+      security: []
+      responses:
+        '200':
+          description: An object describing all the permissions a Hypixel guild master can use.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuildsPermissionsResourceResponse"
+              example:
+                success: true
+                lastUpdated: 1570754198669
+                permissions:
+                  - en_us:
+                      name: Modify Guild Name
+                      description: Change the guild's name.
+                      item:
+                        name: name_tag
+                  - en_us:
+                      name: Modify Guild MOTD
+                      description: Change the guild's message of the day.
+                      item:
+                        name: paper
+                  - en_us:
+                      name: Modify Guild Tag
+                      description: Change the guild's tag.
+                      item:
+                        name: sign
+                  - en_us:
+                      name: Change ranks
+                      description: Promote or demote members (up to their own rank).
+                      item:
+                        name: crafting_table
   /resources/skyblock/collections:
     get:
       tags:
@@ -8032,13 +8151,9 @@ components:
             lastUpdated:
               type: integer
               description: Unix timestamp this resource was last updated.
-            version:
-              type: string
-              description: SkyBlock version this resource applies to.
           required:
             - success
             - lastUpdated
-            - version
     AchievementsResourceResponse:
       allOf:
         - $ref: '#/components/schemas/ResourcesResponse'
@@ -8455,11 +8570,98 @@ components:
           - objectives
           - requirements
           - description
+    GuildsAchievementsResourceResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResourcesResponse'
+        - type: object
+          properties:
+            one_time:
+              type: object
+              description: An empty object at this time. We can probably assume in the future it may contain data not unlike the normal /resources/achievements endpoint.
+            tiered:
+              type: object
+              properties:
+                PRESTIGE:
+                  $ref: '#/components/schemas/GuildsTieredAchievementsData'
+                EXPERIENCE_KINGS:
+                  $ref: '#/components/schemas/GuildsTieredAchievementsData'
+                WINNERS:
+                  $ref: '#/components/schemas/GuildsTieredAchievementsData'
+                ONLINE_PLAYERS:
+                  $ref: '#/components/schemas/GuildsTieredAchievementsData'
+              additionalProperties:
+                $ref: '#/components/schemas/GuildsTieredAchievementsData'
+              required:
+                - PRESTIGE
+                - EXPERIENCE_KINGS
+                - WINNERS
+                - ONLINE_PLAYERS
+          required:
+            - one_time
+            - tiered
+    GuildsTieredAchievementsData:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        tiers:
+          type: array
+          items:
+            type: object
+            properties:
+              tier:
+                type: number
+              amount:
+                type: number
+            required:
+              - tier
+              - amount
+      required:
+        - name
+        - description
+        - tiers
+    GuildsPermissionsResourceResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResourcesResponse'
+        - type: object
+          properties:
+            permissions:
+              type: array
+              items:
+                type: object
+                properties:
+                  en_us:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      item:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                        required:
+                          - name
+                    required:
+                      - name
+                      - description
+                      - item
+                required:
+                  - en_us
+          required:
+            - permissions
     SkyBlockCollectionsResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ResourcesResponse'
         - type: object
           properties:
+            version:
+              type: string
+              description: SkyBlock version this resource applies to.
             collections:
               $ref: '#/components/schemas/SkyBlockResourcesParentCollections'
           required:
@@ -8540,6 +8742,9 @@ components:
         - $ref: '#/components/schemas/ResourcesResponse'
         - type: object
           properties:
+            version:
+              type: string
+              description: SkyBlock version this resource applies to.
             collections:
               $ref: '#/components/schemas/SkyBlockResourcesSkills'
           required:

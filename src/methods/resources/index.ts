@@ -13,13 +13,16 @@ export class Resources extends Method {
    * ```
    */
   async achievements(): Promise<
-    ResultObject<Paths.ResourcesAchievements.Get.Responses.$200, "achievements">
+    ResultObject<
+      Paths.ResourcesAchievements.Get.Responses.$200,
+      ["achievements"]
+    >
   > {
     return getResultObject(
       await this.client.call<Paths.ResourcesAchievements.Get.Responses.$200>(
         "resources/achievements"
       ),
-      "achievements"
+      ["achievements"]
     );
   }
 
@@ -31,13 +34,13 @@ export class Resources extends Method {
    * ```
    */
   async challenges(): Promise<
-    ResultObject<Paths.ResourcesChallenges.Get.Responses.$200, "challenges">
+    ResultObject<Paths.ResourcesChallenges.Get.Responses.$200, ["challenges"]>
   > {
     return getResultObject(
       await this.client.call<Paths.ResourcesChallenges.Get.Responses.$200>(
         "resources/challenges"
       ),
-      "challenges"
+      ["challenges"]
     );
   }
 
@@ -49,13 +52,13 @@ export class Resources extends Method {
    * ```
    */
   async quests(): Promise<
-    ResultObject<Paths.ResourcesQuests.Get.Responses.$200, "quests">
+    ResultObject<Paths.ResourcesQuests.Get.Responses.$200, ["quests"]>
   > {
     return getResultObject(
       await this.client.call<Paths.ResourcesQuests.Get.Responses.$200>(
         "resources/quests"
       ),
-      "quests"
+      ["quests"]
     );
   }
 

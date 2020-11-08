@@ -14,12 +14,12 @@ export class FindGuild extends Method {
    */
   async byName(
     name: Components.Parameters.ByGuildName.ByName
-  ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, "success">> {
+  ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, ["success"]>> {
     return getResultObject(
       await this.client.call<Paths.Boosters.Get.Responses.$200>("findGuild", {
         byName: name,
       }),
-      "success"
+      ["success"]
     ) as never;
   }
 
@@ -34,12 +34,12 @@ export class FindGuild extends Method {
    */
   async byUuid(
     uuid: Components.Parameters.ByUuid.ByUuid
-  ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, "success">> {
+  ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, ["success"]>> {
     return getResultObject(
       await this.client.call<Paths.FindGuild.Get.Responses.$200>("findGuild", {
         byUuid: uuid,
       }),
-      "success"
+      ["success"]
     ) as never;
   }
 }

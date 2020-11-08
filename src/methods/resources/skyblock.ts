@@ -10,28 +10,28 @@ export class SkyBlockResources extends Method {
   async collections(): Promise<
     ResultObject<
       Paths.ResourcesSkyblockCollections.Get.Responses.$200,
-      "collections"
+      ["collections"]
     >
   > {
     return getResultObject(
       await this.client.call<
         Paths.ResourcesSkyblockCollections.Get.Responses.$200
       >("resources/skyblock/collections"),
-      "collections"
+      ["collections"]
     );
   }
 
   async skills(): Promise<
     ResultObject<
       Paths.ResourcesSkyblockSkills.Get.Responses.$200,
-      "collections"
+      ["collections"]
     >
   > {
     return getResultObject(
       await this.client.call<Paths.ResourcesSkyblockSkills.Get.Responses.$200>(
         "resources/skyblock/skills"
       ),
-      "collections"
+      ["collections"]
     );
   }
 }

@@ -63,23 +63,23 @@ const client = new Hypixel("API_KEY");
   - [x] Player
   - [x] Player Count
   - [x] Recent Games
-  - [ ] **Resources**
+  - [x] **Resources**
     - [x] Achievements
     - [x] Challenges
-    - [ ] Quests
-    - [ ] **Guilds**
-      - [ ] Achievements
-      - [ ] Permissions
+    - [x] Quests
+    - [x] **Guilds**
+      - [x] Achievements
+      - [x] Permissions
     - [x] **SkyBlock**
       - [x] Collections
       - [x] Skills
   - [ ] **SkyBlock**
-    - [x] News
-    - [ ] Profile
-    - [ ] Profiles
     - [ ] Auction
     - [ ] Auctions
     - [ ] Bazaar
+    - [x] News
+    - [ ] Profile
+    - [ ] Profiles
   - [x] Status
   - [x] Watchdog Stats
 - [ ] Add extended documentation, and helpers for:

@@ -86,10 +86,6 @@ export declare namespace Components {
        */
       lastUpdated: number;
       /**
-       * SkyBlock version this resource applies to.
-       */
-      version: string;
-      /**
        * Object describing each game mode's achievement data. The game mode is the object's key.
        */
       achievements: {
@@ -161,10 +157,6 @@ export declare namespace Components {
        * Unix timestamp this resource was last updated.
        */
       lastUpdated: number;
-      /**
-       * SkyBlock version this resource applies to.
-       */
-      version: string;
       challenges: {
         [name: string]: ChallengeData;
         arcade: ChallengeData;
@@ -190,6 +182,54 @@ export declare namespace Components {
         walls: ChallengeData;
         battleground: ChallengeData;
       };
+    }
+    export interface GuildsAchievementsResourceResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      /**
+       * Unix timestamp this resource was last updated.
+       */
+      lastUpdated: number;
+      /**
+       * An empty object at this time. We can probably assume in the future it may contain data not unlike the normal /resources/achievements endpoint.
+       */
+      one_time: unknown;
+      tiered: {
+        [name: string]: GuildsTieredAchievementsData;
+        PRESTIGE: GuildsTieredAchievementsData;
+        EXPERIENCE_KINGS: GuildsTieredAchievementsData;
+        WINNERS: GuildsTieredAchievementsData;
+        ONLINE_PLAYERS: GuildsTieredAchievementsData;
+      };
+    }
+    export interface GuildsPermissionsResourceResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      /**
+       * Unix timestamp this resource was last updated.
+       */
+      lastUpdated: number;
+      permissions: {
+        en_us: {
+          name: string;
+          description: string;
+          item: {
+            name: string;
+          };
+        };
+      }[];
+    }
+    export interface GuildsTieredAchievementsData {
+      name: string;
+      description: string;
+      tiers: {
+        tier: number;
+        amount: number;
+      }[];
     }
     export interface LeaderboardDataEntry {
       path: string;
@@ -648,10 +688,6 @@ export declare namespace Components {
        * Unix timestamp this resource was last updated.
        */
       lastUpdated: number;
-      /**
-       * SkyBlock version this resource applies to.
-       */
-      version: string;
       quests: {
         [name: string]: QuestDataArray;
         quake: QuestDataArray;
@@ -687,10 +723,6 @@ export declare namespace Components {
        * Unix timestamp this resource was last updated.
        */
       lastUpdated: number;
-      /**
-       * SkyBlock version this resource applies to.
-       */
-      version: string;
     }
     export interface Session {
       /**
@@ -3170,6 +3202,20 @@ export declare namespace Paths {
     namespace Get {
       namespace Responses {
         export type $200 = Components.Schemas.ChallengesResourceResponse;
+      }
+    }
+  }
+  namespace ResourcesGuildsAchievements {
+    namespace Get {
+      namespace Responses {
+        export type $200 = Components.Schemas.GuildsAchievementsResourceResponse;
+      }
+    }
+  }
+  namespace ResourcesGuildsPermissions {
+    namespace Get {
+      namespace Responses {
+        export type $200 = Components.Schemas.GuildsPermissionsResourceResponse;
       }
     }
   }

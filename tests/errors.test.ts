@@ -57,9 +57,11 @@ describe("A timeout of 1 should throw configured timeout.", function () {
 describe("getResultObject throws", function () {
   it("should throw key not in response", function () {
     try {
-      getResultObject({ success: true }, ("test" as unknown) as "success");
+      getResultObject({ success: true }, ["test" as never]);
     } catch (e) {
-      expect(e.message).to.equal('Key "test" was not in the response.');
+      expect(e.message).to.equal(
+        'One or more key in "test" was not in the response.'
+      );
     }
   });
 });

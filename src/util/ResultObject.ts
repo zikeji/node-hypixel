@@ -14,9 +14,13 @@ import type { Components } from "../types/api";
  */
 export type ResultObject<
   T extends Components.Schemas.ApiSuccess,
-  K extends keyof T
-> = (T[K] extends string | number | boolean ? Omit<T, K> : T[K]) & {
-  meta: (T[K] extends string | number | boolean ? Pick<T, K> : Omit<T, K>) & {
+  K extends (keyof T)[]
+> = (T[K[number]] extends string | number | boolean
+  ? Omit<T, K[number]>
+  : T[K[number]]) & {
+  meta: (T[K[number]] extends string | number | boolean
+    ? Pick<T, K[number]>
+    : Omit<T, K[number]>) & {
     ratelimit: RateLimitData;
   };
 };
@@ -24,34 +28,57 @@ export type ResultObject<
 /** @hidden */
 export function getResultObject<
   T extends Components.Schemas.ApiSuccess,
-  K extends keyof T
->(response: T, key: K): ResultObject<T, K> {
-  if (!(key in response)) {
-    throw new TypeError(`Key "${key}" was not in the response.`);
+  K extends (keyof T)[]
+>(response: T, keys: K): ResultObject<T, K> {
+  // eslint-disable-next-line no-param-reassign
+  if (typeof keys !== "object" || !Array.isArray(keys)) keys = [keys] as never;
+
+  if (!keys.every((key) => key in response)) {
+    throw new TypeError(
+      `One or more key in "${keys.join('"," ')}" was not in the response.`
+    );
   }
+
   const obj: ResultObject<T, K> = {} as ResultObject<T, K>;
-  const items = response[key];
   const { ratelimit } = (response as never) as { ratelimit: RateLimitData };
-  if (typeof items !== "object") {
-    // we just want a single property (the key)
-    const meta: Record<string | number | symbol, unknown> = {};
-    meta[key] = response[key];
-    meta.ratelimit = ratelimit;
+  const meta: Record<string | number | symbol, unknown> = {
+    ratelimit,
+  };
+
+  let assignedMeta = false;
+  keys.forEach((key) => {
+    const value = response[key];
+
+    if (
+      typeof value === "string" ||
+      typeof value === "number" ||
+      typeof value === "boolean"
+    ) {
+      delete response[key];
+      assignedMeta = true;
+      meta[key] = value;
+    }
+  });
+
+  if (assignedMeta) {
+    // we want the remainder merged into the object.
+    Object.assign(obj, response);
     Object.defineProperty(obj, "meta", {
       enumerable: false,
       value: meta,
     });
-    delete response[key];
-    Object.assign(obj, response);
     return obj;
   }
 
-  // we want all remaining properties
-  delete response[key];
-  Object.assign(obj, items);
+  // we want all the keys merged with the root and the remainder assigned to meta.
+  keys.forEach((key) => {
+    Object.assign(obj, response[key]);
+    delete response[key];
+  });
+  Object.assign(meta, response);
   Object.defineProperty(obj, "meta", {
     enumerable: false,
-    value: { ...response, ratelimit },
+    value: meta,
   });
   return obj;
 }

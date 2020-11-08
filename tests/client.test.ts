@@ -17,7 +17,7 @@ const client = new Client(process.env.HYPIXEL_KEY || "");
 const CheckMeta = (
   data: () =>
     | ResultArray<Components.Schemas.ApiSuccess & { n: unknown }, "n">
-    | ResultObject<Components.Schemas.ApiSuccess & { n: unknown }, "n">
+    | ResultObject<Components.Schemas.ApiSuccess & { n: unknown }, ["n"]>
 ) => {
   let result: ReturnType<typeof data>;
   beforeEach(function () {
@@ -483,6 +483,58 @@ describe("Query quests resource", function () {
           if (reward.amount) expect(reward.amount).to.be.a("number");
         }
       }
+    }
+  });
+});
+
+describe("Query guild achievements resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.guilds.achievements>;
+  it("expect not to throw", async function () {
+    result = await client.resources.guilds.achievements();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("object");
+    expect(result.one_time).to.be.an("object").that.is.empty;
+    // one_time is presently empty - we should change our approach if it ever gets filled
+    for (const achievementName of Object.keys(result.tiered)) {
+      expect(achievementName).to.be.a("string");
+      const achievement = result.tiered[achievementName];
+      expect(achievement).to.be.an("object");
+      expect(achievement.name).to.be.a("string");
+      expect(achievement.description).to.be.a("string");
+      expect(achievement.tiers).to.be.an("array");
+      for (const tier of achievement.tiers) {
+        expect(tier.amount).to.be.a("number");
+        expect(tier.tier).to.be.a("number");
+      }
+    }
+  });
+});
+
+describe("Query guild permissions resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.guilds.permissions>;
+  it("expect not to throw", async function () {
+    result = await client.resources.guilds.permissions();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("array");
+    for (const permission of result) {
+      expect(permission)
+        .to.be.an("object")
+        .that.has.property("en_us")
+        .that.is.an("object");
+      expect(permission.en_us.name).to.be.a("string");
+      expect(permission.en_us.description).to.be.a("string");
+      expect(permission.en_us.item)
+        .to.be.an("object")
+        .that.has.property("name")
+        .that.is.a("string");
     }
   });
 });

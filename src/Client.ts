@@ -147,11 +147,11 @@ export class Client extends EventEmitter {
    * ```
    */
   async boosters(): Promise<
-    ResultObject<Paths.Boosters.Get.Responses.$200, "success">
+    ResultObject<Paths.Boosters.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(
       await this.call<Paths.Boosters.Get.Responses.$200>("boosters"),
-      "success"
+      ["success"]
     ) as never;
   }
 
@@ -185,11 +185,11 @@ export class Client extends EventEmitter {
    * ```
    */
   async gameCounts(): Promise<
-    ResultObject<Paths.GameCounts.Get.Responses.$200, "success">
+    ResultObject<Paths.GameCounts.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(
       await this.call<Paths.GameCounts.Get.Responses.$200>("gameCounts"),
-      "success"
+      ["success"]
     ) as never;
   }
 
@@ -210,10 +210,10 @@ export class Client extends EventEmitter {
    * console.log(key);
    * ```
    */
-  async key(): Promise<ResultObject<Paths.Key.Get.Responses.$200, "record">> {
+  async key(): Promise<ResultObject<Paths.Key.Get.Responses.$200, ["record"]>> {
     return getResultObject(
       await this.call<Paths.Key.Get.Responses.$200>("key"),
-      "record"
+      ["record"]
     ) as never;
   }
 
@@ -226,11 +226,11 @@ export class Client extends EventEmitter {
    * ```
    */
   async leaderboards(): Promise<
-    ResultObject<Paths.Leaderboards.Get.Responses.$200, "leaderboards">
+    ResultObject<Paths.Leaderboards.Get.Responses.$200, ["leaderboards"]>
   > {
     return getResultObject(
       await this.call<Paths.Leaderboards.Get.Responses.$200>("leaderboards"),
-      "leaderboards"
+      ["leaderboards"]
     ) as never;
   }
 
@@ -253,11 +253,11 @@ export class Client extends EventEmitter {
    * ```
    */
   async playerCount(): Promise<
-    ResultObject<Paths.PlayerCount.Get.Responses.$200, "success">
+    ResultObject<Paths.PlayerCount.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(
       await this.call<Paths.PlayerCount.Get.Responses.$200>("playerCount"),
-      "success"
+      ["success"]
     ) as never;
   }
 
@@ -301,11 +301,11 @@ export class Client extends EventEmitter {
    * ```
    */
   async watchdogstats(): Promise<
-    ResultObject<Paths.Watchdogstats.Get.Responses.$200, "success">
+    ResultObject<Paths.Watchdogstats.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(
       await this.call<Paths.Watchdogstats.Get.Responses.$200>("watchdogstats"),
-      "success"
+      ["success"]
     ) as never;
   }
 
