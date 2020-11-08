@@ -352,24 +352,67 @@ describe("Get player recent games", function () {
   });
 });
 
-describe("Check SkyBlock news", function () {
+describe("Query achievements resource", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result: AsyncReturnType<typeof client.skyblock.news>;
-  it("expect success", async function () {
-    result = await client.skyblock.news();
+  let result: AsyncReturnType<typeof client.resources.achievements>;
+  it("expect not to throw", async function () {
+    result = await client.resources.achievements();
   });
   CheckMeta(() => result);
   it("required keys should exist", function () {
-    for (const news of result) {
-      expect(news.title).to.be.a("string").and.not.be.empty;
-      expect(news.link).to.be.a("string").and.not.be.empty;
-      expect(news.text).to.be.a("string").and.not.be.empty;
-      expect(news.item).to.be.an("object").and.not.be.empty;
-      expect(news.item.material).to.be.a("string").and.not.be.empty;
-      expect(news.item.data).to.satisfy(function (v: unknown) {
-        return typeof v === "undefined" || typeof v === "number";
-      });
+    expect(result).to.be.an("object");
+    for (const gameModeName of Object.keys(result)) {
+      expect(gameModeName).to.be.a("string");
+      const gameMode = result[gameModeName];
+      expect(gameMode).to.be.an("object");
+      expect(gameMode)
+        .to.be.an("object")
+        .that.has.all.keys(
+          "one_time",
+          "tiered",
+          "total_points",
+          "total_legacy_points"
+        );
+      expect(gameMode).to.have.property("one_time").that.is.an("object");
+      for (const achievementKey of Object.keys(gameMode.one_time)) {
+        expect(achievementKey).to.be.a("string");
+        const achievement = gameMode.one_time[achievementKey];
+        expect(achievement).to.be.an("object");
+        expect(achievement.name).to.be.a("string");
+        expect(achievement.description).to.be.a("string");
+        expect(achievement.points).to.be.a("number");
+        if (achievement.secret) {
+          expect(achievement.secret).to.be.a("boolean");
+        }
+        if (achievement.legacy) {
+          expect(achievement.legacy).to.be.a("boolean");
+        }
+        if (achievement.gamePercentUnlocked) {
+          expect(achievement.gamePercentUnlocked).to.be.a("number");
+        }
+        if (achievement.globalPercentUnlocked) {
+          expect(achievement.globalPercentUnlocked).to.be.a("number");
+        }
+      }
+      expect(gameMode).to.have.property("tiered").that.is.an("object");
+      for (const achievementKey of Object.keys(gameMode.tiered)) {
+        expect(achievementKey).to.be.a("string");
+        const achievement = gameMode.tiered[achievementKey];
+        expect(achievement).to.be.an("object");
+        expect(achievement.name).to.be.a("string");
+        expect(achievement.description).to.be.a("string");
+        if (achievement.legacy) {
+          expect(achievement.legacy).to.be.a("boolean");
+        }
+        for (const tier of achievement.tiers) {
+          expect(tier.tier).to.be.a("number");
+          expect(tier.points).to.be.a("number");
+          expect(tier.amount).to.be.a("number");
+        }
+      }
+      expect(gameMode.total_points).to.be.a("number");
+      expect(gameMode.total_legacy_points).to.be.a("number");
     }
   });
 });
@@ -418,6 +461,28 @@ describe("Query SkyBlock skills resource", function () {
         expect(level.totalExpRequired).to.be.a("number");
         expect(level.unlocks).to.be.an("array");
       }
+    }
+  });
+});
+
+describe("Check SkyBlock news", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.skyblock.news>;
+  it("expect success", async function () {
+    result = await client.skyblock.news();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    for (const news of result) {
+      expect(news.title).to.be.a("string").and.not.be.empty;
+      expect(news.link).to.be.a("string").and.not.be.empty;
+      expect(news.text).to.be.a("string").and.not.be.empty;
+      expect(news.item).to.be.an("object").and.not.be.empty;
+      expect(news.item.material).to.be.a("string").and.not.be.empty;
+      expect(news.item.data).to.satisfy(function (v: unknown) {
+        return typeof v === "undefined" || typeof v === "number";
+      });
     }
   });
 });

@@ -29,6 +29,105 @@ export declare namespace Components {
     export type Unauthorized = Schemas.ApiError;
   }
   namespace Schemas {
+    /**
+     * The game mode's achievement data.
+     */
+    export interface AchievementGameModeData {
+      /**
+       * Any one off achievements, each property's key is the name used in data, and the proper name is stored in the "name" property.
+       * All objects contain the name, points awarded, and description. Some contain a legacy boolean and others might contain percentage of who has unlocked them.
+       *
+       */
+      one_time: {
+        [name: string]: {
+          name: string;
+          description: string;
+          points: number;
+          secret?: boolean;
+          legacy?: boolean;
+          gamePercentUnlocked?: number;
+          globalPercentUnlocked?: number;
+        };
+      };
+      /**
+       * Any tiered achievements, each property's key is the name used in data, and the proper name is stored in the "name" property.
+       * All objects contain the name, description, and achievement tiers. Some contain a legacy boolean.
+       * The achievement tiers array contains the points earned for each tier, and additional data.
+       *
+       */
+      tiered: {
+        [name: string]: {
+          name: string;
+          description: string;
+          legacy?: boolean;
+          tiers: {
+            tier: number;
+            points: number;
+            amount: number;
+          }[];
+        };
+      };
+      /**
+       * Total earnable achievement points in this game mode.
+       */
+      total_points: number;
+      /**
+       * Total earnable _legacy_ achievement points in this game mode.
+       */
+      total_legacy_points: number;
+    }
+    export interface AchievementsResourceResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      /**
+       * Unix timestamp this resource was last updated.
+       */
+      lastUpdated: number;
+      /**
+       * SkyBlock version this resource applies to.
+       */
+      version: string;
+      /**
+       * Object describing each game mode's achievement data. The game mode is the object's key.
+       */
+      achievements: {
+        [
+          name: string
+        ]: /* The game mode's achievement data. */ AchievementGameModeData;
+        arcade: /* The game mode's achievement data. */ AchievementGameModeData;
+        arena: /* The game mode's achievement data. */ AchievementGameModeData;
+        bedwars: /* The game mode's achievement data. */ AchievementGameModeData;
+        blitz: /* The game mode's achievement data. */ AchievementGameModeData;
+        buildbattle: /* The game mode's achievement data. */ AchievementGameModeData;
+        christmas2017: /* The game mode's achievement data. */ AchievementGameModeData;
+        copsandcrims: /* The game mode's achievement data. */ AchievementGameModeData;
+        duels: /* The game mode's achievement data. */ AchievementGameModeData;
+        easter: /* The game mode's achievement data. */ AchievementGameModeData;
+        general: /* The game mode's achievement data. */ AchievementGameModeData;
+        gingerbread: /* The game mode's achievement data. */ AchievementGameModeData;
+        halloween2017: /* The game mode's achievement data. */ AchievementGameModeData;
+        housing: /* The game mode's achievement data. */ AchievementGameModeData;
+        murdermystery: /* The game mode's achievement data. */ AchievementGameModeData;
+        paintball: /* The game mode's achievement data. */ AchievementGameModeData;
+        pit: /* The game mode's achievement data. */ AchievementGameModeData;
+        quake: /* The game mode's achievement data. */ AchievementGameModeData;
+        skyblock: /* The game mode's achievement data. */ AchievementGameModeData;
+        skyclash: /* The game mode's achievement data. */ AchievementGameModeData;
+        skywars: /* The game mode's achievement data. */ AchievementGameModeData;
+        speeduhc: /* The game mode's achievement data. */ AchievementGameModeData;
+        summer: /* The game mode's achievement data. */ AchievementGameModeData;
+        supersmash: /* The game mode's achievement data. */ AchievementGameModeData;
+        tntgames: /* The game mode's achievement data. */ AchievementGameModeData;
+        truecombat: /* The game mode's achievement data. */ AchievementGameModeData;
+        uhc: /* The game mode's achievement data. */ AchievementGameModeData;
+        vampirez: /* The game mode's achievement data. */ AchievementGameModeData;
+        walls: /* The game mode's achievement data. */ AchievementGameModeData;
+        walls3: /* The game mode's achievement data. */ AchievementGameModeData;
+        warlords: /* The game mode's achievement data. */ AchievementGameModeData;
+      };
+    }
     export interface ApiError {
       /**
        * Whether or not the request succeeded.
@@ -1763,6 +1862,1205 @@ export declare namespace Paths {
         export type $403 = Components.Responses.Unauthorized;
         export type $422 = Components.Responses.MalformedUUID;
         export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
+  namespace ResourcesAchievements {
+    namespace Get {
+      namespace Responses {
+        /**
+         * example:
+         * {
+         *   "example": {
+         *     "success": true,
+         *     "lastUpdated": 1604706817946,
+         *     "achievements": {
+         *       "arcade": {
+         *         "one_time": {
+         *           "CREEPER_ATTACK_SURVIVAL": {
+         *             "points": 10,
+         *             "name": "Creeper Attack: Creeeep",
+         *             "description": "Survive Creeper Attack without dying",
+         *             "gamePercentUnlocked": 7.016806390981579,
+         *             "globalPercentUnlocked": 3.194439338105325
+         *           }
+         *         },
+         *         "tiered": {
+         *           "ZOMBIES_NICE_SHOT": {
+         *             "name": "Zombies: Nice Shot",
+         *             "description": "Get %s zombie kills",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 500
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 1000
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 2500
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1600,
+         *         "total_legacy_points": 5
+         *       },
+         *       "arena": {
+         *         "one_time": {
+         *           "MY_NEW_HAT": {
+         *             "points": 5,
+         *             "name": "My New Hat",
+         *             "description": "Win wearing an Epic hat",
+         *             "gamePercentUnlocked": 0.40878630320523257,
+         *             "globalPercentUnlocked": 0.03239382978262079
+         *           }
+         *         },
+         *         "tiered": {
+         *           "POWERUP": {
+         *             "name": "Powerup!",
+         *             "description": "Activate %s powerups",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 250
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 500
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 710,
+         *         "total_legacy_points": 0
+         *       },
+         *       "bedwars": {
+         *         "one_time": {
+         *           "IRON_PUNCH": {
+         *             "points": 5,
+         *             "name": "Iron Punch",
+         *             "description": "Get a kill with an Iron Golem",
+         *             "gamePercentUnlocked": 18.516916616446323,
+         *             "globalPercentUnlocked": 11.081223315450147
+         *           }
+         *         },
+         *         "tiered": {
+         *           "COLLECTORS_EDITION": {
+         *             "name": "Collectors Edition",
+         *             "description": "Collect %s wool from enemy teams",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 25
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 250
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 795,
+         *         "total_legacy_points": 0
+         *       },
+         *       "blitz": {
+         *         "one_time": {
+         *           "DONKEYTAMER_MASTER": {
+         *             "points": 10,
+         *             "name": "Donkeytamer Master",
+         *             "description": "Max out the Donkeytamer Kit",
+         *             "gamePercentUnlocked": 0.01,
+         *             "globalPercentUnlocked": 0.01
+         *           }
+         *         },
+         *         "tiered": {
+         *           "KIT_COLLECTOR": {
+         *             "name": "Kit Collector",
+         *             "description": "Unlock %s Advanced or Ultimate kits",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 1
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 5
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 15
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1650,
+         *         "total_legacy_points": 0
+         *       },
+         *       "buildbattle": {
+         *         "one_time": {
+         *           "GUESSING_STREAK": {
+         *             "points": 5,
+         *             "name": "Guessing Streak",
+         *             "description": "Guess every theme correctly in Guess the Build",
+         *             "gamePercentUnlocked": 5.4412406051235,
+         *             "globalPercentUnlocked": 1.8679243815594853
+         *           }
+         *         },
+         *         "tiered": {
+         *           "BUILD_BATTLE_VOTER": {
+         *             "name": "Judge",
+         *             "description": "Vote on %s builds in Build Battle",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 40
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 200
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 500
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 1000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 560,
+         *         "total_legacy_points": 0
+         *       },
+         *       "christmas2017": {
+         *         "one_time": {
+         *           "GREED_INCARNATE": {
+         *             "points": 15,
+         *             "name": "Greed Incarnate",
+         *             "description": "Steal 42 presents in a single game of Grinch Simulator",
+         *             "globalPercentUnlocked": 0.21662858123274253
+         *           }
+         *         },
+         *         "tiered": {
+         *           "SECRET_SANTA": {
+         *             "name": "Secret Santa",
+         *             "description": "Fill %s stockings in Santa Simulator",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 5
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 25
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 60
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 150
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 660,
+         *         "total_legacy_points": 200
+         *       },
+         *       "copsandcrims": {
+         *         "one_time": {
+         *           "OH_BABY_A_TRIPLE": {
+         *             "points": 15,
+         *             "name": "A Player's Nightmare",
+         *             "description": "Get a double kill using a grenade",
+         *             "gamePercentUnlocked": 0.307022864814434,
+         *             "globalPercentUnlocked": 0.06307310800708539
+         *           }
+         *         },
+         *         "tiered": {
+         *           "CAC_BANKER": {
+         *             "name": "Bounty Collector",
+         *             "description": "Earn %s Coins",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10000
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 50000
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100000
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 250000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 965,
+         *         "total_legacy_points": 0
+         *       },
+         *       "duels": {
+         *         "one_time": {
+         *           "GONE_FISHING": {
+         *             "points": 5,
+         *             "name": "Gone Fishing",
+         *             "description": "Catch a fish",
+         *             "gamePercentUnlocked": 0.8309436623932128,
+         *             "globalPercentUnlocked": 0.27000946479595545
+         *           }
+         *         },
+         *         "tiered": {
+         *           "DUELS_DIVISION": {
+         *             "name": "Climbing the Ranks",
+         *             "description": "Achieve %s Title in any mode",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 1
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 2
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 3
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 4
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1200,
+         *         "total_legacy_points": 110
+         *       },
+         *       "easter": {
+         *         "one_time": {
+         *           "ALL_EGGS_2019": {
+         *             "points": 30,
+         *             "name": "Egghunter (2019)",
+         *             "description": "Find all easter eggs in the Main Lobby",
+         *             "legacy": true
+         *           }
+         *         },
+         *         "tiered": {
+         *           "THROW_EGGS": {
+         *             "name": "Egg Thrower",
+         *             "description": "Throw %s eggs",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 8
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 32
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 128
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 512
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 430,
+         *         "total_legacy_points": 40
+         *       },
+         *       "general": {
+         *         "one_time": {
+         *           "YOUTUBER": {
+         *             "points": 10,
+         *             "name": "EEEEKK!",
+         *             "description": "Be in the same lobby as a YouTuber",
+         *             "globalPercentUnlocked": 62.84929127155385
+         *           }
+         *         },
+         *         "tiered": {
+         *           "CHALLENGER": {
+         *             "name": "Challenger",
+         *             "description": "Complete a total of %s challenges",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 250
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 410,
+         *         "total_legacy_points": 0
+         *       },
+         *       "gingerbread": {
+         *         "one_time": {
+         *           "IS_THIS_SURVIVAL_GAMES": {
+         *             "points": 5,
+         *             "name": "Is this Survival Games?",
+         *             "description": "Hit 5 players with the \"Notched Sword\" in 1 race",
+         *             "gamePercentUnlocked": 1.1200450672852627,
+         *             "globalPercentUnlocked": 0.12229878588538734
+         *           }
+         *         },
+         *         "tiered": {
+         *           "WINNER": {
+         *             "name": "Medalist",
+         *             "description": "Get %s trophies",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 5
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 25
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 250
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 600,
+         *         "total_legacy_points": 0
+         *       },
+         *       "halloween2017": {
+         *         "one_time": {
+         *           "FIRE_FROM_HELL": {
+         *             "points": 5,
+         *             "name": "Fire from Hell",
+         *             "description": "Win a game of Smash Heroes using Skullfire",
+         *             "globalPercentUnlocked": 0.05622079370421381
+         *           }
+         *         },
+         *         "tiered": {
+         *           "PUMPKINATOR": {
+         *             "name": "Pumpkinator Collector",
+         *             "description": "Collect %s pumpkins in Bedwars",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 5
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 25
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 250
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 710,
+         *         "total_legacy_points": 130
+         *       },
+         *       "housing": {
+         *         "one_time": {
+         *           "RECIEVE_COOKIE": {
+         *             "points": 5,
+         *             "name": "Filling the Cookie Jar",
+         *             "description": "Receive a cookie.",
+         *             "gamePercentUnlocked": 23.130059864883275,
+         *             "globalPercentUnlocked": 4.2513101294999025
+         *           }
+         *         },
+         *         "tiered": [],
+         *         "total_points": 55,
+         *         "total_legacy_points": 0
+         *       },
+         *       "murdermystery": {
+         *         "one_time": {
+         *           "BLESSING_AND_CURSE": {
+         *             "points": 5,
+         *             "name": "Mixed Messages",
+         *             "description": "Receive a blessing and a curse from Kali in the same game on Ancient Tomb",
+         *             "gamePercentUnlocked": 13.157039514340763,
+         *             "globalPercentUnlocked": 4.265014758105646
+         *           }
+         *         },
+         *         "tiered": {
+         *           "WINS_AS_SURVIVOR": {
+         *             "name": "Peace Is Mine",
+         *             "description": "Win %s games as innocent or detective without dying",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 1
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 25
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 40
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 805,
+         *         "total_legacy_points": 0
+         *       },
+         *       "paintball": {
+         *         "one_time": {
+         *           "ACTIVATE_KILLSTREAKS": {
+         *             "points": 10,
+         *             "name": "Unstoppable",
+         *             "description": "Activate ten killstreaks",
+         *             "gamePercentUnlocked": 1.0260724023328596,
+         *             "globalPercentUnlocked": 0.2519742678216734
+         *           }
+         *         },
+         *         "tiered": {
+         *           "WINS": {
+         *             "name": "Paintball Superstar",
+         *             "description": "Win %s games",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 1000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 685,
+         *         "total_legacy_points": 0
+         *       },
+         *       "pit": {
+         *         "one_time": {
+         *           "PUNCH_SWORD": {
+         *             "points": 5,
+         *             "name": "The Punch",
+         *             "description": "Hit a player with The Punch",
+         *             "gamePercentUnlocked": 0.3629933575223368,
+         *             "globalPercentUnlocked": 0.013510194923890408
+         *           }
+         *         },
+         *         "tiered": {
+         *           "MYSTICISM": {
+         *             "name": "Mysticism",
+         *             "description": "Enchant %s items",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 250
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1080,
+         *         "total_legacy_points": 0
+         *       },
+         *       "quake": {
+         *         "one_time": {
+         *           "SHOW_ME_THE_MONEY": {
+         *             "points": 15,
+         *             "name": "Show me the money!",
+         *             "description": "Unlock the Polished Bling Case or the 1.0s trigger",
+         *             "gamePercentUnlocked": 0.5984048114967335,
+         *             "globalPercentUnlocked": 0.10115854193121432
+         *           }
+         *         },
+         *         "tiered": {
+         *           "COINS": {
+         *             "name": "Quake Banker",
+         *             "description": "Earn %s coins",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 5000
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 25000
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 100000
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 200000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 940,
+         *         "total_legacy_points": 0
+         *       },
+         *       "skyblock": {
+         *         "one_time": {
+         *           "EXPLOSIVE_ENDING": {
+         *             "points": 5,
+         *             "name": "Explosive Ending",
+         *             "description": "Survive the Blast from the Unstable Dragon",
+         *             "gamePercentUnlocked": 3.273060341189789,
+         *             "globalPercentUnlocked": 1.0396722484452376
+         *           }
+         *         },
+         *         "tiered": {
+         *           "ANGLER": {
+         *             "name": "Angler",
+         *             "description": "Achieve fishing level %s",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 5
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 10,
+         *                 "amount": 15
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 10,
+         *                 "amount": 20
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1700,
+         *         "total_legacy_points": 0
+         *       },
+         *       "skyclash": {
+         *         "one_time": {
+         *           "WHATS_NEXT": {
+         *             "points": 10,
+         *             "name": "What's next?",
+         *             "description": "Max out a Card",
+         *             "legacy": true
+         *           }
+         *         },
+         *         "tiered": {
+         *           "CARDS_UNLOCKED": {
+         *             "name": "Collector!",
+         *             "description": "Unlock %s different Cards",
+         *             "legacy": true,
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 15
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 25
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 35
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 0,
+         *         "total_legacy_points": 715
+         *       },
+         *       "skywars": {
+         *         "one_time": {
+         *           "PEACEMAKER": {
+         *             "points": 10,
+         *             "name": "Peacemaker",
+         *             "description": "Win a game without killing anyone",
+         *             "gamePercentUnlocked": 35.91945665528181,
+         *             "globalPercentUnlocked": 23.00161061791731
+         *           }
+         *         },
+         *         "tiered": {
+         *           "KILLS_TEAM": {
+         *             "name": "Team Killer",
+         *             "description": "Kill %s players in Team mode",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 250
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 1000
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 5000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1555,
+         *         "total_legacy_points": 0
+         *       },
+         *       "speeduhc": {
+         *         "one_time": null,
+         *         "tiered": {
+         *           "SALTY": {
+         *             "name": "Salty",
+         *             "description": "Collect %s Salt",
+         *             "legacy": true,
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 200
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 1000
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 5000
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 10000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 485,
+         *         "total_legacy_points": 90
+         *       },
+         *       "summer": {
+         *         "one_time": {
+         *           "HOME_RUN": {
+         *             "points": 5,
+         *             "name": "Home Run",
+         *             "description": "Knock a player into the void while using the Baseball Player Kit in SkyWars",
+         *             "globalPercentUnlocked": 0.438836819941684
+         *           }
+         *         },
+         *         "tiered": {
+         *           "GONE_FISHING": {
+         *             "name": "Gone Fishing",
+         *             "description": "Fish %s treasure items while fishing in the Main Lobby",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 15,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 25,
+         *                 "amount": 100
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 365,
+         *         "total_legacy_points": 20
+         *       },
+         *       "supersmash": {
+         *         "one_time": {
+         *           "GENCLUCK_CHALLENGE": {
+         *             "points": 5,
+         *             "name": "General Cluck Challenge",
+         *             "description": "Kill 2 enemy heroes with your Chicken Army",
+         *             "gamePercentUnlocked": 5.009991257649556,
+         *             "globalPercentUnlocked": 0.5199804765015701
+         *           }
+         *         },
+         *         "tiered": {
+         *           "SMASH_CHAMPION": {
+         *             "name": "Smash Champion",
+         *             "description": "Reach Smash Level %s",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 20
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 250
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 500
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 430,
+         *         "total_legacy_points": 0
+         *       },
+         *       "tntgames": {
+         *         "one_time": {
+         *           "TNT_TAG_DIFFERENTTAGS": {
+         *             "points": 10,
+         *             "name": "One for you and for you and for you ...",
+         *             "description": "Tag 5 different people in a game of TNT Tag",
+         *             "gamePercentUnlocked": 22.24612356942583,
+         *             "globalPercentUnlocked": 10.263423465717924
+         *           }
+         *         },
+         *         "tiered": {
+         *           "PVP_RUN_WINS": {
+         *             "name": "Running Killer",
+         *             "description": "Win %s games of PVP Run",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 20
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 100
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1680,
+         *         "total_legacy_points": 0
+         *       },
+         *       "truecombat": {
+         *         "one_time": {
+         *           "GOLD_FORAGER": {
+         *             "points": 15,
+         *             "name": "Gold Forager",
+         *             "description": "Max out a Gold Dust perk",
+         *             "legacy": true
+         *           }
+         *         },
+         *         "tiered": {
+         *           "SOLO_KILLER": {
+         *             "name": "Crazy Killer",
+         *             "description": "Kill %s players in Solo Normal or Lucky modes",
+         *             "legacy": true,
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 200
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 500
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 1000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 0,
+         *         "total_legacy_points": 785
+         *       },
+         *       "uhc": {
+         *         "one_time": {
+         *           "CRAFTING_REVOLUTION": {
+         *             "points": 5,
+         *             "name": "Crafting revolution",
+         *             "description": "Use a custom recipe in game",
+         *             "gamePercentUnlocked": 37.00093709225066,
+         *             "globalPercentUnlocked": 3.9130367665843684
+         *           }
+         *         },
+         *         "tiered": {
+         *           "HUNTER": {
+         *             "name": "Hunter",
+         *             "description": "Kill %s players",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 10
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 500
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 1000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 855,
+         *         "total_legacy_points": 0
+         *       },
+         *       "vampirez": {
+         *         "one_time": {
+         *           "PURCHASE_BLOOD": {
+         *             "points": 5,
+         *             "name": "Cash4Blood",
+         *             "description": "Purchase Blood from the shop",
+         *             "gamePercentUnlocked": 24.465217949718827,
+         *             "globalPercentUnlocked": 5.723903700414698
+         *           }
+         *         },
+         *         "tiered": {
+         *           "ZOMBIE_KILLER": {
+         *             "name": "Zombie Hunter",
+         *             "description": "Kill %s Zombies",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 250
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 500
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 2500
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 7500
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 610,
+         *         "total_legacy_points": 0
+         *       },
+         *       "walls": {
+         *         "one_time": {
+         *           "FIRST_KIT": {
+         *             "points": 5,
+         *             "name": "Getting Ready",
+         *             "description": "Unlock your first starter kit",
+         *             "gamePercentUnlocked": 13.703430301410933,
+         *             "globalPercentUnlocked": 1.4262594353363067
+         *           }
+         *         },
+         *         "tiered": {
+         *           "DIAMOND_MINER": {
+         *             "name": "Rare Ore Miner",
+         *             "description": "Mine %s Diamonds",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 5
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 20
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 50
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 100
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 520,
+         *         "total_legacy_points": 0
+         *       },
+         *       "walls3": {
+         *         "one_time": {
+         *           "WHATS_THE_BIG_IDEA": {
+         *             "points": 10,
+         *             "name": "What's the big idea!?",
+         *             "description": "Final kill an enemy after splashing them with a regen potion as Phoenix, before the potion expires",
+         *             "gamePercentUnlocked": 0.036183601274772714,
+         *             "globalPercentUnlocked": 0.01
+         *           }
+         *         },
+         *         "tiered": {
+         *           "COINS": {
+         *             "name": "Mega Walls Banker",
+         *             "description": "Earn %s coins in Mega Walls",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 5000
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 10000
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 35000
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 55000
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 2150,
+         *         "total_legacy_points": 0
+         *       },
+         *       "warlords": {
+         *         "one_time": {
+         *           "MEDIUM_RARE": {
+         *             "points": 5,
+         *             "name": "Medium Rare",
+         *             "description": "Receive a Rare weapon from The Weaponsmith.",
+         *             "gamePercentUnlocked": 50.02137436405603,
+         *             "globalPercentUnlocked": 3.902172048119626
+         *           }
+         *         },
+         *         "tiered": {
+         *           "ASSIST": {
+         *             "name": "Quit Stealing My Kills!",
+         *             "description": "Earn %s assists in any game mode",
+         *             "tiers": [
+         *               {
+         *                 "tier": 1,
+         *                 "points": 5,
+         *                 "amount": 20
+         *               },
+         *               {
+         *                 "tier": 2,
+         *                 "points": 10,
+         *                 "amount": 100
+         *               },
+         *               {
+         *                 "tier": 3,
+         *                 "points": 15,
+         *                 "amount": 500
+         *               },
+         *               {
+         *                 "tier": 4,
+         *                 "points": 20,
+         *                 "amount": 2500
+         *               }
+         *             ]
+         *           }
+         *         },
+         *         "total_points": 1380,
+         *         "total_legacy_points": 0
+         *       }
+         *     }
+         *   }
+         * }
+         */
+        export type $200 = Components.Schemas.AchievementsResourceResponse;
       }
     }
   }
