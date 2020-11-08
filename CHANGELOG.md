@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.0](https://github.com/zikeji/node-hypixel/compare/v1.11.0...v1.12.0) (2020-11-08)
+
+
+### Features
+
+* **api:** add /resources/achievements endpoint ([d648dc8](https://github.com/zikeji/node-hypixel/commit/d648dc8377d64296425d24d52682b2499e7d8abf))
+* **api:** add /resources/challenges endpoint ([731895d](https://github.com/zikeji/node-hypixel/commit/731895db2064e1e0402020a9ad92cf74f96a22c4))
+* **api:** add /resources/guilds/achievements and /resources/guilds/permissions endpoint ([015adf4](https://github.com/zikeji/node-hypixel/commit/015adf4e472630ba7921b1f67a0e70b1c9afc612))
+* **api:** add /resources/quests endpoint ([ae40ec4](https://github.com/zikeji/node-hypixel/commit/ae40ec4c82ce4b542b42f453fb43fb53448a7981))
+
+
+### Bug Fixes
+
+* extra "example" key in schema ([5166bc9](https://github.com/zikeji/node-hypixel/commit/5166bc96a743043a4c0a873fd5739d23c1a4a767))
+
 ## [1.11.0](https://github.com/zikeji/node-hypixel/compare/v1.10.0...v1.11.0) (2020-11-07)
 
 
