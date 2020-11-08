@@ -621,6 +621,63 @@ export declare namespace Components {
     export interface PlayerResponse {
       player: Player;
     }
+    export type QuestDataArray = {
+      id: string;
+      name: string;
+      rewards: {
+        type: string;
+        amount?: number;
+        package?: string;
+      }[];
+      objectives: {
+        id: string;
+        type: string;
+        integer?: number;
+      }[];
+      requirements: {
+        type: string;
+      }[];
+      description: string;
+    }[];
+    export interface QuestsResourceResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      /**
+       * Unix timestamp this resource was last updated.
+       */
+      lastUpdated: number;
+      /**
+       * SkyBlock version this resource applies to.
+       */
+      version: string;
+      quests: {
+        [name: string]: QuestDataArray;
+        quake: QuestDataArray;
+        walls: QuestDataArray;
+        paintball: QuestDataArray;
+        hungergames: QuestDataArray;
+        tntgames: QuestDataArray;
+        vampirez: QuestDataArray;
+        walls3: QuestDataArray;
+        arcade: QuestDataArray;
+        arena: QuestDataArray;
+        uhc: QuestDataArray;
+        mcgo: QuestDataArray;
+        battleground: QuestDataArray;
+        supersmash: QuestDataArray;
+        gingerbread: QuestDataArray;
+        skywars: QuestDataArray;
+        truecombat: QuestDataArray;
+        skyclash: QuestDataArray;
+        prototype: QuestDataArray;
+        bedwars: QuestDataArray;
+        murdermystery: QuestDataArray;
+        buildbattle: QuestDataArray;
+        duels: QuestDataArray;
+      };
+    }
     export interface ResourcesResponse {
       /**
        * Whether or not the request succeeded.
@@ -3113,6 +3170,13 @@ export declare namespace Paths {
     namespace Get {
       namespace Responses {
         export type $200 = Components.Schemas.ChallengesResourceResponse;
+      }
+    }
+  }
+  namespace ResourcesQuests {
+    namespace Get {
+      namespace Responses {
+        export type $200 = Components.Schemas.QuestsResourceResponse;
       }
     }
   }

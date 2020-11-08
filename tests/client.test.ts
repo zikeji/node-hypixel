@@ -444,6 +444,49 @@ describe("Query challenges resource", function () {
   });
 });
 
+describe("Query quests resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.quests>;
+  it("expect not to throw", async function () {
+    result = await client.resources.quests();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("object");
+    for (const gameModeName of Object.keys(result)) {
+      expect(gameModeName).to.be.a("string");
+      const gameMode = result[gameModeName];
+      expect(gameMode).to.be.an("array");
+      for (const quest of gameMode) {
+        expect(quest.id).to.be.a("string");
+        expect(quest.name).to.be.a("string");
+        expect(quest.description).to.be.a("string");
+        expect(quest.objectives).to.be.an("array");
+        for (const objective of quest.objectives) {
+          expect(objective.id).to.be.a("string");
+          expect(objective.type).to.be.a("string");
+          if (objective.integer) expect(objective.integer).to.be.a("number");
+        }
+        expect(quest.requirements).to.be.an("array");
+        for (const requirement of quest.requirements) {
+          expect(requirement)
+            .to.be.an("object")
+            .that.has.all.keys("type")
+            .and.has.property("type")
+            .that.is.a("string");
+        }
+        expect(quest.rewards).to.be.an("array");
+        for (const reward of quest.rewards) {
+          expect(reward.type).to.be.a("string");
+          if (reward.package) expect(reward.package).to.be.a("string");
+          if (reward.amount) expect(reward.amount).to.be.a("number");
+        }
+      }
+    }
+  });
+});
+
 describe("Query SkyBlock collections resource", function () {
   this.timeout(30000);
   this.slow(1000);

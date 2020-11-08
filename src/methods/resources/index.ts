@@ -41,12 +41,23 @@ export class Resources extends Method {
     );
   }
 
-  // async quests(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.client.call<Components.Schemas.ApiSuccess>("resources/quests"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns all the quests for each gamemode on the Hypixel network.
+   * @example
+   * ```typescript
+   * const quests = await client.resources.quests();
+   * ```
+   */
+  async quests(): Promise<
+    ResultObject<Paths.ResourcesQuests.Get.Responses.$200, "quests">
+  > {
+    return getResultObject(
+      await this.client.call<Paths.ResourcesQuests.Get.Responses.$200>(
+        "resources/quests"
+      ),
+      "quests"
+    );
+  }
 
   public guilds: GuildsResources = new GuildsResources(this.client);
 
