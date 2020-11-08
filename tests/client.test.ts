@@ -417,6 +417,33 @@ describe("Query achievements resource", function () {
   });
 });
 
+describe("Query challenges resource", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let result: AsyncReturnType<typeof client.resources.challenges>;
+  it("expect not to throw", async function () {
+    result = await client.resources.challenges();
+  });
+  CheckMeta(() => result);
+  it("required keys should exist", function () {
+    expect(result).to.be.an("object");
+    for (const gameModeName of Object.keys(result)) {
+      expect(gameModeName).to.be.a("string");
+      const gameMode = result[gameModeName];
+      expect(gameMode).to.be.an("array");
+      for (const challenge of gameMode) {
+        expect(challenge.id).to.be.a("string");
+        expect(challenge.name).to.be.a("string");
+        expect(challenge.rewards).to.be.an("array");
+        for (const reward of challenge.rewards) {
+          expect(reward.type).to.be.a("string");
+          expect(reward.amount).to.be.a("number");
+        }
+      }
+    }
+  });
+});
+
 describe("Query SkyBlock collections resource", function () {
   this.timeout(30000);
   this.slow(1000);

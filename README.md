@@ -64,15 +64,15 @@ const client = new Hypixel("API_KEY");
   - [x] Player Count
   - [x] Recent Games
   - [ ] **Resources**
-    - [ ] Achievements
-    - [ ] Challenges
+    - [x] Achievements
+    - [x] Challenges
+    - [ ] Quests
     - [ ] **Guilds**
       - [ ] Achievements
       - [ ] Permissions
     - [x] **SkyBlock**
       - [x] Collections
       - [x] Skills
-    - [ ] Quests
   - [ ] **SkyBlock**
     - [x] News
     - [ ] Profile

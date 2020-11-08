@@ -23,18 +23,23 @@ export class Resources extends Method {
     );
   }
 
-  // async challenges(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.client.call<Components.Schemas.ApiSuccess>(
-  //       "resources/challenges"
-  //     ),
-  //     "success"
-  //   );
-  // }
-
-  public guilds: GuildsResources = new GuildsResources(this.client);
-
-  public skyblock: SkyBlockResources = new SkyBlockResources(this.client);
+  /**
+   * Returns all the challenges for each gamemode on the Hypixel network.
+   * @example
+   * ```typescript
+   * const challenges = await client.resources.challenges();
+   * ```
+   */
+  async challenges(): Promise<
+    ResultObject<Paths.ResourcesChallenges.Get.Responses.$200, "challenges">
+  > {
+    return getResultObject(
+      await this.client.call<Paths.ResourcesChallenges.Get.Responses.$200>(
+        "resources/challenges"
+      ),
+      "challenges"
+    );
+  }
 
   // async quests(): Promise<boolean> {
   //   return returnResponseObject(
@@ -42,4 +47,8 @@ export class Resources extends Method {
   //     "success"
   //   );
   // }
+
+  public guilds: GuildsResources = new GuildsResources(this.client);
+
+  public skyblock: SkyBlockResources = new SkyBlockResources(this.client);
 }

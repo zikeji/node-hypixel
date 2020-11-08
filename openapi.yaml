@@ -6205,6 +6205,163 @@ paths:
                               amount: 2500
                       total_points: 1380
                       total_legacy_points: 0
+  /resources/challenges:
+    get:
+      tags:
+        - metadata
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/resources.md
+      summary: Retrieve a list of Hypixel network challenges.
+      description: |
+        _Does not require an API key._
+        #### Usage
+        ```typescript
+        const challenges = await client.resources.challenges();
+        ```
+      security: []
+      responses:
+        '200':
+          description: An object describing all the challenges on the network.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChallengesResourceResponse"
+              example:
+                success: true
+                lastUpdated: 1604706817953
+                challenges:
+                  arcade:
+                    - id: ARCADE__farm_hunt_challenge
+                      name: Farm Hunt Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  arena:
+                    - id: ARENA__where_is_it_challenge
+                      name: WHERE IS IT Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  bedwars:
+                    - id: BEDWARS__defensive
+                      name: Defensive
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  hungergames:
+                    - id: SURVIVAL_GAMES__star_challenge
+                      name: Star Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  buildbattle:
+                    - id: BUILD_BATTLE__top_3_challenge
+                      name: Top 3 Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  truecombat:
+                    - id: TRUE_COMBAT__rampage_challenge
+                      name: Rampage Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  duels:
+                    - id: DUELS__feed_the_void_challenge
+                      name: Feed The Void Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  mcgo:
+                    - id: MCGO__pistol_challenge
+                      name: Pistol Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  murdermystery:
+                    - id: MURDER_MYSTERY__murder_spree
+                      name: Murder Spree
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  paintball:
+                    - id: PAINTBALL__kill_streak_challenge
+                      name: Kill Streak Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  quake:
+                    - id: QUAKECRAFT__powerup_challenge
+                      name: Powerup Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  skyclash:
+                    - id: SKYCLASH__enderchest_challenge
+                      name: Enderchest Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  skywars:
+                    - id: SKYWARS__feeding_the_void_challenge
+                      name: Feeding the Void Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  supersmash:
+                    - id: SUPER_SMASH__leaderboard_challenge
+                      name: Leaderboard Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  speeduhc:
+                    - id: SPEED_UHC__alchemist_challenge
+                      name: Alchemist Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  gingerbread:
+                    - id: GINGERBREAD__coin_challenge
+                      name: Coin Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  tntgames:
+                    - id: TNTGAMES__tnt_run_challenge
+                      name: TNT Run Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  uhc:
+                    - id: UHC__longshot_challenge
+                      name: Longshot Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  vampirez:
+                    - id: VAMPIREZ__fang_challenge
+                      name: Fang Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  walls3:
+                    - id: WALLS3__wither_challenge
+                      name: Wither Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  walls:
+                    - id: WALLS__first_blood_challenge
+                      name: First Blood Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
+                  battleground:
+                    - id: BATTLEGROUND__support_challenge
+                      name: Support Challenge
+                      rewards:
+                        - type: MultipliedExperienceReward
+                          amount: 3360
   /resources/skyblock/collections:
     get:
       tags:
@@ -7695,6 +7852,110 @@ components:
         - tiered
         - total_points
         - total_legacy_points
+    ChallengesResourceResponse:
+      allOf:
+        - $ref: '#/components/schemas/ResourcesResponse'
+        - type: object
+          properties:
+            challenges:
+              type: object
+              properties:
+                arcade:
+                  $ref: '#/components/schemas/ChallengeData'
+                arena:
+                  $ref: '#/components/schemas/ChallengeData'
+                bedwars:
+                  $ref: '#/components/schemas/ChallengeData'
+                hungergames:
+                  $ref: '#/components/schemas/ChallengeData'
+                buildbattle:
+                  $ref: '#/components/schemas/ChallengeData'
+                truecombat:
+                  $ref: '#/components/schemas/ChallengeData'
+                duels:
+                  $ref: '#/components/schemas/ChallengeData'
+                mcgo:
+                  $ref: '#/components/schemas/ChallengeData'
+                murdermystery:
+                  $ref: '#/components/schemas/ChallengeData'
+                paintball:
+                  $ref: '#/components/schemas/ChallengeData'
+                quake:
+                  $ref: '#/components/schemas/ChallengeData'
+                skyclash:
+                  $ref: '#/components/schemas/ChallengeData'
+                skywars:
+                  $ref: '#/components/schemas/ChallengeData'
+                supersmash:
+                  $ref: '#/components/schemas/ChallengeData'
+                speeduhc:
+                  $ref: '#/components/schemas/ChallengeData'
+                gingerbread:
+                  $ref: '#/components/schemas/ChallengeData'
+                tntgames:
+                  $ref: '#/components/schemas/ChallengeData'
+                uhc:
+                  $ref: '#/components/schemas/ChallengeData'
+                vampirez:
+                  $ref: '#/components/schemas/ChallengeData'
+                walls3:
+                  $ref: '#/components/schemas/ChallengeData'
+                walls:
+                  $ref: '#/components/schemas/ChallengeData'
+                battleground:
+                  $ref: '#/components/schemas/ChallengeData'
+              additionalProperties:
+                $ref: '#/components/schemas/ChallengeData'
+              required:
+                - arcade
+                - arena
+                - bedwars
+                - hungergames
+                - buildbattle
+                - truecombat
+                - duels
+                - mcgo
+                - murdermystery
+                - paintball
+                - quake
+                - skyclash
+                - skywars
+                - supersmash
+                - speeduhc
+                - gingerbread
+                - tntgames
+                - uhc
+                - vampirez
+                - walls3
+                - walls
+                - battleground
+          required:
+            - challenges
+    ChallengeData:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          rewards:
+            type: array
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                amount:
+                  type: number
+              required:
+                - type
+                - amount
+        required:
+          - id
+          - name
+          - rewards
     SkyBlockCollectionsResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ResourcesResponse'
