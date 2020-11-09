@@ -719,6 +719,47 @@ describe("Get SkyBlock auctions page 1 & each skyblock.auction method once", fun
   );
 });
 
+describe("Get SkyBlock bazaar products", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let response: AsyncReturnType<typeof client.skyblock.bazaar>;
+  it("expect success", async function () {
+    response = await client.skyblock.bazaar();
+  });
+  CheckMeta(() => response);
+  it("required keys should exist on response", function () {
+    expect(response).to.be.an("object");
+    for (const itemId of Object.keys(response)) {
+      expect(itemId).to.be.a("string");
+      const item = response[itemId];
+      expect(item).to.be.an("object");
+      expect(item.product_id).to.be.a("string");
+      expect(item.buy_summary).to.be.an("array");
+      for (const obj of item.buy_summary) {
+        expect(obj.amount).to.be.a("number");
+        expect(obj.orders).to.be.a("number");
+        expect(obj.pricePerUnit).to.be.a("number");
+      }
+      expect(item.sell_summary).to.be.an("array");
+      for (const obj of item.sell_summary) {
+        expect(obj.amount).to.be.a("number");
+        expect(obj.orders).to.be.a("number");
+        expect(obj.pricePerUnit).to.be.a("number");
+      }
+      expect(item.quick_status).to.be.an("object");
+      expect(item.quick_status.productId).to.be.a("string");
+      expect(item.quick_status.buyMovingWeek).to.be.a("number");
+      expect(item.quick_status.buyOrders).to.be.a("number");
+      expect(item.quick_status.buyPrice).to.be.a("number");
+      expect(item.quick_status.buyVolume).to.be.a("number");
+      expect(item.quick_status.sellMovingWeek).to.be.a("number");
+      expect(item.quick_status.sellOrders).to.be.a("number");
+      expect(item.quick_status.sellPrice).to.be.a("number");
+      expect(item.quick_status.sellVolume).to.be.a("number");
+    }
+  });
+});
+
 describe("Check SkyBlock news", function () {
   this.timeout(30000);
   this.slow(1000);

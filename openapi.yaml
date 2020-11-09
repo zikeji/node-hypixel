@@ -7186,6 +7186,106 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/RateLimitError'
+  /skyblock/bazaar:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/bazaar.md
+      summary: Returns the list of products along with their sell summary, buy summary and quick status.
+      description: |
+        Returns the list of [products](https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/bazaar.md#product-description) along with their sell summary, buy summary and quick status.
+        #### Usage
+        ```typescript
+        const products = await client.skyblock.bazaar();
+        ```
+      responses:
+        '200':
+          description: An object describing the current bazaar products.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkyBlockBazaarResponse'
+              example:
+                sucess: true
+                lastUpdated: 1604910124671
+                products:
+                  BROWN_MUSHROOM:
+                    product_id: BROWN_MUSHROOM
+                    sell_summary:
+                      - amount: 3011
+                        pricePerUnit: 8.4
+                        orders: 1
+                      - amount: 8972
+                        pricePerUnit: 8.2
+                        orders: 1
+                      - amount: 47983
+                        pricePerUnit: 8.1
+                        orders: 1
+                      - amount: 3049
+                        pricePerUnit: 8
+                        orders: 1
+                    buy_summary:
+                      - amount: 960
+                        pricePerUnit: 15
+                        orders: 1
+                      - amount: 1080
+                        pricePerUnit: 15.1
+                        orders: 1
+                      - amount: 640
+                        pricePerUnit: 15.2
+                        orders: 1
+                      - amount: 640
+                        pricePerUnit: 15.3
+                        orders: 1
+                    quick_status:
+                      productId: BROWN_MUSHROOM
+                      sellPrice: 8.251800462504129
+                      sellVolume: 251544
+                      sellMovingWeek: 11953365
+                      sellOrders: 22
+                      buyPrice: 15.704912911036473
+                      buyVolume: 616961
+                      buyMovingWeek: 7751191
+                      buyOrders: 292
+                  SPOOKY_SHARD:
+                    product_id: SPOOKY_SHARD
+                    sell_summary:
+                      - amount: 64
+                        pricePerUnit: 12000.7
+                        orders: 1
+                      - amount: 524
+                        pricePerUnit: 12000.6
+                        orders: 1
+                      - amount: 112
+                        pricePerUnit: 12000.4
+                        orders: 1
+                      - amount: 160
+                        pricePerUnit: 12000.2
+                        orders: 1
+                    buy_summary:
+                      - amount: 106
+                        pricePerUnit: 15999.6
+                        orders: 3
+                      - amount: 141
+                        pricePerUnit: 15999.7
+                        orders: 1
+                      - amount: 3
+                        pricePerUnit: 15999.8
+                        orders: 1
+                      - amount: 160
+                        pricePerUnit: 15999.9
+                        orders: 1
+                    quick_status:
+                      productId: SPOOKY_SHARD
+                      sellPrice: 12000.31778425656
+                      sellVolume: 43857
+                      sellMovingWeek: 106455
+                      sellOrders: 216
+                      buyPrice: 15999.657085020244
+                      buyVolume: 5586
+                      buyMovingWeek: 111647
+                      buyOrders: 100
   /skyblock/news:
     get:
       tags:
@@ -9203,6 +9303,792 @@ components:
         - claimed_bidders
         - highest_bid_amount
         - bids
+    SkyBlockBazaarResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            lastUpdated:
+              type: number
+            products:
+              type: object
+              properties:
+                ANCIENT_CLAW:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BAZAAR_COOKIE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BLAZE_ROD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BLESSED_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BLUE_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BOOSTER_COOKIE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BROWN_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CACTUS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CARROT_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CARROT_ITEM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CATALYST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CLAY_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                COAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                COBBLESTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                COMPACTOR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                DAEDALUS_STICK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                DARK_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                DIAMOND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ECTOPLASM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                EMERALD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ACACIA_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ANCIENT_CLAW:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BAKED_POTATO:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BIRCH_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BLAZE_POWDER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BLAZE_ROD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BONE_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BREAD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BROWN_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CACTUS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CACTUS_GREEN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CAKE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CARROT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CARROT_ON_A_STICK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CARROT_STICK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CHARCOAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CLAY_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CLOWNFISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COAL_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COBBLESTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COCOA:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKED_FISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKED_MUTTON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKED_SALMON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKIE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_DARK_OAK_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_DIAMOND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_DIAMOND_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EGG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EMERALD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EMERALD_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ENDER_PEARL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ENDSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EYE_OF_ENDER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FERMENTED_SPIDER_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FIREWORK_ROCKET:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FLINT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GHAST_TEAR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GLISTERING_MELON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GLOWSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GLOWSTONE_DUST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GOLD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GOLD_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GOLDEN_CARROT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GRILLED_PORK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GUNPOWDER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_HAY_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_HUGE_MUSHROOM_1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_HUGE_MUSHROOM_2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_INK_SACK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_IRON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_IRON_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_JUNGLE_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LAPIS_LAZULI:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LAPIS_LAZULI_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LAVA_BUCKET:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MAGMA_CREAM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MELON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MELON_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MUTTON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_NETHER_STALK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_OAK_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_OBSIDIAN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PACKED_ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PAPER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PORK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_POTATO:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PRISMARINE_CRYSTALS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PRISMARINE_SHARD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PUFFERFISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PUMPKIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_QUARTZ:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_QUARTZ_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RABBIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RABBIT_FOOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RABBIT_HIDE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_BEEF:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_CHICKEN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_FISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_SALMON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RED_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_REDSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_REDSTONE_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_REDSTONE_LAMP:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ROTTEN_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SAND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SEEDS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SHARK_FIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SLIME_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SLIME_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SNOW_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SPIDER_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SPONGE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SPRUCE_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_STRING:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SUGAR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SUGAR_CANE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_WATER_LILY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_WET_SPONGE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENDER_PEARL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENDER_STONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FISH_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FLINT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FOUL_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FUMING_POTATO_BOOK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GHAST_TEAR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GLOWSTONE_DUST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GOLD_INGOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GOLDEN_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GRAVEL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GREAT_WHITE_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GREEN_CANDY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GREEN_GIFT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GRIFFIN_FEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HAMSTER_WHEEL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HAY_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HOLY_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HOT_POTATO_BOOK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HUGE_MUSHROOM_1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HUGE_MUSHROOM_2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HYPER_CATALYST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ICE_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                INK_SACK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                INK_SACK:3:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                INK_SACK:4:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                IRON_INGOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                JACOBS_TICKET:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LIGHT_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:3:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG_2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG_2:1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MAGMA_CREAM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MELON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MINNOW_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MUTTON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                NETHER_STALK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                NETHERRACK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                NURSE_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                OBSIDIAN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                OLD_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PACKED_ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PORK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                POTATO_ITEM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PRISMARINE_CRYSTALS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PRISMARINE_SHARD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PROTECTOR_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PUMPKIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PUMPKIN_GUTS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PURPLE_CANDY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                QUARTZ:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RABBIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RABBIT_FOOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RABBIT_HIDE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_BEEF:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_CHICKEN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:3:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RECOMBOBULATOR_3000:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RED_GIFT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RED_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REDSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REFINED_MINERAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REVENANT_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REVENANT_VISCERA:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ROTTEN_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SAND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SEEDS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SHARK_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SHARK_FIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SLIME_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SNOW_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SNOW_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SOUL_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPIDER_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPIKED_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPONGE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPOOKY_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPOOKY_SHARD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                STOCK_OF_STONKS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                STRING:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                STRONG_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUGAR_CANE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SULPHUR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUMMONING_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUPER_COMPACTOR_3000:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUPER_EGG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUPERIOR_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                TARANTULA_SILK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                TARANTULA_WEB:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                TIGER_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                UNSTABLE_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WATER_LILY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WEREWOLF_SKIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WHALE_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WHEAT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WHITE_GIFT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WISE_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WOLF_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                YOUNG_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+              additionalProperties:
+                $ref: '#/components/schemas/SkyBlockBazaarProduct'
+              required:
+                - ANCIENT_CLAW
+                - BAZAAR_COOKIE
+                - BLAZE_ROD
+                - BLESSED_BAIT
+                - BLUE_SHARK_TOOTH
+                - BONE
+                - BOOSTER_COOKIE
+                - BROWN_MUSHROOM
+                - CACTUS
+                - CARROT_BAIT
+                - CARROT_ITEM
+                - CATALYST
+                - CLAY_BALL
+                - COAL
+                - COBBLESTONE
+                - COMPACTOR
+                - DAEDALUS_STICK
+                - DARK_BAIT
+                - DIAMOND
+                - ECTOPLASM
+                - EMERALD
+                - ENCHANTED_ACACIA_LOG
+                - ENCHANTED_ANCIENT_CLAW
+                - ENCHANTED_BAKED_POTATO
+                - ENCHANTED_BIRCH_LOG
+                - ENCHANTED_BLAZE_POWDER
+                - ENCHANTED_BLAZE_ROD
+                - ENCHANTED_BONE
+                - ENCHANTED_BONE_BLOCK
+                - ENCHANTED_BREAD
+                - ENCHANTED_BROWN_MUSHROOM
+                - ENCHANTED_CACTUS
+                - ENCHANTED_CACTUS_GREEN
+                - ENCHANTED_CAKE
+                - ENCHANTED_CARROT
+                - ENCHANTED_CARROT_ON_A_STICK
+                - ENCHANTED_CARROT_STICK
+                - ENCHANTED_CHARCOAL
+                - ENCHANTED_CLAY_BALL
+                - ENCHANTED_CLOWNFISH
+                - ENCHANTED_COAL
+                - ENCHANTED_COAL_BLOCK
+                - ENCHANTED_COBBLESTONE
+                - ENCHANTED_COCOA
+                - ENCHANTED_COOKED_FISH
+                - ENCHANTED_COOKED_MUTTON
+                - ENCHANTED_COOKED_SALMON
+                - ENCHANTED_COOKIE
+                - ENCHANTED_DARK_OAK_LOG
+                - ENCHANTED_DIAMOND
+                - ENCHANTED_DIAMOND_BLOCK
+                - ENCHANTED_EGG
+                - ENCHANTED_EMERALD
+                - ENCHANTED_EMERALD_BLOCK
+                - ENCHANTED_ENDER_PEARL
+                - ENCHANTED_ENDSTONE
+                - ENCHANTED_EYE_OF_ENDER
+                - ENCHANTED_FEATHER
+                - ENCHANTED_FERMENTED_SPIDER_EYE
+                - ENCHANTED_FIREWORK_ROCKET
+                - ENCHANTED_FLINT
+                - ENCHANTED_GHAST_TEAR
+                - ENCHANTED_GLISTERING_MELON
+                - ENCHANTED_GLOWSTONE
+                - ENCHANTED_GLOWSTONE_DUST
+                - ENCHANTED_GOLD
+                - ENCHANTED_GOLD_BLOCK
+                - ENCHANTED_GOLDEN_CARROT
+                - ENCHANTED_GRILLED_PORK
+                - ENCHANTED_GUNPOWDER
+                - ENCHANTED_HAY_BLOCK
+                - ENCHANTED_HUGE_MUSHROOM_1
+                - ENCHANTED_HUGE_MUSHROOM_2
+                - ENCHANTED_ICE
+                - ENCHANTED_INK_SACK
+                - ENCHANTED_IRON
+                - ENCHANTED_IRON_BLOCK
+                - ENCHANTED_JUNGLE_LOG
+                - ENCHANTED_LAPIS_LAZULI
+                - ENCHANTED_LAPIS_LAZULI_BLOCK
+                - ENCHANTED_LAVA_BUCKET
+                - ENCHANTED_LEATHER
+                - ENCHANTED_MAGMA_CREAM
+                - ENCHANTED_MELON
+                - ENCHANTED_MELON_BLOCK
+                - ENCHANTED_MUTTON
+                - ENCHANTED_NETHER_STALK
+                - ENCHANTED_OAK_LOG
+                - ENCHANTED_OBSIDIAN
+                - ENCHANTED_PACKED_ICE
+                - ENCHANTED_PAPER
+                - ENCHANTED_PORK
+                - ENCHANTED_POTATO
+                - ENCHANTED_PRISMARINE_CRYSTALS
+                - ENCHANTED_PRISMARINE_SHARD
+                - ENCHANTED_PUFFERFISH
+                - ENCHANTED_PUMPKIN
+                - ENCHANTED_QUARTZ
+                - ENCHANTED_QUARTZ_BLOCK
+                - ENCHANTED_RABBIT
+                - ENCHANTED_RABBIT_FOOT
+                - ENCHANTED_RABBIT_HIDE
+                - ENCHANTED_RAW_BEEF
+                - ENCHANTED_RAW_CHICKEN
+                - ENCHANTED_RAW_FISH
+                - ENCHANTED_RAW_SALMON
+                - ENCHANTED_RED_MUSHROOM
+                - ENCHANTED_REDSTONE
+                - ENCHANTED_REDSTONE_BLOCK
+                - ENCHANTED_REDSTONE_LAMP
+                - ENCHANTED_ROTTEN_FLESH
+                - ENCHANTED_SAND
+                - ENCHANTED_SEEDS
+                - ENCHANTED_SHARK_FIN
+                - ENCHANTED_SLIME_BALL
+                - ENCHANTED_SLIME_BLOCK
+                - ENCHANTED_SNOW_BLOCK
+                - ENCHANTED_SPIDER_EYE
+                - ENCHANTED_SPONGE
+                - ENCHANTED_SPRUCE_LOG
+                - ENCHANTED_STRING
+                - ENCHANTED_SUGAR
+                - ENCHANTED_SUGAR_CANE
+                - ENCHANTED_WATER_LILY
+                - ENCHANTED_WET_SPONGE
+                - ENDER_PEARL
+                - ENDER_STONE
+                - FEATHER
+                - FISH_BAIT
+                - FLINT
+                - FOUL_FLESH
+                - FUMING_POTATO_BOOK
+                - GHAST_TEAR
+                - GLOWSTONE_DUST
+                - GOLD_INGOT
+                - GOLDEN_TOOTH
+                - GRAVEL
+                - GREAT_WHITE_SHARK_TOOTH
+                - GREEN_CANDY
+                - GREEN_GIFT
+                - GRIFFIN_FEATHER
+                - HAMSTER_WHEEL
+                - HAY_BLOCK
+                - HOLY_FRAGMENT
+                - HOT_POTATO_BOOK
+                - HUGE_MUSHROOM_1
+                - HUGE_MUSHROOM_2
+                - HYPER_CATALYST
+                - ICE
+                - ICE_BAIT
+                - INK_SACK
+                - INK_SACK:3
+                - INK_SACK:4
+                - IRON_INGOT
+                - JACOBS_TICKET
+                - LEATHER
+                - LIGHT_BAIT
+                - LOG
+                - LOG:1
+                - LOG:2
+                - LOG:3
+                - LOG_2
+                - LOG_2:1
+                - MAGMA_CREAM
+                - MELON
+                - MINNOW_BAIT
+                - MUTTON
+                - NETHER_STALK
+                - NETHERRACK
+                - NURSE_SHARK_TOOTH
+                - OBSIDIAN
+                - OLD_FRAGMENT
+                - PACKED_ICE
+                - PORK
+                - POTATO_ITEM
+                - PRISMARINE_CRYSTALS
+                - PRISMARINE_SHARD
+                - PROTECTOR_FRAGMENT
+                - PUMPKIN
+                - PUMPKIN_GUTS
+                - PURPLE_CANDY
+                - QUARTZ
+                - RABBIT
+                - RABBIT_FOOT
+                - RABBIT_HIDE
+                - RAW_BEEF
+                - RAW_CHICKEN
+                - RAW_FISH
+                - RAW_FISH:1
+                - RAW_FISH:2
+                - RAW_FISH:3
+                - RECOMBOBULATOR_3000
+                - RED_GIFT
+                - RED_MUSHROOM
+                - REDSTONE
+                - REFINED_MINERAL
+                - REVENANT_FLESH
+                - REVENANT_VISCERA
+                - ROTTEN_FLESH
+                - SAND
+                - SEEDS
+                - SHARK_BAIT
+                - SHARK_FIN
+                - SLIME_BALL
+                - SNOW_BALL
+                - SNOW_BLOCK
+                - SOUL_FRAGMENT
+                - SPIDER_EYE
+                - SPIKED_BAIT
+                - SPONGE
+                - SPOOKY_BAIT
+                - SPOOKY_SHARD
+                - STOCK_OF_STONKS
+                - STRING
+                - STRONG_FRAGMENT
+                - SUGAR_CANE
+                - SULPHUR
+                - SUMMONING_EYE
+                - SUPER_COMPACTOR_3000
+                - SUPER_EGG
+                - SUPERIOR_FRAGMENT
+                - TARANTULA_SILK
+                - TARANTULA_WEB
+                - TIGER_SHARK_TOOTH
+                - UNSTABLE_FRAGMENT
+                - WATER_LILY
+                - WEREWOLF_SKIN
+                - WHALE_BAIT
+                - WHEAT
+                - WHITE_GIFT
+                - WISE_FRAGMENT
+                - WOLF_TOOTH
+                - YOUNG_FRAGMENT
+          required:
+            - lastUpdated
+            - products
+    SkyBlockBazaarProduct:
+      type: object
+      properties:
+        product_id:
+          type: string
+        sell_summary:
+          type: array
+          items:
+            type: object
+            properties:
+              amount:
+                type: number
+              pricePerUnit:
+                type: number
+              orders:
+                type: number
+            required:
+              - amount
+              - pricePerUnit
+              - orders
+        buy_summary:
+          type: array
+          items:
+            type: object
+            properties:
+              amount:
+                type: number
+              pricePerUnit:
+                type: number
+              orders:
+                type: number
+            required:
+              - amount
+              - pricePerUnit
+              - orders
+        quick_status:
+          type: object
+          properties:
+            productId:
+              type: string
+            sellPrice:
+              type: number
+            sellVolume:
+              type: number
+            sellMovingWeek:
+              type: number
+            sellOrders:
+              type: number
+            buyPrice:
+              type: number
+            buyVolume:
+              type: number
+            buyMovingWeek:
+              type: number
+            buyOrders:
+              type: number
+          required:
+            - productId
+            - sellPrice
+            - sellVolume
+            - sellMovingWeek
+            - sellOrders
+            - buyPrice
+            - buyVolume
+            - buyMovingWeek
+            - buyOrders
+      required:
+        - product_id
+        - sell_summary
+        - buy_summary
+        - quick_status
     NewsResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

@@ -1,6 +1,7 @@
 import type { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
+import { getResultObject, ResultObject } from "../../util/ResultObject";
 import { SkyBlockAuction } from "./auction";
 import { SkyBlockAuctions } from "./auctions";
 
@@ -25,12 +26,23 @@ export class SkyBlock extends Method {
    */
   public auctions: SkyBlockAuctions = new SkyBlockAuctions(this.client);
 
-  // async bazaar(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.client.call<Components.Schemas.ApiSuccess>("skyblock/bazaar"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns the list of [products](https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/bazaar.md#product-description) along with their sell summary, buy summary and quick status.
+   * @example
+   * ```typescript
+   * const products = await client.skyblock.bazaar();
+   * ```
+   */
+  public async bazaar(): Promise<
+    ResultObject<Paths.SkyblockBazaar.Get.Responses.$200, ["products"]>
+  > {
+    return getResultObject(
+      await this.client.call<Paths.SkyblockBazaar.Get.Responses.$200>(
+        "skyblock/bazaar"
+      ),
+      ["products"]
+    );
+  }
 
   /**
    * Returns SkyBlock news, including a title, description and a thread.
