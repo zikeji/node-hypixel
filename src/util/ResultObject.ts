@@ -30,9 +30,6 @@ export function getResultObject<
   T extends Components.Schemas.ApiSuccess,
   K extends (keyof T)[]
 >(response: T, keys: K): ResultObject<T, K> {
-  // eslint-disable-next-line no-param-reassign
-  if (typeof keys !== "object" || !Array.isArray(keys)) keys = [keys] as never;
-
   if (!keys.every((key) => key in response)) {
     throw new TypeError(
       `One or more key in "${keys.join('"," ')}" was not in the response.`

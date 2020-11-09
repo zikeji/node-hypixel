@@ -74,8 +74,8 @@ const client = new Hypixel("API_KEY");
       - [x] Collections
       - [x] Skills
   - [ ] **SkyBlock**
-    - [ ] Auction
-    - [ ] Auctions
+    - [x] Auction
+    - [x] Auctions
     - [ ] Bazaar
     - [x] News
     - [ ] Profile

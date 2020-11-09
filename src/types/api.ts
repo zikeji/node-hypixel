@@ -21,6 +21,13 @@ export declare namespace Components {
        */
       export type Uuid = string;
     }
+    namespace PlayerUuidRequired {
+      /**
+       * example:
+       * 20934ef9488c465180a78f861586b4cf
+       */
+      export type Uuid = string;
+    }
   }
   namespace Responses {
     export type MalformedUUID = Schemas.ApiError;
@@ -745,6 +752,154 @@ export declare namespace Components {
        * Agni Temple
        */
       map?: string;
+    }
+    export interface SkyBlockAuction {
+      uuid: string;
+      auctioneer: string;
+      profile_id: string;
+      coop: string[];
+      start: number;
+      end: number;
+      item_name: string;
+      item_lore: string;
+      extra: string;
+      category: string;
+      tier: string;
+      starting_bid: number;
+      claimed: boolean;
+      claimed_bidders: string[];
+      highest_bid_amount: number;
+      bids: {
+        /**
+         * UUID of the auction.
+         */
+        auction_id: string;
+        /**
+         * Minecraft UUID of the bidder.
+         */
+        bidder: string;
+        /**
+         * The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
+         */
+        profile_id: string;
+        /**
+         * The amount in coins the bid is for.
+         */
+        amount: number;
+        /**
+         * Unix timestamp the bid was placed.
+         */
+        timestamp: number;
+      }[];
+      bin?: boolean;
+    }
+    export interface SkyBlockAuctionResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      auctions: {
+        uuid: string;
+        auctioneer: string;
+        profile_id: string;
+        coop: string[];
+        start: number;
+        end: number;
+        item_name: string;
+        item_lore: string;
+        extra: string;
+        category: string;
+        tier: string;
+        starting_bid: number;
+        claimed: boolean;
+        claimed_bidders: string[];
+        highest_bid_amount: number;
+        bids: {
+          /**
+           * UUID of the auction.
+           */
+          auction_id: string;
+          /**
+           * Minecraft UUID of the bidder.
+           */
+          bidder: string;
+          /**
+           * The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
+           */
+          profile_id: string;
+          /**
+           * The amount in coins the bid is for.
+           */
+          amount: number;
+          /**
+           * Unix timestamp the bid was placed.
+           */
+          timestamp: number;
+        }[];
+        bin?: boolean;
+        _id: string;
+        item_bytes: {
+          type: number;
+          /**
+           * Base64 encoded NBT data for the item.
+           */
+          data: string;
+        };
+      }[];
+    }
+    export interface SkyBlockAuctionsResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      page: number;
+      totalPages: number;
+      totalAuctions: number;
+      lastUpdated: number;
+      auctions: {
+        uuid: string;
+        auctioneer: string;
+        profile_id: string;
+        coop: string[];
+        start: number;
+        end: number;
+        item_name: string;
+        item_lore: string;
+        extra: string;
+        category: string;
+        tier: string;
+        starting_bid: number;
+        claimed: boolean;
+        claimed_bidders: string[];
+        highest_bid_amount: number;
+        bids: {
+          /**
+           * UUID of the auction.
+           */
+          auction_id: string;
+          /**
+           * Minecraft UUID of the bidder.
+           */
+          bidder: string;
+          /**
+           * The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
+           */
+          profile_id: string;
+          /**
+           * The amount in coins the bid is for.
+           */
+          amount: number;
+          /**
+           * Unix timestamp the bid was placed.
+           */
+          timestamp: number;
+        }[];
+        bin?: boolean;
+        /**
+         * Base64 encoded NBT data for the item.
+         */
+        item_bytes: string;
+      }[];
     }
     export interface SkyBlockCollectionsResourcesResponse {
       /**
@@ -3237,6 +3392,74 @@ export declare namespace Paths {
     namespace Get {
       namespace Responses {
         export type $200 = Components.Schemas.SkyBlockSkillsResourcesResponse;
+      }
+    }
+  }
+  namespace SkyblockAuction {
+    namespace Get {
+      namespace Parameters {
+        /**
+         * example:
+         * 347ef6c1daac45ed9d1fa02818cf0fb6
+         */
+        export type Player = string;
+        /**
+         * example:
+         * 347ef6c1daac45ed9d1fa02818cf0fb6
+         */
+        export type Profile = string;
+        /**
+         * example:
+         * 409a1e0f261a49849493278d6cd9305a
+         */
+        export type Uuid = string;
+      }
+      export interface QueryParameters {
+        player?: /**
+         * example:
+         * 347ef6c1daac45ed9d1fa02818cf0fb6
+         */
+        Parameters.Player;
+        profile?: /**
+         * example:
+         * 347ef6c1daac45ed9d1fa02818cf0fb6
+         */
+        Parameters.Profile;
+        uuid?: /**
+         * example:
+         * 409a1e0f261a49849493278d6cd9305a
+         */
+        Parameters.Uuid;
+      }
+      namespace Responses {
+        export type $200 = Components.Schemas.SkyBlockAuctionResponse;
+        export type $400 = Components.Schemas.ApiError;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
+      }
+    }
+  }
+  namespace SkyblockAuctions {
+    namespace Get {
+      namespace Parameters {
+        /**
+         * example:
+         * 1
+         */
+        export type Page = number;
+      }
+      export interface QueryParameters {
+        page?: /**
+         * example:
+         * 1
+         */
+        Parameters.Page;
+      }
+      namespace Responses {
+        export type $200 = Components.Schemas.SkyBlockAuctionsResponse;
+        export type $400 = Components.Responses.MissingFields;
+        export type $403 = Components.Responses.Unauthorized;
+        export type $429 = Components.Responses.RateLimitError;
       }
     }
   }

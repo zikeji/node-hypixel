@@ -206,7 +206,7 @@ paths:
         const friends = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An array containing a list of objects describing the player's friends.
@@ -2485,7 +2485,7 @@ paths:
         const player = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An object describing the requested player.
@@ -5313,7 +5313,7 @@ paths:
         const recentGames = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An object describing the player's recent games.
@@ -5358,44 +5358,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '422':
           $ref: '#/components/responses/MalformedUUID'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
-  /skyblock/news:
-    get:
-      tags:
-        - skyblock
-      externalDocs:
-        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
-      summary: Returns SkyBlock news, including a title, description and a thread.
-      description: |
-        #### Usage
-        ```typescript
-        const news = await client.skyblock.news();
-        ```
-      responses:
-        '200':
-          description: A object describing news items.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NewsResponse'
-              example:
-                success: true
-                items:
-                  - item:
-                      - material: EMERALD
-                    link: 'https://hypixel.net/threads/3287083/'
-                    text: 8th September 2020
-                    title: SkyBlock v0.9
-                  - item:
-                      - material: WEB
-                    link: 'https://hypixel.net/threads/3287083/'
-                    text: 7th July 2020
-                    title: SkyBlock v0.8
-        '400':
-          $ref: '#/components/responses/MissingFields'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/RateLimitError'
   /resources/achievements:
@@ -7005,6 +6967,263 @@ paths:
                         totalExpRequired: 50
                         unlocks:
                           - +25 Coins
+  /skyblock/auction:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/auction.md
+      summary: Returns SkyBlock auctions by either player, profile or auction uuid.
+      description: |
+        Returns SkyBlock auctions by either player, profile or auction uuid. Only "active" auctions are returned, these are auctions that are still open or that have not had all bids/items claimed.
+        #### Usage
+        ```typescript
+        const auctions = await client.skyblock.auction.player("347ef6c1daac45ed9d1fa02818cf0fb6");
+        ```
+      parameters:
+        - name: player
+          description: Minecraft UUID of the player who's auctions you are looking up.
+          in: query
+          schema:
+            type: string
+            example: 347ef6c1daac45ed9d1fa02818cf0fb6
+        - name: profile
+          description: Hypixel SkyBlock profile ID for the profile you are looking up auctions on.
+          in: query
+          schema:
+            type: string
+            example: 347ef6c1daac45ed9d1fa02818cf0fb6
+        - name: uuid
+          description: Specific UUID of the auction.
+          in: query
+          schema:
+            type: string
+            example: 409a1e0f261a49849493278d6cd9305a
+      responses:
+        '200':
+          description: An object describing the resulting auctions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkyBlockAuctionResponse'
+              example:
+                success: true
+                auctions:
+                - _id: 5dcdaf2244f4f4f350c02bf3
+                  uuid: 409a1e0f261a49849493278d6cd9305a
+                  auctioneer: 347ef6c1daac45ed9d1fa02818cf0fb6
+                  profile_id: 347ef6c1daac45ed9d1fa02818cf0fb6
+                  coop:
+                  - 347ef6c1daac45ed9d1fa02818cf0fb6
+                  start: 1573760802637
+                  end: 1573761102637
+                  item_name: Azure Bluet
+                  item_lore: "§f§lCOMMON"
+                  extra: Azure Bluet Red Rose
+                  category: blocks
+                  tier: COMMON
+                  starting_bid: 1
+                  item_bytes:
+                    type: 0
+                    data: H4sIAAAAAAAAAB2NQQqCQBhGv1ErHaKu0KoLtGtnarRIhTpA/OGfDIwZ4wxUF/IeHiyyto/3eBKIIJQEIDx4qsJaYJK07m6FhG+p9hEdVMV7TXU3Wh+JWaW6h6ZXhODYGg5/LeZDfxt6nZR5XhYhgoIaxmKE8dsZXu20YwuJZfa0hmJrjbo6y134f8pTll5O5TnbbgAP05Qaqhk+8AVIrd2eoAAAAA==
+                  claimed: true
+                  claimed_bidders: []
+                  highest_bid_amount: 7607533
+                  bids:
+                  - auction_id: 409a1e0f261a49849493278d6cd9305a
+                    bidder: 99748e629dee463892f68abf3a780094
+                    profile_id: 99748e629dee463892f68abf3a780094
+                    amount: 7607533
+                    timestamp: 1573760824844
+
+        '400':
+          description: Missing one or more fields [player,uuid,profile]
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                success: false
+                cause: 'Missing one or more fields [player,uuid,profile]'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /skyblock/auctions:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/auctions.md
+      summary: Returns SkyBlock auctions that are currently active in the in-game Auction House.
+      description: |
+        Returns SkyBlock auctions that are currently active in the in-game Auction House. This method uses pagination due to the amount of results returned. Each page will return up to 1,000 results.
+        #### Usage
+        ```typescript
+        const response = await client.skyblock.auctions.page(0);
+        ```
+      parameters:
+        - name: page
+          description: Page of results to pull. This is zero indexed and defaults to 0 if not provided
+          in: query
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: An object describing page information and auctions on that page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkyBlockAuctionsResponse'
+              example:
+                success: true
+                page: 0
+                totalPages: 49
+                totalAuctions: 49666
+                lastUpdated: 1599850774688
+                auctions:
+                  - uuid: 2bdf7fdf401b43ce9fc73e6d2131425b
+                    auctioneer: 68e9b297349044ada7a987d8002804d9
+                    profile_id: 68e9b297349044ada7a987d8002804d9
+                    coop:
+                      - 68e9b297349044ada7a987d8002804d9
+                    start: 1599823951083
+                    end: 1599996751083
+                    item_name: Diamond Spreading
+                    item_lore: |
+                      §7This item can be used as a
+                      §7minion upgrade. Place it in any
+                      §7minion and it will occasionally
+                      §7generate diamonds!
+                      
+                      §a§lUNCOMMON
+                    extra: Diamond Spreading Diamond
+                    category: misc
+                    tier: UNCOMMON
+                    starting_bid: 640
+                    item_bytes: H4sIAAAAAAAAAE2QT0/CQBDFp4BYepAY9WiyGq8VQaHiraH8aSJ/Angm0+5YNmm3pLuN8on4Hnww4xIvzm3e+2Xe5DkADbCEAwBWBSqCW7YFZ4O8lNpyoKoxaUCNZLyF01ShMRGcRikmyqw/DpxzoXYp7g31nhdkG7UOt8eDt94KxYSmjMUoWUSsVMQZKoZwb+xMSJFLVu6SAjk9skWKMRmeCclQ7v8zKPnJ+BJpyvI4RmVETNM93BgmIUkFamJcYJZLru7MBxfHAx4P6cdsMJ9O5zMbajPMCK6NHPxhbLUrCLmQCTjQHH7rAn2tCxGVmpQNjbwQiZBrTOBqsPRH63A23oyXYbBZTcLR2j4VBZdB6JvrRlssh35gEBNUlsZ58LrdT4782Y3jbsd9iXrcffV6sRtRL+q2I68T8cikaJGR0pjtoNlvtdutzhPz3jp95k8BKlAPMMOETr3/AvhzTEqmAQAA
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bids: []
+                  - uuid: 10533b6d6d3940e4ab9c7850dba03d8f
+                    auctioneer: 5f637954b90b40d0b9e6231346dd0d63
+                    profile_id: 5f637954b90b40d0b9e6231346dd0d63
+                    coop:
+                      - 5f637954b90b40d0b9e6231346dd0d63
+                    start: 1599843526352
+                    end: 1599886726352
+                    item_name: Critical IV Splash Potion
+                    item_lore: |
+                      §4Critical IV §f(48:00)
+                      §7Increases §9☣ Crit Chance §7by
+                      §7§a25% §7and §9☠ Crit Damage §7by
+                      §7§a40%§7.
+                      
+                      §a§lUNCOMMON
+                    extra: Critical IV Splash Potion Potion
+                    category: consumables
+                    tier: COMMON
+                    starting_bid: 95000
+                    item_bytes: H4sIAAAAAAAAAE2RzW7TQBSF78Rp/EMpSLBBYuEFlegi1InsJu6KyC0igjiRaGFZTeyxO8J/8oxR8yYskVj4Pfwm8CCIazuFLkajOeebO+feMQB0INwAADKAAQ9JReDAy6tMEgMUSWMdnnmVkHm6ySXPs8soYoEU3QUC6iLdcpZJUEC7qEraEug8JzBYhioBfZEWCY84KxVE9Pc8ZO8SGgtk/highlwUCd3pMPyYl0xDVcX1oqltr+SSBzQxl5/Npo5e2/NzyzqB46aeLbOgZFQwgYb7+/tPs2VN75ZmAUNptt3BCW5NTafOcSvQLOzRHz16QVMa36OPe9S22tJv8PUjPDV1cu1769Vq7Wsw9GnK4CXKD0N9wuDi1uyHAgY8ubyTJV1IWfJtJZlQ4LDovJuEfWMJFh4S0FjWxQyJBqPeBi3YV9VBZQ+Gq8DBv5tI99Z/WoGjcD/wGxS+4kh/YQw9zcNu3njW4NE+gtwVDEab9dWybUjPSx7z7IrGoF77H/z1FxTx6+8JAiPRdYcph1WFxqup5VLXDpyxZYV0bLtzZ+wGs8k4sJljs+gsmrtnbXt3kmVh154uecqEpGkBT93TyeR0apmT6bkzMzcrgAGM+l94ewjwF9zORniEAgAA
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bin: true
+                    bids: []
+                  - uuid: a775cedadb8a4e66bde8bce99603ba94
+                    auctioneer: e1c3c507ade747e983069ae22c6e6739
+                    profile_id: e1c3c507ade747e983069ae22c6e6739
+                    coop:
+                      - e1c3c507ade747e983069ae22c6e6739
+                    start: 1599841050648
+                    end: 1600201050648
+                    item_name: Hunk of Blue Ice
+                    item_lore: §9§lRARE
+                    extra: Hunk of Blue Ice Skull Item
+                    category: misc
+                    tier: RARE
+                    starting_bid: 3100000
+                    item_bytes: H4sIAAAAAAAAAE2RzZKaQBSFrzqTIFWpLLLLysVsreJHGFlk4ShKE+nJIP7Qm6kWGkEbtKBJJO+Q55gXyBPMg6XCZJXlPfecOvXVkQH60MlkAOh0oZvFnV8duJ2e60J8lqEn6KEHfSeL2ZzTQ9W6/sggr041548/ClZK0EUx3Cn3SmJq5nioW9QY6pGqDfeqZg11w4jGiWkm0Zi2uW/l+cJKkbGqD5JgV1GXrPpXLcHthvKawW/WuArZpUq8c3nUILO9g5XCH9Hxco+KTbOfIhPl7d+ZmMvG+s9rCLo1eKi7KSme6n2+UZa6z5njq1G+/o6388ybcU4CWyEBTvHWz3FwMkKNpHjxdMW5p4baekRmExUvXE6OBwUfT6oXeI23CHXvOE/DwE/xT3vkbcMRWSCVrFwr2SlfWgIZ3sdZdeG06cPN8lwy6Q0L5NcX6/WF+xPfluAG05zBp1Zy6uI0OCeDhxZ5gCLWxj/aV1HSiRBltq8Fq6S3MeDDw3JtP6Op/eys8VeALryb0ZweGPQA/gKo3xTCvAEAAA==
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bin: true
+                    bids: []
+                  - uuid: 703edd6c44714602a0e6d2e9b241a73d
+                    auctioneer: 57170253bb4541f480bdefd557e0c147
+                    profile_id: 57170253bb4541f480bdefd557e0c147
+                    coop:
+                      - 5f5ca9ab03a6406dbdd1a95ada1d6d02
+                      - 57170253bb4541f480bdefd557e0c147
+                    start: 1599844820969
+                    end: 1599866420969
+                    item_name: Zombie's Heart
+                    item_lore: |
+                      §7Health: §a+50 HP
+                      
+                      §6Item Ability: Healing Boost
+                      §7Doubles all healing effects,
+                      §7including your natural
+                      §7regeneration and healing you
+                      §7deal to others, while wearing.
+                      
+                      §7§8This item can be reforged!
+                      §9§lRARE HELMET
+                    extra: Zombie's Heart Skull Item
+                    category: armor
+                    tier: RARE
+                    starting_bid: 240000
+                    item_bytes: H4sIAAAAAAAAAE2S227aQBCGB5K0gKoepN70pt1IkXrR0BjjA46UC8IhmGITiEuCb6K1vdhL1jay103IO/Q5eIE+AQ9WdUFV1cuZ/5vZf2anBlCFEq0BQKkMZRqUfpbgqJMWCS/V4IDj8ACqAxqQPsNhLqjfNajdPBSMjR8TklWgbAZwYugtxfNkuR6o6qLe9HS97i20Vl1VFF9u6V5D9pui7jpLVyTjlORVqHDyxIuM5PunK3A0w6wg8Iush5J7F0nB3ZD5a1MTsXMjsbG5XOlmMlt7HVMzY6EP2tpobfzHqhzfqmzeHEZuMim8eCaNmlNGBtOGH3//YT/3H2zZUizHjefP0dJeWrLbDWLbuYzGjh1ZV8PIlvuRe+vGVtddjh03sp35k72cNFyHsfmyT93b+fPY6cm2M1vajvVkJg1jMbm4EBPU4GVA8xXD6yocjtKMVPbJ99uNPiCY8egcbTf4iyqhwbVQPm43mslJjNoeZZSvz9GOokmILtM05/BJ1HXTwmMkR5gxFP1VyWJBfJ6fwgcB0MRnRbBLr9MiQwkW+8RsX5uRkIjvwZymCcJJ8K+BIOFYAIGIEU9RyiOS5afoMaKMoEeCM0F9FQ6FXX27aTkRzRHdOfVxgjyCMrJIs5AEx/BuuzG2GzZtT3to0BtZPacChzaOyV5x09ij5HO+GyzjYhVvek88w23OM+oVnOQVqKYZDWni4BBeT76bnW/3nWm775j2VWV3ifDKHVuXZu9+0GtPd72LQiRPAsUjiqordbww/LqC9Vbd0IzG7upUrdGSiCZj0ZvTmOQcxyt4a5w1pDNZQg3pXGmitgVQhhddHOOQwAHAH6LiqFwDAwAA
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bids: []
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /skyblock/news:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
+      summary: Returns SkyBlock news, including a title, description and a thread.
+      description: |
+        #### Usage
+        ```typescript
+        const news = await client.skyblock.news();
+        ```
+      responses:
+        '200':
+          description: A object describing news items.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+              example:
+                success: true
+                items:
+                  - item:
+                      - material: EMERALD
+                    link: 'https://hypixel.net/threads/3287083/'
+                    text: 8th September 2020
+                    title: SkyBlock v0.9
+                  - item:
+                      - material: WEB
+                    link: 'https://hypixel.net/threads/3287083/'
+                    text: 7th July 2020
+                    title: SkyBlock v0.8
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /status:
     get:
       tags:
@@ -7019,7 +7238,7 @@ paths:
         const status = await client.status.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An object describing the player's status.
@@ -7113,8 +7332,15 @@ components:
   parameters:
     PlayerUuid:
       name: uuid
-      required: true
       description: Minecraft UUID of the player.
+      in: query
+      schema:
+        type: string
+        example: 20934ef9488c465180a78f861586b4cf
+    PlayerUuidRequired:
+      name: uuid
+      description: Minecraft UUID of the player.
+      required: true
       in: query
       schema:
         type: string
@@ -8833,6 +9059,150 @@ components:
         - level
         - totalExpRequired
         - unlocks
+    SkyBlockAuctionResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            auctions:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/SkyBlockAuction'
+                  - type: object
+                    properties:
+                      _id:
+                        type: string
+                      item_bytes:
+                        type: object
+                        properties:
+                          type:
+                            type: integer
+                          data:
+                            description: Base64 encoded NBT data for the item.
+                            type: string
+                        required:
+                          - type
+                          - data
+                    required:
+                      - _id
+                      - item_bytes
+          required:
+            - auctions
+    SkyBlockAuctionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            page:
+              type: number
+            totalPages:
+              type: number
+            totalAuctions:
+              type: number
+            lastUpdated:
+              type: number
+            auctions:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/SkyBlockAuction'
+                  - type: object
+                    properties:
+                      item_bytes:
+                        description: Base64 encoded NBT data for the item.
+                        type: string
+                    required:
+                      - item_bytes
+          required:
+            - page
+            - totalPages
+            - totalAuctions
+            - lastUpdated
+            - auctions
+    SkyBlockAuction:
+      type: object
+      properties:
+        uuid:
+          type: string
+        auctioneer:
+          type: string
+        profile_id:
+          type: string
+        coop:
+          type: array
+          items:
+            type: string
+        start:
+          type: number
+        end:
+          type: number
+        item_name:
+          type: string
+        item_lore:
+          type: string
+        extra:
+          type: string
+        category:
+          type: string
+        tier:
+          type: string
+        starting_bid:
+          type: number
+        claimed:
+          type: boolean
+        claimed_bidders:
+          type: array
+          items:
+            description: Minecraft UUID of the person who claimed the auction.
+            type: string
+        highest_bid_amount:
+          type: number
+        bids:
+          type: array
+          items:
+            type: object
+            properties:
+              auction_id:
+                description: UUID of the auction.
+                type: string
+              bidder:
+                description: Minecraft UUID of the bidder.
+                type: string
+              profile_id:
+                description: The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
+                type: string
+              amount:
+                description: The amount in coins the bid is for.
+                type: number
+              timestamp:
+                description: Unix timestamp the bid was placed.
+                type: number
+            required:
+              - auction_id
+              - bidder
+              - profile_id
+              - amount
+              - timestamp
+        bin:
+          type: boolean
+      required:
+        - uuid
+        - auctioneer
+        - profile_id
+        - coop
+        - start
+        - end
+        - item_name
+        - item_lore
+        - extra
+        - category
+        - tier
+        - starting_bid
+        - claimed
+        - claimed_bidders
+        - highest_bid_amount
+        - bids
     NewsResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

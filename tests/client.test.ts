@@ -587,6 +587,138 @@ describe("Query SkyBlock skills resource", function () {
   });
 });
 
+const CheckAuctions = (
+  data: () =>
+    | AsyncReturnType<typeof client.skyblock.auction.player>
+    | AsyncReturnType<typeof client.skyblock.auction.profile>
+    | AsyncReturnType<typeof client.skyblock.auction.uuid>
+    | AsyncReturnType<typeof client.skyblock.auctions.page>,
+  msg: string
+) => {
+  let value: ReturnType<typeof data>;
+  beforeEach(function () {
+    value = data() as never;
+  });
+  it(msg, function () {
+    if (Array.isArray(value)) {
+    }
+    for (const auction of Array.isArray(value) ? value : value.auctions) {
+      expect(auction.uuid).to.be.a("string");
+      expect(auction.auctioneer).to.be.a("string");
+      expect(auction.profile_id).to.be.a("string");
+      expect(auction.coop)
+        .to.be.an("array")
+        .that.satisfies(function (coop: typeof auction.coop) {
+          return coop.every((c) => typeof c === "string");
+        });
+      expect(auction.category).to.be.a("string");
+      expect(auction.bids)
+        .to.be.an("array")
+        .that.satisfies(function (bids: typeof auction.bids) {
+          return bids.every(
+            (bid) =>
+              typeof bid.amount === "number" &&
+              typeof bid.auction_id === "string" &&
+              typeof bid.bidder === "string" &&
+              typeof bid.profile_id === "string" &&
+              typeof bid.timestamp === "number"
+          );
+        });
+      expect(auction.claimed).to.be.a("boolean");
+      expect(auction.claimed_bidders)
+        .to.be.an("array")
+        .that.satisfies(function (coop: typeof auction.coop) {
+          return coop.every((c) => typeof c === "string");
+        });
+      expect(auction.starting_bid).to.be.a("number");
+      expect(auction.highest_bid_amount).to.be.a("number");
+      expect(auction.start).to.be.a("number");
+      expect(auction.end).to.be.a("number");
+      expect(auction.extra).to.be.a("string");
+      expect(auction.item_name).to.be.a("string");
+      expect(auction.item_lore).to.be.a("string");
+      let bytes: string;
+      if (Array.isArray(value)) {
+        const auctionEndpoint: AsyncReturnType<
+          typeof client.skyblock.auction.player
+        >[number] = auction as never;
+        expect(auctionEndpoint._id).to.be.a("string");
+        expect(auctionEndpoint.item_bytes)
+          .to.be.an("object")
+          .that.satisfies(function (
+            item_bytes: typeof auctionEndpoint.item_bytes
+          ) {
+            return (
+              typeof item_bytes.data === "string" &&
+              typeof item_bytes.type === "number"
+            );
+          });
+      } else {
+        expect(auction.item_bytes).to.be.a("string");
+      }
+      bytes =
+        typeof auction.item_bytes === "string"
+          ? auction.item_bytes
+          : auction.item_bytes.data;
+      const buffer = Buffer.from(bytes, "base64");
+      const text = buffer.toString("utf-8");
+      expect(text).to.be.a("string");
+      expect(auction.tier).to.be.a("string");
+      if (auction.bin) expect(auction.bin).to.be.a("boolean");
+    }
+  });
+};
+
+describe("Get SkyBlock auctions page 1 & each skyblock.auction method once", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let response: AsyncReturnType<typeof client.skyblock.auctions.page>;
+  it("expect success on /skyblock/auctions", async function () {
+    response = await client.skyblock.auctions.page();
+  });
+  CheckMeta(() => response);
+  it("required keys should exist on auctions response", function () {
+    expect(response.lastUpdated).to.be.a("number");
+    expect(response.page).to.be.a("number");
+    expect(response.totalAuctions).to.be.a("number");
+    expect(response.totalPages).to.be.a("number");
+    expect(response.auctions).to.be.an("array");
+  });
+  CheckAuctions(
+    () => response,
+    "auctions from /skyblock/auctions should have required keys"
+  );
+  let responsePlayer: AsyncReturnType<typeof client.skyblock.auction.player>;
+  let responseProfile: AsyncReturnType<typeof client.skyblock.auction.profile>;
+  let responseUuid: AsyncReturnType<typeof client.skyblock.auction.uuid>;
+  it("call /skyblock/auction player, profile, uuid and expect success", async function () {
+    responsePlayer = await client.skyblock.auction.player(
+      response.auctions[0].auctioneer
+    );
+    responseProfile = await client.skyblock.auction.profile(
+      response.auctions[0].profile_id
+    );
+    responseUuid = await client.skyblock.auction.uuid(
+      response.auctions[0].uuid
+    );
+  });
+  CheckMeta(() => responsePlayer);
+  CheckMeta(() => responseProfile);
+  CheckMeta(() => responseUuid);
+  CheckAuctions(
+    () => responsePlayer,
+    "auctions from /skyblock/auction?player should have required keys"
+  );
+  CheckAuctions(
+    () => responseProfile,
+    "auctions from /skyblock/auction?profile should have required keys"
+  );
+  CheckAuctions(
+    () => responseUuid,
+    "auctions from /skyblock/auction?uuid should have required keys"
+  );
+});
+
 describe("Check SkyBlock news", function () {
   this.timeout(30000);
   this.slow(1000);

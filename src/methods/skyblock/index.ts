@@ -1,23 +1,29 @@
 import type { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
+import { SkyBlockAuction } from "./auction";
+import { SkyBlockAuctions } from "./auctions";
 
 export class SkyBlock extends Method {
-  // async auction(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.client.call<Components.Schemas.ApiSuccess>("skyblock/auction"),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns SkyBlock auctions by either player, profile or auction uuid. Only "active" auctions are returned, these are auctions that are still open or that have not had all bids/items claimed.
+   * @example
+   * ```typescript
+   * let auctions = await client.skyblock.auction.player("347ef6c1daac45ed9d1fa02818cf0fb6");
+   * auctions = await client.skyblock.auction.profile("347ef6c1daac45ed9d1fa02818cf0fb6");
+   * auctions = await client.skyblock.auction.uuid("409a1e0f261a49849493278d6cd9305a");
+   * ```
+   */
+  public auction: SkyBlockAuction = new SkyBlockAuction(this.client);
 
-  // async auctions(): Promise<boolean> {
-  //   return returnResponseObject(
-  //     await this.client.call<Components.Schemas.ApiSuccess>(
-  //       "skyblock/auctions"
-  //     ),
-  //     "success"
-  //   );
-  // }
+  /**
+   * Returns SkyBlock auctions that are currently active in the in-game Auction House.
+   * @example
+   * ```typescript
+   * const { auctions } = await client.skyblock.auctions.page(0);
+   * ```
+   */
+  public auctions: SkyBlockAuctions = new SkyBlockAuctions(this.client);
 
   // async bazaar(): Promise<boolean> {
   //   return returnResponseObject(
@@ -28,7 +34,10 @@ export class SkyBlock extends Method {
 
   /**
    * Returns SkyBlock news, including a title, description and a thread.
-   * @return An array of [[NewsEntry | NewsEntry interface]] objects.
+   * @example
+   * ```typescript
+   * const news = await client.skyblock.news();
+   * ```
    */
   public async news(): Promise<
     ResultArray<Paths.SkyblockNews.Get.Responses.$200, "items">
