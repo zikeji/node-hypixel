@@ -226,7 +226,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "commitizen": "^4.2.1",
-    "conventional-changelog-conventionalcommits": "^4.4.0",
+    "conventional-changelog-conventionalcommits": "^4.5.0",
     "cz-conventional-changelog": "^3.3.0",
     "dtsgenerator": "^3.3.1",
     "eslint": "^7.10.0",
