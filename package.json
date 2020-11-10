@@ -240,7 +240,6 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "remarkable": "^2.0.1",
-    "replace": "^1.2.0",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.2",
     "stylus-svg": "^1.2.0",
