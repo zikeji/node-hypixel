@@ -47,6 +47,13 @@ paths:
       responses:
         '200':
           description: An object describing the current boosters.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -165,6 +172,13 @@ paths:
       responses:
         '200':
           description: An object containing the guild ID if found, otherwise if not found the guild property will be null.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -210,6 +224,13 @@ paths:
       responses:
         '200':
           description: An array containing a list of objects describing the player's friends.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -278,6 +299,13 @@ paths:
       responses:
         '200':
           description: An object describing the current player count and game counts on the Hypixel network.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1243,6 +1271,13 @@ paths:
       responses:
         '200':
           description: An array containing a list of objects describing the player's friends.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1638,6 +1673,13 @@ paths:
       responses:
         '200':
           description: An object describing the API key's information.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1694,6 +1736,13 @@ paths:
       responses:
         '200':
           description: An object describing the current leaderboards on Hypixel's network.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -2489,6 +2538,13 @@ paths:
       responses:
         '200':
           description: An object describing the requested player.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -5280,6 +5336,13 @@ paths:
       responses:
         '200':
           description: An object describing the current player count on the Hypixel network.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -5317,6 +5380,13 @@ paths:
       responses:
         '200':
           description: An object describing the player's recent games.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7002,6 +7072,13 @@ paths:
       responses:
         '200':
           description: An object describing the resulting auctions.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7072,6 +7149,13 @@ paths:
       responses:
         '200':
           description: An object describing page information and auctions on that page.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7202,6 +7286,13 @@ paths:
       responses:
         '200':
           description: An object describing the current bazaar products.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7301,6 +7392,13 @@ paths:
       responses:
         '200':
           description: A object describing news items.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7348,6 +7446,13 @@ paths:
       responses:
         '200':
           description: An object describing the SkyBlock profile.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7433,6 +7538,13 @@ paths:
       responses:
         '200':
           description: An object describing the player's SkyBlock profiles.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7755,6 +7867,13 @@ paths:
       responses:
         '200':
           description: An object describing the player's status.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7789,6 +7908,13 @@ paths:
       responses:
         '200':
           description: An object describing the current watchdog stats.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
