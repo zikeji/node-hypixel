@@ -47,6 +47,13 @@ paths:
       responses:
         '200':
           description: An object describing the current boosters.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -165,6 +172,13 @@ paths:
       responses:
         '200':
           description: An object containing the guild ID if found, otherwise if not found the guild property will be null.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -206,10 +220,17 @@ paths:
         const friends = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An array containing a list of objects describing the player's friends.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -278,6 +299,13 @@ paths:
       responses:
         '200':
           description: An object describing the current player count and game counts on the Hypixel network.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1243,6 +1271,13 @@ paths:
       responses:
         '200':
           description: An array containing a list of objects describing the player's friends.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1638,6 +1673,13 @@ paths:
       responses:
         '200':
           description: An object describing the API key's information.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -1694,6 +1736,13 @@ paths:
       responses:
         '200':
           description: An object describing the current leaderboards on Hypixel's network.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -2485,10 +2534,17 @@ paths:
         const player = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An object describing the requested player.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -5280,6 +5336,13 @@ paths:
       responses:
         '200':
           description: An object describing the current player count on the Hypixel network.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -5313,10 +5376,17 @@ paths:
         const recentGames = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An object describing the player's recent games.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -5358,44 +5428,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '422':
           $ref: '#/components/responses/MalformedUUID'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
-  /skyblock/news:
-    get:
-      tags:
-        - skyblock
-      externalDocs:
-        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
-      summary: Returns SkyBlock news, including a title, description and a thread.
-      description: |
-        #### Usage
-        ```typescript
-        const news = await client.skyblock.news();
-        ```
-      responses:
-        '200':
-          description: A object describing news items.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NewsResponse'
-              example:
-                success: true
-                items:
-                  - item:
-                      - material: EMERALD
-                    link: 'https://hypixel.net/threads/3287083/'
-                    text: 8th September 2020
-                    title: SkyBlock v0.9
-                  - item:
-                      - material: WEB
-                    link: 'https://hypixel.net/threads/3287083/'
-                    text: 7th July 2020
-                    title: SkyBlock v0.8
-        '400':
-          $ref: '#/components/responses/MissingFields'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
         '429':
           $ref: '#/components/responses/RateLimitError'
   /resources/achievements:
@@ -7005,6 +7037,818 @@ paths:
                         totalExpRequired: 50
                         unlocks:
                           - +25 Coins
+  /skyblock/auction:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/auction.md
+      summary: Returns SkyBlock auctions by either player, profile or auction uuid.
+      description: |
+        Returns SkyBlock auctions by either player, profile or auction uuid. Only "active" auctions are returned, these are auctions that are still open or that have not had all bids/items claimed.
+        #### Usage
+        ```typescript
+        const auctions = await client.skyblock.auction.player("347ef6c1daac45ed9d1fa02818cf0fb6");
+        ```
+      parameters:
+        - name: player
+          description: Minecraft UUID of the player who's auctions you are looking up.
+          in: query
+          schema:
+            type: string
+            example: 347ef6c1daac45ed9d1fa02818cf0fb6
+        - name: profile
+          description: Hypixel SkyBlock profile ID for the profile you are looking up auctions on.
+          in: query
+          schema:
+            type: string
+            example: 347ef6c1daac45ed9d1fa02818cf0fb6
+        - name: uuid
+          description: Specific UUID of the auction.
+          in: query
+          schema:
+            type: string
+            example: 409a1e0f261a49849493278d6cd9305a
+      responses:
+        '200':
+          description: An object describing the resulting auctions.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkyBlockAuctionResponse'
+              example:
+                success: true
+                auctions:
+                - _id: 5dcdaf2244f4f4f350c02bf3
+                  uuid: 409a1e0f261a49849493278d6cd9305a
+                  auctioneer: 347ef6c1daac45ed9d1fa02818cf0fb6
+                  profile_id: 347ef6c1daac45ed9d1fa02818cf0fb6
+                  coop:
+                  - 347ef6c1daac45ed9d1fa02818cf0fb6
+                  start: 1573760802637
+                  end: 1573761102637
+                  item_name: Azure Bluet
+                  item_lore: "§f§lCOMMON"
+                  extra: Azure Bluet Red Rose
+                  category: blocks
+                  tier: COMMON
+                  starting_bid: 1
+                  item_bytes:
+                    type: 0
+                    data: H4sIAAAAAAAAAB2NQQqCQBhGv1ErHaKu0KoLtGtnarRIhTpA/OGfDIwZ4wxUF/IeHiyyto/3eBKIIJQEIDx4qsJaYJK07m6FhG+p9hEdVMV7TXU3Wh+JWaW6h6ZXhODYGg5/LeZDfxt6nZR5XhYhgoIaxmKE8dsZXu20YwuJZfa0hmJrjbo6y134f8pTll5O5TnbbgAP05Qaqhk+8AVIrd2eoAAAAA==
+                  claimed: true
+                  claimed_bidders: []
+                  highest_bid_amount: 7607533
+                  bids:
+                  - auction_id: 409a1e0f261a49849493278d6cd9305a
+                    bidder: 99748e629dee463892f68abf3a780094
+                    profile_id: 99748e629dee463892f68abf3a780094
+                    amount: 7607533
+                    timestamp: 1573760824844
+
+        '400':
+          description: Missing one or more fields [player,uuid,profile]
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+              example:
+                success: false
+                cause: 'Missing one or more fields [player,uuid,profile]'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /skyblock/auctions:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/auctions.md
+      summary: Returns SkyBlock auctions that are currently active in the in-game Auction House.
+      description: |
+        Returns SkyBlock auctions that are currently active in the in-game Auction House. This method uses pagination due to the amount of results returned. Each page will return up to 1,000 results.
+        #### Usage
+        ```typescript
+        const response = await client.skyblock.auctions.page(0);
+        ```
+      parameters:
+        - name: page
+          description: Page of results to pull. This is zero indexed and defaults to 0 if not provided
+          in: query
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: An object describing page information and auctions on that page.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkyBlockAuctionsResponse'
+              example:
+                success: true
+                page: 0
+                totalPages: 49
+                totalAuctions: 49666
+                lastUpdated: 1599850774688
+                auctions:
+                  - uuid: 2bdf7fdf401b43ce9fc73e6d2131425b
+                    auctioneer: 68e9b297349044ada7a987d8002804d9
+                    profile_id: 68e9b297349044ada7a987d8002804d9
+                    coop:
+                      - 68e9b297349044ada7a987d8002804d9
+                    start: 1599823951083
+                    end: 1599996751083
+                    item_name: Diamond Spreading
+                    item_lore: |
+                      §7This item can be used as a
+                      §7minion upgrade. Place it in any
+                      §7minion and it will occasionally
+                      §7generate diamonds!
+                      
+                      §a§lUNCOMMON
+                    extra: Diamond Spreading Diamond
+                    category: misc
+                    tier: UNCOMMON
+                    starting_bid: 640
+                    item_bytes: H4sIAAAAAAAAAE2QT0/CQBDFp4BYepAY9WiyGq8VQaHiraH8aSJ/Angm0+5YNmm3pLuN8on4Hnww4xIvzm3e+2Xe5DkADbCEAwBWBSqCW7YFZ4O8lNpyoKoxaUCNZLyF01ShMRGcRikmyqw/DpxzoXYp7g31nhdkG7UOt8eDt94KxYSmjMUoWUSsVMQZKoZwb+xMSJFLVu6SAjk9skWKMRmeCclQ7v8zKPnJ+BJpyvI4RmVETNM93BgmIUkFamJcYJZLru7MBxfHAx4P6cdsMJ9O5zMbajPMCK6NHPxhbLUrCLmQCTjQHH7rAn2tCxGVmpQNjbwQiZBrTOBqsPRH63A23oyXYbBZTcLR2j4VBZdB6JvrRlssh35gEBNUlsZ58LrdT4782Y3jbsd9iXrcffV6sRtRL+q2I68T8cikaJGR0pjtoNlvtdutzhPz3jp95k8BKlAPMMOETr3/AvhzTEqmAQAA
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bids: []
+                  - uuid: 10533b6d6d3940e4ab9c7850dba03d8f
+                    auctioneer: 5f637954b90b40d0b9e6231346dd0d63
+                    profile_id: 5f637954b90b40d0b9e6231346dd0d63
+                    coop:
+                      - 5f637954b90b40d0b9e6231346dd0d63
+                    start: 1599843526352
+                    end: 1599886726352
+                    item_name: Critical IV Splash Potion
+                    item_lore: |
+                      §4Critical IV §f(48:00)
+                      §7Increases §9☣ Crit Chance §7by
+                      §7§a25% §7and §9☠ Crit Damage §7by
+                      §7§a40%§7.
+                      
+                      §a§lUNCOMMON
+                    extra: Critical IV Splash Potion Potion
+                    category: consumables
+                    tier: COMMON
+                    starting_bid: 95000
+                    item_bytes: H4sIAAAAAAAAAE2RzW7TQBSF78Rp/EMpSLBBYuEFlegi1InsJu6KyC0igjiRaGFZTeyxO8J/8oxR8yYskVj4Pfwm8CCIazuFLkajOeebO+feMQB0INwAADKAAQ9JReDAy6tMEgMUSWMdnnmVkHm6ySXPs8soYoEU3QUC6iLdcpZJUEC7qEraEug8JzBYhioBfZEWCY84KxVE9Pc8ZO8SGgtk/highlwUCd3pMPyYl0xDVcX1oqltr+SSBzQxl5/Npo5e2/NzyzqB46aeLbOgZFQwgYb7+/tPs2VN75ZmAUNptt3BCW5NTafOcSvQLOzRHz16QVMa36OPe9S22tJv8PUjPDV1cu1769Vq7Wsw9GnK4CXKD0N9wuDi1uyHAgY8ubyTJV1IWfJtJZlQ4LDovJuEfWMJFh4S0FjWxQyJBqPeBi3YV9VBZQ+Gq8DBv5tI99Z/WoGjcD/wGxS+4kh/YQw9zcNu3njW4NE+gtwVDEab9dWybUjPSx7z7IrGoF77H/z1FxTx6+8JAiPRdYcph1WFxqup5VLXDpyxZYV0bLtzZ+wGs8k4sJljs+gsmrtnbXt3kmVh154uecqEpGkBT93TyeR0apmT6bkzMzcrgAGM+l94ewjwF9zORniEAgAA
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bin: true
+                    bids: []
+                  - uuid: a775cedadb8a4e66bde8bce99603ba94
+                    auctioneer: e1c3c507ade747e983069ae22c6e6739
+                    profile_id: e1c3c507ade747e983069ae22c6e6739
+                    coop:
+                      - e1c3c507ade747e983069ae22c6e6739
+                    start: 1599841050648
+                    end: 1600201050648
+                    item_name: Hunk of Blue Ice
+                    item_lore: §9§lRARE
+                    extra: Hunk of Blue Ice Skull Item
+                    category: misc
+                    tier: RARE
+                    starting_bid: 3100000
+                    item_bytes: H4sIAAAAAAAAAE2RzZKaQBSFrzqTIFWpLLLLysVsreJHGFlk4ShKE+nJIP7Qm6kWGkEbtKBJJO+Q55gXyBPMg6XCZJXlPfecOvXVkQH60MlkAOh0oZvFnV8duJ2e60J8lqEn6KEHfSeL2ZzTQ9W6/sggr041548/ClZK0EUx3Cn3SmJq5nioW9QY6pGqDfeqZg11w4jGiWkm0Zi2uW/l+cJKkbGqD5JgV1GXrPpXLcHthvKawW/WuArZpUq8c3nUILO9g5XCH9Hxco+KTbOfIhPl7d+ZmMvG+s9rCLo1eKi7KSme6n2+UZa6z5njq1G+/o6388ybcU4CWyEBTvHWz3FwMkKNpHjxdMW5p4baekRmExUvXE6OBwUfT6oXeI23CHXvOE/DwE/xT3vkbcMRWSCVrFwr2SlfWgIZ3sdZdeG06cPN8lwy6Q0L5NcX6/WF+xPfluAG05zBp1Zy6uI0OCeDhxZ5gCLWxj/aV1HSiRBltq8Fq6S3MeDDw3JtP6Op/eys8VeALryb0ZweGPQA/gKo3xTCvAEAAA==
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bin: true
+                    bids: []
+                  - uuid: 703edd6c44714602a0e6d2e9b241a73d
+                    auctioneer: 57170253bb4541f480bdefd557e0c147
+                    profile_id: 57170253bb4541f480bdefd557e0c147
+                    coop:
+                      - 5f5ca9ab03a6406dbdd1a95ada1d6d02
+                      - 57170253bb4541f480bdefd557e0c147
+                    start: 1599844820969
+                    end: 1599866420969
+                    item_name: Zombie's Heart
+                    item_lore: |
+                      §7Health: §a+50 HP
+                      
+                      §6Item Ability: Healing Boost
+                      §7Doubles all healing effects,
+                      §7including your natural
+                      §7regeneration and healing you
+                      §7deal to others, while wearing.
+                      
+                      §7§8This item can be reforged!
+                      §9§lRARE HELMET
+                    extra: Zombie's Heart Skull Item
+                    category: armor
+                    tier: RARE
+                    starting_bid: 240000
+                    item_bytes: H4sIAAAAAAAAAE2S227aQBCGB5K0gKoepN70pt1IkXrR0BjjA46UC8IhmGITiEuCb6K1vdhL1jay103IO/Q5eIE+AQ9WdUFV1cuZ/5vZf2anBlCFEq0BQKkMZRqUfpbgqJMWCS/V4IDj8ACqAxqQPsNhLqjfNajdPBSMjR8TklWgbAZwYugtxfNkuR6o6qLe9HS97i20Vl1VFF9u6V5D9pui7jpLVyTjlORVqHDyxIuM5PunK3A0w6wg8Iush5J7F0nB3ZD5a1MTsXMjsbG5XOlmMlt7HVMzY6EP2tpobfzHqhzfqmzeHEZuMim8eCaNmlNGBtOGH3//YT/3H2zZUizHjefP0dJeWrLbDWLbuYzGjh1ZV8PIlvuRe+vGVtddjh03sp35k72cNFyHsfmyT93b+fPY6cm2M1vajvVkJg1jMbm4EBPU4GVA8xXD6yocjtKMVPbJ99uNPiCY8egcbTf4iyqhwbVQPm43mslJjNoeZZSvz9GOokmILtM05/BJ1HXTwmMkR5gxFP1VyWJBfJ6fwgcB0MRnRbBLr9MiQwkW+8RsX5uRkIjvwZymCcJJ8K+BIOFYAIGIEU9RyiOS5afoMaKMoEeCM0F9FQ6FXX27aTkRzRHdOfVxgjyCMrJIs5AEx/BuuzG2GzZtT3to0BtZPacChzaOyV5x09ij5HO+GyzjYhVvek88w23OM+oVnOQVqKYZDWni4BBeT76bnW/3nWm775j2VWV3ifDKHVuXZu9+0GtPd72LQiRPAsUjiqordbww/LqC9Vbd0IzG7upUrdGSiCZj0ZvTmOQcxyt4a5w1pDNZQg3pXGmitgVQhhddHOOQwAHAH6LiqFwDAwAA
+                    claimed: false
+                    claimed_bidders:
+                    highest_bid_amount: 0
+                    bids: []
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /skyblock/bazaar:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/bazaar.md
+      summary: Returns the list of products along with their sell summary, buy summary and quick status.
+      description: |
+        Returns the list of [products](https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/bazaar.md#product-description) along with their sell summary, buy summary and quick status.
+        #### Usage
+        ```typescript
+        const products = await client.skyblock.bazaar();
+        ```
+      responses:
+        '200':
+          description: An object describing the current bazaar products.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkyBlockBazaarResponse'
+              example:
+                sucess: true
+                lastUpdated: 1604910124671
+                products:
+                  BROWN_MUSHROOM:
+                    product_id: BROWN_MUSHROOM
+                    sell_summary:
+                      - amount: 3011
+                        pricePerUnit: 8.4
+                        orders: 1
+                      - amount: 8972
+                        pricePerUnit: 8.2
+                        orders: 1
+                      - amount: 47983
+                        pricePerUnit: 8.1
+                        orders: 1
+                      - amount: 3049
+                        pricePerUnit: 8
+                        orders: 1
+                    buy_summary:
+                      - amount: 960
+                        pricePerUnit: 15
+                        orders: 1
+                      - amount: 1080
+                        pricePerUnit: 15.1
+                        orders: 1
+                      - amount: 640
+                        pricePerUnit: 15.2
+                        orders: 1
+                      - amount: 640
+                        pricePerUnit: 15.3
+                        orders: 1
+                    quick_status:
+                      productId: BROWN_MUSHROOM
+                      sellPrice: 8.251800462504129
+                      sellVolume: 251544
+                      sellMovingWeek: 11953365
+                      sellOrders: 22
+                      buyPrice: 15.704912911036473
+                      buyVolume: 616961
+                      buyMovingWeek: 7751191
+                      buyOrders: 292
+                  SPOOKY_SHARD:
+                    product_id: SPOOKY_SHARD
+                    sell_summary:
+                      - amount: 64
+                        pricePerUnit: 12000.7
+                        orders: 1
+                      - amount: 524
+                        pricePerUnit: 12000.6
+                        orders: 1
+                      - amount: 112
+                        pricePerUnit: 12000.4
+                        orders: 1
+                      - amount: 160
+                        pricePerUnit: 12000.2
+                        orders: 1
+                    buy_summary:
+                      - amount: 106
+                        pricePerUnit: 15999.6
+                        orders: 3
+                      - amount: 141
+                        pricePerUnit: 15999.7
+                        orders: 1
+                      - amount: 3
+                        pricePerUnit: 15999.8
+                        orders: 1
+                      - amount: 160
+                        pricePerUnit: 15999.9
+                        orders: 1
+                    quick_status:
+                      productId: SPOOKY_SHARD
+                      sellPrice: 12000.31778425656
+                      sellVolume: 43857
+                      sellMovingWeek: 106455
+                      sellOrders: 216
+                      buyPrice: 15999.657085020244
+                      buyVolume: 5586
+                      buyMovingWeek: 111647
+                      buyOrders: 100
+  /skyblock/news:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/news.md
+      summary: Returns SkyBlock news, including a title, description and a thread.
+      description: |
+        #### Usage
+        ```typescript
+        const news = await client.skyblock.news();
+        ```
+      responses:
+        '200':
+          description: A object describing news items.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponse'
+              example:
+                success: true
+                items:
+                  - item:
+                      - material: EMERALD
+                    link: 'https://hypixel.net/threads/3287083/'
+                    text: 8th September 2020
+                    title: SkyBlock v0.9
+                  - item:
+                      - material: WEB
+                    link: 'https://hypixel.net/threads/3287083/'
+                    text: 7th July 2020
+                    title: SkyBlock v0.8
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /skyblock/profile:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/profile.md
+      summary: Returns an array SkyBlock profile's data, such as stats, objectives etc.
+      description: |
+        The data returned can differ depending on the players in-game API settings.
+        #### Usage
+        ```typescript
+        const profile = await client.skyblock.profile("20934ef9488c465180a78f861586b4cf");
+        ```
+      parameters:
+        - name: profile
+          description: The Hypixel SkyBlock profile ID being looked up.
+          required: true
+          in: query
+          schema:
+            type: string
+            example: 20934ef9488c465180a78f861586b4cf
+      responses:
+        '200':
+          description: An object describing the SkyBlock profile.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      profile:
+                        $ref: '#/components/schemas/SkyBlockProfile'
+                    required:
+                      - profile
+              example:
+                success: true
+                profile:
+                  profile_id: 20934ef9488c465180a78f861586b4cf
+                  members:
+                    20934ef9488c465180a78f861586b4cf:
+                      last_save: 1594895461520
+                      inv_armor:
+                        type: 0
+                        data: H4sIAAAAAAAAAONiYOBkYMzkYmBgYGEAAQCp5xppEQAAAA==
+                      first_join: 1589001971955
+                      first_join_hub: 407685
+                      stats: {}
+                      objectives:
+                        collect_log:
+                          status: ACTIVE
+                          progress: 0
+                          completed_at: 0
+                      tutorial:
+                      - first_join
+                      - zone_village
+                      - zone_auction_house
+                      - zone_bazaar_alley
+                      quests:
+                        collect_log:
+                          status: ACTIVE
+                          activated_at: 1589001971468
+                          activated_at_sb: 28726267
+                          completed_at: 0
+                          completed_at_sb: 0
+                      coin_purse: 5000
+                      last_death: 28726267
+                      visited_zones:
+                      - village
+                      - auction_house
+                      - bazaar_alley
+                      fairy_souls_collected: 0
+                      slayer_bosses:
+                        zombie:
+                          claimed_levels: {}
+                        spider:
+                          claimed_levels: {}
+                        wolf:
+                          claimed_levels: {}
+                      pets: []
+                      dungeons:
+                        dungeon_types:
+                          catacombs: {}
+                        player_classes: {}
+                        dungeon_journal: {}
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
+  /skyblock/profiles:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/profiles.md
+      summary: Returns an array SkyBlock profile's data, such as stats, objectives etc.
+      description: |
+        The data returned can differ depending on the players in-game API settings. The request takes a player UUID.
+        #### Usage
+        ```typescript
+        const profiles = await client.skyblock.profiles.uuid("20934ef9488c465180a78f861586b4cf");
+        ```
+      parameters:
+        - $ref: '#/components/parameters/PlayerUuidRequired'
+      responses:
+        '200':
+          description: An object describing the player's SkyBlock profiles.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiSuccess'
+                  - type: object
+                    properties:
+                      profiles:
+                        type: array
+                        nullable: true
+                        items:
+                          $ref: '#/components/schemas/SkyBlockProfileCuteName'
+                    required:
+                      - profiles
+              example:
+                success: true
+                profiles:
+                - profile_id: b59f6cd9ea734a4da2ff011808855e6b
+                  members:
+                    20934ef9488c465180a78f861586b4cf:
+                      last_save: 1601999005474
+                      inv_armor:
+                        type: 0
+                        data: H4sIAAAAAAAAAONiYOBkYMzkYmBgYGEAAQCp5xppEQAAAA==
+                      first_join: 1601998821831
+                      first_join_hub: 4313
+                      stats: {}
+                      objectives:
+                        collect_log:
+                          status: ACTIVE
+                          progress: 0
+                          completed_at: 0
+                      tutorial:
+                      - first_join
+                      - zone_village
+                      - zone_bazaar_alley
+                      quests:
+                        collect_log:
+                          status: ACTIVE
+                          activated_at: 1601998821112
+                          activated_at_sb: 41723120
+                          completed_at: 0
+                          completed_at_sb: 0
+                      coin_purse: 3
+                      last_death: 41723120
+                      visited_zones:
+                      - village
+                      - bazaar_alley
+                      fairy_souls_collected: 0
+                      slayer_bosses:
+                        zombie:
+                          claimed_levels: {}
+                        spider:
+                          claimed_levels: {}
+                        wolf:
+                          claimed_levels: {}
+                      pets: []
+                      dungeons:
+                        dungeon_types:
+                          catacombs: {}
+                        player_classes: {}
+                        dungeon_journal: {}
+                  community_upgrades:
+                    upgrade_states: []
+                  cute_name: Cucumber
+                  game_mode: ironman
+                - profile_id: 20934ef9488c465180a78f861586b4cf
+                  members:
+                    20934ef9488c465180a78f861586b4cf:
+                      last_save: 1594895461520
+                      inv_armor:
+                        type: 0
+                        data: H4sIAAAAAAAAAONiYOBkYMzkYmBgYGEAAQCp5xppEQAAAA==
+                      first_join: 1589001971955
+                      first_join_hub: 407685
+                      stats: {}
+                      objectives:
+                        collect_log:
+                          status: ACTIVE
+                          progress: 0
+                          completed_at: 0
+                      tutorial:
+                      - first_join
+                      - zone_village
+                      - zone_auction_house
+                      - zone_bazaar_alley
+                      quests:
+                        collect_log:
+                          status: ACTIVE
+                          activated_at: 1589001971468
+                          activated_at_sb: 28726267
+                          completed_at: 0
+                          completed_at_sb: 0
+                      coin_purse: 5000
+                      last_death: 28726267
+                      visited_zones:
+                      - village
+                      - auction_house
+                      - bazaar_alley
+                      fairy_souls_collected: 0
+                      slayer_bosses:
+                        zombie:
+                          claimed_levels: {}
+                        spider:
+                          claimed_levels: {}
+                        wolf:
+                          claimed_levels: {}
+                      pets: []
+                      dungeons:
+                        dungeon_types:
+                          catacombs: {}
+                        player_classes: {}
+                        dungeon_journal: {}
+                  cute_name: Orange
+                - profile_id: 974b2a9e0d6d41819dd18a05fb228965
+                  members:
+                    20934ef9488c465180a78f861586b4cf:
+                      last_save: 1604963258470
+                      inv_armor:
+                        type: 0
+                        data: H4sIAAAAAAAAAONiYOBkYMzkYmBgYGEAAQCp5xppEQAAAA==
+                      first_join: 1589002493890
+                      first_join_hub: 144304
+                      stats:
+                        gifts_given: 196
+                        highest_critical_damage: 2340569608.6801596
+                        kills: 1049
+                        kills_zombie: 44
+                        kills_zombie_villager: 10
+                        kills_ruin_wolf: 7
+                      objectives:
+                        collect_log:
+                          status: COMPLETE
+                          progress: 1
+                          completed_at: 1604474169400
+                      tutorial:
+                      - first_join
+                      - zone_village
+                      - zone_mine
+                      - zone_danger
+                      - zone_farm
+                      quests:
+                        collect_log:
+                          status: ACTIVE
+                          activated_at: 1589002493572
+                          activated_at_sb: 28726791
+                          completed_at: 0
+                          completed_at_sb: 0
+                      coin_purse: 1005826340.2595283
+                      last_death: 44660021
+                      crafted_generators:
+                      - SNOW_1
+                      - COBBLESTONE_1
+                      visited_zones:
+                      - village
+                      - mine
+                      fairy_souls_collected: 0
+                      fairy_souls: 0
+                      fairy_exchanges: 0
+                      death_count: 24
+                      slayer_bosses:
+                        zombie:
+                          claimed_levels:
+                            level_1: true
+                            level_2: true
+                          xp: 1000000
+                          boss_kills_tier_0: 1
+                          boss_kills_tier_1: 1
+                        spider:
+                          claimed_levels:
+                            level_1: true
+                            level_2: true
+                          xp: 1000000
+                          boss_kills_tier_0: 1
+                          boss_kills_tier_1: 1
+                        wolf:
+                          claimed_levels:
+                            level_1: true
+                            level_2: true
+                          xp: 1000000
+                      pets:
+                      - uuid: 5d83d38c-00d9-4399-84bf-17fb6de3f799
+                        type: BEE
+                        exp: 25353230
+                        active: false
+                        tier: LEGENDARY
+                        heldItem: 
+                        candyUsed: 0
+                        skin: 
+                      dungeons:
+                        dungeon_types:
+                          catacombs:
+                            experience: 1000002701.8999999
+                            times_played:
+                              '0': 1
+                            tier_completions:
+                              '0': 1
+                            fastest_time:
+                              '0': 543283
+                            best_runs:
+                              '0':
+                              - timestamp: 1594287196439
+                                score_exploration: 59
+                                score_speed: 100
+                                score_skill: 57
+                                score_bonus: 1
+                                dungeon_class: tank
+                                teammates:
+                                - a40c9804-6f14-4174-ae25-5e77ee218a4a
+                                - c493b6a6-8674-4efb-bac4-5bb6fe52a898
+                                - 824b39b5-d37f-4f81-885e-2df8593c5817
+                                - dde633f0-1472-4aeb-ba80-af757e07f452
+                                elapsed_time: 543283
+                                damage_dealt: 974508.131547339
+                                deaths: 2
+                                mobs_killed: 34
+                                secrets_found: 0
+                                damage_mitigated: 86091.31206308535
+                                ally_healing: 950.5029296875
+                            best_score:
+                              '0': 217
+                            mobs_killed:
+                              '0': 34
+                            most_mobs_killed:
+                              '0': 34
+                            most_damage_tank:
+                              '0': 974508.131547339
+                            most_healing:
+                              '0': 950.5029296875
+                            watcher_kills:
+                              '0': 1
+                            highest_tier_completed: 4
+                            fastest_time_s:
+                              '1': 657225
+                            most_damage_archer:
+                              '4': 208659014.67389628
+                        player_classes:
+                          archer:
+                            experience: 1110012918.555
+                          healer:
+                            experience: 167
+                          mage:
+                            experience: 500.4133333333333
+                          berserk:
+                            experience: 291.80833333333334
+                          tank:
+                            experience: 1000001564.3799999
+                        dungeon_journal: {}
+                        dungeons_blah_blah:
+                        - malik_first_talk
+                        - gatekeeper_first_talk
+                        selected_dungeon_class: healer
+                      experience_skill_runecrafting: 20190.239999999998
+                      experience_skill_combat: 75056296.56000185
+                      experience_skill_mining: 500003107.6
+                      unlocked_coll_tiers:
+                      - COBBLESTONE_9
+                      - LOG_2
+                      - COAL_-1
+                      - LOG_1
+                      experience_skill_alchemy: 500004100
+                      experience_skill_farming: 550011435.3999829
+                      wardrobe_equipped_slot: 1
+                      collection:
+                        REDSTONE: 3310000
+                        BONE: 11
+                        ROTTEN_FLESH: 27
+                        ENDER_PEARL: 5246
+                        FEATHER: 10000
+                        COBBLESTONE: 110064
+                        WHEAT: 110
+                        RAW_FISH:2: 1
+                        LOG: 274
+                        PORK: 100000
+                        COAL: 21
+                        SUGAR_CANE: 10010
+                        STRING: 20004
+                        SPONGE: 2
+                        SEEDS: 18
+                        LOG:1: 84
+                        OBSIDIAN: 43
+                        LOG_2:1: 6
+                      wardrobe_contents:
+                        type: 0
+                        data: H4sIAAAAAAAAAONiYOBkYMzkYmBg8GCgFgAArkGN1lUAAAA=
+                      experience_skill_taming: 1043649915.0856252
+                      experience_skill_enchanting: 500005427.78508854
+                      sacks_counts:
+                        COBBLESTONE: 0
+                        COAL: 0
+                        IRON_INGOT: 0
+                        GOLD_INGOT: 0
+                      experience_skill_fishing: 500004850
+                      experience_skill_foraging: 500003921.5999985
+                  cute_name: Banana
+                  banking:
+                    balance: 0
+                    transactions: []
+        '400':
+          $ref: '#/components/responses/MissingFields'
+        '403':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimitError'
   /status:
     get:
       tags:
@@ -7019,10 +7863,17 @@ paths:
         const status = await client.status.uuid("20934ef9488c465180a78f861586b4cf");
         ```
       parameters:
-        - $ref: '#/components/parameters/PlayerUuid'
+        - $ref: '#/components/parameters/PlayerUuidRequired'
       responses:
         '200':
           description: An object describing the player's status.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7057,6 +7908,13 @@ paths:
       responses:
         '200':
           description: An object describing the current watchdog stats.
+          headers:
+            ratelimit-limit:
+              $ref: '#/components/headers/ratelimit-limit'
+            ratelimit-remaining:
+              $ref: '#/components/headers/ratelimit-remaining'
+            ratelimit-reset:
+              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7113,8 +7971,15 @@ components:
   parameters:
     PlayerUuid:
       name: uuid
-      required: true
       description: Minecraft UUID of the player.
+      in: query
+      schema:
+        type: string
+        example: 20934ef9488c465180a78f861586b4cf
+    PlayerUuidRequired:
+      name: uuid
+      description: Minecraft UUID of the player.
+      required: true
       in: query
       schema:
         type: string
@@ -7404,43 +8269,13 @@ components:
         networkExp:
           type: number
         giftingMeta:
-          type: object
-          properties:
-            realBundlesReceivedInc:
-              type: number
-            bundlesReceived:
-              type: number
-            realBundlesReceived:
-              type: number
-            giftsGiven:
-              type: number
-            bundlesGiven:
-              type: number
-            realBundlesGiven:
-              type: number
-            milestones:
-              type: array
-              items:
-                type: string
-          additionalProperties:
-            anyOf:
-              - type: object
-                nullable: true
-              - type: number
-              - type: array
-                items:
-                  type: string
+          $ref: '#/components/schemas/PlayerGiftingMeta'
         friendRequestsUuid:
           type: array
           items:
             type: string
         cooldowns:
           type: object
-          properties:
-            fun:
-              type: object
-              additionalProperties:
-                type: number
         parkourCompletions:
           type: object
           additionalProperties:
@@ -7507,7 +8342,6 @@ components:
             anyOf:
               - type: boolean
               - type: string
-              - type: object
         challenges:
           type: object
           properties:
@@ -7532,9 +8366,7 @@ components:
                 TWITTER:
                   type: string
               additionalProperties:
-                anyOf:
-                  - type: string
-                  - type: object
+                type: string
             prompt:
               type: boolean
           additionalProperties:
@@ -7542,6 +8374,8 @@ components:
               - type: string
               - type: boolean
               - type: object
+                additionalProperties:
+                  type: string
         vanityMeta:
           type: object
           properties:
@@ -7634,7 +8468,6 @@ components:
                 anyOf:
                   - type: number
                   - type: boolean
-                  - type: object
             SkyWars:
               type: object
               properties:
@@ -7657,7 +8490,9 @@ components:
                 anyOf:
                   - type: string
                   - type: number
-                  - type: object
+                  - type: array
+                    items:
+                      type: string
             MCGO:
               type: object
               properties:
@@ -7685,7 +8520,9 @@ components:
               additionalProperties:
                 anyOf:
                   - type: number
-                  - type: object
+                  - type: array
+                    items:
+                      type: string
             VampireZ:
               type: object
               properties:
@@ -7728,7 +8565,9 @@ components:
                 anyOf:
                   - type: number
                   - type: boolean
-                  - type: object
+                  - type: array
+                    items:
+                      type: string
             Paintball:
               type: object
               properties:
@@ -7755,7 +8594,9 @@ components:
                   - type: number
                   - type: string
                   - type: boolean
-                  - type: object
+                  - type: array
+                    items:
+                      type: string
             Legacy:
               type: object
               properties:
@@ -7770,9 +8611,7 @@ components:
                 paintball_tokens:
                   type: number
               additionalProperties:
-                anyOf:
-                  - type: number
-                  - type: object
+                type: number
             BuildBattle:
               type: object
               properties:
@@ -7781,9 +8620,7 @@ components:
                 wins:
                   type: number
               additionalProperties:
-                anyOf:
-                  - type: number
-                  - type: object
+                type: number
             Bedwars:
               type: object
               properties:
@@ -7795,7 +8632,6 @@ components:
                 anyOf:
                   - type: boolean
                   - type: number
-                  - type: object
             Pit:
               type: object
               properties:
@@ -7857,7 +8693,9 @@ components:
               additionalProperties:
                 anyOf:
                   - type: number
-                  - type: object
+                  - type: array
+                    items:
+                      type: string
         lastLogin:
           type: number
         lastLogout:
@@ -7894,9 +8732,7 @@ components:
             dailyTwoKExp:
               type: number
           additionalProperties:
-            anyOf:
-              - type: number
-              - type: object
+            type: number
         levelUp_MVP_PLUS:
           type: number
         vanityFavorites:
@@ -7928,9 +8764,7 @@ components:
               MVP:
                 type: boolean
             additionalProperties:
-              anyOf:
-                - type: boolean
-                - type: object
+              type: boolean
         monthlyRankColor:
           type: string
         adsense_tokens:
@@ -7997,6 +8831,8 @@ components:
                 items:
                   type: string
               - type: object
+                additionalProperties:
+                  type: string
         questSettings:
           type: object
           additionalProperties:
@@ -8143,6 +8979,31 @@ components:
         - firstLogin
         - playername
         - displayname
+    PlayerGiftingMeta:
+      type: object
+      properties:
+        realBundlesReceivedInc:
+          type: number
+        bundlesReceived:
+          type: number
+        realBundlesReceived:
+          type: number
+        giftsGiven:
+          type: number
+        bundlesGiven:
+          type: number
+        realBundlesGiven:
+          type: number
+        milestones:
+          type: array
+          items:
+            type: string
+      additionalProperties:
+        anyOf:
+          - type: number
+          - type: array
+            items:
+              type: string
     ResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'
@@ -8833,6 +9694,936 @@ components:
         - level
         - totalExpRequired
         - unlocks
+    SkyBlockAuctionResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            auctions:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/SkyBlockAuction'
+                  - type: object
+                    properties:
+                      _id:
+                        type: string
+                      item_bytes:
+                        type: object
+                        properties:
+                          type:
+                            type: integer
+                          data:
+                            description: Base64 encoded NBT data for the item.
+                            type: string
+                        required:
+                          - type
+                          - data
+                    required:
+                      - _id
+                      - item_bytes
+          required:
+            - auctions
+    SkyBlockAuctionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            page:
+              type: number
+            totalPages:
+              type: number
+            totalAuctions:
+              type: number
+            lastUpdated:
+              type: number
+            auctions:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/SkyBlockAuction'
+                  - type: object
+                    properties:
+                      item_bytes:
+                        description: Base64 encoded NBT data for the item.
+                        type: string
+                    required:
+                      - item_bytes
+          required:
+            - page
+            - totalPages
+            - totalAuctions
+            - lastUpdated
+            - auctions
+    SkyBlockAuction:
+      type: object
+      properties:
+        uuid:
+          type: string
+        auctioneer:
+          type: string
+        profile_id:
+          type: string
+        coop:
+          type: array
+          items:
+            type: string
+        start:
+          type: number
+        end:
+          type: number
+        item_name:
+          type: string
+        item_lore:
+          type: string
+        extra:
+          type: string
+        category:
+          type: string
+        tier:
+          type: string
+        starting_bid:
+          type: number
+        claimed:
+          type: boolean
+        claimed_bidders:
+          type: array
+          items:
+            description: Minecraft UUID of the person who claimed the auction.
+            type: string
+        highest_bid_amount:
+          type: number
+        bids:
+          type: array
+          items:
+            type: object
+            properties:
+              auction_id:
+                description: UUID of the auction.
+                type: string
+              bidder:
+                description: Minecraft UUID of the bidder.
+                type: string
+              profile_id:
+                description: The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
+                type: string
+              amount:
+                description: The amount in coins the bid is for.
+                type: number
+              timestamp:
+                description: Unix timestamp the bid was placed.
+                type: number
+            required:
+              - auction_id
+              - bidder
+              - profile_id
+              - amount
+              - timestamp
+        bin:
+          type: boolean
+      required:
+        - uuid
+        - auctioneer
+        - profile_id
+        - coop
+        - start
+        - end
+        - item_name
+        - item_lore
+        - extra
+        - category
+        - tier
+        - starting_bid
+        - claimed
+        - claimed_bidders
+        - highest_bid_amount
+        - bids
+    SkyBlockBazaarResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            lastUpdated:
+              type: number
+            products:
+              type: object
+              properties:
+                ANCIENT_CLAW:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BAZAAR_COOKIE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BLAZE_ROD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BLESSED_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BLUE_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BOOSTER_COOKIE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                BROWN_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CACTUS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CARROT_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CARROT_ITEM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CATALYST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                CLAY_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                COAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                COBBLESTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                COMPACTOR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                DAEDALUS_STICK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                DARK_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                DIAMOND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ECTOPLASM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                EMERALD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ACACIA_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ANCIENT_CLAW:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BAKED_POTATO:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BIRCH_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BLAZE_POWDER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BLAZE_ROD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BONE_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BREAD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_BROWN_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CACTUS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CACTUS_GREEN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CAKE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CARROT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CARROT_ON_A_STICK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CARROT_STICK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CHARCOAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CLAY_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_CLOWNFISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COAL_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COBBLESTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COCOA:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKED_FISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKED_MUTTON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKED_SALMON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_COOKIE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_DARK_OAK_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_DIAMOND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_DIAMOND_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EGG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EMERALD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EMERALD_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ENDER_PEARL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ENDSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_EYE_OF_ENDER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FERMENTED_SPIDER_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FIREWORK_ROCKET:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_FLINT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GHAST_TEAR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GLISTERING_MELON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GLOWSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GLOWSTONE_DUST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GOLD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GOLD_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GOLDEN_CARROT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GRILLED_PORK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_GUNPOWDER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_HAY_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_HUGE_MUSHROOM_1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_HUGE_MUSHROOM_2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_INK_SACK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_IRON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_IRON_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_JUNGLE_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LAPIS_LAZULI:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LAPIS_LAZULI_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LAVA_BUCKET:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_LEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MAGMA_CREAM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MELON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MELON_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_MUTTON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_NETHER_STALK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_OAK_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_OBSIDIAN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PACKED_ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PAPER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PORK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_POTATO:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PRISMARINE_CRYSTALS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PRISMARINE_SHARD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PUFFERFISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_PUMPKIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_QUARTZ:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_QUARTZ_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RABBIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RABBIT_FOOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RABBIT_HIDE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_BEEF:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_CHICKEN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_FISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RAW_SALMON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_RED_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_REDSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_REDSTONE_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_REDSTONE_LAMP:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_ROTTEN_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SAND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SEEDS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SHARK_FIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SLIME_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SLIME_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SNOW_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SPIDER_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SPONGE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SPRUCE_LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_STRING:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SUGAR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_SUGAR_CANE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_WATER_LILY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENCHANTED_WET_SPONGE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENDER_PEARL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ENDER_STONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FISH_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FLINT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FOUL_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                FUMING_POTATO_BOOK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GHAST_TEAR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GLOWSTONE_DUST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GOLD_INGOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GOLDEN_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GRAVEL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GREAT_WHITE_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GREEN_CANDY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GREEN_GIFT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                GRIFFIN_FEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HAMSTER_WHEEL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HAY_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HOLY_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HOT_POTATO_BOOK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HUGE_MUSHROOM_1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HUGE_MUSHROOM_2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                HYPER_CATALYST:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ICE_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                INK_SACK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                INK_SACK:3:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                INK_SACK:4:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                IRON_INGOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                JACOBS_TICKET:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LEATHER:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LIGHT_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG:3:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG_2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                LOG_2:1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MAGMA_CREAM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MELON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MINNOW_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                MUTTON:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                NETHER_STALK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                NETHERRACK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                NURSE_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                OBSIDIAN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                OLD_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PACKED_ICE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PORK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                POTATO_ITEM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PRISMARINE_CRYSTALS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PRISMARINE_SHARD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PROTECTOR_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PUMPKIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PUMPKIN_GUTS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                PURPLE_CANDY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                QUARTZ:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RABBIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RABBIT_FOOT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RABBIT_HIDE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_BEEF:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_CHICKEN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:1:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:2:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RAW_FISH:3:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RECOMBOBULATOR_3000:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RED_GIFT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                RED_MUSHROOM:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REDSTONE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REFINED_MINERAL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REVENANT_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                REVENANT_VISCERA:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                ROTTEN_FLESH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SAND:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SEEDS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SHARK_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SHARK_FIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SLIME_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SNOW_BALL:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SNOW_BLOCK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SOUL_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPIDER_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPIKED_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPONGE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPOOKY_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SPOOKY_SHARD:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                STOCK_OF_STONKS:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                STRING:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                STRONG_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUGAR_CANE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SULPHUR:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUMMONING_EYE:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUPER_COMPACTOR_3000:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUPER_EGG:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                SUPERIOR_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                TARANTULA_SILK:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                TARANTULA_WEB:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                TIGER_SHARK_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                UNSTABLE_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WATER_LILY:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WEREWOLF_SKIN:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WHALE_BAIT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WHEAT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WHITE_GIFT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WISE_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                WOLF_TOOTH:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+                YOUNG_FRAGMENT:
+                  $ref: '#/components/schemas/SkyBlockBazaarProduct'
+              additionalProperties:
+                $ref: '#/components/schemas/SkyBlockBazaarProduct'
+              required:
+                - ANCIENT_CLAW
+                - BAZAAR_COOKIE
+                - BLAZE_ROD
+                - BLESSED_BAIT
+                - BLUE_SHARK_TOOTH
+                - BONE
+                - BOOSTER_COOKIE
+                - BROWN_MUSHROOM
+                - CACTUS
+                - CARROT_BAIT
+                - CARROT_ITEM
+                - CATALYST
+                - CLAY_BALL
+                - COAL
+                - COBBLESTONE
+                - COMPACTOR
+                - DAEDALUS_STICK
+                - DARK_BAIT
+                - DIAMOND
+                - ECTOPLASM
+                - EMERALD
+                - ENCHANTED_ACACIA_LOG
+                - ENCHANTED_ANCIENT_CLAW
+                - ENCHANTED_BAKED_POTATO
+                - ENCHANTED_BIRCH_LOG
+                - ENCHANTED_BLAZE_POWDER
+                - ENCHANTED_BLAZE_ROD
+                - ENCHANTED_BONE
+                - ENCHANTED_BONE_BLOCK
+                - ENCHANTED_BREAD
+                - ENCHANTED_BROWN_MUSHROOM
+                - ENCHANTED_CACTUS
+                - ENCHANTED_CACTUS_GREEN
+                - ENCHANTED_CAKE
+                - ENCHANTED_CARROT
+                - ENCHANTED_CARROT_ON_A_STICK
+                - ENCHANTED_CARROT_STICK
+                - ENCHANTED_CHARCOAL
+                - ENCHANTED_CLAY_BALL
+                - ENCHANTED_CLOWNFISH
+                - ENCHANTED_COAL
+                - ENCHANTED_COAL_BLOCK
+                - ENCHANTED_COBBLESTONE
+                - ENCHANTED_COCOA
+                - ENCHANTED_COOKED_FISH
+                - ENCHANTED_COOKED_MUTTON
+                - ENCHANTED_COOKED_SALMON
+                - ENCHANTED_COOKIE
+                - ENCHANTED_DARK_OAK_LOG
+                - ENCHANTED_DIAMOND
+                - ENCHANTED_DIAMOND_BLOCK
+                - ENCHANTED_EGG
+                - ENCHANTED_EMERALD
+                - ENCHANTED_EMERALD_BLOCK
+                - ENCHANTED_ENDER_PEARL
+                - ENCHANTED_ENDSTONE
+                - ENCHANTED_EYE_OF_ENDER
+                - ENCHANTED_FEATHER
+                - ENCHANTED_FERMENTED_SPIDER_EYE
+                - ENCHANTED_FIREWORK_ROCKET
+                - ENCHANTED_FLINT
+                - ENCHANTED_GHAST_TEAR
+                - ENCHANTED_GLISTERING_MELON
+                - ENCHANTED_GLOWSTONE
+                - ENCHANTED_GLOWSTONE_DUST
+                - ENCHANTED_GOLD
+                - ENCHANTED_GOLD_BLOCK
+                - ENCHANTED_GOLDEN_CARROT
+                - ENCHANTED_GRILLED_PORK
+                - ENCHANTED_GUNPOWDER
+                - ENCHANTED_HAY_BLOCK
+                - ENCHANTED_HUGE_MUSHROOM_1
+                - ENCHANTED_HUGE_MUSHROOM_2
+                - ENCHANTED_ICE
+                - ENCHANTED_INK_SACK
+                - ENCHANTED_IRON
+                - ENCHANTED_IRON_BLOCK
+                - ENCHANTED_JUNGLE_LOG
+                - ENCHANTED_LAPIS_LAZULI
+                - ENCHANTED_LAPIS_LAZULI_BLOCK
+                - ENCHANTED_LAVA_BUCKET
+                - ENCHANTED_LEATHER
+                - ENCHANTED_MAGMA_CREAM
+                - ENCHANTED_MELON
+                - ENCHANTED_MELON_BLOCK
+                - ENCHANTED_MUTTON
+                - ENCHANTED_NETHER_STALK
+                - ENCHANTED_OAK_LOG
+                - ENCHANTED_OBSIDIAN
+                - ENCHANTED_PACKED_ICE
+                - ENCHANTED_PAPER
+                - ENCHANTED_PORK
+                - ENCHANTED_POTATO
+                - ENCHANTED_PRISMARINE_CRYSTALS
+                - ENCHANTED_PRISMARINE_SHARD
+                - ENCHANTED_PUFFERFISH
+                - ENCHANTED_PUMPKIN
+                - ENCHANTED_QUARTZ
+                - ENCHANTED_QUARTZ_BLOCK
+                - ENCHANTED_RABBIT
+                - ENCHANTED_RABBIT_FOOT
+                - ENCHANTED_RABBIT_HIDE
+                - ENCHANTED_RAW_BEEF
+                - ENCHANTED_RAW_CHICKEN
+                - ENCHANTED_RAW_FISH
+                - ENCHANTED_RAW_SALMON
+                - ENCHANTED_RED_MUSHROOM
+                - ENCHANTED_REDSTONE
+                - ENCHANTED_REDSTONE_BLOCK
+                - ENCHANTED_REDSTONE_LAMP
+                - ENCHANTED_ROTTEN_FLESH
+                - ENCHANTED_SAND
+                - ENCHANTED_SEEDS
+                - ENCHANTED_SHARK_FIN
+                - ENCHANTED_SLIME_BALL
+                - ENCHANTED_SLIME_BLOCK
+                - ENCHANTED_SNOW_BLOCK
+                - ENCHANTED_SPIDER_EYE
+                - ENCHANTED_SPONGE
+                - ENCHANTED_SPRUCE_LOG
+                - ENCHANTED_STRING
+                - ENCHANTED_SUGAR
+                - ENCHANTED_SUGAR_CANE
+                - ENCHANTED_WATER_LILY
+                - ENCHANTED_WET_SPONGE
+                - ENDER_PEARL
+                - ENDER_STONE
+                - FEATHER
+                - FISH_BAIT
+                - FLINT
+                - FOUL_FLESH
+                - FUMING_POTATO_BOOK
+                - GHAST_TEAR
+                - GLOWSTONE_DUST
+                - GOLD_INGOT
+                - GOLDEN_TOOTH
+                - GRAVEL
+                - GREAT_WHITE_SHARK_TOOTH
+                - GREEN_CANDY
+                - GREEN_GIFT
+                - GRIFFIN_FEATHER
+                - HAMSTER_WHEEL
+                - HAY_BLOCK
+                - HOLY_FRAGMENT
+                - HOT_POTATO_BOOK
+                - HUGE_MUSHROOM_1
+                - HUGE_MUSHROOM_2
+                - HYPER_CATALYST
+                - ICE
+                - ICE_BAIT
+                - INK_SACK
+                - INK_SACK:3
+                - INK_SACK:4
+                - IRON_INGOT
+                - JACOBS_TICKET
+                - LEATHER
+                - LIGHT_BAIT
+                - LOG
+                - LOG:1
+                - LOG:2
+                - LOG:3
+                - LOG_2
+                - LOG_2:1
+                - MAGMA_CREAM
+                - MELON
+                - MINNOW_BAIT
+                - MUTTON
+                - NETHER_STALK
+                - NETHERRACK
+                - NURSE_SHARK_TOOTH
+                - OBSIDIAN
+                - OLD_FRAGMENT
+                - PACKED_ICE
+                - PORK
+                - POTATO_ITEM
+                - PRISMARINE_CRYSTALS
+                - PRISMARINE_SHARD
+                - PROTECTOR_FRAGMENT
+                - PUMPKIN
+                - PUMPKIN_GUTS
+                - PURPLE_CANDY
+                - QUARTZ
+                - RABBIT
+                - RABBIT_FOOT
+                - RABBIT_HIDE
+                - RAW_BEEF
+                - RAW_CHICKEN
+                - RAW_FISH
+                - RAW_FISH:1
+                - RAW_FISH:2
+                - RAW_FISH:3
+                - RECOMBOBULATOR_3000
+                - RED_GIFT
+                - RED_MUSHROOM
+                - REDSTONE
+                - REFINED_MINERAL
+                - REVENANT_FLESH
+                - REVENANT_VISCERA
+                - ROTTEN_FLESH
+                - SAND
+                - SEEDS
+                - SHARK_BAIT
+                - SHARK_FIN
+                - SLIME_BALL
+                - SNOW_BALL
+                - SNOW_BLOCK
+                - SOUL_FRAGMENT
+                - SPIDER_EYE
+                - SPIKED_BAIT
+                - SPONGE
+                - SPOOKY_BAIT
+                - SPOOKY_SHARD
+                - STOCK_OF_STONKS
+                - STRING
+                - STRONG_FRAGMENT
+                - SUGAR_CANE
+                - SULPHUR
+                - SUMMONING_EYE
+                - SUPER_COMPACTOR_3000
+                - SUPER_EGG
+                - SUPERIOR_FRAGMENT
+                - TARANTULA_SILK
+                - TARANTULA_WEB
+                - TIGER_SHARK_TOOTH
+                - UNSTABLE_FRAGMENT
+                - WATER_LILY
+                - WEREWOLF_SKIN
+                - WHALE_BAIT
+                - WHEAT
+                - WHITE_GIFT
+                - WISE_FRAGMENT
+                - WOLF_TOOTH
+                - YOUNG_FRAGMENT
+          required:
+            - lastUpdated
+            - products
+    SkyBlockBazaarProduct:
+      type: object
+      properties:
+        product_id:
+          type: string
+        sell_summary:
+          type: array
+          items:
+            type: object
+            properties:
+              amount:
+                type: number
+              pricePerUnit:
+                type: number
+              orders:
+                type: number
+            required:
+              - amount
+              - pricePerUnit
+              - orders
+        buy_summary:
+          type: array
+          items:
+            type: object
+            properties:
+              amount:
+                type: number
+              pricePerUnit:
+                type: number
+              orders:
+                type: number
+            required:
+              - amount
+              - pricePerUnit
+              - orders
+        quick_status:
+          type: object
+          properties:
+            productId:
+              type: string
+            sellPrice:
+              type: number
+            sellVolume:
+              type: number
+            sellMovingWeek:
+              type: number
+            sellOrders:
+              type: number
+            buyPrice:
+              type: number
+            buyVolume:
+              type: number
+            buyMovingWeek:
+              type: number
+            buyOrders:
+              type: number
+          required:
+            - productId
+            - sellPrice
+            - sellVolume
+            - sellMovingWeek
+            - sellOrders
+            - buyPrice
+            - buyVolume
+            - buyMovingWeek
+            - buyOrders
+      required:
+        - product_id
+        - sell_summary
+        - buy_summary
+        - quick_status
     NewsResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'
@@ -8891,6 +10682,2171 @@ components:
           example: Agni Temple
       required:
         - online
+    SkyBlockProfile:
+      type: object
+      nullable: true
+      properties:
+        autodelete:
+          type: boolean
+        banking:
+          $ref: '#/components/schemas/SkyBlockProfileBanking'
+        community_upgrades:
+          $ref: '#/components/schemas/SkyBlockProfileCommunityUpgrades'
+        game_mode:
+          description: Often this field is "ironman".
+          type: string
+        members:
+          type: object
+          description: The members of this profile. The object key is their Minecraft UUID.
+          additionalProperties:
+            $ref: '#/components/schemas/SkyBlockProfileMember'
+        profile_id:
+          type: string
+      required:
+        - cute_name
+        - members
+        - profile_id
+    SkyBlockProfileCuteName:
+      allOf:
+        - $ref: '#/components/schemas/SkyBlockProfile'
+        - type: object
+          properties:
+            cute_name:
+              description: Cute name of the profile. e.g. "Strawberry"
+              example: Strawberry
+              type: string
+          required:
+            - cute_name
+    SkyBlockProfileBanking:
+      type: object
+      description: Profile banking information. Only shows up if their banking API is enabled.
+      properties:
+        balance:
+          type: number
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkyBlockProfileBankingTransaction'
+      required:
+        - balance
+        - transactions
+    SkyBlockProfileBankingTransaction:
+      type: object
+      properties:
+        action:
+          type: string
+        amount:
+          type: number
+        initiator_name:
+          type: string
+        timestamp:
+          type: number
+      required:
+        - action
+        - amount
+        - initiator_name
+        - timestamp
+    SkyBlockProfileCommunityUpgrades:
+      type: object
+      properties:
+        currently_upgrading:
+          $ref: '#/components/schemas/SkyBlockProfileCommunityUpgradesCurrent'
+        upgrade_states:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkyBlockProfileCommunityUpgradesState'
+      required:
+        - currently_upgrading
+    SkyBlockProfileCommunityUpgradesCurrent:
+      type: object
+      properties:
+        new_tier:
+          type: number
+        start_ms:
+          description: Timestamp of when it was started.
+          type: number
+        upgrade:
+          type: string
+        who_started:
+          description: Minecraft UUID of the player that started this.
+          type: string
+      required:
+        - new_tier
+        - start_ms
+        - upgrade
+        - who_started
+    SkyBlockProfileCommunityUpgradesState:
+      type: object
+      properties:
+        claimed_by:
+          description: Minecraft UUID of the player that claimed this.
+          type: string
+        claimed_ms:
+          description: Timestamp of when it was claimed.
+          type: number
+        fasttracked:
+          type: boolean
+        started_by:
+          description: Minecraft UUID of the player that started this.
+          type: string
+        started_ms:
+          description: Timestamp of when it was started.
+          type: number
+        tier:
+          type: number
+        upgrade:
+          type: string
+      required:
+        - claimed_by
+        - claimed_ms
+        - fasttracked
+        - started_by
+        - started_ms
+        - tier
+        - upgrade
+    SkyBlockProfileMember:
+      allOf:
+        - $ref: '#/components/schemas/SkyBlockProfileMemberBase'
+        - $ref: '#/components/schemas/SkyBlockProfileCollectionsAPI'
+        - $ref: '#/components/schemas/SkyBlockProfileInventoryAPI'
+        - $ref: '#/components/schemas/SkyBlockProfileSkillsAPI'
+    SkyBlockProfileMemberBase:
+      type: object
+      properties:
+        achievement_spawned_island_types:
+          type: array
+          description: An array of values, each value describing an island that has been spawned by the member. e.g. "Pond Island"
+          items:
+            type: string
+        coin_purse:
+          type: number
+        coop_invitation:
+          $ref: '#/components/schemas/SkyBlockProfileCoopInvitation'
+        crafted_generators:
+          type: array
+          description: An array of values, each value describing a minion and it's tier that the player has upgraded / crafted.
+          items:
+            type: string
+        death_count:
+          type: number
+        dungeons:
+          type: object
+          properties:
+            dungeon_journal:
+              $ref: '#/components/schemas/SkyBlockProfileDungeonJournal'
+            dungeon_types:
+              type: object
+              properties:
+                catacombs:
+                  $ref: '#/components/schemas/SkyBlockProfileDungeonType'
+              additionalProperties:
+                $ref: '#/components/schemas/SkyBlockProfileDungeonType'
+              required:
+                - catacombs
+            dungeons_blah_blah:
+              $ref: '#/components/schemas/SkyBlockProfileDungeonBlahBlah'
+            player_classes:
+              type: object
+              properties:
+                archer:
+                  $ref: '#/components/schemas/SkyBlockProfileDungeonClass'
+                berserk:
+                  $ref: '#/components/schemas/SkyBlockProfileDungeonClass'
+                healer:
+                  $ref: '#/components/schemas/SkyBlockProfileDungeonClass'
+                mage:
+                  $ref: '#/components/schemas/SkyBlockProfileDungeonClass'
+                tank:
+                  $ref: '#/components/schemas/SkyBlockProfileDungeonClass'
+              additionalProperties:
+                $ref: '#/components/schemas/SkyBlockProfileDungeonClass'
+              required:
+                - archer
+                - berserk
+                - healer
+                - mage
+                - tank
+            selected_dungeon_class:
+              type: string
+          required:
+            - dungeon_journal
+            - dungeon_types
+            - player_classes
+        fairy_exchanges:
+          type: number
+        fairy_souls:
+          type: number
+        fairy_souls_collected:
+          type: number
+        first_join:
+          type: number
+        first_join_hub:
+          type: number
+        fishing_treasure_caught:
+          type: number
+        inv_armor:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        last_death:
+          type: number
+        last_save:
+          type: number
+        objectives:
+          $ref: '#/components/schemas/SkyBlockProfileObjectives'
+        pets:
+          $ref: '#/components/schemas/SkyBlockProfilePets'
+        quests:
+          $ref: '#/components/schemas/SkyBlockProfileQuests'
+        slayer_bosses:
+          $ref: '#/components/schemas/SkyBlockProfileSlayerBosses'
+        slayer_quest:
+          $ref: '#/components/schemas/SkyBlockProfileSlayerQuest'
+        stats:
+          $ref: '#/components/schemas/SkyBlockProfileStats'
+        tutorial:
+          type: array
+          items:
+            type: string
+        visited_zones:
+          type: array
+          items:
+            type: string
+      required:
+        - coin_purse
+        - first_join
+        - first_join_hub
+        - inv_armor
+        - last_death
+        - last_save
+        - objectives
+        - quests
+        - stats
+        - tutorial
+        - visited_zones
+    SkyBlockProfileCollectionsAPI:
+      type: object
+      properties:
+        collection:
+          $ref: '#/components/schemas/SkyBlockProfileCollection'
+        unlocked_coll_tiers:
+          type: array
+          description: An array of values, each value describing a collection tier that has been unlocked.
+          items:
+            type: string
+    SkyBlockProfileInventoryData:
+      type: object
+      properties:
+        data:
+          type: string
+        type:
+          type: number
+      required:
+        - data
+        - type
+    SkyBlockProfileInventoryAPI:
+      type: object
+      properties:
+        candy_inventory_contents:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        ender_chest_contents:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        fishing_bag:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        inv_contents:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        potion_bag:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        quiver:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        sacks_counts:
+          $ref: '#/components/schemas/SkyBlockProfileSacksCounts'
+        talisman_bag:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        wardrobe_contents:
+          $ref: '#/components/schemas/SkyBlockProfileInventoryData'
+        wardrobe_equipped_slot:
+          type: number
+    SkyBlockProfileSkillsAPI:
+      type: object
+      properties:
+        experience_skill_alchemy:
+          type: number
+        experience_skill_carpentry:
+          type: number
+        experience_skill_combat:
+          type: number
+        experience_skill_enchanting:
+          type: number
+        experience_skill_farming:
+          type: number
+        experience_skill_fishing:
+          type: number
+        experience_skill_foraging:
+          type: number
+        experience_skill_mining:
+          type: number
+        experience_skill_runecrafting:
+          type: number
+        experience_skill_taming:
+          type: number
+    SkyBlockProfileSacksCounts:
+      type: object
+      description: The contents of their sacks.
+      properties:
+        BLAZE_ROD:
+          type: number
+        BONE:
+          type: number
+        CACTUS:
+          type: number
+        CARROT_ITEM:
+          type: number
+        CLAY_BALL:
+          type: number
+        COAL:
+          type: number
+        COBBLESTONE:
+          type: number
+        DIAMOND:
+          type: number
+        DUNGEON_TRAP:
+          type: number
+        EMERALD:
+          type: number
+        ENDER_PEARL:
+          type: number
+        ENDER_STONE:
+          type: number
+        GHAST_TEAR:
+          type: number
+        GLOWSTONE_DUST:
+          type: number
+        GOLD_INGOT:
+          type: number
+        GRAVEL:
+          type: number
+        ICE:
+          type: number
+        INK_SACK:
+          type: number
+        'INK_SACK:3':
+          type: number
+        'INK_SACK:4':
+          type: number
+        IRON_INGOT:
+          type: number
+        LEATHER:
+          type: number
+        LOG:
+          type: number
+        'LOG:1':
+          type: number
+        'LOG:2':
+          type: number
+        'LOG:3':
+          type: number
+        LOG_2:
+          type: number
+        'LOG_2:1':
+          type: number
+        MAGMA_CREAM:
+          type: number
+        MELON:
+          type: number
+        MUSHROOM_COLLECTION:
+          type: number
+        MUTTON:
+          type: number
+        NETHERRACK:
+          type: number
+        NETHER_STALK:
+          type: number
+        OBSIDIAN:
+          type: number
+        PORK:
+          type: number
+        POTATO_ITEM:
+          type: number
+        PRISMARINE_CRYSTALS:
+          type: number
+        PRISMARINE_SHARD:
+          type: number
+        PUMPKIN:
+          type: number
+        QUARTZ:
+          type: number
+        RABBIT:
+          type: number
+        RAW_FISH:
+          type: number
+        'RAW_FISH:1':
+          type: number
+        'RAW_FISH:2':
+          type: number
+        'RAW_FISH:3':
+          type: number
+        REDSTONE:
+          type: number
+        REVENANT_FLESH:
+          type: number
+        ROTTEN_FLESH:
+          type: number
+        SAND:
+          type: number
+        SEEDS:
+          type: number
+        SLIME_BALL:
+          type: number
+        SPIDER_EYE:
+          type: number
+        SPONGE:
+          type: number
+        STRING:
+          type: number
+        SUGAR_CANE:
+          type: number
+        SULPHUR:
+          type: number
+        TARANTULA_WEB:
+          type: number
+        WATER_LILY:
+          type: number
+        WHEAT:
+          type: number
+        WOLF_TOOTH:
+          type: number
+      additionalProperties:
+        type: number
+    SkyBlockProfileCollection:
+      type: object
+      description: Each property key is the collection's item, and the value is the XP.
+      properties:
+        BLAZE_ROD:
+          type: number
+        BONE:
+          type: number
+        CACTUS:
+          type: number
+        CARROT_ITEM:
+          type: number
+        CLAY_BALL:
+          type: number
+        COAL:
+          type: number
+        COBBLESTONE:
+          type: number
+        DIAMOND:
+          type: number
+        EMERALD:
+          type: number
+        ENCHANTED_CLAY_BALL:
+          type: number
+        ENCHANTED_DIAMOND:
+          type: number
+        ENDER_PEARL:
+          type: number
+        ENDER_STONE:
+          type: number
+        FEATHER:
+          type: number
+        GHAST_TEAR:
+          type: number
+        GLOWSTONE_DUST:
+          type: number
+        GOLD_INGOT:
+          type: number
+        GRAVEL:
+          type: number
+        ICE:
+          type: number
+        INK_SACK:
+          type: number
+        'INK_SACK:3':
+          type: number
+        'INK_SACK:4':
+          type: number
+        IRON_INGOT:
+          type: number
+        LEATHER:
+          type: number
+        LOG:
+          type: number
+        'LOG:1':
+          type: number
+        'LOG:2':
+          type: number
+        'LOG:3':
+          type: number
+        LOG_2:
+          type: number
+        'LOG_2:1':
+          type: number
+        MAGMA_CREAM:
+          type: number
+        MELON:
+          type: number
+        MUSHROOM_COLLECTION:
+          type: number
+        MUTTON:
+          type: number
+        NETHERRACK:
+          type: number
+        NETHER_STALK:
+          type: number
+        OBSIDIAN:
+          type: number
+        PORK:
+          type: number
+        POTATO_ITEM:
+          type: number
+        PRISMARINE_CRYSTALS:
+          type: number
+        PRISMARINE_SHARD:
+          type: number
+        PUMPKIN:
+          type: number
+        QUARTZ:
+          type: number
+        RABBIT:
+          type: number
+        RABBIT_HIDE:
+          type: number
+        RAW_CHICKEN:
+          type: number
+        RAW_FISH:
+          type: number
+        'RAW_FISH:1':
+          type: number
+        'RAW_FISH:2':
+          type: number
+        'RAW_FISH:3':
+          type: number
+        REDSTONE:
+          type: number
+        ROTTEN_FLESH:
+          type: number
+        SAND:
+          type: number
+        SEEDS:
+          type: number
+        SLIME_BALL:
+          type: number
+        SNOW_BLOCK:
+          type: number
+        SPIDER_EYE:
+          type: number
+        SPONGE:
+          type: number
+        STRING:
+          type: number
+        SUGAR_CANE:
+          type: number
+        SULPHUR:
+          type: number
+        WATER_LILY:
+          type: number
+        WHEAT:
+          type: number
+        WOOL:
+          type: number
+      additionalProperties:
+        type: number
+    SkyBlockProfileCoopInvitation:
+      type: object
+      description: Coop invitation that the member accepted.
+      properties:
+        confirmed:
+          type: boolean
+        confirmed_timestamp:
+          description: The timestamp of when the player accepted the invite.
+          type: number
+        invited_by:
+          description: The Minecraft UUID of the player who invited them.
+          type: string
+        timestamp:
+          description: When the invitation was created.
+          type: number
+      required:
+        - invited_by
+        - timestamp
+    SkyBlockProfileDungeonJournal:
+      type: object
+      properties:
+        journal_entries:
+          type: object
+          properties:
+            expedition_volume_1:
+              $ref: '#/components/schemas/SkyBlockProfileDungeonJournalEntries'
+            expedition_volume_2:
+              $ref: '#/components/schemas/SkyBlockProfileDungeonJournalEntries'
+            karylles_diary:
+              $ref: '#/components/schemas/SkyBlockProfileDungeonJournalEntries'
+            the_study:
+              $ref: '#/components/schemas/SkyBlockProfileDungeonJournalEntries'
+            uncanny_remains:
+              $ref: '#/components/schemas/SkyBlockProfileDungeonJournalEntries'
+          additionalProperties:
+            $ref: '#/components/schemas/SkyBlockProfileDungeonJournalEntries'
+    SkyBlockProfileDungeonJournalEntries:
+      type: array
+      items:
+        type: number
+    SkyBlockProfileDungeonType:
+      type: object
+      properties:
+        best_runs:
+          type: object
+          description: The property key is the floor these run stats were achieved on.
+          additionalProperties:
+            $ref: '#/components/schemas/SkyBlockProfileDungeonTypeFloorRun'
+        best_score:
+          type: object
+          description: The property key is the floor number this score was achieved on.
+          additionalProperties:
+            type: number
+        experience:
+          type: number
+          description: The amount of exp this profile member has in this dungeon type.
+        fastest_time:
+          type: object
+          description: The property key is the floor number this time was achieved on.
+          additionalProperties:
+            type: number
+        fastest_time_s:
+          type: object
+          description: Fastest time for an S completion. The property key is the floor number this time was achieved on.
+          additionalProperties:
+            type: number
+        fastest_time_s_plus:
+          type: object
+          description: Fastest time for an S+ completion. The property key is the floor number this time was achieved on.
+          additionalProperties:
+            type: number
+        highest_tier_completed:
+          description: Highest dungeon tier the profile member has completed of this type.
+          type: number
+        mobs_killed:
+          type: object
+          description: The property key is the floor number these mobs were killed on.
+          additionalProperties:
+            type: number
+        most_damage_archer:
+          type: object
+          description: The most damage this profile member has dealt in a single run as an archer. The object key is the floor number.
+          additionalProperties:
+            type: number
+        most_damage_berserk:
+          type: object
+          description: The most damage this profile member has dealt in a single run as a berserker. The object key is the floor number.
+          additionalProperties:
+            type: number
+        most_damage_mage:
+          type: object
+          description: The most damage this profile member has dealt in a single run as a mage. The object key is the floor number.
+          additionalProperties:
+            type: number
+        most_damage_tank:
+          type: object
+          description: The most damage this profile member has dealt in a single run as a tank. The object key is the floor number.
+          additionalProperties:
+            type: number
+        most_healing:
+          type: object
+          description: The most healing this profile member has performed in a single run. The object key is the floor number.
+          additionalProperties:
+            type: number
+        most_mobs_killed:
+          type: object
+          description: The most mobs this profile member has killed in a single run. The object key is the floor number.
+          additionalProperties:
+            type: number
+        tier_completions:
+          type: object
+          description: The amount of times this profile member has completed each floor. The object key is the floor number.
+          additionalProperties:
+            type: number
+        times_played:
+          type: object
+          description: The amount of times this profile member has attempted each floor. The object key is the floor number.
+          additionalProperties:
+            type: number
+        watcher_kills:
+          type: object
+          description: The amount of times this profile member has killed the watcher. The object key is the floor number.
+          additionalProperties:
+            type: number
+    SkyBlockProfileDungeonTypeFloorRun:
+      type: array
+      items:
+        type: object
+        properties:
+          ally_healing:
+            type: number
+          damage_dealt:
+            type: number
+          damage_mitigated:
+            type: number
+          deaths:
+            type: number
+          dungeon_class:
+            type: string
+          elapsed_time:
+            type: number
+          mobs_killed:
+            type: number
+          score_bonus:
+            type: number
+          score_exploration:
+            type: number
+          score_skill:
+            type: number
+          score_speed:
+            type: number
+          secrets_found:
+            type: number
+          teammates:
+            type: array
+            items:
+              type: string
+          timestamp:
+            type: number
+        required:
+          - damage_dealt
+          - damage_mitigated
+          - deaths
+          - dungeon_class
+          - elapsed_time
+          - mobs_killed
+          - score_bonus
+          - score_exploration
+          - score_skill
+          - score_speed
+          - secrets_found
+          - teammates
+          - timestamp
+    SkyBlockProfileDungeonBlahBlah:
+      type: array
+      description: Array of values, each value describing a dungeon NPC the profile member has spoken to.
+      items:
+        type: string
+    SkyBlockProfileDungeonClass:
+      type: object
+      properties:
+        experience:
+          type: number
+      required:
+        - experience
+    SkyBlockProfileObjectives:
+      type: object
+      properties:
+        chop_tree:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        collect_birch_logs:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        collect_clay:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        collect_dark_oak_logs:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        collect_diamond:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                DIAMOND:
+                  type: boolean
+        collect_emerald:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                EMERALD:
+                  type: boolean
+        collect_end_stone:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                ENDER_STONE:
+                  type: boolean
+        collect_farm_animal_resources:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                LEATHER:
+                  type: boolean
+                PORK:
+                  type: boolean
+                RAW_CHICKEN:
+                  type: boolean
+        collect_farm_animal_resources_2:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                MUTTON:
+                  type: boolean
+                RABBIT:
+                  type: boolean
+        collect_farming_resources:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                CARROT_ITEM:
+                  type: boolean
+                MELON:
+                  type: boolean
+                POTATO_ITEM:
+                  type: boolean
+                PUMPKIN:
+                  type: boolean
+        collect_farming_resources_2:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                CACTUS:
+                  type: boolean
+                'INK_SACK:3':
+                  type: boolean
+                SUGAR_CANE:
+                  type: boolean
+        collect_ingots:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                GOLD_INGOT:
+                  type: boolean
+                IRON_INGOT:
+                  type: boolean
+        collect_lapis:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                'INK_SACK:4':
+                  type: boolean
+        collect_log:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        collect_nether_resources:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                BLAZE_ROD:
+                  type: boolean
+                NETHER_STALK:
+                  type: boolean
+        collect_nether_resources_2:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                GLOWSTONE_DUST:
+                  type: boolean
+                MAGMA_CREAM:
+                  type: boolean
+                QUARTZ:
+                  type: boolean
+        collect_obsidian:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                OBSIDIAN:
+                  type: boolean
+        collect_redstone:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                REDSTONE:
+                  type: boolean
+        collect_spider:
+          allOf:
+            - $ref: '#/components/schemas/SkyBlockProfileObjective'
+            - type: object
+              properties:
+                SPIDER_EYE:
+                  type: boolean
+                STRING:
+                  type: boolean
+        collect_wheat:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        collect_wool_carpenter:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_chicken_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_chicken_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_chicken_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_chicken_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_anything_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_anything_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_anything_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_anything_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_anything_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_abilities_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_abilities_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_abilities_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_abilities_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_abilities_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_pearls_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_pearls_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_pearls_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_pearls_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_pearls_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_no_pearls_with_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_nothing_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_nothing_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_nothing_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_nothing_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_crystal_core_nothing_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_end_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_end_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_end_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_end_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_anything_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_anything_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_anything_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_anything_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_anything_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_abilities_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_abilities_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_abilities_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_abilities_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_abilities_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_pearls_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_pearls_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_pearls_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_pearls_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_no_pearls_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_nothing_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_nothing_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_nothing_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_nothing_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_giant_mushroom_nothing_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_anything_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_anything_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_anything_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_anything_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_anything_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_abilities_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_abilities_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_abilities_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_abilities_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_abilities_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_pearls_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_pearls_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_pearls_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_pearls_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_no_pearls_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_nothing_no_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_nothing_no_return_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_nothing_no_return_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_nothing_no_return_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_precursor_ruins_nothing_with_return_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_woods_race_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_woods_race_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_woods_race_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        complete_the_woods_race_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        craft_wheat_minion:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        craft_wood_pickaxe:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        craft_workbench:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        deposit_coins:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        enchant_item:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        explore_hub:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        explore_village:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        fight_dragon:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        find_pickaxe:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        give_fairy_souls:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        give_pickaxe_lapis_miner:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        give_rick_ingots:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_combat_skill:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_combat_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_farming_skill:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_farming_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_foraging_skill:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_foraging_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_mining_skill:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        increase_mining_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        kill_danger_mobs:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        mine_coal:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        paint_canvas:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        public_island:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        reach_diamond_reserve:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        reach_dragons_nest:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        reach_lapis_quarry:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        reach_obsidian_sanctuary:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        reach_pigmens_den:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        reach_slimehill:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        reforge_item:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_artist_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_artist_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_auction_master:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_banker:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_bartender:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_blacksmith:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_blacksmith_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_carpenter:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_charlie:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_charlie_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_elle:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_end_dealer:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_event_master:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_fairy:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_farmer:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_farmer_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_farmhand_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_farmhand_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_fisherman_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_fisherman_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_frosty:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guber_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guber_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guber_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guber_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guber_5:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guide:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_anything_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_anything_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_anything_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_anything_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_abilities_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_abilities_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_abilities_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_abilities_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_pearls_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_pearls_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_pearls_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_pearls_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_no_pearls_with_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_nothing_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_nothing_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_nothing_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_crystal_core_nothing_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_anything_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_anything_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_anything_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_anything_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_abilities_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_abilities_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_abilities_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_abilities_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_pearls_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_pearls_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_pearls_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_no_pearls_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_nothing_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_nothing_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_nothing_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_giant_mushroom_nothing_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_anything_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_anything_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_anything_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_anything_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_abilities_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_abilities_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_abilities_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_abilities_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_pearls_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_pearls_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_pearls_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_no_pearls_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_nothing_no_return_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_nothing_no_return_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_nothing_no_return_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_guildford_precursor_ruins_nothing_no_return_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gulliver_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gulliver_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gulliver_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gulliver_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gulliver_5:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gustave_1:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gustave_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gustave_3:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gustave_4:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_gustave_5:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_haymitch:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_lapis_miner:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_lazy_miner:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_librarian:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_lift_operator:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_lumberjack:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_lumberjack_2:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_melody:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_pet_collector:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_pet_sitter:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_rick:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        talk_to_telekinesis_applier:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_barn_island:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_blazing_fortress:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_deep_caverns:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_foraging_islands:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_gold_mine:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_mushroom_desert:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_spiders_den:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+        warp_the_end:
+          $ref: '#/components/schemas/SkyBlockProfileObjective'
+      additionalProperties:
+        $ref: '#/components/schemas/SkyBlockProfileObjective'
+    SkyBlockProfileObjective:
+      type: object
+      properties:
+        completed_at:
+          type: number
+        progress:
+          type: number
+        status:
+          type: string
+      additionalProperties:
+        oneOf:
+          - type: boolean
+          - type: number
+          - type: string
+      required:
+        - completed_at
+        - progress
+        - status
+    SkyBlockProfilePets:
+      type: array
+      items:
+        $ref: '#/components/schemas/SkyBlockProfilePet'
+    SkyBlockProfilePet:
+      type: object
+      properties:
+        active:
+          type: boolean
+        candyUsed:
+          type: number
+        exp:
+          type: number
+        heldItem:
+          nullable: true
+          type: string
+        skin:
+          type: string
+          nullable: true
+        tier:
+          type: string
+        type:
+          type: string
+        uuid:
+          type: string
+      required:
+        - active
+        - exp
+        - tier
+        - type
+    SkyBlockProfileQuests:
+      type: object
+      properties:
+        collect_log:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        explore_hub:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        explore_village:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        increase_combat_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        increase_farming_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        increase_foraging_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        increase_mining_skill_5:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        kill_danger_mobs:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        reforge_item:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_artist_1:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_auction_master:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_banker:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_blacksmith:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_carpenter:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_end_dealer:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_farmer:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_farmhand_1:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_guber_1:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_guildford_1:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_gulliver_1:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_gustave_1:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_lapis_miner:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_lazy_miner:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_librarian:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_lumberjack:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+        talk_to_rick:
+          $ref: '#/components/schemas/SkyBlockProfileQuest'
+      additionalProperties:
+        $ref: '#/components/schemas/SkyBlockProfileQuest'
+    SkyBlockProfileQuest:
+      type: object
+      properties:
+        activated_at:
+          type: number
+        activated_at_sb:
+          type: number
+        completed_at:
+          type: number
+        completed_at_sb:
+          type: number
+        status:
+          type: string
+      required:
+        - activated_at
+        - activated_at_sb
+        - completed_at
+        - completed_at_sb
+        - status
+    SkyBlockProfileSlayerBosses:
+      type: object
+      properties:
+        spider:
+          $ref: '#/components/schemas/SkyBlockProfileSlayerBoss'
+        wolf:
+          $ref: '#/components/schemas/SkyBlockProfileSlayerBoss'
+        zombie:
+          $ref: '#/components/schemas/SkyBlockProfileSlayerBoss'
+      additionalProperties:
+        $ref: '#/components/schemas/SkyBlockProfileSlayerBoss'
+      required:
+        - spider
+        - wolf
+        - zombie
+    SkyBlockProfileSlayerBoss:
+      type: object
+      properties:
+        boss_kills_tier_0:
+          type: number
+        boss_kills_tier_1:
+          type: number
+        boss_kills_tier_2:
+          type: number
+        boss_kills_tier_3:
+          type: number
+        claimed_levels:
+          type: object
+          properties:
+            level_1:
+              type: boolean
+            level_2:
+              type: boolean
+            level_3:
+              type: boolean
+            level_4:
+              type: boolean
+            level_5:
+              type: boolean
+            level_6:
+              type: boolean
+          additionalProperties:
+            type: boolean
+        xp:
+          type: number
+      additionalProperties:
+        anyOf:
+          - type: number
+          - type: object
+            additionalProperties:
+              type: boolean
+      required:
+        - claimed_levels
+    SkyBlockProfileSlayerQuest:
+      type: object
+      description: Details on the profile member's currently active slayer quest.
+      properties:
+        combat_xp:
+          type: number
+        completion_state:
+          type: number
+        kill_timestamp:
+          type: number
+        last_killed_mob_island:
+          type: string
+        recent_mob_kills:
+          type: array
+          items:
+            type: object
+            properties:
+              timestamp:
+                type: number
+              xp:
+                type: number
+            required:
+              - timestamp
+              - xp
+        spawn_timestamp:
+          type: number
+        start_timestamp:
+          type: number
+        tier:
+          type: number
+        type:
+          type: string
+        xp_on_last_follower_spawn:
+          type: number
+      required:
+        - completion_state
+        - start_timestamp
+        - tier
+        - type
+    SkyBlockProfileStats:
+      type: object
+      properties:
+        auctions_bids:
+          type: number
+        auctions_bought_common:
+          type: number
+        auctions_bought_epic:
+          type: number
+        auctions_bought_legendary:
+          type: number
+        auctions_bought_rare:
+          type: number
+        auctions_bought_special:
+          type: number
+        auctions_bought_uncommon:
+          type: number
+        auctions_completed:
+          type: number
+        auctions_created:
+          type: number
+        auctions_fees:
+          type: number
+        auctions_gold_earned:
+          type: number
+        auctions_gold_spent:
+          type: number
+        auctions_highest_bid:
+          type: number
+        auctions_no_bids:
+          type: number
+        auctions_sold_common:
+          type: number
+        auctions_sold_epic:
+          type: number
+        auctions_sold_legendary:
+          type: number
+        auctions_sold_rare:
+          type: number
+        auctions_sold_special:
+          type: number
+        auctions_sold_uncommon:
+          type: number
+        auctions_won:
+          type: number
+        chicken_race_best_time_2:
+          type: number
+        deaths:
+          type: number
+        deaths_blaze:
+          type: number
+        deaths_cactus:
+          type: number
+        deaths_catfish:
+          type: number
+        deaths_corrupted_protector:
+          type: number
+        deaths_crypt_dreadlord:
+          type: number
+        deaths_crypt_lurker:
+          type: number
+        deaths_crypt_souleater:
+          type: number
+        deaths_diamond_guy:
+          type: number
+        deaths_diamond_skeleton:
+          type: number
+        deaths_diamond_zombie:
+          type: number
+        deaths_dungeon_respawning_skeleton:
+          type: number
+        deaths_emerald_slime:
+          type: number
+        deaths_enderman:
+          type: number
+        deaths_endermite:
+          type: number
+        deaths_fall:
+          type: number
+        deaths_fire:
+          type: number
+        deaths_fireball_magma_cube:
+          type: number
+        deaths_gaia_construct:
+          type: number
+        deaths_generator_magma_cube:
+          type: number
+        deaths_generator_slime:
+          type: number
+        deaths_howling_spirit:
+          type: number
+        deaths_king_midas:
+          type: number
+        deaths_lapis_zombie:
+          type: number
+        deaths_liquid_hot_magma:
+          type: number
+        deaths_livid_clone:
+          type: number
+        deaths_lost_adventurer:
+          type: number
+        deaths_magma_cube:
+          type: number
+        deaths_magma_cube_boss:
+          type: number
+        deaths_obsidian_wither:
+          type: number
+        deaths_old_dragon:
+          type: number
+        deaths_old_wolf:
+          type: number
+        deaths_player:
+          type: number
+        deaths_professor:
+          type: number
+        deaths_professor_guardian_summon:
+          type: number
+        deaths_professor_mage_guardian:
+          type: number
+        deaths_protector_dragon:
+          type: number
+        deaths_random_slime:
+          type: number
+        deaths_redstone_pigman:
+          type: number
+        deaths_revenant_zombie:
+          type: number
+        deaths_ruin_wolf:
+          type: number
+        deaths_sadan_statue:
+          type: number
+        deaths_scared_skeleton:
+          type: number
+        deaths_scarf:
+          type: number
+        deaths_scarf_mage:
+          type: number
+        deaths_scarf_warrior:
+          type: number
+        deaths_sea_guardian:
+          type: number
+        deaths_shadow_assassin:
+          type: number
+        deaths_skeleton:
+          type: number
+        deaths_skeleton_emperor:
+          type: number
+        deaths_skeleton_grunt:
+          type: number
+        deaths_skeleton_master:
+          type: number
+        deaths_skeleton_soldier:
+          type: number
+        deaths_skeletor:
+          type: number
+        deaths_sniper_skeleton:
+          type: number
+        deaths_soul_of_the_alpha:
+          type: number
+        deaths_spider:
+          type: number
+        deaths_spider_jockey:
+          type: number
+        deaths_spirit_bat:
+          type: number
+        deaths_spirit_rabbit:
+          type: number
+        deaths_strong_dragon:
+          type: number
+        deaths_suffocation:
+          type: number
+        deaths_superior_dragon:
+          type: number
+        deaths_tarantula_spider:
+          type: number
+        deaths_tentaclees:
+          type: number
+        deaths_trap:
+          type: number
+        deaths_unburried_zombie:
+          type: number
+        deaths_unknown:
+          type: number
+        deaths_unstable_dragon:
+          type: number
+        deaths_void:
+          type: number
+        deaths_voracious_spider:
+          type: number
+        deaths_watcher:
+          type: number
+        deaths_watcher_summon_undead:
+          type: number
+        deaths_weaver_spider:
+          type: number
+        deaths_wise_dragon:
+          type: number
+        deaths_wither_skeleton:
+          type: number
+        deaths_wolf:
+          type: number
+        deaths_young_dragon:
+          type: number
+        deaths_zealot_enderman:
+          type: number
+        deaths_zombie:
+          type: number
+        deaths_zombie_deep:
+          type: number
+        deaths_zombie_grunt:
+          type: number
+        deaths_zombie_soldier:
+          type: number
+        dungeon_hub_crystal_core_anything_no_return_best_time:
+          type: number
+        dungeon_hub_crystal_core_anything_with_return_best_time:
+          type: number
+        dungeon_hub_crystal_core_no_abilities_no_return_best_time:
+          type: number
+        dungeon_hub_crystal_core_no_pearls_no_return_best_time:
+          type: number
+        dungeon_hub_crystal_core_no_pearls_with_return_best_time:
+          type: number
+        dungeon_hub_crystal_core_nothing_no_return_best_time:
+          type: number
+        dungeon_hub_giant_mushroom_anything_no_return_best_time:
+          type: number
+        dungeon_hub_giant_mushroom_no_abilities_no_return_best_time:
+          type: number
+        dungeon_hub_giant_mushroom_no_pearls_no_return_best_time:
+          type: number
+        dungeon_hub_giant_mushroom_nothing_no_return_best_time:
+          type: number
+        dungeon_hub_precursor_ruins_anything_no_return_best_time:
+          type: number
+        dungeon_hub_precursor_ruins_no_abilities_no_return_best_time:
+          type: number
+        dungeon_hub_precursor_ruins_no_pearls_no_return_best_time:
+          type: number
+        dungeon_hub_precursor_ruins_nothing_no_return_best_time:
+          type: number
+        end_race_best_time:
+          type: number
+        ender_crystals_destroyed:
+          type: number
+        foraging_race_best_time:
+          type: number
+        gifts_given:
+          type: number
+        gifts_received:
+          type: number
+        highest_crit_damage:
+          type: number
+        highest_critical_damage:
+          type: number
+        items_fished:
+          type: number
+        items_fished_large_treasure:
+          type: number
+        items_fished_normal:
+          type: number
+        items_fished_treasure:
+          type: number
+        kills:
+          type: number
+        kills_bat_pinata:
+          type: number
+        kills_bat_spooky:
+          type: number
+        kills_batty_witch:
+          type: number
+        kills_blaze:
+          type: number
+        kills_blaze_higher_or_lower:
+          type: number
+        kills_blue_shark:
+          type: number
+        kills_bonzo_summon_undead:
+          type: number
+        kills_brood_mother_cave_spider:
+          type: number
+        kills_brood_mother_spider:
+          type: number
+        kills_carrot_king:
+          type: number
+        kills_catfish:
+          type: number
+        kills_cave_spider:
+          type: number
+        kills_cellar_spider:
+          type: number
+        kills_chicken:
+          type: number
+        kills_chicken_deep:
+          type: number
+        kills_corrupted_protector:
+          type: number
+        kills_cow:
+          type: number
+        kills_creeper:
+          type: number
+        kills_crypt_dreadlord:
+          type: number
+        kills_crypt_lurker:
+          type: number
+        kills_crypt_souleater:
+          type: number
+        kills_crypt_tank_zombie:
+          type: number
+        kills_crypt_undead:
+          type: number
+        kills_crypt_undead_alexander:
+          type: number
+        kills_crypt_undead_apunch:
+          type: number
+        kills_crypt_undead_bernhard:
+          type: number
+        kills_crypt_undead_christian:
+          type: number
+        kills_crypt_undead_codename_b:
+          type: number
+        kills_crypt_undead_connorlinfoot:
+          type: number
+        kills_crypt_undead_dctr:
+          type: number
+        kills_crypt_undead_friedrich:
+          type: number
+        kills_crypt_undead_jayavarmen:
+          type: number
+        kills_crypt_undead_likaos:
+          type: number
+        kills_crypt_undead_marius:
+          type: number
+        kills_crypt_undead_nicholas:
+          type: number
+        kills_crypt_undead_nitroholic_:
+          type: number
+        kills_crypt_undead_pieter:
+          type: number
+        kills_crypt_undead_relenter:
+          type: number
+        kills_crypt_undead_sfarnham:
+          type: number
+        kills_crypt_undead_valentin:
+          type: number
+        kills_crypt_witherskeleton:
+          type: number
+        kills_dasher_spider:
+          type: number
+        kills_deep_sea_protector:
+          type: number
+        kills_diamond_guy:
+          type: number
+        kills_diamond_skeleton:
+          type: number
+        kills_diamond_zombie:
+          type: number
+        kills_dungeon_respawning_skeleton:
+          type: number
+        kills_dungeon_respawning_skeleton_skull:
+          type: number
+        kills_dungeon_secret_bat:
+          type: number
+        kills_emerald_slime:
+          type: number
+        kills_enderman:
+          type: number
+        kills_endermite:
+          type: number
+        kills_fireball_magma_cube:
+          type: number
+        kills_forest_island_bat:
+          type: number
+        kills_frosty_the_snowman:
+          type: number
+        kills_frozen_steve:
+          type: number
+        kills_gaia_construct:
+          type: number
+        kills_generator_ghast:
+          type: number
+        kills_generator_magma_cube:
+          type: number
+        kills_generator_slime:
+          type: number
+        kills_ghast:
+          type: number
+        kills_guardian_defender:
+          type: number
+        kills_guardian_emperor:
+          type: number
+        kills_horseman_bat:
+          type: number
+        kills_horseman_horse:
+          type: number
+        kills_horseman_zombie:
+          type: number
+        kills_howling_spirit:
+          type: number
+        kills_invisible_creeper:
+          type: number
+        kills_jockey_shot_silverfish:
+          type: number
+        kills_jockey_skeleton:
+          type: number
+        kills_king_midas:
+          type: number
+        kills_lapis_zombie:
+          type: number
+        kills_liquid_hot_magma:
+          type: number
+        kills_lonely_spider:
+          type: number
+        kills_lost_adventurer:
+          type: number
+        kills_magma_cube:
+          type: number
+        kills_magma_cube_boss:
+          type: number
+        kills_minos_hunter:
+          type: number
+        kills_minotaur:
+          type: number
+        kills_night_respawning_skeleton:
+          type: number
+        kills_night_squid:
+          type: number
+        kills_nurse_shark:
+          type: number
+        kills_obsidian_wither:
+          type: number
+        kills_old_wolf:
+          type: number
+        kills_pack_spirit:
+          type: number
+        kills_parasite:
+          type: number
+        kills_phantom_spirit:
+          type: number
+        kills_pig:
+          type: number
+        kills_pigman:
+          type: number
+        kills_player:
+          type: number
+        kills_pond_squid:
+          type: number
+        kills_professor_guardian_summon:
+          type: number
+        kills_protector_dragon:
+          type: number
+        kills_rabbit:
+          type: number
+        kills_random_slime:
+          type: number
+        kills_redstone_pigman:
+          type: number
+        kills_respawning_skeleton:
+          type: number
+        kills_revenant_zombie:
+          type: number
+        kills_ruin_wolf:
+          type: number
+        kills_scared_skeleton:
+          type: number
+        kills_scarf_archer:
+          type: number
+        kills_scarf_mage:
+          type: number
+        kills_scarf_priest:
+          type: number
+        kills_scarf_warrior:
+          type: number
+        kills_scary_jerry:
+          type: number
+        kills_sea_archer:
+          type: number
+        kills_sea_guardian:
+          type: number
+        kills_sea_leech:
+          type: number
+        kills_sea_walker:
+          type: number
+        kills_sea_witch:
+          type: number
+        kills_shadow_assassin:
+          type: number
+        kills_sheep:
+          type: number
+        kills_siamese_lynx:
+          type: number
+        kills_skeleton:
+          type: number
+        kills_skeleton_emperor:
+          type: number
+        kills_skeleton_grunt:
+          type: number
+        kills_skeleton_master:
+          type: number
+        kills_skeleton_soldier:
+          type: number
+        kills_skeletor:
+          type: number
+        kills_slime:
+          type: number
+        kills_sniper_skeleton:
+          type: number
+        kills_soul_of_the_alpha:
+          type: number
+        kills_spider:
+          type: number
+        kills_spider_jockey:
+          type: number
+        kills_spirit_bat:
+          type: number
+        kills_spirit_bull:
+          type: number
+        kills_spirit_chicken:
+          type: number
+        kills_spirit_miniboss:
+          type: number
+        kills_spirit_rabbit:
+          type: number
+        kills_spirit_sheep:
+          type: number
+        kills_spirit_wolf:
+          type: number
+        kills_splitter_spider:
+          type: number
+        kills_splitter_spider_silverfish:
+          type: number
+        kills_strong_dragon:
+          type: number
+        kills_super_archer:
+          type: number
+        kills_super_tank_zombie:
+          type: number
+        kills_tarantula_spider:
+          type: number
+        kills_tentaclees:
+          type: number
+        kills_tiger_shark:
+          type: number
+        kills_trick_or_treater:
+          type: number
+        kills_unburried_zombie:
+          type: number
+        kills_voracious_spider:
+          type: number
+        kills_watcher:
+          type: number
+        kills_watcher_bonzo:
+          type: number
+        kills_watcher_summon_undead:
+          type: number
+        kills_water_hydra:
+          type: number
+        kills_weaver_spider:
+          type: number
+        kills_witch:
+          type: number
+        kills_witch_bat:
+          type: number
+        kills_wither_gourd:
+          type: number
+        kills_wither_skeleton:
+          type: number
+        kills_wraith:
+          type: number
+        kills_zealot_enderman:
+          type: number
+        kills_zombie:
+          type: number
+        kills_zombie_deep:
+          type: number
+        kills_zombie_grunt:
+          type: number
+        kills_zombie_knight:
+          type: number
+        kills_zombie_soldier:
+          type: number
+        kills_zombie_villager:
+          type: number
+        most_winter_cannonballs_hit:
+          type: number
+        most_winter_damage_dealt:
+          type: number
+        most_winter_magma_damage_dealt:
+          type: number
+        most_winter_snowballs_hit:
+          type: number
+        mythos_burrows_chains_complete:
+          type: number
+        mythos_burrows_chains_complete_COMMON:
+          type: number
+        mythos_burrows_chains_complete_RARE:
+          type: number
+        mythos_burrows_chains_complete_null:
+          type: number
+        mythos_burrows_dug_combat:
+          type: number
+        mythos_burrows_dug_combat_COMMON:
+          type: number
+        mythos_burrows_dug_combat_RARE:
+          type: number
+        mythos_burrows_dug_combat_null:
+          type: number
+        mythos_burrows_dug_next:
+          type: number
+        mythos_burrows_dug_next_COMMON:
+          type: number
+        mythos_burrows_dug_next_RARE:
+          type: number
+        mythos_burrows_dug_next_null:
+          type: number
+        mythos_burrows_dug_treasure:
+          type: number
+        mythos_burrows_dug_treasure_COMMON:
+          type: number
+        mythos_burrows_dug_treasure_RARE:
+          type: number
+        mythos_burrows_dug_treasure_null:
+          type: number
+        mythos_kills:
+          type: number
+        pet_milestone_ores_mined:
+          type: number
+        pet_milestone_sea_creatures_killed:
+          type: number
+      additionalProperties:
+        type: number
   securitySchemes:
     apiKey:
       type: apiKey
