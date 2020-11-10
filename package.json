@@ -232,7 +232,7 @@
     "eslint": "^7.10.0",
     "eslint-config-airbnb-typescript-prettier": "^3.1.0",
     "esm": "^3.2.25",
-    "mocha": "^8.2.0",
+    "mocha": "^8.2.1",
     "node-env-run": "^4.0.2",
     "nyc": "^15.1.0",
     "prettier": "^2.1.2",
