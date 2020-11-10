@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { Client, Components } from "../src";
+import { Schema } from "dtsgenerator";
+import { Client, Components, Paths } from "../src";
 import { Guild } from "../src/methods/guild";
 import type { ResultArray } from "../src/util/ResultArray";
 import type { ResultObject } from "../src/util/ResultObject";
@@ -778,6 +779,490 @@ describe("Check SkyBlock news", function () {
       expect(news.item.data).to.satisfy(function (v: unknown) {
         return typeof v === "undefined" || typeof v === "number";
       });
+    }
+  });
+});
+
+describe("Get SkyBlock profiles", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let responseProfile: AsyncReturnType<typeof client.skyblock.profile>;
+  let responseProfiles: AsyncReturnType<typeof client.skyblock.profiles.uuid>;
+  it("expect success", async function () {
+    responseProfile = await client.skyblock.profile(
+      "20934ef9488c465180a78f861586b4cf"
+    );
+    responseProfiles = await client.skyblock.profiles.uuid(
+      "20934ef9488c465180a78f861586b4cf"
+    );
+  });
+  CheckMeta(() => responseProfile);
+  CheckMeta(() => responseProfiles);
+  it("required keys should exist on response", function () {
+    expect(responseProfile).to.be.an("object");
+    expect(responseProfiles).to.be.an("array");
+    const profiles = [responseProfile, ...responseProfiles];
+    for (const profile of profiles) {
+      if (profile === null) throw new Error("Profile should not be null.");
+      if ((profile as { cute_name?: string }).cute_name) {
+        expect((profile as { cute_name: string }).cute_name).to.be.a("string");
+      }
+      if (profile.autodelete) expect(profile.autodelete).to.be.a("boolean");
+      if (profile.banking) {
+        expect(profile.banking.balance).to.be.a("number");
+        for (const transaction of profile.banking.transactions) {
+          expect(transaction.action).to.be.a("string");
+          expect(transaction.initiator_name).to.be.a("string");
+          expect(transaction.amount).to.be.a("number");
+          expect(transaction.timestamp).to.be.a("number");
+        }
+      }
+      if (profile.community_upgrades) {
+        profile.community_upgrades.currently_upgrading;
+        if (profile.community_upgrades.upgrade_states) {
+          for (const state of profile.community_upgrades.upgrade_states) {
+            expect(state.fasttracked).to.be.a("boolean");
+            expect(state.claimed_by).to.be.a("string");
+            expect(state.started_by).to.be.a("string");
+            expect(state.upgrade).to.be.a("string");
+            expect(state.started_ms).to.be.a("number");
+            expect(state.claimed_ms).to.be.a("number");
+            expect(state.tier).to.be.a("number");
+          }
+        }
+      }
+      if (profile.game_mode) expect(profile.game_mode).to.be.a("string");
+      for (const memberUuid of Object.keys(profile.members)) {
+        expect(memberUuid).to.be.a("string");
+        const member = profile.members[memberUuid];
+        expect(member).to.be.an("object");
+        expect(member.coin_purse).to.be.a("number");
+        expect(member.first_join).to.be.a("number");
+        expect(member.first_join_hub).to.be.a("number");
+        expect(member.last_death).to.be.a("number");
+        expect(member.last_save).to.be.a("number");
+        expect(member.inv_armor)
+          .to.be.an("object")
+          .that.satisfies(function (
+            value: Components.Schemas.SkyBlockProfileInventoryData
+          ) {
+            return (
+              typeof value.type === "number" && typeof value.data === "string"
+            );
+          });
+        member.objectives;
+        member.quests;
+        member.stats;
+
+        expect(member.tutorial)
+          .to.be.an("array")
+          .that.satisfies(function (val: string[]) {
+            return val.every((v) => typeof v === "string");
+          });
+        expect(member.visited_zones)
+          .to.be.an("array")
+          .that.satisfies(function (val: string[]) {
+            return val.every((v) => typeof v === "string");
+          });
+
+        if (member.achievement_spawned_island_types) {
+          expect(member.achievement_spawned_island_types)
+            .to.be.an("array")
+            .that.satisfies(function (val: string[]) {
+              return val.every((v) => typeof v === "string");
+            });
+        }
+        if (member.coop_invitation) {
+          expect(member.coop_invitation.invited_by).to.be.a("string");
+          expect(member.coop_invitation.timestamp).to.be.a("number");
+          if (member.coop_invitation.confirmed) {
+            expect(member.coop_invitation.confirmed).to.be.a("boolean");
+          }
+          if (member.coop_invitation.confirmed_timestamp) {
+            expect(member.coop_invitation.confirmed_timestamp).to.be.a(
+              "number"
+            );
+          }
+        }
+        if (member.crafted_generators) {
+          expect(member.crafted_generators)
+            .to.be.an("array")
+            .that.satisfies(function (val: string[]) {
+              return val.every((v) => typeof v === "string");
+            });
+        }
+        if (member.death_count) {
+          expect(member.death_count).to.be.a("number");
+        }
+        if (member.dungeons) {
+          expect(member.dungeons.dungeon_journal).to.be.an("object");
+
+          if (member.dungeons.dungeon_journal.journal_entries) {
+            expect(member.dungeons.dungeon_journal.journal_entries)
+              .to.be.an("object")
+              .that.satisfies(function (
+                val: Components.Schemas.SkyBlockProfileDungeonJournal["journal_entries"]
+              ) {
+                return (
+                  typeof val !== "undefined" &&
+                  Object.keys(val).every(
+                    (v) =>
+                      typeof v === "string" &&
+                      Array.isArray(val[v]) &&
+                      (val[v] as number[]).every((p) => typeof p === "number")
+                  )
+                );
+              });
+          }
+          expect(member.dungeons.dungeon_types)
+            .to.be.an("object")
+            .that.has.property("catacombs")
+            .that.is.an("object");
+
+          if (member.dungeons.dungeon_types.catacombs) {
+            if (
+              member.dungeons.dungeon_types.catacombs.highest_tier_completed
+            ) {
+              expect(
+                member.dungeons.dungeon_types.catacombs.highest_tier_completed
+              ).to.be.a("number");
+            }
+            if (member.dungeons.dungeon_types.catacombs.experience) {
+              expect(
+                member.dungeons.dungeon_types.catacombs.experience
+              ).to.be.a("number");
+            }
+            if (member.dungeons.dungeon_types.catacombs.best_runs) {
+              expect(
+                member.dungeons.dungeon_types.catacombs.best_runs
+              ).to.be.an("object");
+              for (const key of Object.keys(
+                member.dungeons.dungeon_types.catacombs.best_runs
+              )) {
+                const runs =
+                  member.dungeons.dungeon_types.catacombs.best_runs[key];
+                for (const run of runs) {
+                  expect(run.damage_dealt).to.be.a("number");
+                  expect(run.damage_mitigated).to.be.a("number");
+                  expect(run.deaths).to.be.a("number");
+                  expect(run.elapsed_time).to.be.a("number");
+                  expect(run.mobs_killed).to.be.a("number");
+                  expect(run.score_bonus).to.be.a("number");
+                  expect(run.score_exploration).to.be.a("number");
+                  expect(run.score_skill).to.be.a("number");
+                  expect(run.score_speed).to.be.a("number");
+                  expect(run.secrets_found).to.be.a("number");
+                  expect(run.timestamp).to.be.a("number");
+                  expect(run.dungeon_class).to.be.a("string");
+                  expect(run.teammates)
+                    .to.be.an("array")
+                    .that.satisfies(function (value: string[]) {
+                      return value.every((v) => typeof v === "string");
+                    });
+                  if (run.ally_healing) {
+                    expect(run.ally_healing).to.be.a("number");
+                  }
+                }
+              }
+            }
+
+            for (const key of Object.keys(
+              member.dungeons.dungeon_types.catacombs
+            )) {
+              if (
+                [
+                  "times_played",
+                  "best_score",
+                  "fastest_time",
+                  "fastest_time_s",
+                  "fastest_time_s_plus",
+                  "mobs_killed",
+                  "most_damage_archer",
+                  "most_damage_berserk",
+                  "most_damage_mage",
+                  "most_damage_tank",
+                  "most_healing",
+                  "most_mobs_killed",
+                  "tier_completions",
+                  "watcher_kills",
+                ].includes(key)
+              ) {
+                expect(
+                  ((member.dungeons.dungeon_types.catacombs as never) as {
+                    [name: string]: never;
+                  })[key]
+                )
+                  .to.be.an("object")
+                  .that.satisfies(function (
+                    val: Components.Schemas.SkyBlockProfileDungeonType["times_played"]
+                  ) {
+                    return (
+                      typeof val !== "undefined" &&
+                      Object.keys(val).every((v) => typeof val[v] === "number")
+                    );
+                  });
+              }
+            }
+          }
+
+          if (member.dungeons.dungeons_blah_blah) {
+            expect(member.dungeons.dungeons_blah_blah)
+              .to.be.an("array")
+              .that.satisfies(function (
+                value: Components.Schemas.SkyBlockProfileDungeonBlahBlah
+              ) {
+                return value.every((v) => typeof v === "string");
+              });
+          }
+
+          expect(member.dungeons.player_classes).to.be.an("object");
+          for (const className of Object.keys(member.dungeons.player_classes)) {
+            expect(className).to.be.a("string").be;
+            const playerClass = member.dungeons.player_classes[className];
+            expect(playerClass.experience).to.be.a("number");
+          }
+          if (member.dungeons.selected_dungeon_class) {
+            expect(member.dungeons.selected_dungeon_class).to.be.a("string");
+          }
+        }
+        if (member.fairy_exchanges) {
+          expect(member.fairy_exchanges).to.be.a("number");
+        }
+        if (member.fairy_souls) {
+          expect(member.fairy_souls).to.be.a("number");
+        }
+        if (member.fairy_souls_collected) {
+          expect(member.fairy_souls_collected).to.be.a("number");
+        }
+        if (member.fishing_treasure_caught) {
+          expect(member.fishing_treasure_caught).to.be.a("number");
+        }
+        if (member.pets) {
+          expect(member.pets).to.be.an("array");
+          for (const pet of member.pets) {
+            expect(pet.active).to.be.a("boolean");
+            expect(pet.tier).to.be.a("string");
+            expect(pet.type).to.be.a("string");
+            expect(pet.exp).to.be.a("number");
+            if (pet.candyUsed) expect(pet.candyUsed).to.be.a("number");
+            if (pet.heldItem) expect(pet.heldItem).to.be.a("string");
+            if (pet.uuid) expect(pet.uuid).to.be.a("string");
+
+            console.log(pet.skin);
+          }
+        }
+        if (member.slayer_bosses) {
+          expect(member.slayer_bosses).to.be.an("object");
+          for (const bossName of Object.keys(member.slayer_bosses)) {
+            expect(bossName).to.be.a("string");
+            const boss = member.slayer_bosses[bossName];
+            expect(boss).to.be.an("object");
+            for (const key of Object.keys(boss)) {
+              if (key === "claimed_levels") {
+                for (const level of Object.keys(boss.claimed_levels)) {
+                  expect(level).to.be.a("string");
+                  expect(boss.claimed_levels[level]).to.be.a("boolean");
+                }
+              } else {
+                expect(boss[key]).to.be.a("number");
+              }
+            }
+          }
+        }
+        if (member.slayer_quest) {
+          expect(member.slayer_quest).to.be.an("object");
+          expect(member.slayer_quest.completion_state).to.be.a("number");
+          expect(member.slayer_quest.start_timestamp).to.be.a("number");
+          expect(member.slayer_quest.tier).to.be.a("number");
+          expect(member.slayer_quest.type).to.be.a("string");
+          if (member.slayer_quest.combat_xp) {
+            expect(member.slayer_quest.combat_xp).to.be.a("number");
+          }
+          if (member.slayer_quest.kill_timestamp) {
+            expect(member.slayer_quest.kill_timestamp).to.be.a("number");
+          }
+          if (member.slayer_quest.last_killed_mob_island) {
+            expect(member.slayer_quest.last_killed_mob_island).to.be.a(
+              "string"
+            );
+          }
+          if (member.slayer_quest.spawn_timestamp) {
+            expect(member.slayer_quest.spawn_timestamp).to.be.a("number");
+          }
+          if (member.slayer_quest.xp_on_last_follower_spawn) {
+            expect(member.slayer_quest.xp_on_last_follower_spawn).to.be.a(
+              "number"
+            );
+          }
+          if (member.slayer_quest.recent_mob_kills) {
+            expect(member.slayer_quest.recent_mob_kills)
+              .to.be.an("array")
+              .that.satisfies(function (
+                value: Components.Schemas.SkyBlockProfileSlayerQuest["recent_mob_kills"]
+              ) {
+                return (
+                  typeof value !== "undefined" &&
+                  value.every(
+                    (v) =>
+                      typeof v.timestamp === "number" &&
+                      typeof v.xp === "number"
+                  )
+                );
+              });
+          }
+        }
+        if (member.collection) {
+          expect(member.collection)
+            .to.be.an("object")
+            .that.satisfies(function (
+              val: Components.Schemas.SkyBlockProfileCollection
+            ) {
+              return Object.keys(val).every(
+                (key) => typeof val[key] === "number"
+              );
+            });
+        }
+        if (member.unlocked_coll_tiers) {
+          expect(member.unlocked_coll_tiers)
+            .to.be.an("array")
+            .that.satisfies(function (val: string[]) {
+              return val.every((v) => typeof v === "string");
+            });
+        }
+        if (member.candy_inventory_contents) {
+          expect(member.candy_inventory_contents)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.ender_chest_contents) {
+          expect(member.ender_chest_contents)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.fishing_bag) {
+          expect(member.fishing_bag)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.inv_contents) {
+          expect(member.inv_contents)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.potion_bag) {
+          expect(member.potion_bag)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.quiver) {
+          expect(member.quiver)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.sacks_counts) {
+          expect(member.sacks_counts)
+            .to.be.an("object")
+            .that.satisfies(function (
+              val: Components.Schemas.SkyBlockProfileSacksCounts
+            ) {
+              return Object.keys(val).every(
+                (key) => typeof val[key] === "number"
+              );
+            });
+        }
+        if (member.talisman_bag) {
+          expect(member.talisman_bag)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.wardrobe_contents) {
+          expect(member.wardrobe_contents)
+            .to.be.an("object")
+            .that.satisfies(function (
+              value: Components.Schemas.SkyBlockProfileInventoryData
+            ) {
+              return (
+                typeof value.type === "number" && typeof value.data === "string"
+              );
+            });
+        }
+        if (member.wardrobe_equipped_slot) {
+          expect(member.wardrobe_equipped_slot).to.be.a("number");
+        }
+        if (member.experience_skill_alchemy) {
+          expect(member.experience_skill_alchemy).to.be.a("number");
+        }
+        if (member.experience_skill_carpentry) {
+          expect(member.experience_skill_carpentry).to.be.a("number");
+        }
+        if (member.experience_skill_combat) {
+          expect(member.experience_skill_combat).to.be.a("number");
+        }
+        if (member.experience_skill_enchanting) {
+          expect(member.experience_skill_enchanting).to.be.a("number");
+        }
+        if (member.experience_skill_farming) {
+          expect(member.experience_skill_farming).to.be.a("number");
+        }
+        if (member.experience_skill_fishing) {
+          expect(member.experience_skill_fishing).to.be.a("number");
+        }
+        if (member.experience_skill_foraging) {
+          expect(member.experience_skill_foraging).to.be.a("number");
+        }
+        if (member.experience_skill_mining) {
+          expect(member.experience_skill_mining).to.be.a("number");
+        }
+        if (member.experience_skill_runecrafting) {
+          expect(member.experience_skill_runecrafting).to.be.a("number");
+        }
+        if (member.experience_skill_taming) {
+          expect(member.experience_skill_taming).to.be.a("number");
+        }
+      }
+      expect(profile.profile_id).to.be.a("string");
     }
   });
 });

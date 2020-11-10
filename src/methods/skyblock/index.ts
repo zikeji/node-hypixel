@@ -4,6 +4,7 @@ import { getResultArray, ResultArray } from "../../util/ResultArray";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
 import { SkyBlockAuction } from "./auction";
 import { SkyBlockAuctions } from "./auctions";
+import { SkyBlockProfiles } from "./profiles";
 
 export class SkyBlock extends Method {
   /**
@@ -63,32 +64,32 @@ export class SkyBlock extends Method {
   }
 
   /**
-   * Return a profile by it's profile ID.
-   * @param profile The profile ID you are looking up.
-   * @return A [[Profile | Profile interface]] object.
+   * Returns a SkyBlock profile's data, such as stats, objectives etc. The data returned can differ depending on the players in-game API settings.
+   * @example
+   * ```typescript
+   * const news = await client.skyblock.profile("20934ef9488c465180a78f861586b4cf");
+   * ```
    */
-  // public async profile(profile: string): Promise<Profile> {
-  //   return returnResponseObject(
-  //     await this.client.call<
-  //       { profile: Profile } & Components.Schemas.ApiSuccess
-  //     >("skyblock/profile", {
-  //       profile,
-  //     }),
-  //     "profile"
-  //   );
-  // }
+  public async profile(
+    profile: Paths.SkyblockProfile.Get.Parameters.Profile
+  ): Promise<
+    ResultObject<Paths.SkyblockProfile.Get.Responses.$200, ["profile"]>
+  > {
+    return getResultObject(
+      await this.client.call<Paths.SkyblockProfile.Get.Responses.$200>(
+        "skyblock/profile",
+        { profile }
+      ),
+      ["profile"]
+    );
+  }
 
   /**
-   * Return an array of profiles for a Hypixel user.
-   * @param uuid The Minecraft UUID of the player who's profiles you are looking up.
-   * @return An array of [[ProfileWithCuteName | Profile interface]] objects.
+   * Returns an array SkyBlock profile's data, such as stats, objectives etc. The data returned can differ depending on the players in-game API settings. The request takes a player UUID.
+   * @example
+   * ```typescript
+   * const profiles = await client.skyblock.profiles.uuid("20934ef9488c465180a78f861586b4cf");
+   * ```
    */
-  // public async profiles(uuid: string): Promise<ProfileWithCuteName[]> {
-  //   return returnResponseObject(
-  //     await this.client.call<
-  //       { profiles: ProfileWithCuteName[] } & Components.Schemas.ApiSuccess
-  //     >("skyblock/profiles", { uuid }),
-  //     "profiles"
-  //   );
-  // }
+  public profiles: SkyBlockProfiles = new SkyBlockProfiles(this.client);
 }
