@@ -11906,9 +11906,11 @@ components:
         exp:
           type: number
         heldItem:
+          nullable: true
           type: string
         skin:
-          type: object
+          type: string
+          nullable: true
         tier:
           type: string
         type:

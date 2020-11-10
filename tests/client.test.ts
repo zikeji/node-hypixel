@@ -1047,8 +1047,7 @@ describe("Get SkyBlock profiles", function () {
             if (pet.candyUsed) expect(pet.candyUsed).to.be.a("number");
             if (pet.heldItem) expect(pet.heldItem).to.be.a("string");
             if (pet.uuid) expect(pet.uuid).to.be.a("string");
-
-            console.log(pet.skin);
+            if (pet.skin) expect(pet.skin).to.be.a("string");
           }
         }
         if (member.slayer_bosses) {

@@ -1993,8 +1993,8 @@ export declare namespace Components {
       active: boolean;
       candyUsed?: number;
       exp: number;
-      heldItem?: string;
-      skin?: unknown;
+      heldItem?: string | null;
+      skin?: string | null;
       tier: string;
       type: string;
       uuid?: string;
