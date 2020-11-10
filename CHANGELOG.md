@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/zikeji/node-hypixel/compare/v1.12.0...v1.13.0) (2020-11-10)
+
+
+### Features
+
+* **api:** add /skyblock/auctions and /skyblock/auction endpoint ([9349037](https://github.com/zikeji/node-hypixel/commit/9349037713c601d3895a8038fda8395d2f64ad59))
+* **api:** add /skyblock/bazaar endpoint ([8ffe9a5](https://github.com/zikeji/node-hypixel/commit/8ffe9a5dfe48aa1cf2e1cd86e3834cd3e1a6bfc1))
+* **api:** add /skyblock/profile and /skyblock/profiles endpoint ([4c6285a](https://github.com/zikeji/node-hypixel/commit/4c6285af1767e26885ff1d399e45689a4db690e9))
+* **api:** update skyblock profile schema ([9b84460](https://github.com/zikeji/node-hypixel/commit/9b844605cb2a6301e136f048199eac3f5c9b8039))
+* **schema:** add headers to schema ([45ba69f](https://github.com/zikeji/node-hypixel/commit/45ba69f325edd797c83f48ef2b7d05ad679b07b4))
+
+
+### Documentation
+
+* **readme:** update progress in readme ([6c598d0](https://github.com/zikeji/node-hypixel/commit/6c598d0821a9bdf45476e06ec65728d7a1c13c9f))
+
 ## [1.12.0](https://github.com/zikeji/node-hypixel/compare/v1.11.0...v1.12.0) (2020-11-08)
 
 
