@@ -94,6 +94,11 @@ export interface ClientOptions {
 /** @internal */
 const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
 
+interface ClientEvents {
+  limited: (limit: number, reset: Date) => void;
+  reset: () => void;
+}
+
 export declare interface Client {
   /**
    * Listen to the "limited" event which emits when the client starts limiting your calls due to hitting the rate limit.
@@ -135,9 +140,11 @@ export declare interface Client {
 /**
  * @noInheritDoc
  */
-export class Client extends EventEmitter {
+export class Client {
   /** @internal */
   private static readonly endpoint = new URL(`https://api.hypixel.net`);
+  /** @internal */
+  private readonly emitter = new EventEmitter();
   /** @internal */
   private readonly queue = new Queue();
   /** @internal */
@@ -166,7 +173,6 @@ export class Client extends EventEmitter {
    * @param options Any options and customizations being applied.
    */
   public constructor(key: string, options?: ClientOptions) {
-    super();
     if (!key || typeof key !== "string") {
       throw new InvalidKeyError("Invalid API key");
     }
@@ -176,6 +182,24 @@ export class Client extends EventEmitter {
     this.userAgent = options?.userAgent ?? "@zikeji/hypixel";
     this.agent = options?.agent;
     this.cache = options?.cache;
+  }
+
+  on<E extends keyof ClientEvents>(event: E, listener: ClientEvents[E]): this {
+    this.emitter.on(event, listener);
+    return this;
+  }
+
+  once<E extends keyof ClientEvents>(
+    event: E,
+    listener: ClientEvents[E]
+  ): this {
+    this.emitter.once(event, listener);
+    return this;
+  }
+
+  off<E extends keyof ClientEvents>(event: E, listener: ClientEvents[E]): this {
+    this.emitter.off(event, listener);
+    return this;
   }
 
   /**
@@ -401,7 +425,7 @@ export class Client extends EventEmitter {
     await this.queue.wait();
     if (this.rateLimit.remaining === 0) {
       const timeout = this.rateLimit.reset * 1000;
-      this.emit(
+      this.emitter.emit(
         "limited",
         this.rateLimit.limit,
         new Date(Date.now() + this.rateLimit.reset)
@@ -409,7 +433,7 @@ export class Client extends EventEmitter {
       await new Promise((resolve) => {
         setTimeout(resolve, timeout);
       });
-      this.emit("reset");
+      this.emitter.emit("reset");
     }
     let response: T & DefaultMeta;
     try {
