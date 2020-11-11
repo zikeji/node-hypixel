@@ -243,7 +243,7 @@
     "rimraf": "^3.0.2",
     "semantic-release": "^17.1.2",
     "stylus-svg": "^1.2.0",
-    "swagger-ui": "^3.35.2",
+    "swagger-ui": "^3.36.2",
     "ts-node": "^9.0.0",
     "typedoc": "^0.19.2",
     "typedoc-plugin-markdown": "^3.0.11",
