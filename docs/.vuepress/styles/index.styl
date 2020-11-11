@@ -19,12 +19,21 @@ body.theme-light
     font-size: 0.85em;
 
 .theme-default-content
+  position relative
   pre
   pre[class*='language-']
     margin 0
     padding 0.5rem 0.5rem
   code
     font-family 'Source Code Pro', monospace
+  h2#introduction
+    visibility hidden
+    display block
+    position absolute
+    height 1px
+    padding 0
+    margin 0
+    top -70px
 
 .home
   a img ~ span

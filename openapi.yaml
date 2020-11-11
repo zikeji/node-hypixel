@@ -9816,7 +9816,6 @@ components:
             required:
               - auction_id
               - bidder
-              - profile_id
               - amount
               - timestamp
         bin:

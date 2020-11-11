@@ -1,5 +1,7 @@
 # Metadata
 
+## Introduction
+
 Every client response (aside from [<code class="language-javascript"><span class="token function">client</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/classes/client/#call)) contain a non-enumerable "meta" property. This property won't show up when you run `console.log` or if you iterate over the object/array, but will still be there.
 
 This project aims to be unopinionated, however in this area it does hold an opinion. Hypixel's public API follows a pattern of responding with a JSON object that at the least has the property "success". Some methods include additional properties (such as the resources returning update information), and API failures return "cause" (the error message). Failures are handled by my client, so you don't have to worry about those.

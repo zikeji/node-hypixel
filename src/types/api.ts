@@ -797,7 +797,7 @@ export declare namespace Components {
         /**
          * The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
          */
-        profile_id: string;
+        profile_id?: string;
         /**
          * The amount in coins the bid is for.
          */
@@ -842,7 +842,7 @@ export declare namespace Components {
           /**
            * The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
            */
-          profile_id: string;
+          profile_id?: string;
           /**
            * The amount in coins the bid is for.
            */
@@ -900,7 +900,7 @@ export declare namespace Components {
           /**
            * The Hypixel SkyBlock profile ID of the profile the bidder was on when they placed the bid.
            */
-          profile_id: string;
+          profile_id?: string;
           /**
            * The amount in coins the bid is for.
            */

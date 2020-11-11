@@ -83,8 +83,12 @@ const client = new Hypixel("API_KEY");
   - [x] Status
   - [x] Watchdog Stats
 - [ ] Add extended documentation, and helpers for:
-  - [ ] Player endpoint, conversion of xp to levels and easily determining rank info
-  - [ ] Profile endpoint, conversion of xp to levels, collection tiers, etc.
+  - [ ] Player endpoint
+    - [ ] XP to network level
+    - [x] Rank info helper
+  - [ ] SkyBlock Profile endpoint
+    - [ ] collection amounts to collection tier
+    - [ ] skill xp to skill level
 
 ## Contributing
 If some API result isn't documented / typed out fully, please open an issue and I can add it ASAP. Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
