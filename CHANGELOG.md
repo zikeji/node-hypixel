@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/zikeji/node-hypixel/compare/v1.13.0...v1.14.0) (2020-11-11)
+
+
+### Features
+
+* **helpers:** add hypixel rank helper ([98b6fbf](https://github.com/zikeji/node-hypixel/commit/98b6fbf09420ff93dd421ba2230aa0f5495f1ae1))
+
 ## [1.13.0](https://github.com/zikeji/node-hypixel/compare/v1.12.0...v1.13.0) (2020-11-10)
 
 
