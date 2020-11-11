@@ -15,7 +15,7 @@ describe("testClient sequential queue & rate limiting", function () {
 
     for (let i = 0; i < 125; i += 1) {
       // @ts-ignore
-      promises.push(testClient.call(i));
+      promises.push(testClient.call(i.toString(10)));
     }
   });
 

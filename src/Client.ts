@@ -21,6 +21,8 @@ import { getResultObject, ResultObject } from "./util/ResultObject";
 export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
   execute: () => Promise<T>;
   retries: number;
+  noRateLimit: boolean;
+  includeApiKey: boolean;
 }
 
 /** @hidden */
@@ -31,11 +33,31 @@ export interface RateLimitData {
 }
 
 /** @hidden */
-interface Parameters {
+export interface DefaultMeta {
+  ratelimit?: RateLimitData;
+  cached?: boolean;
+  cloudflareCache?: {
+    /**
+     * Cloudflare cache status.
+     */
+    status: "HIT" | "MISS" | "BYPASS" | "EXPIRED" | "DYNAMIC";
+    /**
+     * Cloudflare cache age.
+     */
+    age?: number;
+    /**
+     * Cloudflare max cache age.
+     */
+    maxAge?: number;
+  };
+}
+
+/** @hidden */
+export interface Parameters {
   [parameter: string]: string;
 }
 
-interface ClientOptions {
+export interface ClientOptions {
   /**
    * Amount of times to retry a failed request.
    * @default 3
@@ -55,7 +77,22 @@ interface ClientOptions {
    * Custom [HTTPS agent](https://nodejs.org/api/https.html#https_class_https_agent) if desired.
    */
   agent?: Agent;
+  /**
+   * Functions you want to use for caching results. Optional.
+   */
+  cache?: {
+    get<T extends Components.Schemas.ApiSuccess>(
+      key: string
+    ): Promise<(T & DefaultMeta) | undefined>;
+    set<T extends Components.Schemas.ApiSuccess>(
+      key: string,
+      value: T & DefaultMeta
+    ): Promise<void>;
+  };
 }
+
+/** @internal */
+const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
 
 export declare interface Client {
   /**
@@ -113,6 +150,8 @@ export class Client extends EventEmitter {
   private readonly userAgent: string;
   /** @internal */
   private readonly agent?: Agent;
+  /** @internal */
+  private readonly cache?: ClientOptions["cache"];
 
   /** @internal */
   protected rateLimit: RateLimitData = {
@@ -136,6 +175,7 @@ export class Client extends EventEmitter {
     this.timeout = options?.timeout ?? 10000;
     this.userAgent = options?.userAgent ?? "@zikeji/hypixel";
     this.agent = options?.agent;
+    this.cache = options?.cache;
   }
 
   /**
@@ -152,7 +192,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Boosters.Get.Responses.$200>("boosters"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -190,7 +230,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.GameCounts.Get.Responses.$200>("gameCounts"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -214,7 +254,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Key.Get.Responses.$200>("key"),
       ["record"]
-    ) as never;
+    );
   }
 
   /**
@@ -231,7 +271,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Leaderboards.Get.Responses.$200>("leaderboards"),
       ["leaderboards"]
-    ) as never;
+    );
   }
 
   /**
@@ -258,7 +298,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.PlayerCount.Get.Responses.$200>("playerCount"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -306,7 +346,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Watchdogstats.Get.Responses.$200>("watchdogstats"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -324,13 +364,34 @@ export class Client extends EventEmitter {
    * // { success: true, guild: '553490650cf26f12ae5bac8f' }
    * ```
    */
-  public call<T extends Components.Schemas.ApiSuccess>(
+  public async call<T extends Components.Schemas.ApiSuccess>(
     path: string,
     parameters: Parameters = {}
-  ): Promise<T> {
-    return this.executeActionableCall(
+  ): Promise<T & { cached?: boolean }> {
+    if (!this.cache) {
+      return this.executeActionableCall(
+        this.createActionableCall(path, parameters)
+      );
+    }
+    const key = `${path.split("/").join(":")}${
+      Object.values(parameters).length === 0
+        ? ""
+        : `:${Object.values(parameters).map((v) =>
+            v.toLowerCase().replace(/-/g, "")
+          )}`
+    }`;
+    const cachedResponse:
+      | (T & { cached?: boolean })
+      | undefined = await this.cache.get<T>(key);
+    if (cachedResponse) {
+      cachedResponse.cached = true;
+      return cachedResponse;
+    }
+    const response: T = await this.executeActionableCall(
       this.createActionableCall(path, parameters)
     );
+    await this.cache.set(key, response);
+    return response;
   }
 
   /** @internal */
@@ -350,7 +411,7 @@ export class Client extends EventEmitter {
       });
       this.emit("reset");
     }
-    let response: T;
+    let response: T & DefaultMeta;
     try {
       response = await call.execute();
     } catch (error) {
@@ -369,11 +430,8 @@ export class Client extends EventEmitter {
     } finally {
       this.queue.free();
     }
-    if (typeof response === "object") {
-      Object.defineProperty(response, "ratelimit", {
-        enumerable: false,
-        value: JSON.parse(JSON.stringify(this.rateLimit)),
-      });
+    if (typeof response === "object" && !call.noRateLimit) {
+      response.ratelimit = JSON.parse(JSON.stringify(this.rateLimit));
     }
     return response;
   }
@@ -384,26 +442,50 @@ export class Client extends EventEmitter {
     /* istanbul ignore next */
     parameters: Parameters = {}
   ): ActionableCall<T> {
+    let noRateLimit = false;
+    let includeApiKey = true;
+
+    // No API key or rate limiting is needed on resources, skyblock/auctions, or skyblock/bazaar
+    if (
+      path.startsWith("resources") ||
+      path === "skyblock/auctions" ||
+      path === "skyblock/bazaar"
+    ) {
+      noRateLimit = true;
+      includeApiKey = false;
+    }
+
     return {
-      execute: this.callMethod.bind(this, path, parameters),
+      execute: this.callMethod.bind(
+        this,
+        path,
+        parameters,
+        noRateLimit,
+        includeApiKey
+      ),
       retries: 0,
+      noRateLimit,
+      includeApiKey,
     } as ActionableCall<T>;
   }
 
   /** @internal */
   private callMethod<
-    T extends Components.Schemas.ApiSuccess & { cause?: string }
+    T extends Components.Schemas.ApiSuccess & {
+      cause?: string;
+    } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
   >(
     path: string,
-    /* istanbul ignore next */ parameters: Parameters = {}
+    parameters: Parameters,
+    noRateLimit: boolean,
+    includeApiKey: boolean
   ): Promise<T> {
     const url = new URL(path, Client.endpoint);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
     });
 
-    // No API key needed on resources.
-    if (!path.startsWith("resources")) {
+    if (includeApiKey) {
       url.searchParams.set("key", this.apiKey);
     }
 
@@ -429,7 +511,9 @@ export class Client extends EventEmitter {
         });
 
         incomingMessage.on("end", () => {
-          this.getRateLimitHeaders(incomingMessage.headers);
+          if (!noRateLimit) {
+            this.getRateLimitHeaders(incomingMessage.headers);
+          }
 
           /* istanbul ignore next */
           if (
@@ -487,6 +571,24 @@ export class Client extends EventEmitter {
                 `Invalid JSON response received. Response: ${responseBody}`
               )
             );
+          }
+
+          /* istanbul ignore else */
+          if (incomingMessage.headers["cf-cache-status"]) {
+            const age = parseInt(incomingMessage.headers.age as string, 10);
+            const maxAge = CACHE_CONTROL_REGEX.exec(
+              incomingMessage.headers["cache-control"] as string
+            );
+            responseObject.cloudflareCache = {
+              status: incomingMessage.headers["cf-cache-status"] as never,
+              ...(typeof age === "number" && !Number.isNaN(age) && { age }),
+              ...(maxAge &&
+                typeof maxAge === "object" &&
+                maxAge.length === 2 &&
+                parseInt(maxAge[1], 10) > 0 && {
+                  maxAge: parseInt(maxAge[1], 10),
+                }),
+            };
           }
 
           return resolve(responseObject);

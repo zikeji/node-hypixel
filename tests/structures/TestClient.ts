@@ -24,7 +24,7 @@ export class TestClient extends Client {
   }
 
   // @ts-ignore
-  public async callMethod(index: number): number {
+  public async callMethod(index: string): number {
     await new Promise((resolve) => {
       setTimeout(resolve, 15);
     });
@@ -38,6 +38,6 @@ export class TestClient extends Client {
             "ratelimit-reset": this.rateLimit.reset.toString(10),
           }
     );
-    return index;
+    return parseInt(index, 10);
   }
 }

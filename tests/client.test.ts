@@ -3,7 +3,7 @@ import { Client, Components } from "../src";
 import type { ResultArray } from "../src/util/ResultArray";
 import type { ResultObject } from "../src/util/ResultObject";
 
-type AsyncReturnType<T extends (...args: any) => any> = T extends (
+export type AsyncReturnType<T extends (...args: any) => any> = T extends (
   ...args: any
 ) => Promise<infer U>
   ? U
@@ -16,7 +16,8 @@ const client = new Client(process.env.HYPIXEL_KEY || "");
 const CheckMeta = (
   data: () =>
     | ResultArray<Components.Schemas.ApiSuccess & { n: unknown }, "n">
-    | ResultObject<Components.Schemas.ApiSuccess & { n: unknown }, ["n"]>
+    | ResultObject<Components.Schemas.ApiSuccess & { n: unknown }, ["n"]>,
+  noRateLimit = false
 ) => {
   let result: ReturnType<typeof data>;
   beforeEach(function () {
@@ -28,12 +29,37 @@ const CheckMeta = (
   it("success should be true", function () {
     expect(result.meta.success).to.equal(true);
   });
-  it("ratelimit data should exist", function () {
-    expect(result.meta.ratelimit).to.be.an("object");
-    expect(result.meta.ratelimit.limit).to.be.a("number");
-    expect(result.meta.ratelimit.reset).to.be.a("number");
-    expect(result.meta.ratelimit.remaining).to.be.a("number");
+  it("cloudflareCache data should exist", function () {
+    expect(result.meta.cloudflareCache).to.be.an("object");
+    expect(result.meta.cloudflareCache?.status)
+      .to.be.a("string")
+      .and.that.is.oneOf(["HIT", "MISS", "BYPASS", "EXPIRED", "DYNAMIC"]);
+    if (result.meta.cloudflareCache?.status === "HIT") {
+      expect(result.meta.cloudflareCache?.age).to.be.a("number");
+      expect(result.meta.cloudflareCache?.maxAge).to.be.a("number");
+    } else if (
+      result.meta.cloudflareCache?.status === "EXPIRED" ||
+      result.meta.cloudflareCache?.status === "MISS"
+    ) {
+      expect(result.meta.cloudflareCache?.age).to.be.undefined;
+      expect(result.meta.cloudflareCache?.maxAge).to.be.a("number");
+    } else {
+      expect(result.meta.cloudflareCache?.age).to.be.undefined;
+      expect(result.meta.cloudflareCache?.maxAge).to.be.undefined;
+    }
   });
+  if (noRateLimit) {
+    it("ratelimit data should not exist", function () {
+      expect(result.meta.ratelimit).to.be.undefined;
+    });
+  } else {
+    it("ratelimit data should exist", function () {
+      expect(result.meta.ratelimit).to.be.an("object");
+      expect(result.meta.ratelimit?.limit).to.be.a("number");
+      expect(result.meta.ratelimit?.reset).to.be.a("number");
+      expect(result.meta.ratelimit?.remaining).to.be.a("number");
+    });
+  }
 };
 
 describe("Run basic undocumented call", function () {
@@ -358,7 +384,7 @@ describe("Query achievements resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.achievements();
   });
-  CheckMeta(() => result);
+  CheckMeta(() => result, true);
   it("required keys should exist", function () {
     expect(result).to.be.an("object");
     for (const gameModeName of Object.keys(result)) {
@@ -423,7 +449,7 @@ describe("Query challenges resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.challenges();
   });
-  CheckMeta(() => result);
+  CheckMeta(() => result, true);
   it("required keys should exist", function () {
     expect(result).to.be.an("object");
     for (const gameModeName of Object.keys(result)) {
@@ -450,7 +476,7 @@ describe("Query quests resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.quests();
   });
-  CheckMeta(() => result);
+  CheckMeta(() => result, true);
   it("required keys should exist", function () {
     expect(result).to.be.an("object");
     for (const gameModeName of Object.keys(result)) {
@@ -493,7 +519,7 @@ describe("Query guild achievements resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.guilds.achievements();
   });
-  CheckMeta(() => result);
+  CheckMeta(() => result, true);
   it("required keys should exist", function () {
     expect(result).to.be.an("object");
     expect(result.one_time).to.be.an("object").that.is.empty;
@@ -520,7 +546,7 @@ describe("Query guild permissions resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.guilds.permissions();
   });
-  CheckMeta(() => result);
+  CheckMeta(() => result, true);
   it("required keys should exist", function () {
     expect(result).to.be.an("array");
     for (const permission of result) {
@@ -545,7 +571,7 @@ describe("Query SkyBlock collections resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.skyblock.collections();
   });
-  CheckMeta(() => result);
+  CheckMeta(() => result, true);
   it("required keys should exist", function () {
     for (const key of Object.keys(result)) {
       const collection = result[key];
@@ -569,7 +595,7 @@ describe("Query SkyBlock skills resource", function () {
   it("expect not to throw", async function () {
     result = await client.resources.skyblock.skills();
   });
-  CheckMeta(() => result);
+  CheckMeta(() => result, true);
   it("required keys should exist", function () {
     for (const key of Object.keys(result)) {
       const skill = result[key];
@@ -675,7 +701,7 @@ describe("Get SkyBlock auctions page 1 & each skyblock.auction method once", fun
   it("expect success on /skyblock/auctions", async function () {
     response = await client.skyblock.auctions.page();
   });
-  CheckMeta(() => response);
+  CheckMeta(() => response, true);
   it("required keys should exist on auctions response", function () {
     expect(response.lastUpdated).to.be.a("number");
     expect(response.page).to.be.a("number");
@@ -725,7 +751,7 @@ describe("Get SkyBlock bazaar products", function () {
   it("expect success", async function () {
     response = await client.skyblock.bazaar();
   });
-  CheckMeta(() => response);
+  CheckMeta(() => response, true);
   it("required keys should exist on response", function () {
     expect(response).to.be.an("object");
     for (const itemId of Object.keys(response)) {
@@ -1293,29 +1319,3 @@ describe("Get watchdog stats", function () {
     expect(result.staff_total).to.be.greaterThan(-1);
   });
 });
-
-// describe("Query SkyBlock profiles by mc uuid", function () {
-//   this.timeout(30000);
-//   this.slow(1000);
-//   let result: AsyncReturnType<typeof client.profiles>;
-//   it("expect success", async function () {
-//     result = await client.profiles("ec1811e6822b4843bcd4fef82f75deb7");
-//     expect(result.length).not.to.equal(0);
-//   });
-// });
-
-// describe("Query SkyBlock profile by mc uuid", function () {
-//   this.timeout(30000);
-//   this.slow(1000);
-//   let profileId = "74c72b90bdd84b668ccb5a20752030cc";
-//   let result: AsyncReturnType<typeof client.profile>;
-//   it("expect not to throw", async function () {
-//     result = await client.profile(profileId);
-//   });
-//   it("expect profile to have members", function () {
-//     expect(result?.members?.length).not.to.equal(0);
-//   });
-//   it("expect profile id to equal provided id", function () {
-//     expect(result?.profile_id).to.equal(profileId);
-//   });
-// });

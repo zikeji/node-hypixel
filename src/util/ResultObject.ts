@@ -1,4 +1,4 @@
-import type { RateLimitData } from "../Client";
+import type { DefaultMeta } from "../Client";
 import type { Components } from "../types/api";
 
 /**
@@ -20,38 +20,53 @@ export type ResultObject<
   : T[K[number]]) & {
   meta: (T[K[number]] extends string | number | boolean
     ? Pick<T, K[number]>
-    : Omit<T, K[number]>) & {
-    ratelimit: RateLimitData;
-  };
+    : Omit<T, K[number]>) &
+    DefaultMeta;
 };
 
 /** @hidden */
 export function getResultObject<
   T extends Components.Schemas.ApiSuccess,
   K extends (keyof T)[]
->(response: T, keys: K): ResultObject<T, K> {
-  if (!keys.every((key) => key in response)) {
+>(response: T & DefaultMeta, keys: K): ResultObject<T, K> {
+  const clonedResponse: typeof response = JSON.parse(JSON.stringify(response));
+  if (!keys.every((key) => key in clonedResponse)) {
     throw new TypeError(
       `One or more key in "${keys.join('"," ')}" was not in the response.`
     );
   }
 
   const obj: ResultObject<T, K> = {} as ResultObject<T, K>;
-  const { ratelimit } = (response as never) as { ratelimit: RateLimitData };
-  const meta: Record<string | number | symbol, unknown> = {
-    ratelimit,
-  };
+  const { ratelimit, cached, cloudflareCache } = clonedResponse;
+  const meta: DefaultMeta & Record<string | number | symbol, unknown> = {};
+  if (cached) {
+    meta.cached = true;
+    delete clonedResponse.cached;
+  }
+  if (cloudflareCache) {
+    meta.cloudflareCache = cloudflareCache;
+    delete clonedResponse.cloudflareCache;
+  }
+  if (ratelimit) {
+    if (
+      !cached &&
+      (!meta.cloudflareCache || meta.cloudflareCache.status !== "HIT")
+    ) {
+      meta.ratelimit = ratelimit;
+    }
+    delete clonedResponse.ratelimit;
+  }
 
   let assignedMeta = false;
   keys.forEach((key) => {
-    const value = response[key];
+    const value = clonedResponse[key];
 
     if (
       typeof value === "string" ||
       typeof value === "number" ||
       typeof value === "boolean"
     ) {
-      delete response[key];
+      delete clonedResponse[key];
       assignedMeta = true;
       meta[key] = value;
     }
@@ -59,7 +74,7 @@ export function getResultObject<
 
   if (assignedMeta) {
     // we want the remainder merged into the object.
-    Object.assign(obj, response);
+    Object.assign(obj, clonedResponse);
     Object.defineProperty(obj, "meta", {
       enumerable: false,
       value: meta,
@@ -69,10 +84,10 @@ export function getResultObject<
 
   // we want all the keys merged with the root and the remainder assigned to meta.
   keys.forEach((key) => {
-    Object.assign(obj, response[key]);
-    delete response[key];
+    Object.assign(obj, clonedResponse[key]);
+    delete clonedResponse[key];
   });
-  Object.assign(meta, response);
+  Object.assign(meta, clonedResponse);
   Object.defineProperty(obj, "meta", {
     enumerable: false,
     value: meta,
