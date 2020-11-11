@@ -32,7 +32,6 @@ export interface RateLimitData {
   limit: number;
 }
 
-/** @hidden */
 export interface DefaultMeta {
   ratelimit?: RateLimitData;
   cached?: boolean;
@@ -55,6 +54,19 @@ export interface DefaultMeta {
 /** @hidden */
 export interface Parameters {
   [parameter: string]: string;
+}
+
+/**
+ * If you want built in caching, implementing these methods (or utilitizing an library that includes these methods) is a must. Refer to the [cache](https://node-hypixel.zikeji.com/guide/cache) guide.
+ */
+export interface BasicCache {
+  get<T extends Components.Schemas.ApiSuccess>(
+    key: string
+  ): Promise<(T & DefaultMeta) | undefined>;
+  set<T extends Components.Schemas.ApiSuccess>(
+    key: string,
+    value: T & DefaultMeta
+  ): Promise<void>;
 }
 
 export interface ClientOptions {
@@ -80,15 +92,7 @@ export interface ClientOptions {
   /**
    * Functions you want to use for caching results. Optional.
    */
-  cache?: {
-    get<T extends Components.Schemas.ApiSuccess>(
-      key: string
-    ): Promise<(T & DefaultMeta) | undefined>;
-    set<T extends Components.Schemas.ApiSuccess>(
-      key: string,
-      value: T & DefaultMeta
-    ): Promise<void>;
-  };
+  cache?: BasicCache;
 }
 
 /** @internal */
@@ -606,6 +610,9 @@ export class Client {
             responseObject.cloudflareCache = {
               status: incomingMessage.headers["cf-cache-status"] as never,
               ...(typeof age === "number" && !Number.isNaN(age) && { age }),
+              ...(incomingMessage.headers["cf-cache-status"] === "HIT" &&
+                (typeof age !== "number" ||
+                  Number.isNaN(age)) && /* istanbul ignore next */ { age: 0 }),
               ...(maxAge &&
                 typeof maxAge === "object" &&
                 maxAge.length === 2 &&
