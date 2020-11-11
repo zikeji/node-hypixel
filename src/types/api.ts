@@ -5018,9 +5018,6 @@ export declare namespace Paths {
       }
       namespace Responses {
         export type $200 = Components.Schemas.SkyBlockAuctionsResponse;
-        export type $400 = Components.Responses.MissingFields;
-        export type $403 = Components.Responses.Unauthorized;
-        export type $429 = Components.Responses.RateLimitError;
       }
     }
   }
