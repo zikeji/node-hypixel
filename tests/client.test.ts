@@ -1,7 +1,5 @@
 import { expect } from "chai";
-import { Schema } from "dtsgenerator";
-import { Client, Components, Paths } from "../src";
-import { Guild } from "../src/methods/guild";
+import { Client, Components } from "../src";
 import type { ResultArray } from "../src/util/ResultArray";
 import type { ResultObject } from "../src/util/ResultObject";
 
@@ -621,7 +619,7 @@ const CheckAuctions = (
               typeof bid.amount === "number" &&
               typeof bid.auction_id === "string" &&
               typeof bid.bidder === "string" &&
-              typeof bid.profile_id === "string" &&
+              (!bid.profile_id || typeof bid.profile_id === "string") &&
               typeof bid.timestamp === "number"
           );
         });

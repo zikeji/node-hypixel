@@ -82,6 +82,14 @@ module.exports = config({
           ]
         },
         {
+          title: "Helpers",
+          collapsable: false,
+          icon: "helper",
+          children: [
+            "playerRanks"
+          ]
+        },
+        {
           title: "Advanced",
           collapsable: false,
           icon: "advanced",
