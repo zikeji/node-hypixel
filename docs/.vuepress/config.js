@@ -94,6 +94,7 @@ module.exports = config({
           collapsable: false,
           icon: "advanced",
           children: [
+            "cache",
             "metadata"
           ]
         }
