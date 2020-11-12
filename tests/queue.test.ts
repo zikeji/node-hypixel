@@ -6,6 +6,18 @@ describe("testClient sequential queue & rate limiting", function () {
   this.slow(10000);
   const testClient = new TestClient();
 
+  const limitedListener = () => {
+    throw new Error("We should not have been hit.");
+  };
+
+  it("adds listener", function () {
+    testClient.on("limited", limitedListener);
+  });
+
+  it("removes listener", function () {
+    testClient.off("limited", limitedListener);
+  });
+
   const promises: Promise<void>[] = [];
   before(function () {
     // @ts-ignore
@@ -15,7 +27,7 @@ describe("testClient sequential queue & rate limiting", function () {
 
     for (let i = 0; i < 125; i += 1) {
       // @ts-ignore
-      promises.push(testClient.call(i));
+      promises.push(testClient.call(i.toString(10)));
     }
   });
 

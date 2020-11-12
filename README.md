@@ -23,7 +23,7 @@ The library aims to replicate the [Hypixel API][hypixel] as closely as possible,
 
 ## Project Status
 
-`ALPHA` - this project is not ready for production use, expect breaking changes that do not follow semver. semantic-releaser bumped me to 1.0.0, I had intended to stay on 0.X.X, and use 1.0.0 as my release, but it didn't pan out. 2.0.0 will be my release once all necessary features are completed.
+Working on adding more helpers to make your life easier, but all other features are implemented and ready to go.
 
 ## Installation
 
@@ -36,8 +36,8 @@ npm i --save @zikeji/hypixel
 ## Usage
 
 ```javascript
-import { Client as Hypixel } from "@zikeji/hypixel";
-const client = new Hypixel("API_KEY");
+const { Client } = require("@zikeji/hypixel");
+const client = new Client("API_KEY");
 (async () => {
   const status = await client.status.uuid("20934ef9488c465180a78f861586b4cf"); // Minikloon
   console.log(status);
@@ -51,7 +51,7 @@ const client = new Hypixel("API_KEY");
 ## Roadmap
 
 - [x] Add rate limiting support
-- [ ] Add cache support
+- [x] Add cache support
 - [x] Add method, typing, testing, and documentation for:
   - [x] Boosters
   - [x] Find Guild

@@ -1,5 +1,20 @@
 import { expect } from "chai";
 import { getPlayerRank, removeMinecraftFormatting } from "../src";
+import { getResultArray } from "../src/util/ResultArray";
+import { getResultObject } from "../src/util/ResultObject";
+
+describe("Test getResultArray", function () {
+  const obj = getResultArray({ success: true, items: [] }, "items");
+  it("should not have cloudflare meta", function () {
+    expect(obj.meta.cloudflareCache).to.be.undefined;
+  });
+});
+describe("Test getResultObject", function () {
+  const obj = getResultObject({ success: true, items: [] }, ["success"]);
+  it("should not have cloudflare meta", function () {
+    expect(obj.meta.cloudflareCache).to.be.undefined;
+  });
+});
 
 describe("Test PlayerRank helper", function () {
   it("should return admin", function () {
@@ -84,7 +99,7 @@ describe("Test PlayerRank helper", function () {
 });
 
 describe("Test removeMinecraftFormatting", function () {
-  it("should return MVP++ with blue", function () {
+  it("should return MVP++ without formatting", function () {
     expect(removeMinecraftFormatting("§6[MVP§9++§6]"))
       .to.be.a("string")
       .that.equals("[MVP++]");

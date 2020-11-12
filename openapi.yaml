@@ -7139,6 +7139,7 @@ paths:
         ```typescript
         const response = await client.skyblock.auctions.page(0);
         ```
+      security: []
       parameters:
         - name: page
           description: Page of results to pull. This is zero indexed and defaults to 0 if not provided
@@ -7149,13 +7150,6 @@ paths:
       responses:
         '200':
           description: An object describing page information and auctions on that page.
-          headers:
-            ratelimit-limit:
-              $ref: '#/components/headers/ratelimit-limit'
-            ratelimit-remaining:
-              $ref: '#/components/headers/ratelimit-remaining'
-            ratelimit-reset:
-              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:
@@ -7264,12 +7258,6 @@ paths:
                     claimed_bidders:
                     highest_bid_amount: 0
                     bids: []
-        '400':
-          $ref: '#/components/responses/MissingFields'
-        '403':
-          $ref: '#/components/responses/Unauthorized'
-        '429':
-          $ref: '#/components/responses/RateLimitError'
   /skyblock/bazaar:
     get:
       tags:
@@ -7283,16 +7271,10 @@ paths:
         ```typescript
         const products = await client.skyblock.bazaar();
         ```
+      security: []
       responses:
         '200':
           description: An object describing the current bazaar products.
-          headers:
-            ratelimit-limit:
-              $ref: '#/components/headers/ratelimit-limit'
-            ratelimit-remaining:
-              $ref: '#/components/headers/ratelimit-remaining'
-            ratelimit-reset:
-              $ref: '#/components/headers/ratelimit-reset'
           content:
             application/json:
               schema:

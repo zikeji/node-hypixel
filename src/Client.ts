@@ -21,21 +21,76 @@ import { getResultObject, ResultObject } from "./util/ResultObject";
 export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
   execute: () => Promise<T>;
   retries: number;
+  noRateLimit: boolean;
+  includeApiKey: boolean;
 }
 
 /** @hidden */
 export interface RateLimitData {
+  /**
+   * Remaining API calls until the limit resets.
+   */
   remaining: number;
+  /**
+   * Time, in seconds, until remaining resets to limit.
+   */
   reset: number;
+  /**
+   * How many requests per minute your API key can make.
+   */
   limit: number;
 }
 
+/**
+ * Possible meta options returned on the meta variable.
+ */
+export interface DefaultMeta {
+  /**
+   * If this request required an API key it returned rate limit information in the headers, which is included here.
+   */
+  ratelimit?: RateLimitData;
+  /**
+   * If you included a cache get/set method in the options, this value will be set to true if that cache was hit.
+   */
+  cached?: boolean;
+  /**
+   * Data from CloudFlare's headers in regards to caching - particularly relevant for resources endpoints.
+   */
+  cloudflareCache?: {
+    /**
+     * Cloudflare cache status.
+     */
+    status: "HIT" | "MISS" | "BYPASS" | "EXPIRED" | "DYNAMIC";
+    /**
+     * Cloudflare cache age.
+     */
+    age?: number;
+    /**
+     * Cloudflare max cache age.
+     */
+    maxAge?: number;
+  };
+}
+
 /** @hidden */
-interface Parameters {
+export interface Parameters {
   [parameter: string]: string;
 }
 
-interface ClientOptions {
+/**
+ * If you want built in caching, implementing these methods (or utilitizing an library that includes these methods) is a must. Refer to the [cache](https://node-hypixel.zikeji.com/guide/cache) guide.
+ */
+export interface BasicCache {
+  get<T extends Components.Schemas.ApiSuccess>(
+    key: string
+  ): Promise<(T & DefaultMeta) | undefined>;
+  set<T extends Components.Schemas.ApiSuccess>(
+    key: string,
+    value: T & DefaultMeta
+  ): Promise<void>;
+}
+
+export interface ClientOptions {
   /**
    * Amount of times to retry a failed request.
    * @default 3
@@ -55,6 +110,18 @@ interface ClientOptions {
    * Custom [HTTPS agent](https://nodejs.org/api/https.html#https_class_https_agent) if desired.
    */
   agent?: Agent;
+  /**
+   * Functions you want to use for caching results. Optional.
+   */
+  cache?: BasicCache;
+}
+
+/** @internal */
+const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
+
+interface ClientEvents {
+  limited: (limit: number, reset: Date) => void;
+  reset: () => void;
 }
 
 export declare interface Client {
@@ -98,9 +165,11 @@ export declare interface Client {
 /**
  * @noInheritDoc
  */
-export class Client extends EventEmitter {
+export class Client {
   /** @internal */
   private static readonly endpoint = new URL(`https://api.hypixel.net`);
+  /** @internal */
+  private readonly emitter = new EventEmitter();
   /** @internal */
   private readonly queue = new Queue();
   /** @internal */
@@ -113,6 +182,8 @@ export class Client extends EventEmitter {
   private readonly userAgent: string;
   /** @internal */
   private readonly agent?: Agent;
+  /** @internal */
+  private readonly cache?: ClientOptions["cache"];
 
   /** @internal */
   protected rateLimit: RateLimitData = {
@@ -127,7 +198,6 @@ export class Client extends EventEmitter {
    * @param options Any options and customizations being applied.
    */
   public constructor(key: string, options?: ClientOptions) {
-    super();
     if (!key || typeof key !== "string") {
       throw new InvalidKeyError("Invalid API key");
     }
@@ -136,6 +206,25 @@ export class Client extends EventEmitter {
     this.timeout = options?.timeout ?? 10000;
     this.userAgent = options?.userAgent ?? "@zikeji/hypixel";
     this.agent = options?.agent;
+    this.cache = options?.cache;
+  }
+
+  on<E extends keyof ClientEvents>(event: E, listener: ClientEvents[E]): this {
+    this.emitter.on(event, listener);
+    return this;
+  }
+
+  once<E extends keyof ClientEvents>(
+    event: E,
+    listener: ClientEvents[E]
+  ): this {
+    this.emitter.once(event, listener);
+    return this;
+  }
+
+  off<E extends keyof ClientEvents>(event: E, listener: ClientEvents[E]): this {
+    this.emitter.off(event, listener);
+    return this;
   }
 
   /**
@@ -152,7 +241,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Boosters.Get.Responses.$200>("boosters"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -190,7 +279,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.GameCounts.Get.Responses.$200>("gameCounts"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -214,7 +303,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Key.Get.Responses.$200>("key"),
       ["record"]
-    ) as never;
+    );
   }
 
   /**
@@ -231,7 +320,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Leaderboards.Get.Responses.$200>("leaderboards"),
       ["leaderboards"]
-    ) as never;
+    );
   }
 
   /**
@@ -258,7 +347,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.PlayerCount.Get.Responses.$200>("playerCount"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -306,7 +395,7 @@ export class Client extends EventEmitter {
     return getResultObject(
       await this.call<Paths.Watchdogstats.Get.Responses.$200>("watchdogstats"),
       ["success"]
-    ) as never;
+    );
   }
 
   /**
@@ -324,13 +413,34 @@ export class Client extends EventEmitter {
    * // { success: true, guild: '553490650cf26f12ae5bac8f' }
    * ```
    */
-  public call<T extends Components.Schemas.ApiSuccess>(
+  public async call<T extends Components.Schemas.ApiSuccess>(
     path: string,
     parameters: Parameters = {}
-  ): Promise<T> {
-    return this.executeActionableCall(
+  ): Promise<T & { cached?: boolean }> {
+    if (!this.cache) {
+      return this.executeActionableCall(
+        this.createActionableCall(path, parameters)
+      );
+    }
+    const key = `${path.split("/").join(":")}${
+      Object.values(parameters).length === 0
+        ? ""
+        : `:${Object.values(parameters).map((v) =>
+            v.toLowerCase().replace(/-/g, "")
+          )}`
+    }`;
+    const cachedResponse:
+      | (T & { cached?: boolean })
+      | undefined = await this.cache.get<T>(key);
+    if (cachedResponse) {
+      cachedResponse.cached = true;
+      return cachedResponse;
+    }
+    const response: T = await this.executeActionableCall(
       this.createActionableCall(path, parameters)
     );
+    await this.cache.set(key, response);
+    return response;
   }
 
   /** @internal */
@@ -340,7 +450,7 @@ export class Client extends EventEmitter {
     await this.queue.wait();
     if (this.rateLimit.remaining === 0) {
       const timeout = this.rateLimit.reset * 1000;
-      this.emit(
+      this.emitter.emit(
         "limited",
         this.rateLimit.limit,
         new Date(Date.now() + this.rateLimit.reset)
@@ -348,9 +458,9 @@ export class Client extends EventEmitter {
       await new Promise((resolve) => {
         setTimeout(resolve, timeout);
       });
-      this.emit("reset");
+      this.emitter.emit("reset");
     }
-    let response: T;
+    let response: T & DefaultMeta;
     try {
       response = await call.execute();
     } catch (error) {
@@ -369,11 +479,8 @@ export class Client extends EventEmitter {
     } finally {
       this.queue.free();
     }
-    if (typeof response === "object") {
-      Object.defineProperty(response, "ratelimit", {
-        enumerable: false,
-        value: JSON.parse(JSON.stringify(this.rateLimit)),
-      });
+    if (typeof response === "object" && !call.noRateLimit) {
+      response.ratelimit = JSON.parse(JSON.stringify(this.rateLimit));
     }
     return response;
   }
@@ -384,26 +491,50 @@ export class Client extends EventEmitter {
     /* istanbul ignore next */
     parameters: Parameters = {}
   ): ActionableCall<T> {
+    let noRateLimit = false;
+    let includeApiKey = true;
+
+    // No API key or rate limiting is needed on resources, skyblock/auctions, or skyblock/bazaar
+    if (
+      path.startsWith("resources") ||
+      path === "skyblock/auctions" ||
+      path === "skyblock/bazaar"
+    ) {
+      noRateLimit = true;
+      includeApiKey = false;
+    }
+
     return {
-      execute: this.callMethod.bind(this, path, parameters),
+      execute: this.callMethod.bind(
+        this,
+        path,
+        parameters,
+        noRateLimit,
+        includeApiKey
+      ),
       retries: 0,
+      noRateLimit,
+      includeApiKey,
     } as ActionableCall<T>;
   }
 
   /** @internal */
   private callMethod<
-    T extends Components.Schemas.ApiSuccess & { cause?: string }
+    T extends Components.Schemas.ApiSuccess & {
+      cause?: string;
+    } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
   >(
     path: string,
-    /* istanbul ignore next */ parameters: Parameters = {}
+    parameters: Parameters,
+    noRateLimit: boolean,
+    includeApiKey: boolean
   ): Promise<T> {
     const url = new URL(path, Client.endpoint);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
     });
 
-    // No API key needed on resources.
-    if (!path.startsWith("resources")) {
+    if (includeApiKey) {
       url.searchParams.set("key", this.apiKey);
     }
 
@@ -429,7 +560,9 @@ export class Client extends EventEmitter {
         });
 
         incomingMessage.on("end", () => {
-          this.getRateLimitHeaders(incomingMessage.headers);
+          if (!noRateLimit) {
+            this.getRateLimitHeaders(incomingMessage.headers);
+          }
 
           /* istanbul ignore next */
           if (
@@ -487,6 +620,27 @@ export class Client extends EventEmitter {
                 `Invalid JSON response received. Response: ${responseBody}`
               )
             );
+          }
+
+          /* istanbul ignore else */
+          if (incomingMessage.headers["cf-cache-status"]) {
+            const age = parseInt(incomingMessage.headers.age as string, 10);
+            const maxAge = CACHE_CONTROL_REGEX.exec(
+              incomingMessage.headers["cache-control"] as string
+            );
+            responseObject.cloudflareCache = {
+              status: incomingMessage.headers["cf-cache-status"] as never,
+              ...(typeof age === "number" && !Number.isNaN(age) && { age }),
+              ...(incomingMessage.headers["cf-cache-status"] === "HIT" &&
+                (typeof age !== "number" ||
+                  Number.isNaN(age)) && /* istanbul ignore next */ { age: 0 }),
+              ...(maxAge &&
+                typeof maxAge === "object" &&
+                maxAge.length === 2 &&
+                parseInt(maxAge[1], 10) > 0 && {
+                  maxAge: parseInt(maxAge[1], 10),
+                }),
+            };
           }
 
           return resolve(responseObject);
