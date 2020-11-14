@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.0](https://github.com/zikeji/node-hypixel/compare/v1.14.0...v1.15.0) (2020-11-12)
+
+
+### Features
+
+* **api:** removed rate limit and key on /skyblock/auctions and /skyblock/bazaar ([e3a882f](https://github.com/zikeji/node-hypixel/commit/e3a882fa506ba00b44ee7acaea0ced5a7b47f7a3))
+* **client:** add optional cache support to client ([7bbeb13](https://github.com/zikeji/node-hypixel/commit/7bbeb136da2a99742cc3181f29d12243a7414565))
+
+
+### Bug Fixes
+
+* **client:** ocassionally age is undefined when cache hit on CF ([894e33a](https://github.com/zikeji/node-hypixel/commit/894e33aeae6dde3ef5ae5f9c8effe56e49b72865))
+
+
+### Code Refactoring
+
+* **client:** no longer extend EventEmitter to get cleaner type suggestions ([fd2e5e5](https://github.com/zikeji/node-hypixel/commit/fd2e5e54bfac61875953c177d524a582b4254e12))
+
+
+### Documentation
+
+* **client:** add more documentation to the client ([278cf37](https://github.com/zikeji/node-hypixel/commit/278cf3783e1bb4507e12e647f7744d23adfe096e))
+* **guide:** add cache guide ([236f110](https://github.com/zikeji/node-hypixel/commit/236f110e3af427cfafeb13596701d5b322ed1cbe))
+* **readme:** update README ([1356d43](https://github.com/zikeji/node-hypixel/commit/1356d43ab3dc94f263f62df73c5fff4a95be6f31))
+
 ## [1.14.0](https://github.com/zikeji/node-hypixel/compare/v1.13.0...v1.14.0) (2020-11-11)
 
 
