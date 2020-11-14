@@ -7,6 +7,7 @@ import {
   NBTInventory,
   removeMinecraftFormatting,
   SkyBlockProfileTransformedInventories,
+  transformSkyBlockItemData,
   transformSkyBlockProfileMemberInventories,
 } from "../src";
 import { getResultArray } from "../src/util/ResultArray";
@@ -334,5 +335,23 @@ describe("Test TransformSkyBlockItemData", function () {
         }
       }
     }
+  });
+  it("should throw as invalid data is being given", async function () {
+    try {
+      await transformSkyBlockItemData("");
+    } catch (e) {
+      expect(e).to.be.instanceOf(Error);
+    }
+  });
+  it("should return an array 4 in length", async function () {
+    const result = await transformSkyBlockItemData(
+      Buffer.from("H4sIAAAAAAAAAONiYOBkYMzkYmBgYGEAAQCp5xppEQAAAA==", "base64")
+    );
+    expect(result)
+      .to.be.an("array")
+      .and.that.satisfies(function (arr: null[]) {
+        return arr.every((v) => v === null);
+      });
+    expect(result.length).to.be.a("number").that.equals(4);
   });
 });

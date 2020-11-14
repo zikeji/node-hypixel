@@ -127,6 +127,7 @@ export async function transformSkyBlockItemData(
   try {
     nbt = await import("prismarine-nbt");
   } catch (e) {
+    /* istanbul ignore next */
     throw new Error("prismarine-nbt must be installed to use this helper");
   }
   let buffer: Buffer;
@@ -141,6 +142,7 @@ export async function transformSkyBlockItemData(
     Parameters<typeof nbt.parse>[1]
   >[1] = await new Promise((resolve, reject) =>
     nbt.parse(buffer, (err, nbtData) => {
+      /* istanbul ignore if */
       if (err) {
         return reject(err);
       }
@@ -154,15 +156,18 @@ export async function transformSkyBlockItemData(
         if (Object.entries(item).length === 0 || !item.tag.ExtraAttributes) {
           return null;
         }
+        /* istanbul ignore else */
         if (item.tag.SkullOwner) {
           const skullOwner: {
             Properties: { textures: { Value: string }[] };
           } = item.tag.SkullOwner as never;
           const propertiesData = skullOwner.Properties.textures.shift();
+          /* istanbul ignore else */
           if (propertiesData) {
             item.tag.SkullOwner.Properties = JSON.parse(
               Buffer.from(propertiesData.Value, "base64").toString()
             );
+            /* istanbul ignore if */
             if (skullOwner.Properties.textures.length > 0) {
               item.tag.SkullOwner.ExtraProperties = skullOwner.Properties.textures.map(
                 ({ Value }) =>
@@ -175,6 +180,7 @@ export async function transformSkyBlockItemData(
         }
         await Promise.all(
           Object.keys(item.tag.ExtraAttributes).map(async (key) => {
+            /* istanbul ignore if */
             if (!item.tag.ExtraAttributes) return;
             if (key.endsWith("_backpack_data") || key.endsWith("_bag_data")) {
               item.tag.ExtraAttributes[key] = await transformSkyBlockItemData(
