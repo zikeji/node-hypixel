@@ -86,7 +86,8 @@ module.exports = config({
           collapsable: false,
           icon: "helper",
           children: [
-            "playerRanks"
+            "helpers/player-ranks",
+            "helpers/skyblock-item-data"
           ]
         },
         {
@@ -94,8 +95,8 @@ module.exports = config({
           collapsable: false,
           icon: "advanced",
           children: [
-            "cache",
-            "metadata"
+            "advanced/cache",
+            "advanced/metadata"
           ]
         }
       ]
