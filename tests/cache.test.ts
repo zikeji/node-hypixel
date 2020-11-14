@@ -1,7 +1,7 @@
+/// <reference path="../src/globals.d.ts" />
+
 import { expect } from "chai";
 import { Client } from "../src";
-import type { ResultArray } from "../src/util/ResultArray";
-import type { ResultObject } from "../src/util/ResultObject";
 import { AsyncReturnType } from "./client.test";
 
 const basicCache = new Map<string, never>();
