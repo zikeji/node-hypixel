@@ -117,7 +117,7 @@ export interface NBTCustomPotionEffect {
 }
 
 /**
- * This helper will transform NBT data into a typed
+ * This helper will transform NBT data into a typed object using prismarine-nbt. It will also transform any backpacks/bags with item data so you can explore those as well.
  * @param value A Base64 item data string, NBT byte array, or buffer.
  */
 export async function transformSkyBlockItemData(
@@ -219,6 +219,10 @@ const SKYBLOCK_INVENTORIES: (keyof SkyBlockProfileTransformedInventories)[] = [
   "wardrobe_contents",
 ];
 
+/**
+ * This helper will loop over all the possible inventories on a profile and run the {@link transformSkyBlockItemData} helper on them, returning the member object with the transformed properties.
+ * @param member The profile member object that you want to transform the inventory data of.
+ */
 export async function transformSkyBlockProfileMemberInventories(
   member: Components.Schemas.SkyBlockProfileMember
 ): Promise<SkyBlockProfileMemberWithTransformedInventories> {

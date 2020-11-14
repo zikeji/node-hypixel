@@ -1,4 +1,4 @@
-/// <reference path="../src/helpers/prismarine-nbt.d.ts" />
+/// <reference path="../src/globals.d.ts" />
 
 import { expect } from "chai";
 import {

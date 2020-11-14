@@ -1,3 +1,5 @@
+/// <reference path="../src/globals.d.ts" />
+
 import { expect } from "chai";
 import { Agent } from "https";
 import { Client, InvalidKeyError } from "../src";
