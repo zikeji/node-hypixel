@@ -38,8 +38,11 @@ for (let line of content.split("\n")) {
     if(lines[lines.length - 1].match(/settings\?:/)) {
       line = line.replace(/\[name: string\]: boolean \| string/, "[name: string]: boolean | string | undefined");
     }
-    if(lines[lines.length - 1].match(/socialMedia\?: \{/)) {
-      line = line.replace(/\[name: string\]: string \| boolean \| \{/, "[name: string]: string | boolean | undefined | {");
+    if(lines[lines.length - 1].match(/export interface PlayerSocialMedia/)) {
+      line = line.replace(/\[name: string\]: string \| boolean \| PlayerSocialMediaLinks/, "[name: string]: string | boolean | PlayerSocialMediaLinks | undefined");
+    }
+    if(lines[lines.length - 1].match(/export interface PlayerSocialMediaLinks/)) {
+      line = line.replace(/\[name: string\]: string/, "[name: string]: string | undefined");
     }
     if(lines[lines.length - 1].match(/\[name: string\]: string \| boolean \| undefined \| \{/)) {
       line = line.replace(/\[name: string\]: string/, "[name: string]: string | undefined");

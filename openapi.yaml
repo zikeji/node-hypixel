@@ -8332,32 +8332,7 @@ components:
               additionalProperties:
                 type: number
         socialMedia:
-          type: object
-          properties:
-            TWITTER:
-              type: string
-            DISCORD:
-              type: string
-            links:
-              type: object
-              properties:
-                HYPIXEL:
-                  type: string
-                DISCORD:
-                  type: string
-                TWITTER:
-                  type: string
-              additionalProperties:
-                type: string
-            prompt:
-              type: boolean
-          additionalProperties:
-            anyOf:
-              - type: string
-              - type: boolean
-              - type: object
-                additionalProperties:
-                  type: string
+          $ref: '#/components/schemas/PlayerSocialMedia'
         vanityMeta:
           type: object
           properties:
@@ -8986,6 +8961,37 @@ components:
           - type: array
             items:
               type: string
+    PlayerSocialMedia:
+      allOf:
+        - $ref: '#/components/schemas/PlayerSocialMediaLinks'
+        - type: object
+          properties:
+            links:
+              $ref: '#/components/schemas/PlayerSocialMediaLinks'
+            prompt:
+              type: boolean
+      additionalProperties:
+        anyOf:
+          - type: string
+          - type: boolean
+          - $ref: '#/components/schemas/PlayerSocialMediaLinks'
+    PlayerSocialMediaLinks:
+      type: object
+      properties:
+        DISCORD:
+          type: string
+        HYPIXEL:
+          type: string
+        INSTAGRAM:
+          type: string
+        TWITCH:
+          type: string
+        TWITTER:
+          type: string
+        YOUTUBE:
+          type: string
+      additionalProperties:
+        type: string
     ResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

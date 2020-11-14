@@ -361,24 +361,7 @@ export declare namespace Components {
           [name: string]: number;
         };
       };
-      socialMedia?: {
-        [name: string]:
-          | string
-          | boolean
-          | undefined
-          | {
-              [name: string]: string | undefined;
-            };
-        TWITTER?: string;
-        DISCORD?: string;
-        links?: {
-          [name: string]: string | undefined;
-          HYPIXEL?: string;
-          DISCORD?: string;
-          TWITTER?: string;
-        };
-        prompt?: boolean;
-      };
+      socialMedia?: PlayerSocialMedia;
       vanityMeta?: {
         packages?: string[];
       };
@@ -683,6 +666,26 @@ export declare namespace Components {
     }
     export interface PlayerResponse {
       player: Player;
+    }
+    export interface PlayerSocialMedia {
+      [name: string]: string | boolean | PlayerSocialMediaLinks | undefined;
+      DISCORD?: string;
+      HYPIXEL?: string;
+      INSTAGRAM?: string;
+      TWITCH?: string;
+      TWITTER?: string;
+      YOUTUBE?: string;
+      links?: PlayerSocialMediaLinks;
+      prompt?: boolean;
+    }
+    export interface PlayerSocialMediaLinks {
+      [name: string]: string | undefined;
+      DISCORD?: string;
+      HYPIXEL?: string;
+      INSTAGRAM?: string;
+      TWITCH?: string;
+      TWITTER?: string;
+      YOUTUBE?: string;
     }
     export type QuestDataArray = {
       id: string;
