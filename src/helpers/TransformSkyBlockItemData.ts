@@ -58,7 +58,7 @@ export interface NBTExtraAttributes {
   dungeon_item_level?: number;
   backpack_color?: string;
   runes?: { [name: string]: number };
-  potion_level?: string;
+  potion_level?: number;
   potion?: string;
   effects?: NBTExtraAttributesPotionEffect[];
   potion_type?: string;
@@ -81,7 +81,7 @@ export interface NBTExtraAttributes {
 export interface NBTExtraAttributesPotionEffect {
   level: number;
   effect: string;
-  duration_tickets: number;
+  duration_ticks: number;
 }
 
 export interface NBTEnch {
@@ -90,7 +90,7 @@ export interface NBTEnch {
 }
 
 export interface NBTSkullOwner {
-  Id: number;
+  Id: string;
   Properties: {
     timestamp?: number;
     profileId?: number;
