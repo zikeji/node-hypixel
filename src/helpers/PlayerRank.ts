@@ -48,14 +48,23 @@ export interface PlayerRank {
    */
   colorHex: MinecraftColorAsHex;
   /**
-   * If they have a custom color for their profile.
+   * If they have a custom color for their rank.
    * **Note:** this can be set when the player isn't MVP++. If you want to use this value, be sure to check if the rank is SUPERSTAR (MVP++).
    */
-  customColor?: MinecraftFormatting;
+  customRankColor?: MinecraftFormatting;
   /**
-   * Same as customColor, but the hex version of the color.
+   * Same as customRankColor, but the hex version of the color.
    */
-  customColorHex?: MinecraftColorAsHex;
+  customRankColorHex?: MinecraftColorAsHex;
+  /**
+   * If they have a custom color for the pluses in their rank (++).
+   * **Note:** this can be set when the player isn't MVP++. If you want to use this value, be sure to check if the rank is SUPERSTAR (MVP++).
+   */
+  customPlusColor?: MinecraftFormatting;
+  /**
+   * Same as customPlusColor, but the hex version of the color.
+   */
+  customPlusColorHex?: MinecraftColorAsHex;
   /**
    * Whether or not this is a staff only rank.
    */
@@ -238,18 +247,33 @@ export function getPlayerRank(
       };
       break;
   }
-  if (player.rankPlusColor) {
-    const customColor =
+  if (player.monthlyRankColor || player.rankPlusColor) {
+    const customRankColor =
+      MinecraftFormatting[
+        player.monthlyRankColor as keyof typeof MinecraftFormatting
+      ];
+    const customPlusColor =
       MinecraftFormatting[
         player.rankPlusColor as keyof typeof MinecraftFormatting
       ];
-    if (customColor) {
-      out.customColor = customColor;
-      out.customColorHex =
-        MinecraftColorAsHex[customColor as keyof typeof MinecraftColorAsHex];
-      if (out.priority === PlayerRanks.SUPERSTAR) {
-        out.prefix = `§6[MVP${customColor}++§6]`;
-      }
+    if (customRankColor) {
+      out.customRankColor = customRankColor;
+      out.customRankColorHex =
+        MinecraftColorAsHex[
+          customRankColor as keyof typeof MinecraftColorAsHex
+        ];
+    }
+    if (customPlusColor) {
+      out.customPlusColor = customPlusColor;
+      out.customPlusColorHex =
+        MinecraftColorAsHex[
+          customPlusColor as keyof typeof MinecraftColorAsHex
+        ];
+    }
+    if (out.priority === PlayerRanks.SUPERSTAR) {
+      out.prefix = `${customRankColor ?? "§6"}[MVP${customPlusColor ?? "§c"}++${
+        customRankColor ?? "§6"
+      }]`;
     }
   }
   return out;

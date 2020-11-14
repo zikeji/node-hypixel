@@ -3,6 +3,8 @@
 import { expect } from "chai";
 import {
   Components,
+  getExpToNetworkLevel,
+  getNetworkLevel,
   getPlayerRank,
   NBTInventory,
   removeMinecraftFormatting,
@@ -61,7 +63,7 @@ describe("Test PlayerRank helper", function () {
     );
     expect(rank.name).to.be.a("string").that.equals("SUPERSTAR");
   });
-  it("should return MVP++ with a blue prefix", function () {
+  it("should return MVP++ with a blue ++", function () {
     const rank = getPlayerRank(
       {
         monthlyPackageRank: "SUPERSTAR",
@@ -71,6 +73,18 @@ describe("Test PlayerRank helper", function () {
       false
     );
     expect(rank.prefix).to.be.a("string").that.equals("§6[MVP§9++§6]");
+  });
+  it("should return MVP++ with a aqua color and black ++", function () {
+    const rank = getPlayerRank(
+      {
+        monthlyPackageRank: "SUPERSTAR",
+        newPackageRank: "MVP_PLUS",
+        monthlyRankColor: "AQUA",
+        rankPlusColor: "BLACK",
+      } as never,
+      false
+    );
+    expect(rank.prefix).to.be.a("string").that.equals("§b[MVP§0++§b]");
   });
   it("should return MVP+", function () {
     const rank = getPlayerRank(
