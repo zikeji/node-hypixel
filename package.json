@@ -249,7 +249,7 @@
     "typedoc": "^0.19.2",
     "typedoc-plugin-markdown": "^3.0.11",
     "typedoc-plugin-no-inherit": "^1.2.0",
-    "typescript": "^4.0.3",
+    "typescript": "^4.0.5",
     "vuepress": "^1.7.1",
     "vuepress-plugin-typedoc": "^0.1.1",
     "vuepress-theme-hope": "^1.4.7",
