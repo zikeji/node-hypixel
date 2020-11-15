@@ -8199,23 +8199,112 @@ components:
       type: object
       properties:
         player:
-          $ref: '#/components/schemas/Player'
+          $ref: '#/components/schemas/NullablePlayer'
       required:
         - player
+    NullablePlayer:
+      anyOf:
+        - $ref: '#/components/schemas/Player'
+        - nullable: true
     Player:
+      description: |
+        The player object has many properties that define specific things. There are many of these properties, and due to their iterative nature no point in typing them.
+        
+        ## Booleans
+
+        Additional properties that are the boolean type (true/false) are usually a setting toggle or a one time event/action.
+        
+        * Properties with keys that start with "levelingReward_" and end with a number indicate when that leveling reward has been claimed. The number itself is the network level of the reward.
+        * Properties with keys that look like "xmas2019_MAIN_LOBBY_1" - I believe these correlate with Christmas events but not sure what true/false means for these.
+          * The general property key format is "xmasYEAR_TYPE_NUMBER".
+          * A regex to match these would be: /^xmas(\d{4})_([A-Z_]+?)_(\d+)$/
+
+        ## Numbers
+
+        Additional properties that are the number type will generally either be some form of statistic, or a timestamp.
+
+        * Properties with keys that start with "claimed_solo_bank_" will be a timestamp indicating when it was claimed. The full key will include a Minecraft UUID at the end.
+        * Properties with keys that roughly match "completed_christmas_quests_YEAR" will be a timestamp that indicates when they completed all the available quests for that event.
+        * Properties with keys that start with "anniversaryNPCProgress" will indicate how many event NPCs have been visited by the player.
+
+        ## Arrays
+
+        Some arrays will fit into a certain schema based on the property's key.
+
+        * Properties with keys that start with "anniversaryNPCVisited" will be an array of numbers.
+
+        ## Objects
+
+        Some objects will fit into a certain schema based on the property's key.
+
+        * Properties with keys starting with "adventRewards" will fit the "PlayerAdventRewards" schema.
+        * Properties with keys ending with "Cooldowns" will fit the "PlayerEventCooldown" schema.
+        * Properties with keys starting with "upcomingLanguageRelease_" will fit the "PlayerUpcomingLanguageRelease" schema.
+        * Properties with keys starting with "dmcrates-" will fit the "PlayerMonthlyCrates" schema.
+      allOf:
+        - $ref: '#/components/schemas/PlayerInfoData'
+        - $ref: '#/components/schemas/PlayerStatsData'
+        - $ref: '#/components/schemas/PlayerSettingsData'
+        - $ref: '#/components/schemas/PlayerFriendsData'
+        - $ref: '#/components/schemas/PlayerGuildData'
+        - $ref: '#/components/schemas/PlayerTaskData'
+        - $ref: '#/components/schemas/PlayerMiscData'
+        - $ref: '#/components/schemas/PlayerAchievementData'
+        - type: object
+          additionalProperties:
+            anyOf:
+              - type: boolean
+              - type: string
+              - type: number
+              - type: array
+                items:
+                  type: number
+              - type: array
+                items:
+                  type: string
+              - $ref: '#/components/schemas/PlayerAdventRewards'
+              - $ref: '#/components/schemas/PlayerAchievementTotem'
+              - $ref: '#/components/schemas/PlayerChallenges'
+              - $ref: '#/components/schemas/PlayerCompassStats'
+              - $ref: '#/components/schemas/PlayerCooldowns'
+              - $ref: '#/components/schemas/PlayerEventCooldown'
+              - $ref: '#/components/schemas/PlayerFireworksStorage'
+              - $ref: '#/components/schemas/PlayerGiftingMeta'
+              - $ref: '#/components/schemas/PlayerHousingMeta'
+              - $ref: '#/components/schemas/PlayerMonthlyCrates'
+              - $ref: '#/components/schemas/PlayerMonthlyCrates'
+              - $ref: '#/components/schemas/PlayerOutfit'
+              - $ref: '#/components/schemas/PlayerParkourCheckpointBests'
+              - $ref: '#/components/schemas/PlayerParkourCompletions'
+              - $ref: '#/components/schemas/PlayerPetConsumables'
+              - $ref: '#/components/schemas/PlayerPetStats'
+              - $ref: '#/components/schemas/PlayerPlotResets'
+              - $ref: '#/components/schemas/PlayerQuestSettings'
+              - $ref: '#/components/schemas/PlayerQuests'
+              - $ref: '#/components/schemas/PlayerSettings'
+              - $ref: '#/components/schemas/PlayerSkin'
+              - $ref: '#/components/schemas/PlayerSocialMedia'
+              - $ref: '#/components/schemas/PlayerStats'
+              - $ref: '#/components/schemas/PlayerTourney'
+              - $ref: '#/components/schemas/PlayerUpcomingLanguageRelease'
+              - $ref: '#/components/schemas/PlayerVanityMeta'
+    PlayerInfoData:
       type: object
-      nullable: true
       properties:
         _id:
           type: string
         uuid:
           type: string
-        firstLogin:
-          type: number
         playername:
           type: string
         displayname:
           type: string
+        firstLogin:
+          type: number
+        lastLogin:
+          type: number
+        lastLogout:
+          type: number
         knownAliases:
           type: array
           items:
@@ -8224,609 +8313,56 @@ components:
           type: array
           items:
             type: string
-        achievementsOneTime:
-          type: array
-          items:
-            type: string
-        rank:
-          type: string
-        parkourCheckpointBests:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: number
-        achievementTracking:
-          type: array
-          items:
-            type: string
-        achievementPoints:
+        claimed_century_cake:
           type: number
-        achievements:
-          type: object
-          additionalProperties:
-            type: number
-        karma:
+          description: Timestamp of when the SkyBlock Century Cake was claimed.
+        claimed_potato_basket:
           type: number
-        networkExp:
+          description: Timestamp of when the Potato Basket was claimed.
+        claimed_potato_talisman:
           type: number
-        giftingMeta:
-          $ref: '#/components/schemas/PlayerGiftingMeta'
-        friendRequestsUuid:
-          type: array
-          items:
-            type: string
-        cooldowns:
-          type: object
-        parkourCompletions:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: object
-              properties:
-                timeStart:
-                  type: number
-                timeTook:
-                  type: number
-              required:
-                - timeStart
-                - timeTook
-        newPackageRank:
-          type: string
-        userLanguage:
-          type: string
-        mcVersionRp:
-          type: string
-        achievementSync:
-          type: object
-          additionalProperties:
-            type: number
-        onetime_achievement_menu_sort:
-          type: string
-        housingMeta:
-          type: object
-          properties:
-            packages:
-              type: array
-              items:
-                type: string
-        settings:
-          type: object
-          properties:
-            allowFriendRequests:
-              type: boolean
-            allowPartyRequests:
-              type: boolean
-            autoSpawnPet:
-              type: boolean
-            bloodVisibility:
-              type: boolean
-            chatVisibility:
-              type: boolean
-            lobbySpeed:
-              type: boolean
-            lobbyProtection:
-              type: boolean
-            petVisibility:
-              type: boolean
-            legacyCompass:
-              type: boolean
-            partyInvitePrivacy:
-              type: string
-            friendRequestPrivacy:
-              type: string
-            duelInvitePrivacy:
-              type: string
-            privateMessageSounds:
-              type: boolean
-          additionalProperties:
-            anyOf:
-              - type: boolean
-              - type: string
-        challenges:
-          type: object
-          properties:
-            all_time:
-              type: object
-              additionalProperties:
-                type: number
-        socialMedia:
-          $ref: '#/components/schemas/PlayerSocialMedia'
-        vanityMeta:
-          type: object
-          properties:
-            packages:
-              type: array
-              items:
-                type: string
-        channel:
-          type: string
-        petStats:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              HUNGER:
-                type: object
-                properties:
-                  timestamp:
-                    type: number
-                  value:
-                    type: number
-                required:
-                  - timestamp
-                  - value
-              THIRST:
-                type: object
-                properties:
-                  value:
-                    type: number
-                  timestamp:
-                    type: number
-                required:
-                  - value
-                  - timestamp
-              EXERCISE:
-                type: object
-                properties:
-                  timestamp:
-                    type: number
-                  value:
-                    type: number
-                required:
-                  - timestamp
-                  - value
-              experience:
-                type: number
-        petConsumables:
-          type: object
-          additionalProperties:
-            type: number
-        currentClickEffect:
-          type: string
-        tourney:
-          type: object
-          properties:
-            first_join_lobby:
-              type: number
-            quake_solo2_0:
-              type: object
-              properties:
-                games_played:
-                  type: number
-                playtime:
-                  type: number
-                first_game:
-                  type: number
-                tributes_earned:
-                  type: number
-            total_tributes:
-              type: number
-        onetime_achievement_menu_sort_completion_sort:
-          type: string
-        lastAdsenseGenerateTime:
-          type: number
-        voting:
-          type: object
-          additionalProperties:
-            type: number
-        currentGadget:
-          type: string
-        stats:
-          type: object
-          properties:
-            Arcade:
-              type: object
-              properties:
-                coins:
-                  type: number
-              additionalProperties:
-                anyOf:
-                  - type: number
-                  - type: boolean
-            SkyWars:
-              type: object
-              properties:
-                packages:
-                  type: array
-                  items:
-                    type: string
-                souls:
-                  type: number
-            GingerBread:
-              type: object
-              properties:
-                coins:
-                  type: number
-                packages:
-                  type: array
-                  items:
-                    type: string
-              additionalProperties:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: array
-                    items:
-                      type: string
-            MCGO:
-              type: object
-              properties:
-                coins:
-                  type: number
-            TrueCombat:
-              type: object
-              properties:
-                win_streak:
-                  type: number
-                games:
-                  type: number
-                deaths:
-                  type: number
-                coins:
-                  type: number
-                losses:
-                  type: number
-                survived_players:
-                  type: number
-                packages:
-                  type: array
-                  items:
-                    type: string
-              additionalProperties:
-                anyOf:
-                  - type: number
-                  - type: array
-                    items:
-                      type: string
-            VampireZ:
-              type: object
-              properties:
-                updated_stats:
-                  type: boolean
-            Quake:
-              type: object
-              properties:
-                packages:
-                  type: array
-                  items:
-                    type: string
-                alternative_gun_cooldown_indicator:
-                  type: boolean
-                compass_selected:
-                  type: boolean
-                enable_sound:
-                  type: boolean
-                instantRespawn:
-                  type: boolean
-                showDashCooldown:
-                  type: boolean
-                highest_killstreak:
-                  type: number
-                showKillPrefix:
-                  type: boolean
-                kills:
-                  type: number
-                headshots:
-                  type: number
-                coins:
-                  type: number
-                distance_travelled:
-                  type: number
-                shots_fired:
-                  type: number
-                deaths:
-                  type: number
-              additionalProperties:
-                anyOf:
-                  - type: number
-                  - type: boolean
-                  - type: array
-                    items:
-                      type: string
-            Paintball:
-              type: object
-              properties:
-                packages:
-                  type: array
-                  items:
-                    type: string
-                kills:
-                  type: number
-                wins:
-                  type: number
-                coins:
-                  type: number
-                shots_fired:
-                  type: number
-                deaths:
-                  type: number
-                showKillPrefix:
-                  type: boolean
-                favorite_slots:
-                  type: string
-              additionalProperties: 
-                anyOf:
-                  - type: number
-                  - type: string
-                  - type: boolean
-                  - type: array
-                    items:
-                      type: string
-            Legacy:
-              type: object
-              properties:
-                next_tokens_seconds:
-                  type: number
-                quakecraft_tokens:
-                  type: number
-                total_tokens:
-                  type: number
-                tokens:
-                  type: number
-                paintball_tokens:
-                  type: number
-              additionalProperties:
-                type: number
-            BuildBattle:
-              type: object
-              properties:
-                wins_solo_normal:
-                  type: number
-                wins:
-                  type: number
-              additionalProperties:
-                type: number
-            Bedwars:
-              type: object
-              properties:
-                bedwars_boxes:
-                  type: number
-                Experience:
-                  type: number
-              additionalProperties:
-                anyOf:
-                  - type: boolean
-                  - type: number
-            Pit:
-              type: object
-              properties:
-                profile:
-                  type: object
-                  properties:
-                    renown:
-                      type: number
-            SkyBlock:
-              type: object
-              properties:
-                profiles:
-                  type: object
-                  additionalProperties:
-                    type: object
-                    description: Object key is the profile ID
-                    properties:
-                      profile_id:
-                        type: string
-                      cute_name:
-                        type: string
-            MurderMystery:
-              type: object
-              properties:
-                murdermystery_books:
-                  type: array
-                  items:
-                    type: string
-                detective_chance:
-                  type: number
-                murderer_chance:
-                  type: number
-                coins:
-                  type: number
-                coins_pickedup:
-                  type: number
-                coins_pickedup_MURDER_CLASSIC:
-                  type: number
-                coins_pickedup_skyway_pier:
-                  type: number
-                coins_pickedup_skyway_pier_MURDER_CLASSIC:
-                  type: number
-                games:
-                  type: number
-                games_MURDER_CLASSIC:
-                  type: number
-                games_skyway_pier:
-                  type: number
-                games_skyway_pier_MURDER_CLASSIC:
-                  type: number
-                wins:
-                  type: number
-                wins_MURDER_CLASSIC:
-                  type: number
-                wins_skyway_pier:
-                  type: number
-                wins_skyway_pier_MURDER_CLASSIC:
-                  type: number
-              additionalProperties:
-                anyOf:
-                  - type: number
-                  - type: array
-                    items:
-                      type: string
-        lastLogin:
-          type: number
-        lastLogout:
-          type: number
-        quickjoin_timestamp:
-          type: number
-        quickjoin_uses:
-          type: number
-        levelingReward_1:
-          type: boolean
-        network_update_book:
-          type: string
-        levelUp_VIP_PLUS:
-          type: number
-        achievementRewardsNew:
-          type: object
-          additionalProperties:
-            type: number
-        lastClaimedReward:
-          type: number
-        rewardHighScore:
-          type: number
-        rewardScore:
-          type: number
-        rewardStreak:
-          type: number
-        totalDailyRewards:
-          type: number
-        totalRewards:
-          type: number
-        eugene:
-          type: object
-          properties:
-            dailyTwoKExp:
-              type: number
-          additionalProperties:
-            type: number
-        levelUp_MVP_PLUS:
-          type: number
-        vanityFavorites:
-          type: string
+          description: Timestamp of when the Potato Talisman was claimed.
         monthlyPackageRank:
           type: string
-        mostRecentMonthlyPackageRank:
-          type: string
-        currentPet:
-          type: string
-        quests:
-          type: object
-          additionalProperties:
-            anyOf:
-              - type: object
-        rankPlusColor:
-          type: string
-        monthlycrates:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              REGULAR:
-                type: boolean
-              VIP:
-                type: boolean
-              VIP_PLUS:
-                type: boolean
-              MVP:
-                type: boolean
-            additionalProperties:
-              type: boolean
         monthlyRankColor:
           type: string
-        adsense_tokens:
-          type: number
-        collectibles_menu_sort:
+        newPackageRank:
           type: string
-        outfit:
-          type: object
-          properties:
-            BOOTS:
-              type: string
-            CHESTPLATE:
-              type: string
-            LEGGINGS:
-              type: string
-            HELMET:
-              type: string
-        petJourneyTimestamp:
-          type: number
-        mostRecentGameType:
+        packageRank:
           type: string
-        timePlaying:
+        rank:
+          type: string
+        rankPlusColor:
+          type: string
+        levelUp_NONE:
           type: number
-        flashingSalePopup:
-          type: number
-        flashingSaleOpens:
-          type: number
-        flashingSalePoppedUp:
-          type: number
-        flashingSaleClicks:
-          type: number
-        fortuneBuff:
-          type: number
+          description: Timestamp indicating when they purchased the rank.
         levelUp_VIP:
           type: number
-        achievementTotem:
-          type: object
-          properties:
-            canCustomize:
-              type: boolean
-            allowed_max_height:
-              type: number
-            unlockedParts:
-              type: array
-              items:
-                type: string
-            selectedParts:
-              type: object
-              additionalProperties:
-                type: string
-            unlockedColors:
-              type: array
-              items:
-                type: string
-            selectedColors:
-              type: object
-              additionalProperties:
-                type: string
-          additionalProperties:
-            anyOf:
-              - type: boolean
-              - type: number
-              - type: array
-                items:
-                  type: string
-              - type: object
-                additionalProperties:
-                  type: string
-        questSettings:
-          type: object
-          additionalProperties:
-            type: boolean
-        customFilter:
+          description: Timestamp indicating when they purchased the rank.
+        levelUp_VIP_PLUS:
+          type: number
+          description: Timestamp indicating when they purchased the rank.
+        levelUp_MVP:
+          type: number
+          description: Timestamp indicating when they purchased the rank.
+        levelUp_MVP_PLUS:
+          type: number
+          description: Timestamp indicating when they purchased the rank.
+        lastClaimedReward:
+          type: number
+        lastAdsenseGenerateTime:
+          type: number
+        lastMapVote:
+          type: number
+        mcVersionRp:
           type: string
-        currentCloak:
+        mostRecentGameType:
           type: string
-        auto_spawn_pet:
-          type: boolean
-        chat:
-          type: boolean
-        eulaCoins:
-          type: boolean
-        fireworkStorage:
-          type: array
-          items:
-            type: object
-            properties:
-              flight_duration:
-                type: number
-              shape:
-                type: string
-              trail:
-                type: boolean
-              twinkle:
-                type: boolean
-              colors:
-                type: string
-              fade_colors:
-                type: string
-              selected:
-                type: boolean
-        guildNotifications:
-          type: boolean
         mostRecentMinecraftVersion:
           type: number
+        mostRecentMonthlyPackageRank:
+          type: string
         mostRecentlyThanked:
           type: string
         mostRecentlyThankedUuid:
@@ -8835,132 +8371,638 @@ components:
           type: string
         mostRecentlyTippedUuid:
           type: string
-        notifications:
+        petConsumables:
+          $ref: '#/components/schemas/PlayerPetConsumables'
+        petJourneyTimestamp:
+          type: number
+        quickjoin_timestamp:
+          type: number
+        quickjoin_uses:
+          type: number
+        scorpius_bribe_96:
+          type: number
+        testPass:
           type: boolean
-        packageRank:
+        watchdogBlockTimestamp:
+          type: number
+      required:
+        - _id
+        - displayname
+        - knownAliases
+        - knownAliasesLower
+        - playername
+        - uuid
+    PlayerStatsData:
+      type: object
+      properties:
+        adsense_tokens:
+          type: number
+        networkExp:
+          type: number
+        karma:
+          type: number
+        coins:
+          type: number
+        eulaCoins:
+          type: boolean
+        kills:
+          type: number
+        killstreaks:
+          type: number
+        deaths:
+          type: number
+        wins:
+          type: number
+        fortuneBuff:
+          type: number
+        gifts_grinch:
+          type: number
+        hasTheHotPotato:
+          type: boolean
+        main2017Tutorial:
+          type: boolean
+        monthlycrates:
+          $ref: '#/components/schemas/PlayerMonthlyCrates'
+        network_update_book:
           type: string
-        seeRequests:
+          description: This property represents a version - e.g. "v0.75"
+        parkourCheckpointBests:
+          $ref: '#/components/schemas/PlayerParkourCheckpointBests'
+        parkourCompletions:
+          $ref: '#/components/schemas/PlayerParkourCompletions'
+        petStats:
+          $ref: '#/components/schemas/PlayerPetStats'
+        rewardConsumed:
           type: boolean
-        spectators_invisible:
+        rewardHighScore:
+          type: number
+        rewardScore:
+          type: number
+        rewardStreak:
+          type: number
+        skyblock_free_cookie:
+          type: number
+        shots_fired:
+          type: number
+        snowball_fight_intro_2019:
           type: boolean
+        stats:
+          $ref: '#/components/schemas/PlayerStats'
         thanksReceived:
           type: number
         thanksSent:
           type: number
+        timePlaying:
+          type: number
+        totalDailyRewards:
+          type: number
+        totalRewards:
+          type: number
+        tourney:
+          $ref: '#/components/schemas/PlayerTourney'
         tournamentTokens:
-          type: number
-        wardrobe:
-          type: string
-        gadget:
-          type: string
-        friendInvisible:
-          type: boolean
-        reverted:
-          type: boolean
-        notifiedOfStuff:
-          type: boolean
-        petUpdate:
-          type: number
-        transformation:
-          type: string
-        coins:
-          type: number
-        rewardConsumed:
-          type: boolean
-        disableSendAll:
-          type: boolean
-        vanityCraftedBoxToday:
-          type: number
-        vanityFirstCraftedBox:
-          type: number
-        vanityFirstConvertedBox:
           type: number
         vanityConvertedBoxToday:
           type: number
-        flashingNewsPopup:
-          type: array
-          items:
-            type: string
-        flashingNewsPoppedUp:
+        vanityFirstConvertedBox:
           type: number
-        flashingNewsOpens:
+        voting:
+          $ref: '#/components/schemas/PlayerVoting'
+        vanityTokens:
           type: number
-        compassStats:
-          type: object
-          properties:
-            compass:
-              type: object
-              properties:
-                skywars:
-                  type: number
-                prototype:
-                  type: number
-                battleground:
-                  type: number
-        spec_first_person:
+      required:
+        - stats
+    PlayerSettingsData:
+      type: object
+      properties:
+        language:
+          type: string
+        autoDetectLanguage:
           type: boolean
-        currentHat:
-          type: string
-        currentIp:
-          type: string
-        particlePack:
-          type: string
-        chatAlerts:
-          type: boolean
-        disguise:
-          type: string
-        prefix:
-          type: string
-        votesMissed:
-          type: number
-        buildTeam:
+        auto_spawn_pet:
           type: boolean
         battlePassGlowStatus:
           type: boolean
+        channel:
+          type: string
+        chat:
+          type: boolean
+        clock:
+          type: boolean
+        collectibles_menu_sort:
+          type: string
+        collectibles_menu_visibility_sort:
+          type: string
+        combatTracker:
+          type: boolean
+        currentClickEffect:
+          type: string
+        currentCloak:
+          type: string
+        currentEmote:
+          type: string
+        currentGadget:
+          type: string
+        currentHat:
+          type: string
+        currentPet:
+          type: string
+        customFilter:
+          type: string
+        disableTipMessages:
+          type: boolean
+        disguise:
+          type: string
+        gadget:
+          type: string
+        notifications:
+          type: boolean
+        outfit:
+          $ref: '#/components/schemas/PlayerOutfit'
+        onetime_achievement_menu_sort:
+          type: string
+        onetime_achievement_menu_sort_completion_sort:
+          type: string
+        particlePack:
+          type: string
+        petActive:
+          type: boolean
+        pp:
+          type: string
+          description: Particle pack, e.g. "note", "anger", "enchantment", etc.
+        questSettings:
+          $ref: '#/components/schemas/PlayerQuestSettings'
+        seeRequests:
+          type: boolean
+        sendCerberusMessages:
+          type: boolean
+        settings:
+          $ref: '#/components/schemas/PlayerSettings'
+        skin:
+          $ref: '#/components/schemas/PlayerSkin'
+        socialMedia:
+          $ref: '#/components/schemas/PlayerSocialMedia'
+        spec_always_flying:
+          type: boolean
+        spec_auto_teleport:
+          type: boolean
+        spec_first_person:
+          type: boolean
+        spectators_invisible:
+          type: boolean
+        tiered_achievement_menu_sort:
+          type: string
+        transformation:
+          type: string
+        userLanguage:
+          type: string
+        vanityFavorites:
+          type: string
+        wardrobe:
+          type: string
+    PlayerFriendsData:
+      type: object
+      properties:
+        friendBlocksUuid:
+          type: array
+          items:
+            type: string
+        friendRequests:
+          type: array
+          items:
+            type: string
+        friendRequestsUuid:
+          type: array
+          items:
+            type: string
+      additionalProperties:
+        type: array
+        items:
+          type: string
+    PlayerGuildData:
+      type: object
+      properties:
         guildInvites:
           type: array
           items:
             type: string
-      additionalProperties:
-        anyOf:
-          - type: boolean
-          - type: number
-          - type: string
-          - type: array
-            items:
-              type: object
-          - type: object
-      required:
-        - _id
-        - uuid
-        - firstLogin
-        - playername
-        - displayname
-    PlayerGiftingMeta:
+        guildKickReason:
+          type: string
+        guildNotifications:
+          type: boolean
+    PlayerTaskData:
       type: object
       properties:
-        realBundlesReceivedInc:
-          type: number
-        bundlesReceived:
-          type: number
-        realBundlesReceived:
-          type: number
-        giftsGiven:
-          type: number
-        bundlesGiven:
-          type: number
-        realBundlesGiven:
-          type: number
-        milestones:
+        challenges:
+          $ref: '#/components/schemas/PlayerChallenges'
+        quests:
+          $ref: '#/components/schemas/PlayerQuests'
+    PlayerMiscData:
+      type: object
+      properties:
+        aprilFoolsStaffClicked_0:
           type: array
           items:
             type: string
+        anniversaryNPCProgress2020:
+          type: number
+        anniversaryNPCVisited2020:
+          type: array
+          items:
+            type: number
+        SANTA_FINISHED:
+          type: boolean
+        SANTA_QUEST_STARTED:
+          type: boolean
+        compassStats:
+          $ref: '#/components/schemas/PlayerCompassStats'
+        cooldowns:
+          $ref: '#/components/schemas/PlayerCooldowns'
+        fireworksStorage:
+          $ref: '#/components/schemas/PlayerFireworksStorage'
+        giftingMeta:
+          $ref: '#/components/schemas/PlayerGiftingMeta'
+        housingMeta:
+          $ref: '#/components/schemas/PlayerHousingMeta'
+        vanityMeta:
+          $ref: '#/components/schemas/PlayerVanityMeta'
+        flashingSaleClicks:
+          type: number
+        flashingSaleOpens:
+          type: number
+        flashingSalePoppedUp:
+          type: number
+        flashingSalePopup:
+          type: number
+        adventRewards2017:
+          $ref: '#/components/schemas/PlayerAdventRewards'
+        adventRewards2018:
+          $ref: '#/components/schemas/PlayerAdventRewards'
+        adventRewards_v2_2018:
+          $ref: '#/components/schemas/PlayerAdventRewards'
+        adventRewards2019:
+          $ref: '#/components/schemas/PlayerAdventRewards'
+        adventRewards_v2_2019:
+          $ref: '#/components/schemas/PlayerAdventRewards'
+        christmas2019Cooldowns:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        summer2020Cooldowns:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        easter2020Cooldowns:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        easter2020Cooldowns2:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        halloween2016Cooldowns:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        halloween2020Cooldowns:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        holiday2016Cooldowns:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        specialtyCooldowns:
+          $ref: '#/components/schemas/PlayerEventCooldown'
+        upcomingLanguageRelease_Korean:
+          $ref: '#/components/schemas/PlayerUpcomingLanguageRelease'
+        upcomingLanguageRelease_Portuguese:
+          $ref: '#/components/schemas/PlayerUpcomingLanguageRelease'
+        upcomingLanguageRelease_Russian:
+          $ref: '#/components/schemas/PlayerUpcomingLanguageRelease'
+        plotResets:
+          $ref: '#/components/schemas/PlayerPlotResets'
+    PlayerAdventRewards:
+      type: object
+      description: |
+        An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+        The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+      additionalProperties:
+        type: number
+        description: A timestamp.
+    PlayerEventCooldown:
+      type: object
+      description: |
+        Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+        The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+      additionalProperties:
+        type: boolean
+    PlayerUpcomingLanguageRelease:
+      type: object
+      description: |
+        An object describing what I assume to be testers who've logged in with a specific language.
+      properties:
+        logins:
+          type: number
+      required:
+        - logins
+    PlayerAchievementData:
+      type: object
+      properties:
+        achievementPoints:
+          type: number
+        achievementRewardsNew:
+          $ref: '#/components/schemas/PlayerAchievementRewardsNew'
+        achievementSync:
+          $ref: '#/components/schemas/PlayerAchievementSync'
+        achievementTotem:
+          $ref: '#/components/schemas/PlayerAchievementTotem'
+        achievementTracking:
+          type: array
+          items:
+            type: string
+        achievementTrackingHideMessages:
+          type: boolean
+        achievements:
+          $ref: '#/components/schemas/PlayerAchievements'
+        achievementsOneTime:
+          type: array
+          description: Array of values, each value representing an achievement.
+          items:
+            type: string
+      required:
+        - achievementPoints
+        - achievementTracking
+        - achievements
+        - achievementsOneTime
+    PlayerAchievementRewardsNew:
+      type: object
+      description: Object property keys are in the format "for_points_NUMBER".
+      additionalProperties:
+        type: number
+    PlayerAchievementSync:
+      type: object
+      properties:
+        quake_tiered:
+          type: number
+      required:
+        - quake_tiered
+      additionalProperties:
+        type: number
+    PlayerAchievementTotem:
+      type: object
+      properties:
+        allowed_max_height:
+          type: number
+        canCustomize:
+          type: boolean
+        selectedColors:
+          type: object
+          description: Object property keys are in the format "slotcolor_NUMBER"
+          additionalProperties:
+            type: string
+        selectedParts:
+          type: object
+          description: Object property keys are in the format "slot_NUMBER"
+          additionalProperties:
+            type: string
+        unlockedColors:
+          type: array
+          items:
+            type: string
+        unlockedParts:
+          type: array
+          items:
+            type: string
+      required:
+        - allowed_max_height
+        - canCustomize
+        - selectedColors
+        - selectedParts
+        - unlockedColors
+        - unlockedParts
+    PlayerAchievements:
+      type: object
+      description: Tiered / numbered achievements the player has earned. All known properties are listed but given it's Hypixel it's subject to change fairly often.
+      properties:
+        arcade_arcade_banker:
+          type: number
+        arcade_bounty_hunter:
+          type: number
+        arena_climb_the_ranks:
+          type: number
+        bedwars_beds:
+          type: number
+        bedwars_bedwars_killer:
+          type: number
+        bedwars_collectors_edition:
+          type: number
+        bedwars_level:
+          type: number
+        bedwars_loot_box:
+          type: number
+        bedwars_wins:
+          type: number
+        buildbattle_build_battle_points:
+          type: number
+        buildbattle_build_battle_score:
+          type: number
+        buildbattle_build_battle_voter:
+          type: number
+        buildbattle_guess_the_build_guesses:
+          type: number
+        buildbattle_guess_the_build_winner:
+          type: number
+        christmas2017_advent_2019:
+          type: number
+        christmas2017_present_collector:
+          type: number
+        christmas2017_santa_says_rounds:
+          type: number
+        duels_bridge_doubles_wins:
+          type: number
+        duels_bridge_duels_wins:
+          type: number
+        duels_bridge_four_teams_wins:
+          type: number
+        duels_bridge_teams_wins:
+          type: number
+        duels_bridge_win_streak:
+          type: number
+        duels_bridge_wins:
+          type: number
+        duels_duels_division:
+          type: number
+        duels_duels_traveller:
+          type: number
+        duels_duels_win_streak:
+          type: number
+        duels_duels_winner:
+          type: number
+        duels_goals:
+          type: number
+        duels_unique_map_wins:
+          type: number
+        easter_throw_eggs:
+          type: number
+        general_challenger:
+          type: number
+        general_coins:
+          type: number
+        general_quest_master:
+          type: number
+        general_wins:
+          type: number
+        gingerbread_banker:
+          type: number
+        halloween2017_pumpkinator:
+          type: number
+        paintball_coins:
+          type: number
+        paintball_kill_streaks:
+          type: number
+        paintball_kills:
+          type: number
+        pit_contracts:
+          type: number
+        pit_events:
+          type: number
+        pit_gold:
+          type: number
+        pit_kills:
+          type: number
+        quake_coins:
+          type: number
+        quake_headshots:
+          type: number
+        quake_killing_sprees:
+          type: number
+        quake_kills:
+          type: number
+        quake_wins:
+          type: number
+        skyblock_angler:
+          type: number
+        skyblock_augmentation:
+          type: number
+        skyblock_combat:
+          type: number
+        skyblock_concoctor:
+          type: number
+        skyblock_domesticator:
+          type: number
+        skyblock_dungeoneer:
+          type: number
+        skyblock_excavator:
+          type: number
+        skyblock_gatherer:
+          type: number
+        skyblock_harvester:
+          type: number
+        skyblock_minion_lover:
+          type: number
+        skyblock_slayer:
+          type: number
+        skyblock_treasure_hunter:
+          type: number
+        skyblock_treasury:
+          type: number
+        skyblock_unique_gifts:
+          type: number
+        skyclash_cards_unlocked:
+          type: number
+        skywars_cages:
+          type: number
+        skywars_heads:
+          type: number
+        skywars_kills_solo:
+          type: number
+        skywars_kills_team:
+          type: number
+        skywars_kits_solo:
+          type: number
+        skywars_kits_team:
+          type: number
+        skywars_new_day_new_challenge:
+          type: number
+        skywars_wins_lab:
+          type: number
+        skywars_wins_solo:
+          type: number
+        skywars_wins_team:
+          type: number
+        skywars_you_re_a_star:
+          type: number
+        summer_shopaholic:
+          type: number
+        supersmash_hero_slayer:
+          type: number
+        tntgames_block_runner:
+          type: number
+        tntgames_tnt_banker:
+          type: number
+        tntgames_tnt_triathlon:
+          type: number
+        walls3_coins:
+          type: number
+        walls3_guardian:
+          type: number
+        walls3_jack_of_all_trades:
+          type: number
+        walls3_rusher:
+          type: number
+      additionalProperties:
+        type: number
+    PlayerSettings:
+      type: object
+      properties:
+        compass:
+          type: object
+          additionalProperties:
+            type: string
+        allowFriendRequests:
+          type: boolean
+        allowPartyRequests:
+          type: boolean
+        autoSpawnPet:
+          type: boolean
+        bloodVisibility:
+          type: boolean
+        chatVisibility:
+          type: boolean
+        duelInvitePrivacy:
+          type: string
+        friendRequestPrivacy:
+          type: string
+        legacyCompass:
+          type: boolean
+        lobbySpeed:
+          type: boolean
+        lobbyProtection:
+          type: boolean
+        petVisibility:
+          type: boolean
+        partyInvitePrivacy:
+          type: string
+        privateMessageSounds:
+          type: boolean
+        profanityLevel:
+          type: string
+        profanityLevel_GUILD:
+          type: string
+        profanityLevel_PARTY:
+          type: string
+        profanityLevel_PM:
+          type: string
+        spec_speed:
+          type: number
       additionalProperties:
         anyOf:
+          - type: boolean
+          - type: string
           - type: number
-          - type: array
-            items:
+          - type: object
+            additionalProperties:
               type: string
+    PlayerSkin:
+      type: object
+      properties:
+        signature:
+          type: string
+        timeoutStart:
+          type: number
+        value:
+          type: string
+      required:
+        - signature
+        - timeoutStart
+        - value
     PlayerSocialMedia:
       allOf:
         - $ref: '#/components/schemas/PlayerSocialMediaLinks'
@@ -8970,6 +9012,9 @@ components:
               $ref: '#/components/schemas/PlayerSocialMediaLinks'
             prompt:
               type: boolean
+          required:
+            - links
+            - prompt
       additionalProperties:
         anyOf:
           - type: string
@@ -8992,6 +9037,887 @@ components:
           type: string
       additionalProperties:
         type: string
+    PlayerStats:
+      type: object
+      description: The player stats object contains statistics for individual game modes.
+      properties:
+        Arcade: 
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Arena: 
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Battleground:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Bedwars:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        BuildBattle:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Duels:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        GingerBread:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        HungerGames:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Legacy:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        MCGO:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        MurderMystery:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Paintball:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Pit:
+          $ref: '#/components/schemas/PlayerStatsPit'
+        Quake:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        SkyBlock:
+          $ref: '#/components/schemas/PlayerStatsSkyBlock'
+        SkyWars:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        SpeedUHC:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        SuperSmash:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        TNTGames:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        TrueCombat:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        UHC:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        VampireZ:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Walls:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Walls3:
+          $ref: '#/components/schemas/PlayerStatsWalls3'
+        SkyClash:
+          $ref: '#/components/schemas/PlayerStatsGameMode'
+        Housing:
+          $ref: '#/components/schemas/PlayerStatsHousing'
+      additionalProperties: 
+        anyOf:
+          - $ref: '#/components/schemas/PlayerStatsGameMode'
+          - $ref: '#/components/schemas/PlayerStatsPit'
+          - $ref: '#/components/schemas/PlayerStatsSkyBlock'
+          - $ref: '#/components/schemas/PlayerStatsWalls3'
+          - $ref: '#/components/schemas/PlayerStatsHousing'
+    PlayerStatsGameMode:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            type: string
+      additionalProperties:
+        anyOf:
+          - type: number
+          - type: boolean
+          - type: string
+          - type: array
+            items:
+              type: string
+    PlayerStatsPit:
+      allOf:
+        - $ref: '#/components/schemas/PlayerStatsGameMode'
+        - type: object
+          properties:
+            pit_stats_ptl:
+              $ref: '#/components/schemas/PlayerStatsGameMode'
+            profile:
+              $ref: '#/components/schemas/PlayerStatsPitProfile'
+          additionalProperties:
+            anyOf:
+              - $ref: '#/components/schemas/PlayerStatsGameMode'
+              - $ref: '#/components/schemas/PlayerStatsPitProfile'
+          required:
+            - profile
+    PlayerStatsPitProfile:
+      allOf:
+        - $ref: '#/components/schemas/PlayerStatsGameMode'
+        - type: object
+          properties:
+            bounties:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfileBounty'
+            cash:
+              type: number
+            contract:
+              $ref: '#/components/schemas/PlayerStatsPitProfileContract'
+            contract_choices:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfileContract'
+            death_recaps:
+              $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+            ended_contracts:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfileEndedContract'
+            gold_transactions:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfileTransaction'
+            hotbar_favorites:
+              type: array
+              items:
+                type: number
+            inv_armor:
+              $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+            inv_contents:
+              $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+            inv_enderchest:
+              $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+            item_stash:
+              $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+            items_last_buy:
+              $ref: '#/components/schemas/PlayerStatsPitProfileLastBoughtItems'
+            last_contract:
+              type: number
+              description: Timestamp.
+            last_midfight_disconnect:
+              description: Timestamp.
+              type: number
+            last_save:
+              description: Timestamp.
+              type: number
+            leaderboard_stats:
+              $ref: '#/components/schemas/PlayerStatsPitProfileLeaderboardStats'
+            login_messages:
+              type: array
+              items:
+                type: string
+            outgoing_offers:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfileOutgoingOffer'
+            prestiges:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfilePrestige'
+            reconessence_day:
+              description: Timestamp.
+              type: number
+            renown:
+              type: number
+            renown_unlocks:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfileUnlock'
+            selected_killstreak_0:
+              nullable: true
+              type: string
+            selected_killstreak_1:
+              nullable: true
+              type: string
+            selected_killstreak_2:
+              nullable: true
+              type: string
+            selected_killstreak_3:
+              nullable: true
+              type: string
+            selected_perk_0:
+              nullable: true
+              type: string
+            selected_perk_1:
+              nullable: true
+              type: string
+            selected_perk_2:
+              nullable: true
+              type: string
+            selected_perk_3:
+              nullable: true
+              type: string
+            spire_stash_armor:
+              $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+            spire_stash_inv:
+              $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+            trade_timestamps:
+              type: array
+              items:
+                type: number
+            unlocks:
+              type: array
+              description: Other properties of this type might appear with the key "unlocks_NUMBER" e.g. "unlocks_10"
+              items:
+                $ref: '#/components/schemas/PlayerStatsPitProfileUnlock'
+            xp:
+              type: number
+            zero_point_three_gold_transfer:
+              type: boolean
+          additionalProperties:
+            anyOf:
+              - type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatsPitProfileBounty'
+              - $ref: '#/components/schemas/PlayerStatsPitProfileContract'
+              - type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatsPitProfileContract'
+              - type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatsPitProfileEndedContract'
+              - type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatsPitProfileTransaction'
+              - $ref: '#/components/schemas/PlayerStatsPitProfileLeaderboardStats'
+              - type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatsPitProfileOutgoingOffer'
+              - $ref: '#/components/schemas/PlayerStatsPitProfileInventory'
+              - type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatsPitProfilePrestige'
+              - type: array
+                items:
+                  $ref: '#/components/schemas/PlayerStatsPitProfileUnlock'
+              - type: array
+                items:
+                  type: number
+          required:
+            - inv_armor
+            - inv_contents
+            - last_save
+            - login_messages
+    PlayerStatsPitProfileBounty:
+      type: object
+      properties:
+        amount:
+          type: number
+        issuer:
+          type: string
+        remainingTicks:
+          type: number
+        timestamp:
+          type: number
+      required:
+        - amount
+        - issuer
+        - remainingTicks
+        - timestamp
+    PlayerStatsPitProfileContract:
+      allOf:
+        - $ref: '#/components/schemas/PlayerStatsPitProfileEndedContract'
+        - type: object
+          properties:
+            gold_reward:
+              type: number
+            key:
+              type: string
+          required:
+            - gold_reward
+            - key
+    PlayerStatsPitProfileEndedContract:
+      type: object
+      properties:
+        chunk_of_viles_reward:
+          type: number
+        completion_date:
+          type: number
+        difficulty:
+          type: string
+        progress:
+          $ref: '#/components/schemas/PlayerStatsPitProfileContractRequirements'
+        remaining_ticks:
+          type: number
+        requirements:
+          $ref: '#/components/schemas/PlayerStatsPitProfileContractRequirements'
+      additionalProperties:
+        anyOf:
+          - type: number
+          - type: string
+          - $ref: '#/components/schemas/PlayerStatsPitProfileContractRequirements'
+      required:
+        - completion_date
+        - difficulty
+        - progress
+        - remaining_ticks
+        - requirements
+    PlayerStatsPitProfileContractRequirements:
+      type: object
+      description: Property key is the type of requirement.
+      additionalProperties:
+        type: number
+    PlayerStatsPitProfileTransaction:
+      type: object
+      properties:
+        amount:
+          type: number
+        timestamp:
+          type: number
+      required:
+        - amount
+        - timestamp
+    PlayerStatsPitProfileLastBoughtItems:
+      type: object
+      additionalProperties:
+        type: number
+    PlayerStatsPitProfileLeaderboardStats:
+      type: object
+      additionalProperties:
+        type: number
+    PlayerStatsPitProfileOutgoingOffer:
+      type: object
+      description: No properties known.
+      additionalProperties:
+        type: object
+    PlayerStatsPitProfilePrestige:
+      type: object
+      properties:
+        index:
+          type: number
+        timestamp:
+          type: number
+        xp_on_prestige:
+          type: number
+      required:
+        - index
+        - timestamp
+        - xp_on_prestige
+    PlayerStatsPitProfileUnlock:
+      type: object
+      properties:
+        acquireDate:
+          type: number
+        key:
+          type: string
+        tier:
+          type: number
+      required:
+        - acquireDate
+        - key
+        - tier
+    PlayerStatsPitProfileInventory:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: number
+        type:
+          type: number
+      required:
+        - data
+        - type
+    PlayerStatsSkyBlock:
+      type: object
+      description: An object which properties describe each individual profile the player is a member of.
+      properties:
+        profiles:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              cute_name:
+                type: string
+              profile_id:
+                type: string
+            required:
+              - cute_name
+              - profile_id
+      required:
+        - profiles
+    PlayerStatsWalls3:
+      allOf:
+        - $ref: '#/components/schemas/PlayerStatsGameMode'
+        - type: object
+          properties:
+            classes:
+              $ref: '#/components/schemas/PlayerStatsWalls3Classes'
+          additionalProperties:
+            anyOf:
+              - $ref: '#/components/schemas/PlayerStatsWalls3Classes'
+          required:
+            - profile
+    PlayerStatsWalls3Classes:
+      type: object
+      description: Each property key describes a class name.
+      additionalProperties:
+        type: object
+        additionalProperties: 
+          anyOf:
+            - type: boolean
+            - type: number
+    PlayerStatsHousing:
+      type: object
+      description: |
+        Housing stats, generally limited to layout items - either the layout_items property will exist or there may be a property in the format of "layout_items_UUID".
+      properties:
+        layout_items:
+          $ref: '#/components/schemas/PlayerStatsHousingLayoutItems'
+      additionalProperties:
+        $ref: '#/components/schemas/PlayerStatsHousingLayoutItems'
+    PlayerStatsHousingLayoutItems:
+      type: object
+      additionalProperties:
+        type: string
+    PlayerVoting:
+      type: object
+      properties:
+        last_mcf:
+          type: number
+        last_mcipl:
+          type: number
+        last_mcmp:
+          type: number
+        last_mcsl:
+          type: number
+        last_mcsorg:
+          type: number
+        last_minestatus:
+          type: number
+        last_pact:
+          type: number
+        last_pmc:
+          type: number
+        last_topg:
+          type: number
+        last_vote:
+          type: number
+        secondary_mcf:
+          type: number
+        secondary_mcipl:
+          type: number
+        secondary_mcmp:
+          type: number
+        secondary_mcsl:
+          type: number
+        secondary_mcsorg:
+          type: number
+        secondary_minestatus:
+          type: number
+        secondary_pact:
+          type: number
+        secondary_pmc:
+          type: number
+        secondary_topg:
+          type: number
+        total:
+          type: number
+        total_mcf:
+          type: number
+        total_mcipl:
+          type: number
+        total_mcmp:
+          type: number
+        total_mcsl:
+          type: number
+        total_mcsorg:
+          type: number
+        total_minestatus:
+          type: number
+        total_pact:
+          type: number
+        total_pmc:
+          type: number
+        total_topg:
+          type: number
+        votesToday:
+          type: number
+      additionalProperties:
+        type: number
+      required:
+        - total
+    PlayerChallenges:
+      type: object
+      description: |
+        In addition to the all_time property, other properties may appear that have properties that start with "day_" but have the same schema as all_time.
+      properties:
+        all_time:
+          $ref: '#/components/schemas/PlayerChallengesObject'
+      additionalProperties:
+        $ref: '#/components/schemas/PlayerChallengesObject'
+      required:
+        - all_time
+    PlayerChallengesObject:
+      type: object
+      description: |
+        Each property key correlates with an ID from the /resources/challenges endpoint.
+        For example, a key might be "ARCADE__farm_hunt_challenge"
+      additionalProperties:
+        type: number    
+    PlayerCompassStats:
+      type: object
+      properties:
+        compass:
+          $ref: '#/components/schemas/PlayerCompassStatsChild'
+        npc:
+          $ref: '#/components/schemas/PlayerCompassStatsChild'
+    PlayerCompassStatsChild:
+      type: object
+      properties:
+        arcade:
+          type: number
+        arena:
+          type: number
+        battleground:
+          type: number
+        buildbattle:
+          type: number
+        gingerbread:
+          type: number
+        housing:
+          type: number
+        hungergames:
+          type: number
+        leveling:
+          type: number
+        mainlobby:
+          type: number
+        mcgo:
+          type: number
+        miniwalls:
+          type: number
+        paintball:
+          type: number
+        prototype:
+          type: number
+        quake:
+          type: number
+        skyclash:
+          type: number
+        skywars:
+          type: number
+        speeduhc:
+          type: number
+        supersmash:
+          type: number
+        tntgames:
+          type: number
+        truecombat:
+          type: number
+        uhc:
+          type: number
+        vampirez:
+          type: number
+        walls:
+          type: number
+        walls3:
+          type: number
+      additionalProperties:
+        type: number
+    PlayerCooldowns:
+      type: object
+      properties:
+        fun:
+          type: object
+          properties:
+            event:
+              type: number
+            events:
+              type: number
+            event_scrambled:
+              type: number
+            event_quickmaths:
+              type: number
+            santaclaus:
+              type: number
+            piano:
+              type: number
+            whatsmyface:
+              type: number
+      required:
+        - fun
+    PlayerEugene:
+      type: object
+      properties:
+        dailyTwoKExp:
+          type: number
+        weekly_booster:
+          type: number
+      required:
+        - dailyTwoKExp
+    PlayerFireworksStorage:
+      type: array
+      items:
+        type: object
+        properties:
+          colors:
+            type: string
+          fade_colors:
+            type: string
+          flight_duration:
+            type: number
+          selected:
+            type: boolean
+          shape:
+            type: string
+          trail:
+            type: boolean
+          twinkle:
+            type: boolean
+        required:
+          - colors
+          - fade_colors
+          - flight_duration
+          - selected
+          - trail
+          - twinkle
+    PlayerGiftingMeta:
+      type: object
+      properties:
+        bundlesReceived:
+          type: number
+        bundlesGiven:
+          type: number
+        giftsGiven:
+          type: number
+        milestones:
+          type: array
+          items:
+            type: string
+        realBundlesGiven:
+          type: number
+        realBundlesReceived:
+          type: number
+        realBundlesReceivedInc:
+          type: number
+    PlayerHousingMeta:
+      type: object
+      description: Potentially has properties that follow format "given_cookies_NUMBER" which will be an array of strings.
+      properties:
+        allowedBlocks:
+          type: array
+          items:
+            type: string
+        firstHouseJoinMs:
+          type: number
+        packages:
+          type: array
+          items:
+            type: string
+        playerSettings:
+          $ref: '#/components/schemas/PlayerHousingMetaPlayerSettings'
+        plotSize:
+          type: string
+        tutorialStep:
+          type: string
+        playlist:
+          type: string
+        selectedChannels_v3:
+          type: array
+          items:
+            type: string
+        purchasedSlots:
+          type: number
+        toggle_BORDER:
+          type: boolean
+        toggle_TIPS:
+          type: boolean
+        visibilityDisabled:
+          type: boolean
+      additionalProperties:
+        anyOf:
+          - type: string
+          - type: number
+          - type: boolean
+          - type: array
+            items:
+              type: string
+          - $ref: '#/components/schemas/PlayerHousingMetaPlayerSettings'
+    PlayerHousingMetaPlayerSettings:
+      type: object
+      properties:
+        VISIBILITY:
+          type: string
+        BORDER:
+          type: string
+        TIPS:
+          type: string
+        customVisibility:
+          type: number
+        YT_REPULSOR:
+          type: string
+      additionalProperties:
+        anyOf:
+          - type: string
+          - type: number
+    PlayerMonthlyCrates:
+      type: object
+      description: Each property is a month and year like "8-2019" and the value contains booleans indicating which reward tier was claimed.
+      additionalProperties:
+        type: object
+        properties:
+          REGULAR:
+            type: boolean
+          VIP:
+            type: boolean
+          VIP_PLUS:
+            type: boolean
+          MVP:
+            type: boolean
+          MVP_PLUS:
+            type: boolean
+        additionalProperties:
+          type: boolean
+          description: Each property is a boolean indicating the rank's monthly crate that was claimed. e.g. "REGULAR = true" and "VIP_PLUS = true". 
+    PlayerOutfit:
+      type: object
+      properties:
+        BOOTS:
+          type: string
+        CHESTPLATE:
+          type: string
+        HELMET:
+          type: string
+        LEGGINGS:
+          type: string
+    PlayerParkourCheckpointBests:
+      type: object
+      description: Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars".
+      additionalProperties: 
+        type: object
+        description: Each property key describes the checkpoint number. e.g. "0" or "3"
+        additionalProperties:
+          type: number
+          description: Time in milliseconds it took to reach this checkpoint.
+    PlayerParkourCompletions:
+      type: object
+      description: Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars".
+      additionalProperties:
+        type: array
+        items:
+          type: object
+          properties:
+            timeStart:
+              type: number
+              description: Timestamp of when this parkour was started.
+            timeTook:
+              type: number
+              description: Time in milliseconds that it took to complete the parkour.
+          required:
+            - timeStart
+            - timeTook
+    PlayerPetConsumables:
+      type: object
+      description: This object describes the pet pet consumables the player has. Each property's key is the consumable name. e.g. "APPLE" or "WOOD_SWORD"
+      additionalProperties:
+        type: number
+    PlayerPetStats:
+      type: object
+      description: Each property key is the name of the pet the stats apply to.
+      additionalProperties:
+        $ref: '#/components/schemas/PlayerIndividualPetStats'
+    PlayerIndividualPetStats:
+      type: object
+      properties:
+        EXERCISE:
+          $ref: '#/components/schemas/PlayerIndividualPetStatsCare'
+        HUNGER:
+          $ref: '#/components/schemas/PlayerIndividualPetStatsCare'
+        THIRST:
+          $ref: '#/components/schemas/PlayerIndividualPetStatsCare'
+        experience:
+          type: number
+        name:
+          type: string
+    PlayerIndividualPetStatsCare:
+      type: object
+      properties:
+        timestamp:
+          type: number
+        value:
+          type: number
+      required:
+        - timestamp
+        - value
+    PlayerPlotResets:
+      type: object
+      properties:
+        time:
+          description: Timestamp of when the reset occurred.
+          type: number
+        uuid:
+          description: Minecraft UUID
+          type: string
+      required:
+        - time
+        - uuid
+    PlayerQuests:
+      type: object
+      description: An object which has properties which match quests described by the /resources/quests endpoint.
+      additionalProperties: 
+        $ref: '#/components/schemas/PlayerQuestsInfo'
+    PlayerQuestSettings:
+      type: object
+      properties:
+        autoActivate:
+          type: boolean
+    PlayerQuestsInfo:
+      type: object
+      description: Use this own object's key to find the quest from the /resources/quests endpoint in order to interpret this information.
+      properties:
+        active:
+          type: object
+          properties:
+            objectives:
+              type: object
+              description: The property key is the objective name. e.g. "wins" or "2v2"
+              additionalProperties:
+                anyOf:
+                  - type: number
+                  - type: string
+            started:
+              type: number
+          required:
+            - objectives
+        completions:
+          type: array
+          items:
+            type: object
+            properties:
+              time:
+                type: number
+            required:
+              - time
+    PlayerTourney:
+      type: object
+      description: Aside from the properties in the schema this object contains properties who's keys follow a format like "GAMEMODE_TYPE_NUMBER". e.g. "sw_insane_doubles_0". These fit the "PlayerTourneyGameData" schema.
+      properties:
+        first_join_lobby:
+          type: number
+        hide_purchased:
+          type: boolean
+        playtime:
+          type: object
+          additionalProperties:
+            type: number
+        shop_sort:
+          type: string
+        total_tributes:
+          type: number
+      additionalProperties:
+        anyOf:
+          - type: number
+          - type: string
+          - type: boolean
+          - type: object
+            additionalProperties:
+              type: number
+          - $ref: '#/components/schemas/PlayerTourneyGameData'
+    PlayerTourneyGameData:
+      type: object
+      properties:
+        claimed_ranking_reward:
+          type: number
+        first_win:
+          type: number
+        games_played:
+          type: number
+        playtime:
+          type: number
+        seenRPbook:
+          type: boolean
+        tributes_earned:
+          type: number
+    PlayerVanityMeta:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            type: string
+      required:
+        - packages
     ResourcesResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

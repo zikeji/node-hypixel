@@ -86,6 +86,17 @@ describe("Test PlayerRank helper", function () {
     );
     expect(rank.prefix).to.be.a("string").that.equals("§b[MVP§0++§b]");
   });
+  it("should return MVP++ with a aqua color", function () {
+    const rank = getPlayerRank(
+      {
+        monthlyPackageRank: "SUPERSTAR",
+        newPackageRank: "MVP_PLUS",
+        monthlyRankColor: "AQUA",
+      } as never,
+      false
+    );
+    expect(rank.prefix).to.be.a("string").that.equals("§b[MVP§c++§b]");
+  });
   it("should return MVP+", function () {
     const rank = getPlayerRank(
       { newPackageRank: "MVP_PLUS", rankPlusColor: "BLACK" } as never,

@@ -338,17 +338,1254 @@ describe("Get leaderboards", function () {
 describe("Get player", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result: AsyncReturnType<typeof client.player.uuid>;
+  let player: AsyncReturnType<typeof client.player.uuid>;
   it("expect not to throw", async function () {
-    result = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
+    player = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
   });
-  CheckMeta(() => result);
+  CheckMeta(() => player);
   it("required keys should exist", function () {
-    expect(result._id).to.be.a("string");
-    expect(result.uuid).to.be.a("string");
-    expect(result.firstLogin).to.be.a("number");
-    expect(result.playername).to.be.a("string");
-    expect(result.displayname).to.be.a("string");
+    expect(player._id).to.be.a("string");
+    expect(player.uuid).to.be.a("string");
+    expect(player.playername).to.be.a("string");
+    expect(player.displayname).to.be.a("string");
+    if (player.firstLogin) {
+      expect(player.firstLogin).to.be.a("number");
+    }
+    if (player.lastLogin) {
+      expect(player.lastLogin).to.be.a("number");
+    }
+    if (player.lastLogout) {
+      expect(player.lastLogout).to.be.a("number");
+    }
+    expect(player.knownAliases)
+      .to.be.an("array")
+      .that.satisfies(function (value: string[]) {
+        return value.every((v) => typeof v === "string");
+      });
+    expect(player.knownAliasesLower)
+      .to.be.an("array")
+      .that.satisfies(function (value: string[]) {
+        return value.every((v) => typeof v === "string");
+      });
+    if (player.claimed_century_cake) {
+      expect(player.claimed_century_cake).to.be.a("number");
+    }
+    if (player.claimed_potato_basket) {
+      expect(player.claimed_potato_basket).to.be.a("number");
+    }
+    if (player.claimed_potato_talisman) {
+      expect(player.claimed_potato_talisman).to.be.a("number");
+    }
+    if (player.monthlyPackageRank) {
+      expect(player.monthlyPackageRank).to.be.a("string");
+    }
+    if (player.monthlyRankColor) {
+      expect(player.monthlyRankColor).to.be.a("string");
+    }
+    if (player.newPackageRank) {
+      expect(player.newPackageRank).to.be.a("string");
+    }
+    if (player.packageRank) {
+      expect(player.packageRank).to.be.a("string");
+    }
+    if (player.rank) {
+      expect(player.rank).to.be.a("string");
+    }
+    if (player.rankPlusColor) {
+      expect(player.rankPlusColor).to.be.a("string");
+    }
+    if (player.levelUp_NONE) {
+      expect(player.levelUp_NONE).to.be.a("number");
+    }
+    if (player.levelUp_VIP) {
+      expect(player.levelUp_VIP).to.be.a("number");
+    }
+    if (player.levelUp_VIP_PLUS) {
+      expect(player.levelUp_VIP_PLUS).to.be.a("number");
+    }
+    if (player.levelUp_MVP) {
+      expect(player.levelUp_MVP).to.be.a("number");
+    }
+    if (player.levelUp_MVP_PLUS) {
+      expect(player.levelUp_MVP_PLUS).to.be.a("number");
+    }
+    if (player.lastClaimedReward) {
+      expect(player.lastClaimedReward).to.be.a("number");
+    }
+    if (player.lastAdsenseGenerateTime) {
+      expect(player.lastAdsenseGenerateTime).to.be.a("number");
+    }
+    if (player.lastMapVote) {
+      expect(player.lastMapVote).to.be.a("number");
+    }
+    if (player.mcVersionRp) {
+      expect(player.mcVersionRp).to.be.a("string");
+    }
+    if (player.mostRecentGameType) {
+      expect(player.mostRecentGameType).to.be.a("string");
+    }
+    if (player.mostRecentMinecraftVersion) {
+      expect(player.mostRecentMinecraftVersion).to.be.a("number");
+    }
+    if (player.mostRecentMonthlyPackageRank) {
+      expect(player.mostRecentMonthlyPackageRank).to.be.a("string");
+    }
+    if (player.mostRecentlyThanked) {
+      expect(player.mostRecentlyThanked).to.be.a("string");
+    }
+    if (player.mostRecentlyThankedUuid) {
+      expect(player.mostRecentlyThankedUuid).to.be.a("string");
+    }
+    if (player.mostRecentlyTipped) {
+      expect(player.mostRecentlyTipped).to.be.a("string");
+    }
+    if (player.mostRecentlyTippedUuid) {
+      expect(player.mostRecentlyTippedUuid).to.be.a("string");
+    }
+    if (player.petConsumables) {
+      const petConsumables = player.petConsumables;
+      expect(petConsumables)
+        .to.be.an("object")
+        .that.satisfies(function (
+          value: NonNullable<typeof player.petConsumables>
+        ) {
+          return Object.values(value).every((v) => typeof v === "number");
+        });
+    }
+    if (player.petJourneyTimestamp) {
+      expect(player.petJourneyTimestamp).to.be.a("number");
+    }
+    if (player.quickjoin_timestamp) {
+      expect(player.quickjoin_timestamp).to.be.a("number");
+    }
+    if (player.quickjoin_uses) {
+      expect(player.quickjoin_uses).to.be.a("number");
+    }
+    if (player.scorpius_bribe_96) {
+      expect(player.scorpius_bribe_96).to.be.a("number");
+    }
+    if (player.testPass) {
+      expect(player.testPass).to.be.a("boolean");
+    }
+    if (player.watchdogBlockTimestamp) {
+      expect(player.watchdogBlockTimestamp).to.be.a("number");
+    }
+    if (player.adsense_tokens) {
+      expect(player.adsense_tokens).to.be.a("number");
+    }
+    if (player.networkExp) {
+      expect(player.networkExp).to.be.a("number");
+    }
+    if (player.karma) {
+      expect(player.karma).to.be.a("number");
+    }
+    if (player.coins) {
+      expect(player.coins).to.be.a("number");
+    }
+    if (player.eulaCoins) {
+      expect(player.eulaCoins).to.be.a("boolean");
+    }
+    if (player.kills) {
+      expect(player.kills).to.be.a("number");
+    }
+    if (player.killstreaks) {
+      expect(player.killstreaks).to.be.a("number");
+    }
+    if (player.deaths) {
+      expect(player.deaths).to.be.a("number");
+    }
+    if (player.wins) {
+      expect(player.wins).to.be.a("number");
+    }
+    if (player.fortuneBuff) {
+      expect(player.fortuneBuff).to.be.a("number");
+    }
+    if (player.gifts_grinch) {
+      expect(player.gifts_grinch).to.be.a("number");
+    }
+    if (player.hasTheHotPotato) {
+      expect(player.hasTheHotPotato).to.be.a("boolean");
+    }
+    if (player.main2017Tutorial) {
+      expect(player.main2017Tutorial).to.be.a("boolean");
+    }
+    if (player.monthlycrates) {
+      const monthlycrates = player.monthlycrates;
+      expect(monthlycrates)
+        .to.be.an("object")
+        .that.satisfies(function (
+          value: NonNullable<typeof player.monthlycrates>
+        ) {
+          return Object.values(value).every((v) =>
+            Object.values(v).every((iV) => typeof iV === "boolean")
+          );
+        });
+    }
+    if (player.network_update_book) {
+      expect(player.network_update_book).to.be.a("string");
+    }
+    if (player.parkourCheckpointBests) {
+      const parkourCheckpointBests = player.parkourCheckpointBests;
+      expect(parkourCheckpointBests)
+        .to.be.an("object")
+        .that.satisfies(function (
+          value: NonNullable<typeof player.parkourCheckpointBests>
+        ) {
+          return Object.values(value).every((v) =>
+            Object.values(v).every((iV) => typeof iV === "number")
+          );
+        });
+    }
+    if (player.parkourCompletions) {
+      const parkourCompletions = player.parkourCompletions;
+      expect(parkourCompletions)
+        .to.be.an("object")
+        .that.satisfies(function (
+          value: NonNullable<typeof player.parkourCompletions>
+        ) {
+          return Object.values(value).every((v) =>
+            Object.values(v).every(
+              (iV) =>
+                typeof iV.timeStart === "number" &&
+                typeof iV.timeTook === "number"
+            )
+          );
+        });
+    }
+    if (player.petStats) {
+      const petStats = player.petStats;
+      expect(petStats).to.be.an("object");
+      for (const petName of Object.keys(petStats)) {
+        const pet = petStats[petName];
+        if (pet.EXERCISE) {
+          const EXERCISE = pet.EXERCISE;
+          expect(EXERCISE).to.be.an("object");
+          expect(EXERCISE.timestamp).to.be.a("number");
+          expect(EXERCISE.value).to.be.a("number");
+        }
+        if (pet.HUNGER) {
+          const HUNGER = pet.HUNGER;
+          expect(HUNGER).to.be.an("object");
+          expect(HUNGER.timestamp).to.be.a("number");
+          expect(HUNGER.value).to.be.a("number");
+        }
+        if (pet.THIRST) {
+          const THIRST = pet.THIRST;
+          expect(THIRST).to.be.an("object");
+          expect(THIRST.timestamp).to.be.a("number");
+          expect(THIRST.value).to.be.a("number");
+        }
+        if (pet.experience) {
+          expect(pet.experience).to.be.a("number");
+        }
+        if (pet.name) {
+          expect(pet.name).to.be.a("string");
+        }
+      }
+    }
+    if (player.rewardConsumed) {
+      expect(player.rewardConsumed).to.be.a("boolean");
+    }
+    if (player.rewardHighScore) {
+      expect(player.rewardHighScore).to.be.a("number");
+    }
+    if (player.rewardScore) {
+      expect(player.rewardScore).to.be.a("number");
+    }
+    if (player.rewardStreak) {
+      expect(player.rewardStreak).to.be.a("number");
+    }
+    if (player.skyblock_free_cookie) {
+      expect(player.skyblock_free_cookie).to.be.a("number");
+    }
+    if (player.shots_fired) {
+      expect(player.shots_fired).to.be.a("number");
+    }
+    if (player.snowball_fight_intro_2019) {
+      expect(player.snowball_fight_intro_2019).to.be.a("boolean");
+    }
+    const stats = player.stats;
+    expect(stats).to.be.an("object");
+    for (const gameModeName of Object.keys(stats)) {
+      if (gameModeName === "Housing") {
+        const gameMode: NonNullable<typeof stats.Housing> = stats[
+          gameModeName
+        ] as never;
+        expect(gameMode).to.be.an("object");
+        for (const layoutItems of Object.values(gameMode)) {
+          if (typeof layoutItems !== "object")
+            throw new Error("This shouldn't throw, just a typeguard.");
+          for (const item of Object.values(layoutItems)) {
+            expect(item).to.be.a("string");
+          }
+        }
+      } else if (gameModeName === "SkyBlock") {
+        const gameMode: NonNullable<typeof stats.SkyBlock> = stats[
+          gameModeName
+        ] as never;
+        expect(gameMode.profiles).to.be.an("object");
+        for (const key of Object.keys(gameMode.profiles)) {
+          expect(key)
+            .to.be.a("string")
+            .that.satisfies(function (val: string) {
+              return /[0-9a-z]{32}/.test(val);
+            });
+          const profile = gameMode.profiles[key];
+          expect(profile).to.be.an("object");
+          expect(profile.cute_name).to.be.a("string");
+          expect(profile.profile_id).to.be.a("string");
+        }
+      } else if (gameModeName === "Walls3") {
+        const gameMode: NonNullable<typeof stats.Walls3> = stats[
+          gameModeName
+        ] as never;
+        expect(gameMode).to.be.an("object");
+        for (const key of Object.keys(gameMode) as (keyof typeof gameMode)[]) {
+          if (key === "packages") {
+            expect(gameMode[key]).to.be.an("array");
+            for (const val of gameMode[key] as NonNullable<
+              typeof gameMode.packages
+            >) {
+              expect(val).to.be.a("string");
+            }
+          } else if (key === "classes") {
+            expect(gameMode[key]).to.be.an("object");
+            for (const wallsClass of Object.values(
+              gameMode[key] as NonNullable<typeof gameMode.classes>
+            )) {
+              expect(wallsClass).to.be.an("object");
+              for (const property of Object.values(wallsClass)) {
+                expect(property).to.satisfy(function (val: unknown) {
+                  return typeof val === "number" || typeof val === "boolean";
+                });
+              }
+            }
+          } else {
+            expect(gameMode[key]).to.satisfy(function (val: unknown) {
+              return (
+                typeof val === "string" ||
+                typeof val === "boolean" ||
+                typeof val === "number"
+              );
+            });
+          }
+        }
+      } else if (gameModeName === "Pit") {
+        const gameMode: NonNullable<typeof stats.Pit> = stats[
+          gameModeName
+        ] as never;
+        for (const key of Object.keys(gameMode)) {
+          if (key === "packages") {
+            expect(gameMode[key]).to.be.an("array");
+            for (const value of gameMode[key] as NonNullable<
+              typeof gameMode.packages
+            >) {
+              expect(value).to.be.a("string");
+            }
+          } else if (key === "profile") {
+            const profile = gameMode[
+              key
+            ] as Components.Schemas.PlayerStatsPitProfile;
+            expect(profile).to.be.an("object");
+            for (const profileKey of Object.keys(profile)) {
+              let property = profile[profileKey];
+              if (["packages", "login_messages"].includes(profileKey)) {
+                for (const val of property as string[]) {
+                  expect(val).to.be.a("string");
+                }
+              } else if (profileKey === "bounties") {
+                for (const bounty of property as Components.Schemas.PlayerStatsPitProfileBounty[]) {
+                  expect(bounty.amount).to.be.a("number");
+                  expect(bounty.issuer).to.be.a("string");
+                  expect(bounty.remainingTicks).to.be.a("number");
+                  expect(bounty.timestamp).to.be.a("number");
+                  expect(
+                    new Date(bounty.timestamp).getFullYear()
+                  ).to.be.greaterThan(2010);
+                }
+              } else if (profileKey === "contract") {
+                const contract = property as Components.Schemas.PlayerStatsPitProfileContract;
+                if (contract.chunk_of_viles_reward) {
+                  expect(contract.chunk_of_viles_reward).to.be.a("number");
+                }
+                expect(contract.completion_date).to.be.a("number");
+                expect(
+                  new Date(contract.completion_date).getFullYear()
+                ).to.be.greaterThan(2010);
+                expect(contract.difficulty).to.be.a("string");
+                expect(contract.progress).to.be.an("object");
+                for (const val of Object.values(contract.progress)) {
+                  expect(val).to.be.a("number");
+                }
+                expect(contract.remaining_ticks).to.be.a("number");
+                expect(contract.requirements).to.be.an("object");
+                for (const val of Object.values(contract.requirements)) {
+                  expect(val).to.be.a("number");
+                }
+                expect(contract.gold_reward).to.be.a("number");
+                expect(contract.key).to.be.a("string");
+              } else if (profileKey === "contract_choices") {
+                for (const contract of property as Components.Schemas.PlayerStatsPitProfileContract[]) {
+                  if (contract.chunk_of_viles_reward) {
+                    expect(contract.chunk_of_viles_reward).to.be.a("number");
+                  }
+                  expect(contract.completion_date).to.be.a("number");
+                  expect(
+                    new Date(contract.completion_date).getFullYear()
+                  ).to.be.greaterThan(2010);
+                  expect(contract.difficulty).to.be.a("string");
+                  expect(contract.progress).to.be.an("object");
+                  for (const val of Object.values(contract.progress)) {
+                    expect(val).to.be.a("number");
+                  }
+                  expect(contract.remaining_ticks).to.be.a("number");
+                  expect(contract.requirements).to.be.an("object");
+                  for (const val of Object.values(contract.requirements)) {
+                    expect(val).to.be.a("number");
+                  }
+                  expect(contract.gold_reward).to.be.a("number");
+                  expect(contract.key).to.be.a("string");
+                }
+              } else if (profileKey === "ended_contracts") {
+                for (const contract of property as Components.Schemas.PlayerStatsPitProfileEndedContract[]) {
+                  if (contract.chunk_of_viles_reward) {
+                    expect(contract.chunk_of_viles_reward).to.be.a("number");
+                  }
+                  expect(contract.completion_date).to.be.a("number");
+                  expect(
+                    new Date(contract.completion_date).getFullYear()
+                  ).to.be.greaterThan(2010);
+                  expect(contract.difficulty).to.be.a("string");
+                  expect(contract.progress).to.be.an("object");
+                  for (const val of Object.values(contract.progress)) {
+                    expect(val).to.be.a("number");
+                  }
+                  expect(contract.remaining_ticks).to.be.a("number");
+                  expect(contract.requirements).to.be.an("object");
+                  for (const val of Object.values(contract.requirements)) {
+                    expect(val).to.be.a("number");
+                  }
+                }
+              } else if (profileKey === "gold_transactions") {
+                for (const transaction of property as Components.Schemas.PlayerStatsPitProfileTransaction[]) {
+                  expect(transaction.amount).to.be.a("number");
+                  expect(transaction.timestamp).to.be.a("number");
+                  expect(
+                    new Date(transaction.timestamp).getFullYear()
+                  ).to.be.greaterThan(2010);
+                }
+              } else if (["cash", "renown", "xp"].includes(profileKey)) {
+                expect(property).to.be.a("number");
+              } else if (
+                [
+                  "last_contract",
+                  "last_midfight_disconnect",
+                  "last_save",
+                  "reconessence_day",
+                ].includes(profileKey)
+              ) {
+                property = property as number;
+                expect(property).to.be.a("number");
+                expect(new Date(property).getFullYear()).to.be.greaterThan(
+                  2010
+                );
+              } else if (profileKey === "hotbar_favorites") {
+                for (const value of property as number[]) {
+                  expect(value).to.be.a("number");
+                }
+              } else if (profileKey === "trade_timestamps") {
+                for (const value of property as number[]) {
+                  expect(value).to.be.a("number");
+                  expect(new Date(value).getFullYear()).to.be.greaterThan(2010);
+                }
+              } else if (
+                [
+                  "death_recaps",
+                  "inv_armor",
+                  "inv_contents",
+                  "inv_enderchest",
+                  "item_stash",
+                  "spire_stash_armor",
+                  "spire_stash_inv",
+                ].includes(profileKey)
+              ) {
+                property = property as Components.Schemas.PlayerStatsPitProfileInventory;
+                expect(property.data).to.be.an("array");
+                for (const byte of property.data) {
+                  expect(byte).to.be.a("number");
+                }
+                expect(property.type).to.be.a("number");
+              } else if (
+                profileKey.startsWith("selected_killstreak_") ||
+                profileKey.startsWith("selected_perk_")
+              ) {
+                expect(property).to.satisfy(function (val: string | null) {
+                  return val === null || typeof val === "string";
+                });
+              } else if (profileKey === "items_last_buy") {
+                property = property as Components.Schemas.PlayerStatsPitProfileLastBoughtItems;
+                for (const item of Object.values(property)) {
+                  expect(item).to.be.a("number");
+                }
+              } else if (profileKey === "leaderboard_stats") {
+                property = property as Components.Schemas.PlayerStatsPitProfileLeaderboardStats;
+                for (const stat of Object.values(property)) {
+                  expect(stat).to.be.a("number");
+                }
+              } else if (profileKey === "outgoing_offers") {
+                property = property as Components.Schemas.PlayerStatsPitProfileOutgoingOffer[];
+                expect(property).to.be.an("array").that.is.empty;
+              } else if (profileKey === "prestiges") {
+                for (const prestige of property as Components.Schemas.PlayerStatsPitProfilePrestige[]) {
+                  expect(prestige.index).to.be.a("number");
+                  expect(prestige.timestamp).to.be.a("number");
+                  expect(
+                    new Date(prestige.timestamp).getFullYear()
+                  ).to.be.greaterThan(2010);
+                  expect(prestige.xp_on_prestige).to.be.a("number");
+                }
+              } else if (
+                ["unlocks", "renown_unlocks"].includes(profileKey) ||
+                profileKey.startsWith("unlocks_")
+              ) {
+                for (const unlock of property as Components.Schemas.PlayerStatsPitProfileUnlock[]) {
+                  expect(unlock.acquireDate).to.be.a("number");
+                  expect(unlock.key).to.be.a("string");
+                  expect(unlock.tier).to.be.a("number");
+                }
+              } else if (profileKey === "zero_point_three_gold_transfer") {
+                expect(property).to.be.a("boolean");
+              } else {
+                if (Array.isArray(property)) {
+                  console.error(property);
+                  throw new Error(`unexpected array with key ${profileKey}`);
+                } else if (typeof property === "object") {
+                  for (const value of Object.values(
+                    property as Record<string, number>
+                  )) {
+                    expect(value).to.be.a("number");
+                  }
+                } else {
+                  expect(property).to.satisfy(function (
+                    val: boolean | number | string
+                  ) {
+                    return (
+                      typeof val === "boolean" ||
+                      typeof val === "number" ||
+                      typeof val === "string"
+                    );
+                  });
+                }
+              }
+            }
+          } else {
+            if (typeof gameMode[key] === "object") {
+              if (Array.isArray(gameMode[key])) {
+                expect(gameMode[key]).to.be.an("array");
+                for (const value of gameMode[key] as string[]) {
+                  expect(value).to.be.a("string");
+                }
+              } else {
+                const property = gameMode[
+                  key
+                ] as Components.Schemas.PlayerStatsGameMode;
+                expect(property).to.be.an("object");
+                if (property.packages) {
+                  expect(property.packages).to.be.an("array");
+                  for (const value of property.packages) {
+                    expect(value).to.be.a("string");
+                  }
+                }
+                for (const propertyKey of Object.keys(property)) {
+                  if (propertyKey === "packages") continue;
+                  expect(property[propertyKey]).to.satisfy(function (
+                    val: unknown
+                  ) {
+                    return (
+                      typeof val === "number" ||
+                      typeof val === "boolean" ||
+                      typeof val === "string"
+                    );
+                  });
+                }
+              }
+            } else {
+              expect(gameMode[key]).to.satisfy(function (value: unknown) {
+                return (
+                  typeof value === "number" ||
+                  typeof value === "boolean" ||
+                  typeof value === "string"
+                );
+              });
+            }
+          }
+        }
+      } else {
+        const gameMode = stats[gameModeName] as NonNullable<
+          typeof stats.Arcade
+        >;
+        expect(gameMode)
+          .to.be.an("object")
+          .that.satisfies(function (value: typeof gameMode) {
+            return Object.values(value).every((v) => {
+              if (Array.isArray(v)) {
+                return v.every((vI) => typeof vI === "string");
+              }
+              return (
+                typeof v === "number" ||
+                typeof v === "boolean" ||
+                typeof v === "string"
+              );
+            });
+          });
+      }
+    }
+    if (player.thanksReceived) {
+      expect(player.thanksReceived).to.be.a("number");
+    }
+    if (player.thanksSent) {
+      expect(player.thanksSent).to.be.a("number");
+    }
+    if (player.timePlaying) {
+      expect(player.timePlaying).to.be.a("number");
+    }
+    if (player.totalDailyRewards) {
+      expect(player.totalDailyRewards).to.be.a("number");
+    }
+    if (player.totalRewards) {
+      expect(player.totalRewards).to.be.a("number");
+    }
+    if (player.tourney) {
+      const tourney = player.tourney;
+      expect(tourney).to.be.an("object");
+      for (const key of Object.keys(tourney)) {
+        if (key === "first_join_lobby" || key === "total_tributes") {
+          expect(tourney[key]).to.be.a("number");
+        } else if (key === "hide_purchased") {
+          expect(tourney[key]).to.be.a("boolean");
+        } else if (key == "shop_sort") {
+          expect(tourney[key]).to.be.a("string");
+        } else if (key == "playtime") {
+          expect(tourney[key]).to.be.an("object");
+          const playtime = tourney[key] as NonNullable<typeof tourney.playtime>;
+          for (const val of Object.values(playtime)) {
+            expect(val).to.be.a("number");
+          }
+        } else {
+          expect(key)
+            .to.be.a("string")
+            .that.satisfies(function (val: string) {
+              return val.match(/(?:\w+_)+-?\d+/);
+            });
+          const tourneyGameModeData: Components.Schemas.PlayerTourneyGameData = tourney[
+            key
+          ] as never;
+          expect(tourneyGameModeData).to.be.an("object");
+          if (tourneyGameModeData.claimed_ranking_reward) {
+            expect(tourneyGameModeData.claimed_ranking_reward).to.be.a(
+              "number"
+            );
+          }
+          if (tourneyGameModeData.first_win) {
+            expect(tourneyGameModeData.first_win).to.be.a("number");
+          }
+          if (tourneyGameModeData.games_played) {
+            expect(tourneyGameModeData.games_played).to.be.a("number");
+          }
+          if (tourneyGameModeData.playtime) {
+            expect(tourneyGameModeData.playtime).to.be.a("number");
+          }
+          if (tourneyGameModeData.seenRPbook) {
+            expect(tourneyGameModeData.seenRPbook).to.be.a("boolean");
+          }
+          if (tourneyGameModeData.tributes_earned) {
+            expect(tourneyGameModeData.tributes_earned).to.be.a("number");
+          }
+        }
+      }
+    }
+    if (player.tournamentTokens) {
+      expect(player.tournamentTokens).to.be.a("number");
+    }
+    if (player.vanityConvertedBoxToday) {
+      expect(player.vanityConvertedBoxToday).to.be.a("number");
+    }
+    if (player.vanityFirstConvertedBox) {
+      expect(player.vanityFirstConvertedBox).to.be.a("number");
+    }
+    if (player.voting) {
+      const voting = player.voting;
+      expect(voting).to.be.an("object");
+      expect(voting.total).to.exist;
+      for (const value of Object.values(voting)) {
+        expect(value).to.be.a("number");
+      }
+    }
+    if (player.vanityTokens) {
+      expect(player.vanityTokens).to.be.a("number");
+    }
+    if (player.language) {
+      expect(player.language).to.be.a("string");
+    }
+    if (player.autoDetectLanguage) {
+      expect(player.autoDetectLanguage).to.be.a("boolean");
+    }
+    if (player.auto_spawn_pet) {
+      expect(player.auto_spawn_pet).to.be.a("boolean");
+    }
+    if (player.battlePassGlowStatus) {
+      expect(player.battlePassGlowStatus).to.be.a("boolean");
+    }
+    if (player.channel) {
+      expect(player.channel).to.be.a("string");
+    }
+    if (player.chat) {
+      expect(player.chat).to.be.a("boolean");
+    }
+    if (player.clock) {
+      expect(player.clock).to.be.a("boolean");
+    }
+    if (player.collectibles_menu_sort) {
+      expect(player.collectibles_menu_sort).to.be.a("string");
+    }
+    if (player.collectibles_menu_visibility_sort) {
+      expect(player.collectibles_menu_visibility_sort).to.be.a("string");
+    }
+    if (player.combatTracker) {
+      expect(player.combatTracker).to.be.a("boolean");
+    }
+    if (player.currentClickEffect) {
+      expect(player.currentClickEffect).to.be.a("string");
+    }
+    if (player.currentCloak) {
+      expect(player.currentCloak).to.be.a("string");
+    }
+    if (player.currentEmote) {
+      expect(player.currentEmote).to.be.a("string");
+    }
+    if (player.currentGadget) {
+      expect(player.currentGadget).to.be.a("string");
+    }
+    if (player.currentHat) {
+      expect(player.currentHat).to.be.a("string");
+    }
+    if (player.currentPet) {
+      expect(player.currentPet).to.be.a("string");
+    }
+    if (player.customFilter) {
+      expect(player.customFilter).to.be.a("string");
+    }
+    if (player.disableTipMessages) {
+      expect(player.disableTipMessages).to.be.a("boolean");
+    }
+    if (player.disguise) {
+      expect(player.disguise).to.be.a("string");
+    }
+    if (player.gadget) {
+      expect(player.gadget).to.be.a("string");
+    }
+    if (player.notifications) {
+      expect(player.notifications).to.be.a("boolean");
+    }
+    if (player.outfit) {
+      const outfit = player.outfit;
+      expect(outfit).to.be.an("object");
+      for (const piece of Object.keys(
+        player.outfit
+      ) as (keyof typeof player.outfit)[]) {
+        expect(piece)
+          .to.be.a("string")
+          .that.satisfies(function (val: string) {
+            return val === val.toUpperCase();
+          });
+        expect(player.outfit[piece]).to.be.a("string");
+      }
+    }
+    if (player.onetime_achievement_menu_sort) {
+      expect(player.onetime_achievement_menu_sort).to.be.a("string");
+    }
+    if (player.onetime_achievement_menu_sort_completion_sort) {
+      expect(player.onetime_achievement_menu_sort_completion_sort).to.be.a(
+        "string"
+      );
+    }
+    if (player.particlePack) {
+      expect(player.particlePack).to.be.a("string");
+    }
+    if (player.petActive) {
+      expect(player.petActive).to.be.a("boolean");
+    }
+    if (player.pp) {
+      expect(player.pp).to.be.a("string");
+    }
+    if (player.questSettings) {
+      const questSettings = player.questSettings;
+      expect(questSettings).to.be.an("object");
+      if (questSettings.autoActivate) {
+        expect(questSettings.autoActivate).to.be.a("boolean");
+      }
+      for (const key of Object.keys(questSettings)) {
+        expect(key).to.be.a("string").that.equals("autoActivate");
+      }
+    }
+    if (player.seeRequests) {
+      expect(player.seeRequests).to.be.a("boolean");
+    }
+    if (player.sendCerberusMessages) {
+      expect(player.sendCerberusMessages).to.be.a("boolean");
+    }
+    if (player.settings) {
+      const settings = player.settings;
+      expect(settings).to.be.an("object");
+      if (settings.compass) {
+        expect(settings.compass).to.be.an("object");
+        for (const val of Object.values(settings.compass)) {
+          expect(val).to.be.a("string");
+        }
+      }
+      for (const key of Object.keys(settings)) {
+        if (key === "compass") continue;
+        expect(settings[key]).to.satisfy(function (
+          val: string | number | boolean
+        ) {
+          return (
+            typeof val === "string" ||
+            typeof val === "number" ||
+            typeof val === "boolean"
+          );
+        });
+      }
+    }
+    if (player.skin) {
+      const skin = player.skin;
+      expect(skin).to.be.an("object");
+      expect(skin.signature).to.be.a("string");
+      expect(skin.timeoutStart).to.be.a("number");
+      expect(skin.value).to.be.a("string");
+    }
+    if (player.socialMedia) {
+      const socialMedia = player.socialMedia;
+      expect(socialMedia).to.be.an("object");
+      expect(socialMedia.links).to.be.an("object");
+      for (const key of Object.keys(socialMedia.links)) {
+        expect(key).to.satisfy(function (val: string) {
+          return val.toUpperCase() === val;
+        });
+        expect(socialMedia.links[key]).to.be.a("string");
+      }
+      expect(socialMedia.prompt).to.be.a("boolean");
+      for (const key of Object.keys(socialMedia)) {
+        if (key === "prompt" || key === "links") {
+          continue;
+        }
+        expect(key).to.satisfy(function (val: string) {
+          return val.toUpperCase() === val;
+        });
+        expect(socialMedia[key]).to.be.a("string");
+      }
+    }
+    if (player.spec_always_flying) {
+      expect(player.spec_always_flying).to.be.a("boolean");
+    }
+    if (player.spec_auto_teleport) {
+      expect(player.spec_auto_teleport).to.be.a("boolean");
+    }
+    if (player.spec_first_person) {
+      expect(player.spec_first_person).to.be.a("boolean");
+    }
+    if (player.spectators_invisible) {
+      expect(player.spectators_invisible).to.be.a("boolean");
+    }
+    if (player.tiered_achievement_menu_sort) {
+      expect(player.tiered_achievement_menu_sort).to.be.a("string");
+    }
+    if (player.transformation) {
+      expect(player.transformation).to.be.a("string");
+    }
+    if (player.userLanguage) {
+      expect(player.userLanguage).to.be.a("string");
+    }
+    if (player.vanityFavorites) {
+      expect(player.vanityFavorites).to.be.a("string");
+    }
+    if (player.wardrobe) {
+      expect(player.wardrobe).to.be.a("string");
+    }
+    if (player.friendBlocksUuid) {
+      expect(player.friendBlocksUuid)
+        .to.be.an("array")
+        .that.satisfies(function (value: string[]) {
+          return value.every((v) => typeof v === "string");
+        });
+    }
+    if (player.friendRequests) {
+      expect(player.friendRequests)
+        .to.be.an("array")
+        .that.satisfies(function (value: string[]) {
+          return value.every((v) => typeof v === "string");
+        });
+    }
+    if (player.friendRequestsUuid) {
+      expect(player.friendRequestsUuid)
+        .to.be.an("array")
+        .that.satisfies(function (value: string[]) {
+          return value.every((v) => typeof v === "string");
+        });
+    }
+    if (player.guildInvites) {
+      expect(player.guildInvites)
+        .to.be.an("array")
+        .that.satisfies(function (value: string[]) {
+          return value.every((v) => typeof v === "string");
+        });
+    }
+    if (player.guildKickReason) {
+      expect(player.guildKickReason).to.be.a("string");
+    }
+    if (player.guildNotifications) {
+      expect(player.guildNotifications).to.be.a("boolean");
+    }
+    if (player.challenges) {
+      const challenges = player.challenges;
+      expect(challenges).to.be.an("object");
+      for (const challenge of Object.values(challenges)) {
+        for (const value of Object.values(challenge)) {
+          expect(value).to.be.a("number");
+        }
+      }
+    }
+    if (player.quests) {
+      const quests = player.quests;
+      expect(quests).to.be.an("object");
+      for (const quest of Object.values(quests)) {
+        expect(quest).to.be.an("object");
+        if (quest.active) {
+          expect(quest.active.objectives).to.be.an("object");
+          for (const objective of Object.values(quest.active.objectives)) {
+            expect(objective).to.satisfy(function (value: string | number) {
+              return typeof value === "string" || typeof value === "number";
+            });
+          }
+          if (quest.active.started) {
+            expect(quest.active.started).to.be.a("number");
+          }
+        }
+        if (quest.completions) {
+        }
+      }
+    }
+    if (player.aprilFoolsStaffClicked_0) {
+      expect(player.aprilFoolsStaffClicked_0)
+        .to.be.an("array")
+        .that.satisfies(function (value: string[]) {
+          return value.every((v) => typeof v === "string");
+        });
+    }
+    if (player.anniversaryNPCProgress2020) {
+      expect(player.anniversaryNPCProgress2020).to.be.a("number");
+    }
+    if (player.anniversaryNPCVisited2020) {
+      expect(player.anniversaryNPCVisited2020)
+        .to.be.an("array")
+        .that.satisfies(function (value: number[]) {
+          return value.every((v) => typeof v === "number");
+        });
+    }
+    if (player.SANTA_FINISHED) {
+      expect(player.SANTA_FINISHED).to.be.a("boolean");
+    }
+    if (player.SANTA_QUEST_STARTED) {
+      expect(player.SANTA_QUEST_STARTED).to.be.a("boolean");
+    }
+    if (player.compassStats) {
+      const compassStats = player.compassStats;
+      expect(compassStats).to.be.an("object");
+      for (const stats of Object.values(
+        compassStats as { [name: string]: NonNullable<typeof compassStats.npc> }
+      )) {
+        for (const stat of Object.values(stats)) {
+          expect(stat).to.be.a("number");
+        }
+      }
+    }
+    if (player.cooldowns) {
+      const cooldowns = player.cooldowns;
+      expect(cooldowns).to.be.an("object");
+      expect(cooldowns.fun).to.be.an("object");
+      for (const cooldown of Object.values(cooldowns.fun)) {
+        expect(cooldown).to.be.a("number");
+      }
+    }
+    if (player.fireworksStorage) {
+      const fireworksStorage = player.fireworksStorage;
+      expect(fireworksStorage).to.be.an("array");
+      for (const firework of fireworksStorage) {
+        expect(firework.colors).to.be.a("string");
+        expect(firework.fade_colors).to.be.a("string");
+        expect(firework.flight_duration).to.be.a("number");
+        expect(firework.selected).to.be.a("boolean");
+        if (firework.shape) {
+          expect(firework.shape).to.be.a(" string");
+        }
+        expect(firework.trail).to.be.a("boolean");
+        expect(firework.twinkle).to.be.a("boolean");
+      }
+    }
+    if (player.giftingMeta) {
+      const giftingMeta = player.giftingMeta;
+      expect(giftingMeta).to.be.an("object");
+      if (giftingMeta.bundlesReceived) {
+        expect(giftingMeta.bundlesReceived).to.be.a("number");
+      }
+      if (giftingMeta.bundlesGiven) {
+        expect(giftingMeta.bundlesGiven).to.be.a("number");
+      }
+      if (giftingMeta.giftsGiven) {
+        expect(giftingMeta.giftsGiven).to.be.a("number");
+      }
+      if (giftingMeta.milestones) {
+        expect(giftingMeta.milestones).to.be.an("array");
+        for (const milestone of giftingMeta.milestones) {
+          expect(milestone).to.be.a("string");
+        }
+      }
+      if (giftingMeta.realBundlesGiven) {
+        expect(giftingMeta.realBundlesGiven).to.be.a("number");
+      }
+      if (giftingMeta.realBundlesReceived) {
+        expect(giftingMeta.realBundlesReceived).to.be.a("number");
+      }
+      if (giftingMeta.realBundlesReceivedInc) {
+        expect(giftingMeta.realBundlesReceivedInc).to.be.a("number");
+      }
+    }
+    if (player.housingMeta) {
+      const housingMeta = player.housingMeta;
+      expect(housingMeta).to.be.an("object");
+      for (const meta of Object.values(housingMeta)) {
+        if (typeof meta === "object") {
+          if (Array.isArray(meta)) {
+            for (const val of meta) {
+              expect(val).to.be.a("string");
+            }
+            continue;
+          }
+          for (const setting of Object.values(meta)) {
+            expect(setting).to.satisfy(function (val: typeof setting) {
+              return typeof val === "string" || typeof val === "number";
+            });
+          }
+          continue;
+        }
+        expect(meta).to.satisfy(function (val: typeof meta) {
+          return (
+            typeof val === "string" ||
+            typeof val === "number" ||
+            typeof val === "boolean"
+          );
+        });
+      }
+    }
+    if (player.vanityMeta) {
+      const vanityMeta = player.vanityMeta;
+      expect(vanityMeta).to.be.an("object");
+      expect(vanityMeta.packages).to.be.an("array");
+      for (const val of vanityMeta.packages) {
+        expect(val).to.be.a("string");
+      }
+    }
+    if (player.flashingSaleClicks) {
+      expect(player.flashingSaleClicks).to.be.a("number");
+    }
+    if (player.flashingSaleOpens) {
+      expect(player.flashingSaleOpens).to.be.a("number");
+    }
+    if (player.flashingSalePoppedUp) {
+      expect(player.flashingSalePoppedUp).to.be.a("number");
+    }
+    if (player.flashingSalePopup) {
+      expect(player.flashingSalePopup).to.be.a("number");
+    }
+    if (player.adventRewards2017) {
+      const adventRewards2017 = player.adventRewards2017;
+      expect(adventRewards2017).to.be.an("object");
+      for (const val of Object.values(adventRewards2017)) {
+        expect(val).to.be.a("number");
+      }
+    }
+    if (player.adventRewards2018) {
+      const adventRewards2018 = player.adventRewards2018;
+      expect(adventRewards2018).to.be.an("object");
+      for (const val of Object.values(adventRewards2018)) {
+        expect(val).to.be.a("number");
+      }
+    }
+    if (player.adventRewards_v2_2018) {
+      const adventRewards_v2_2018 = player.adventRewards_v2_2018;
+      expect(adventRewards_v2_2018).to.be.an("object");
+      for (const val of Object.values(adventRewards_v2_2018)) {
+        expect(val).to.be.a("number");
+      }
+    }
+    if (player.adventRewards2019) {
+      const adventRewards2019 = player.adventRewards2019;
+      expect(adventRewards2019).to.be.an("object");
+      for (const val of Object.values(adventRewards2019)) {
+        expect(val).to.be.a("number");
+      }
+    }
+    if (player.adventRewards_v2_2019) {
+      const adventRewards_v2_2019 = player.adventRewards_v2_2019;
+      expect(adventRewards_v2_2019).to.be.an("object");
+      for (const val of Object.values(adventRewards_v2_2019)) {
+        expect(val).to.be.a("number");
+      }
+    }
+    if (player.christmas2019Cooldowns) {
+      const christmas2019Cooldowns = player.christmas2019Cooldowns;
+      expect(christmas2019Cooldowns).to.be.an("object");
+      for (const val of Object.values(christmas2019Cooldowns)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.summer2020Cooldowns) {
+      const summer2020Cooldowns = player.summer2020Cooldowns;
+      expect(summer2020Cooldowns).to.be.an("object");
+      for (const val of Object.values(summer2020Cooldowns)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.easter2020Cooldowns) {
+      const easter2020Cooldowns = player.easter2020Cooldowns;
+      expect(easter2020Cooldowns).to.be.an("object");
+      for (const val of Object.values(easter2020Cooldowns)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.easter2020Cooldowns2) {
+      const easter2020Cooldowns2 = player.easter2020Cooldowns2;
+      expect(easter2020Cooldowns2).to.be.an("object");
+      for (const val of Object.values(easter2020Cooldowns2)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.halloween2016Cooldowns) {
+      const halloween2016Cooldowns = player.halloween2016Cooldowns;
+      expect(halloween2016Cooldowns).to.be.an("object");
+      for (const val of Object.values(halloween2016Cooldowns)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.halloween2020Cooldowns) {
+      const halloween2020Cooldowns = player.halloween2020Cooldowns;
+      expect(halloween2020Cooldowns).to.be.an("object");
+      for (const val of Object.values(halloween2020Cooldowns)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.holiday2016Cooldowns) {
+      const holiday2016Cooldowns = player.holiday2016Cooldowns;
+      expect(holiday2016Cooldowns).to.be.an("object");
+      for (const val of Object.values(holiday2016Cooldowns)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.specialtyCooldowns) {
+      const specialtyCooldowns = player.specialtyCooldowns;
+      expect(specialtyCooldowns).to.be.an("object");
+      for (const val of Object.values(specialtyCooldowns)) {
+        expect(val).to.be.a("boolean");
+      }
+    }
+    if (player.upcomingLanguageRelease_Korean) {
+      const upcomingLanguageRelease_Korean =
+        player.upcomingLanguageRelease_Korean;
+      expect(upcomingLanguageRelease_Korean).to.be.an("object");
+      expect(upcomingLanguageRelease_Korean.logins).to.be.a("number");
+    }
+    if (player.upcomingLanguageRelease_Portuguese) {
+      const upcomingLanguageRelease_Portuguese =
+        player.upcomingLanguageRelease_Portuguese;
+      expect(upcomingLanguageRelease_Portuguese).to.be.an("object");
+      expect(upcomingLanguageRelease_Portuguese.logins).to.be.a("number");
+    }
+    if (player.upcomingLanguageRelease_Russian) {
+      const upcomingLanguageRelease_Russian =
+        player.upcomingLanguageRelease_Russian;
+      expect(upcomingLanguageRelease_Russian).to.be.an("object");
+      expect(upcomingLanguageRelease_Russian.logins).to.be.a("number");
+    }
+    if (player.plotResets) {
+      const plotResets = player.plotResets;
+      expect(plotResets).to.be.an("object");
+      expect(plotResets.time).to.be.a("number");
+      expect(plotResets.uuid).to.be.a("string");
+    }
+    expect(player.achievementPoints).to.be.a("number");
+    if (player.achievementRewardsNew) {
+      const achievementRewardsNew = player.achievementRewardsNew;
+      expect(achievementRewardsNew).to.be.an("object");
+      for (const val of Object.values(achievementRewardsNew)) {
+        expect(val).to.be.a("number");
+      }
+    }
+    if (player.achievementSync) {
+      const achievementSync = player.achievementSync;
+      expect(achievementSync).to.be.an("object");
+      expect(achievementSync.quake_tiered).to.be.a("number");
+      for (const val of Object.values(achievementSync)) {
+        expect(val).to.be.a("number");
+      }
+    }
+    if (player.achievementTotem) {
+      const achievementTotem = player.achievementTotem;
+      expect(achievementTotem).to.be.an("object");
+      expect(achievementTotem.allowed_max_height).to.be.a("number");
+      expect(achievementTotem.canCustomize).to.be.a("boolean");
+      expect(achievementTotem.selectedColors).to.be.an("object");
+      for (const key of Object.keys(achievementTotem.selectedColors)) {
+        expect(key)
+          .to.be.a("string")
+          .that.satisfies(function (val: string) {
+            return val.startsWith("slotcolor_");
+          });
+        expect(achievementTotem.selectedColors[key]).to.be.a("string");
+      }
+      expect(achievementTotem.selectedParts).to.be.an("object");
+      for (const key of Object.keys(achievementTotem.selectedParts)) {
+        expect(key)
+          .to.be.a("string")
+          .that.satisfies(function (val: string) {
+            return val.startsWith("slot_");
+          });
+        expect(achievementTotem.selectedParts[key]).to.be.a("string");
+      }
+      for (const color of achievementTotem.unlockedColors) {
+        expect(color).to.be.a("string");
+      }
+      for (const part of achievementTotem.unlockedParts) {
+        expect(part).to.be.a("string");
+      }
+    }
+    expect(player.achievementTracking)
+      .to.be.an("array")
+      .that.satisfies(function (value: string[]) {
+        return value.every((v) => typeof v === "string");
+      });
+    if (player.achievementTrackingHideMessages) {
+      expect(player.achievementTrackingHideMessages).to.be.a("boolean");
+    }
+    const achievements = player.achievements;
+    expect(achievements)
+      .to.be.an("object")
+      .that.satisfies(function (value: typeof player.achievements) {
+        return Object.values(value).every((v) => typeof v === "number");
+      });
+    expect(player.achievementsOneTime)
+      .to.be.an("array")
+      .that.satisfies(function (value: string[]) {
+        return value.every((v) => typeof v === "string");
+      });
   });
 });
 
