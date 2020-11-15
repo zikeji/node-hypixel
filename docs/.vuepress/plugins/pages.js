@@ -1,3 +1,4 @@
+const { readFileSync } = require("fs");
 const { resolve } = require("path");
 
 /**
@@ -43,6 +44,20 @@ module.exports = {
       filePath: resolve(__dirname, "../", "../", "../", "CHANGELOG.md"),
       frontmatter: {
         sidebar: "auto"
+      }
+    },
+    {
+      permalink: "/LICENSE.html",
+      content: readFileSync(resolve(__dirname, "../", "../", "../", "LICENSE")),
+      frontmatter: {
+        sidebar: false
+      }
+    },
+    {
+      permalink: "/LICENSE-HYPIXEL-PHP.html",
+      filePath: resolve(__dirname, "../", "../", "../", "LICENSE-HYPIXEL-PHP.md"),
+      frontmatter: {
+        sidebar: false
       }
     },
   ],

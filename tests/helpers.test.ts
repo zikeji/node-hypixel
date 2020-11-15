@@ -369,3 +369,66 @@ describe("Test TransformSkyBlockItemData", function () {
     expect(result.length).to.be.a("number").that.equals(4);
   });
 });
+
+describe("Test getNetworkLevel", function () {
+  it("should return level 32", function () {
+    const levelInfo = getNetworkLevel(1514993);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(32);
+    expect(levelInfo.preciseLevel)
+      .to.be.a("number")
+      .that.equals(32.48563428571428);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(1514993);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(1472500);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(87500);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(45007);
+  });
+  it("should return level 127", function () {
+    const levelInfo = getNetworkLevel({ networkExp: 20955390 } as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(127);
+    expect(levelInfo.preciseLevel)
+      .to.be.a("number")
+      .that.equals(127.02427692307693);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(20955390);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(20947500);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(325000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(317110);
+  });
+  it("should return level 1 with negative exp", function () {
+    const levelInfo = getNetworkLevel(-9001);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(1);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(1);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(10000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(10000);
+  });
+  it("should return level 1 with playerdata and no exp", function () {
+    const levelInfo = getNetworkLevel({} as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(1);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(1);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(10000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(10000);
+  });
+});
+
+describe("Test getExpToNetworkLevel with float", function () {
+  it("should equal 299799.99999999994", function () {
+    expect(getExpToNetworkLevel(13.37))
+      .to.be.a("number")
+      .that.equals(299799.99999999994);
+  });
+});
