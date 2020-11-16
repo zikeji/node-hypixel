@@ -87,6 +87,7 @@ module.exports = config({
           icon: "helper",
           children: [
             "helpers/player-ranks",
+            "helpers/network-level",
             "helpers/minecraft-item-data"
           ]
         },
