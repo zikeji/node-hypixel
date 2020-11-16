@@ -9048,7 +9048,7 @@ components:
         Battleground:
           $ref: '#/components/schemas/PlayerStatsGameMode'
         Bedwars:
-          $ref: '#/components/schemas/PlayerStatsGameMode'
+          $ref: '#/components/schemas/PlayerStatsBedwars'
         BuildBattle:
           $ref: '#/components/schemas/PlayerStatsGameMode'
         Duels:
@@ -9115,6 +9115,232 @@ components:
           - type: array
             items:
               type: string
+    PlayerStatsBedwars:
+      description: Stats for bedwars.
+      allOf:
+        - $ref: '#/components/schemas/PlayerStatsGameMode'
+        - $ref: '#/components/schemas/PlayerStatsBedwarsInfo'
+        - $ref: '#/components/schemas/PlayerStatsBedwarsStats'
+    PlayerStatsBedwarsInfo:
+      description: |
+        These properties generally have to do with either settings, info (like coins, exp, items), and some universal stats.
+
+        Some properties aren't listed but certain values can be expected based on the property's key.
+
+        * Properties that have keys which start with "voted_" (e.g. voted_enderman) will be a boolean.
+        * Properties that have keys which start with "quickjoin_uses_" (e.g. quickjoin_uses_Amazon) will be a number.
+      type: object
+      properties:
+        chest_history:
+          type: string
+        chest_history_new:
+          type: array
+          items:
+            type: string
+        coins:
+          type: number
+        Experience:
+          type: number
+        Experience_new:
+          type: number
+        Bedwars_openedChests:
+          type: number
+        Bedwars_openedCommons:
+          type: number
+        Bedwars_openedEpics:
+          type: number
+        Bedwars_openedLegendaries:
+          type: number
+        Bedwars_openedRares:
+          type: number
+        activeBedDestroy:
+          type: string
+        activeDeathCry:
+          type: string
+        activeGlyph:
+          type: string
+        activeIslandTopper:
+          type: string
+        activeKillEffect:
+          type: string
+        activeKillMessages:
+          type: string
+        activeNPCSkin:
+          type: string
+        activeProjectileTrail:
+          type: string
+        activeSprays:
+          type: string
+        activeVictoryDance:
+          type: string
+        activeWoodType:
+          type: string
+        favourites_1:
+          type: string
+        favourites_2:
+          type: string
+        first_join_7:
+          type: boolean
+        understands_resource_bank:
+          type: boolean
+        understands_streaks:
+          type: boolean
+        privategames:
+          $ref: '#/components/schemas/PlayerStatsBedwarsPrivateGamesSettings'
+      additionalProperties:
+        anyOf:
+          - type: number
+          - type: string
+          - type: boolean
+          - type: array
+            items:
+              type: string
+          - $ref: '#/components/schemas/PlayerStatsBedwarsPrivateGamesSettings'
+    PlayerStatsBedwarsStats:
+      type: object
+      description: |
+        This interface lists keys that should be fairly common.
+        All of these calls have variant specific values that get prepended by a game mode.
+
+        ###  Modes
+        * castle_
+        * two_four_
+        * four_three_
+        * four_four_
+        * eight_one_
+        * eight_two_
+        * tourney_bedwars4s_-1_
+        * tourney_bedwars4s_0_
+        * tourney_bedwars4s_1_
+        * tourney_bedwars_two_four_0_
+
+        #### Sub Modes
+        * armed_
+        * lucky_
+        * no_void_
+        * rush_
+        * ultimate_
+        * voidless_
+
+        ### Explanation
+
+        So aside from the base / default mode which this interface describes, you can find the stats for a specific game mode by joining the above values.
+
+        For example, if you want the "wins_bedwars" value but for rush on four four you'd find that on the key "four_four_rush_wins_bedwars", if it exists.
+      properties:
+        _items_purchased_bedwars:
+          type: number
+        beds_broken_bedwars:
+          type: number
+        beds_lost_bedwars:
+          type: number
+        deaths_bedwars:
+          type: number
+        diamond_resources_collected_bedwars:
+          type: number
+        emerald_resources_collected_bedwars:
+          type: number
+        entity_attack_deaths_bedwars:
+          type: number
+        entity_attack_final_deaths_bedwars:
+          type: number
+        entity_attack_final_kills_bedwars:
+          type: number
+        entity_attack_kills_bedwars:
+          type: number
+        entity_explosion_deaths_bedwars:
+          type: number
+        entity_explosion_final_deaths_bedwars:
+          type: number
+        entity_explosion_final_kills_bedwars:
+          type: number
+        entity_explosion_kills_bedwars:
+          type: number
+        fall_deaths_bedwars:
+          type: number
+        fall_final_deaths_bedwars:
+          type: number
+        fall_final_kills_bedwars:
+          type: number
+        fall_kills_bedwars:
+          type: number
+        final_deaths_bedwars:
+          type: number
+        final_kills_bedwars:
+          type: number
+        fire_deaths_bedwars:
+          type: number
+        fire_final_deaths_bedwars:
+          type: number
+        fire_tick_deaths_bedwars:
+          type: number
+        fire_tick_final_deaths_bedwars:
+          type: number
+        games_played_bedwars:
+          type: number
+        gold_resources_collected_bedwars:
+          type: number
+        iron_resources_collected_bedwars:
+          type: number
+        items_purchased_bedwars:
+          type: number
+        kills_bedwars:
+          type: number
+        losses_bedwars:
+          type: number
+        permanent _items_purchased_bedwars:
+          type: number
+        permanent_items_purchased_bedwars:
+          type: number
+        projectile_deaths_bedwars:
+          type: number
+        projectile_final_deaths_bedwars:
+          type: number
+        projectile_final_kills_bedwars:
+          type: number
+        projectile_kills_bedwars:
+          type: number
+        resources_collected_bedwars:
+          type: number
+        suffocation_deaths_bedwars:
+          type: number
+        void_deaths_bedwars:
+          type: number
+        void_final_deaths_bedwars:
+          type: number
+        void_final_kills_bedwars:
+          type: number
+        void_kills_bedwars:
+          type: number
+        wins_bedwars:
+          type: number
+        winstreak:
+          type: number
+    PlayerStatsBedwarsPrivateGamesSettings:
+      type: object
+      properties:
+        bed_instabreak:
+          type: boolean
+        disable_block_protection:
+          type: boolean
+        event_time:
+          type: string
+        health_buff:
+          type: string
+        low_gravity:
+          type: boolean
+        max_team_upgrades:
+          type: boolean
+        no_diamonds:
+          type: boolean
+        no_emeralds:
+          type: boolean
+        one_hit_one_kill:
+          type: boolean
+        respawn_time:
+          type: string
+        speed:
+          type: string
     PlayerStatsPit:
       allOf:
         - $ref: '#/components/schemas/PlayerStatsGameMode'

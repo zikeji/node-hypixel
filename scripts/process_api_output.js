@@ -6,9 +6,11 @@ const content = fs.readFileSync(path.join(__dirname, "../", "src", "types", "api
 const lines = [];
 
 let inMonthlyCrates = false;
+let inPlayerStatsBedwars = false;
 let inSkyBlockProfileObjective = false;
 let SkyBlockProfileSlayerBoss = false;
 for (let line of content.split("\n")) {
+  let shouldPushLine = true;
   line = line.replace(/declare namespace/, "export declare namespace");
 
   if (inMonthlyCrates) {
@@ -51,6 +53,9 @@ for (let line of content.split("\n")) {
       line = line.replace(/\[name: string\]: PlayerStatsGameMode/, "[name: string]: undefined | PlayerStatsGameMode");
     }
     if(lines[lines.length - 1].match(/export interface PlayerStatsGameMode/)) {
+      line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
+    }
+    if(lines[lines.length - 1].match(/export interface PlayerStatsBedwars/)) {
       line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
     }
     if(lines[lines.length - 1].match(/export interface PlayerStatsHousing/)) {
@@ -118,7 +123,22 @@ for (let line of content.split("\n")) {
   if (line.match(/export interface SkyBlockProfilePet/)) {
     inSkyBlockProfileObjective = false;
   }
-  lines.push(line);
+
+  if (line.match(/export interface PlayerStatsBedwars \{/)) {
+    inPlayerStatsBedwars = true;
+  }
+  if (inPlayerStatsBedwars) {
+    shouldPushLine = false;
+    if (/\s{8}\}/.test(line)) {
+      inPlayerStatsBedwars = false;
+      shouldPushLine = true;
+      line = "        export type PlayerStatsBedwars = PlayerStatsGameMode & PlayerStatsBedwarsInfo & PlayerStatsBedwarsStats;"
+    }
+  }
+
+  if (shouldPushLine) {
+    lines.push(line);
+  }
 }
 
 fs.writeFileSync(path.join(__dirname, "../", "src", "types", "api.ts"), lines.join("\n"));

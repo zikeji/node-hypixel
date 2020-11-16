@@ -1383,7 +1383,7 @@ export declare namespace Components {
       Arcade?: PlayerStatsGameMode;
       Arena?: PlayerStatsGameMode;
       Battleground?: PlayerStatsGameMode;
-      Bedwars?: PlayerStatsGameMode;
+      Bedwars?: /* Stats for bedwars. */ PlayerStatsBedwars;
       BuildBattle?: PlayerStatsGameMode;
       Duels?: PlayerStatsGameMode;
       GingerBread?: PlayerStatsGameMode;
@@ -1410,6 +1410,147 @@ export declare namespace Components {
        *
        */
       PlayerStatsHousing;
+    }
+    /**
+     * Stats for bedwars.
+     */
+    export type PlayerStatsBedwars = PlayerStatsGameMode &
+      PlayerStatsBedwarsInfo &
+      PlayerStatsBedwarsStats;
+    /**
+     * These properties generally have to do with either settings, info (like coins, exp, items), and some universal stats.
+     *
+     * Some properties aren't listed but certain values can be expected based on the property's key.
+     *
+     * * Properties that have keys which start with "voted_" (e.g. voted_enderman) will be a boolean.
+     * * Properties that have keys which start with "quickjoin_uses_" (e.g. quickjoin_uses_Amazon) will be a number.
+     *
+     */
+    export interface PlayerStatsBedwarsInfo {
+      [name: string]:
+        | undefined
+        | number
+        | string
+        | boolean
+        | string[]
+        | PlayerStatsBedwarsPrivateGamesSettings;
+      chest_history?: string;
+      chest_history_new?: string[];
+      coins?: number;
+      Experience?: number;
+      Experience_new?: number;
+      Bedwars_openedChests?: number;
+      Bedwars_openedCommons?: number;
+      Bedwars_openedEpics?: number;
+      Bedwars_openedLegendaries?: number;
+      Bedwars_openedRares?: number;
+      activeBedDestroy?: string;
+      activeDeathCry?: string;
+      activeGlyph?: string;
+      activeIslandTopper?: string;
+      activeKillEffect?: string;
+      activeKillMessages?: string;
+      activeNPCSkin?: string;
+      activeProjectileTrail?: string;
+      activeSprays?: string;
+      activeVictoryDance?: string;
+      activeWoodType?: string;
+      favourites_1?: string;
+      favourites_2?: string;
+      first_join_7?: boolean;
+      understands_resource_bank?: boolean;
+      understands_streaks?: boolean;
+      privategames?: PlayerStatsBedwarsPrivateGamesSettings;
+    }
+    export interface PlayerStatsBedwarsPrivateGamesSettings {
+      bed_instabreak?: boolean;
+      disable_block_protection?: boolean;
+      event_time?: string;
+      health_buff?: string;
+      low_gravity?: boolean;
+      max_team_upgrades?: boolean;
+      no_diamonds?: boolean;
+      no_emeralds?: boolean;
+      one_hit_one_kill?: boolean;
+      respawn_time?: string;
+      speed?: string;
+    }
+    /**
+     * This interface lists keys that should be fairly common.
+     * All of these calls have variant specific values that get prepended by a game mode.
+     *
+     * ###  Modes
+     * * castle_
+     * * two_four_
+     * * four_three_
+     * * four_four_
+     * * eight_one_
+     * * eight_two_
+     * * tourney_bedwars4s_-1_
+     * * tourney_bedwars4s_0_
+     * * tourney_bedwars4s_1_
+     * * tourney_bedwars_two_four_0_
+     *
+     * #### Sub Modes
+     * * armed_
+     * * lucky_
+     * * no_void_
+     * * rush_
+     * * ultimate_
+     * * voidless_
+     *
+     * ### Explanation
+     *
+     * So aside from the base / default mode which this interface describes, you can find the stats for a specific game mode by joining the above values.
+     *
+     * For example, if you want the "wins_bedwars" value but for rush on four four you'd find that on the key "four_four_rush_wins_bedwars", if it exists.
+     *
+     */
+    export interface PlayerStatsBedwarsStats {
+      _items_purchased_bedwars?: number;
+      beds_broken_bedwars?: number;
+      beds_lost_bedwars?: number;
+      deaths_bedwars?: number;
+      diamond_resources_collected_bedwars?: number;
+      emerald_resources_collected_bedwars?: number;
+      entity_attack_deaths_bedwars?: number;
+      entity_attack_final_deaths_bedwars?: number;
+      entity_attack_final_kills_bedwars?: number;
+      entity_attack_kills_bedwars?: number;
+      entity_explosion_deaths_bedwars?: number;
+      entity_explosion_final_deaths_bedwars?: number;
+      entity_explosion_final_kills_bedwars?: number;
+      entity_explosion_kills_bedwars?: number;
+      fall_deaths_bedwars?: number;
+      fall_final_deaths_bedwars?: number;
+      fall_final_kills_bedwars?: number;
+      fall_kills_bedwars?: number;
+      final_deaths_bedwars?: number;
+      final_kills_bedwars?: number;
+      fire_deaths_bedwars?: number;
+      fire_final_deaths_bedwars?: number;
+      fire_tick_deaths_bedwars?: number;
+      fire_tick_final_deaths_bedwars?: number;
+      games_played_bedwars?: number;
+      gold_resources_collected_bedwars?: number;
+      iron_resources_collected_bedwars?: number;
+      items_purchased_bedwars?: number;
+      kills_bedwars?: number;
+      losses_bedwars?: number;
+      "permanent _items_purchased_bedwars"?: number;
+      permanent_items_purchased_bedwars?: number;
+      projectile_deaths_bedwars?: number;
+      projectile_final_deaths_bedwars?: number;
+      projectile_final_kills_bedwars?: number;
+      projectile_kills_bedwars?: number;
+      resources_collected_bedwars?: number;
+      suffocation_deaths_bedwars?: number;
+      void_deaths_bedwars?: number;
+      void_final_deaths_bedwars?: number;
+      void_final_kills_bedwars?: number;
+      void_kills_bedwars?: number;
+      wins_bedwars?: number;
+      winstreak?: number;
     }
     export interface PlayerStatsData {
       adsense_tokens?: number;
