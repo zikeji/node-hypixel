@@ -87,7 +87,7 @@ module.exports = config({
           icon: "helper",
           children: [
             "helpers/player-ranks",
-            "helpers/skyblock-item-data"
+            "helpers/minecraft-item-data"
           ]
         },
         {

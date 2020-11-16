@@ -1,8 +1,8 @@
-# SkyBlock Item Data
+# Minecraft Item Data
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">transformSkyBlockItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockitemdata) and [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockprofilememberinventories) helpers exist to ease the process of consuming NBT data. NBT data is what is returned in the API result for SkyBlock profile/profiles inventory information.
+The [<code class="language-javascript"><span class="token function">transformItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformitemdata) and [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockprofilememberinventories) helpers exist to ease the process of consuming NBT data. You can find NBT data in the `/skyblock/profile` & `/skyblock/profiles` endpoint as inventory data, and in the `/player` endpoint for Pit inventories under `player.stats.Pit.profile`.
 
 These helpers will transform the NBT data into objects that conform to the [InventoryItem interface](/ts-api/interfaces/nbtinventoryitem/#hierarchy). You can make use of type hinting to figure out what is available, or browse the type definitions. These definitions cover what I found during discovery, with some unecessary definitions left out. As always you can use <code class="language-javascript"><span class="token function">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> to view the data if you are looking for something specific.
 
@@ -22,17 +22,17 @@ The primary function of this helper aside from converting the data using [prisma
 
 ## Examples
 
-### Specific Inventory
+### SkyBlock Inventory
 
-There is a processing overhead when transforming this information, as such - if you only need a specific inventory you should use the [<code class="language-javascript"><span class="token function">transformSkyBlockItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockitemdata) helper.
+If you only need a specific inventory you should use the [<code class="language-javascript"><span class="token function">transformItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformitemdata) helper.
 
 ```typescript
-import { Client as Hypixel, transformSkyBlockItemData } from "@zikeji/hypixel";
+import { Client as Hypixel, transformItemData } from "@zikeji/hypixel";
 const client = new Hypixel("API_KEY");
 (async () => {
   const profile = await client.skyblock.profile("ec1811e6822b4843bcd4fef82f75deb7");
   const member = profile.members.ec1811e6822b4843bcd4fef82f75deb7;
-  const armor = await transformSkyBlockItemData(member.inv_armor.data);
+  const armor = await transformItemData(member.inv_armor.data);
 
   console.log(armor);
   // output:
@@ -49,7 +49,7 @@ const client = new Hypixel("API_KEY");
 })();
 ```
 
-### All Inventories
+### All SkyBlock Inventories
 
 If you need all inventories resolved, the [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockprofilememberinventories) helper will do that for you by transforming the member object you pass and adding the appropriate inventory data.
 
@@ -81,5 +81,26 @@ const client = new Hypixel("API_KEY");
     "§6Godly Diver's Shirt",
     "§6Godly Diver's Mask"
   ]
+})();
+```
+
+### Pit Inventory
+
+Your can also use the helper to transform Pit inventory data. 
+
+```typescript
+import { Client as Hypixel, transformItemData } from "@zikeji/hypixel";
+const client = new Hypixel("API_KEY");
+(async () => {
+  const player = await client.player.uuid("ec1811e6822b4843bcd4fef82f75deb7");
+  const armor = await transformItemData(player.stats.Pit.profile.inv_armor.data);
+
+  console.log(armor);
+  // output:
+  [{…}, {…}, {…}, {…}]
+
+  console.log(armor.map((item) => item.id));
+  // output:
+  [ 309, 300, 307, 298 ]
 })();
 ```

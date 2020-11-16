@@ -5,5 +5,6 @@ export * from "./errors/RateLimitError";
 export * from "./helpers/MinecraftFormatting";
 export * from "./helpers/NetworkLevel";
 export * from "./helpers/PlayerRank";
+export * from "./helpers/TransformItemData";
 export * from "./helpers/TransformSkyBlockItemData";
 export * from "./types/api";
