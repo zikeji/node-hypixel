@@ -47,7 +47,7 @@ export function getExpToNetworkLevel(level: number): number {
  * @param data The player object or the raw EXP number.
  */
 export function getNetworkLevel(
-  data: NonNullable<Components.Schemas.Player> | number
+  data: Components.Schemas.Player | number
 ): NetworkLevel {
   let currentExp = 0;
   if (typeof data === "number") {
