@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.0](https://github.com/zikeji/node-hypixel/compare/v1.15.0...v1.16.0) (2020-11-14)
+
+
+### Features
+
+* **helpers:** add NBT data transformation ([42f2325](https://github.com/zikeji/node-hypixel/commit/42f232593ba1eb295ad9d27fa2749dae9dfc6364))
+
+
+### Bug Fixes
+
+* **test:** fix compilation issue for running coverage ([8fbf1b6](https://github.com/zikeji/node-hypixel/commit/8fbf1b6df71eb91760ca33cf429febe69325a6ab))
+
+
+### Code Refactoring
+
+* **helpers:** moved current helpers into dedicated folder ([1893a68](https://github.com/zikeji/node-hypixel/commit/1893a68e9d2136027b909a60e5b1c561045acaa4))
+
+
+### Tests
+
+* **coverage:** bring coverage back to 100% ([ce895d4](https://github.com/zikeji/node-hypixel/commit/ce895d4c45b550381cf3489f1844dc96b0f55d90))
+* **nbt:** add tests for transforming item data to ensure they match schema ([885f3d6](https://github.com/zikeji/node-hypixel/commit/885f3d6c666e5e88085b0472e5f97b5ac7e2ecba))
+
+
+### Documentation
+
+* **helpers:** add documentation and examples for item data helper ([015f724](https://github.com/zikeji/node-hypixel/commit/015f724f736d49ecec6e633e1cfe72456576c3a1))
+
 ## [1.15.0](https://github.com/zikeji/node-hypixel/compare/v1.14.0...v1.15.0) (2020-11-12)
 
 
