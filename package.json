@@ -222,7 +222,7 @@
     "@types/node": "^14.14.7",
     "@types/yargs-parser": "^15.0.0",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
-    "@typescript-eslint/parser": "^4.7.0",
+    "@typescript-eslint/parser": "^4.8.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "commitizen": "^4.2.2",
