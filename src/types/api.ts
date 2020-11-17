@@ -292,397 +292,1588 @@ export declare namespace Components {
       success: boolean;
       items: NewsEntries;
     }
-    export type Player = {
+    export type NullablePlayer = /**
+     * The player object has many properties that define specific things. There are many of these properties, and due to their iterative nature no point in typing them.
+     *
+     * ## Booleans
+     *
+     * Additional properties that are the boolean type (true/false) are usually a setting toggle or a one time event/action.
+     *
+     * * Properties with keys that start with "levelingReward_" and end with a number indicate when that leveling reward has been claimed. The number itself is the network level of the reward.
+     * * Properties with keys that look like "xmas2019_MAIN_LOBBY_1" - I believe these correlate with Christmas events but not sure what true/false means for these.
+     *   * The general property key format is "xmasYEAR_TYPE_NUMBER".
+     *   * A regex to match these would be: /^xmas(\d{4})_([A-Z_]+?)_(\d+)$/
+     *
+     * ## Numbers
+     *
+     * Additional properties that are the number type will generally either be some form of statistic, or a timestamp.
+     *
+     * * Properties with keys that start with "claimed_solo_bank_" will be a timestamp indicating when it was claimed. The full key will include a Minecraft UUID at the end.
+     * * Properties with keys that roughly match "completed_christmas_quests_YEAR" will be a timestamp that indicates when they completed all the available quests for that event.
+     * * Properties with keys that start with "anniversaryNPCProgress" will indicate how many event NPCs have been visited by the player.
+     *
+     * ## Arrays
+     *
+     * Some arrays will fit into a certain schema based on the property's key.
+     *
+     * * Properties with keys that start with "anniversaryNPCVisited" will be an array of numbers.
+     *
+     * ## Objects
+     *
+     * Some objects will fit into a certain schema based on the property's key.
+     *
+     * * Properties with keys starting with "adventRewards" will fit the "PlayerAdventRewards" schema.
+     * * Properties with keys ending with "Cooldowns" will fit the "PlayerEventCooldown" schema.
+     * * Properties with keys starting with "upcomingLanguageRelease_" will fit the "PlayerUpcomingLanguageRelease" schema.
+     * * Properties with keys starting with "dmcrates-" will fit the "PlayerMonthlyCrates" schema.
+     *
+     */ Player | null;
+    /**
+     * The player object has many properties that define specific things. There are many of these properties, and due to their iterative nature no point in typing them.
+     *
+     * ## Booleans
+     *
+     * Additional properties that are the boolean type (true/false) are usually a setting toggle or a one time event/action.
+     *
+     * * Properties with keys that start with "levelingReward_" and end with a number indicate when that leveling reward has been claimed. The number itself is the network level of the reward.
+     * * Properties with keys that look like "xmas2019_MAIN_LOBBY_1" - I believe these correlate with Christmas events but not sure what true/false means for these.
+     *   * The general property key format is "xmasYEAR_TYPE_NUMBER".
+     *   * A regex to match these would be: /^xmas(\d{4})_([A-Z_]+?)_(\d+)$/
+     *
+     * ## Numbers
+     *
+     * Additional properties that are the number type will generally either be some form of statistic, or a timestamp.
+     *
+     * * Properties with keys that start with "claimed_solo_bank_" will be a timestamp indicating when it was claimed. The full key will include a Minecraft UUID at the end.
+     * * Properties with keys that roughly match "completed_christmas_quests_YEAR" will be a timestamp that indicates when they completed all the available quests for that event.
+     * * Properties with keys that start with "anniversaryNPCProgress" will indicate how many event NPCs have been visited by the player.
+     *
+     * ## Arrays
+     *
+     * Some arrays will fit into a certain schema based on the property's key.
+     *
+     * * Properties with keys that start with "anniversaryNPCVisited" will be an array of numbers.
+     *
+     * ## Objects
+     *
+     * Some objects will fit into a certain schema based on the property's key.
+     *
+     * * Properties with keys starting with "adventRewards" will fit the "PlayerAdventRewards" schema.
+     * * Properties with keys ending with "Cooldowns" will fit the "PlayerEventCooldown" schema.
+     * * Properties with keys starting with "upcomingLanguageRelease_" will fit the "PlayerUpcomingLanguageRelease" schema.
+     * * Properties with keys starting with "dmcrates-" will fit the "PlayerMonthlyCrates" schema.
+     *
+     */
+    export interface Player {
       [name: string]:
-        | boolean
-        | number
-        | string
-        | unknown[]
         | undefined
-        | unknown;
+        | boolean
+        | string
+        | number
+        | number[]
+        | string[]
+        /**
+         * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+         * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+         *
+         */
+        | PlayerAdventRewards
+        | PlayerAchievementTotem
+        /**
+         * In addition to the all_time property, other properties may appear that have properties that start with "day_" but have the same schema as all_time.
+         *
+         */
+        | PlayerChallenges
+        | PlayerCompassStats
+        | PlayerCooldowns
+        /**
+         * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+         * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+         *
+         */
+        | PlayerEventCooldown
+        | PlayerFireworksStorage
+        | PlayerGiftingMeta
+        | /* Potentially has properties that follow format "given_cookies_NUMBER" which will be an array of strings. */ PlayerHousingMeta
+        | /* Each property is a month and year like "8-2019" and the value contains booleans indicating which reward tier was claimed. */ PlayerMonthlyCrates
+        | /* Each property is a month and year like "8-2019" and the value contains booleans indicating which reward tier was claimed. */ PlayerMonthlyCrates
+        | PlayerOutfit
+        | /* Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars". */ PlayerParkourCheckpointBests
+        | /* Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars". */ PlayerParkourCompletions
+        | /* This object describes the pet pet consumables the player has. Each property's key is the consumable name. e.g. "APPLE" or "WOOD_SWORD" */ PlayerPetConsumables
+        | /* Each property key is the name of the pet the stats apply to. */ PlayerPetStats
+        | PlayerPlotResets
+        | PlayerQuestSettings
+        | /* An object which has properties which match quests described by the /resources/quests endpoint. */ PlayerQuests
+        | PlayerSettings
+        | PlayerSkin
+        | PlayerSocialMedia
+        | /* The player stats object contains statistics for individual game modes. */ PlayerStats
+        | /* Aside from the properties in the schema this object contains properties who's keys follow a format like "GAMEMODE_TYPE_NUMBER". e.g. "sw_insane_doubles_0". These fit the "PlayerTourneyGameData" schema. */ PlayerTourney
+        /**
+         * An object describing what I assume to be testers who've logged in with a specific language.
+         *
+         */
+        | PlayerUpcomingLanguageRelease
+        | PlayerVanityMeta;
       _id: string;
       uuid: string;
-      firstLogin: number;
       playername: string;
       displayname: string;
-      knownAliases?: string[];
-      knownAliasesLower?: string[];
-      achievementsOneTime?: string[];
-      rank?: string;
-      parkourCheckpointBests?: {
-        [name: string]: {
-          [name: string]: number;
-        };
-      };
-      achievementTracking?: string[];
-      achievementPoints?: number;
-      achievements?: {
-        [name: string]: number;
-      };
-      karma?: number;
-      networkExp?: number;
-      giftingMeta?: PlayerGiftingMeta;
-      friendRequestsUuid?: string[];
-      cooldowns?: unknown;
-      parkourCompletions?: {
-        [name: string]: {
-          timeStart: number;
-          timeTook: number;
-        }[];
-      };
-      newPackageRank?: string;
-      userLanguage?: string;
-      mcVersionRp?: string;
-      achievementSync?: {
-        [name: string]: number;
-      };
-      onetime_achievement_menu_sort?: string;
-      housingMeta?: {
-        packages?: string[];
-      };
-      settings?: {
-        [name: string]: boolean | string | undefined;
-        allowFriendRequests?: boolean;
-        allowPartyRequests?: boolean;
-        autoSpawnPet?: boolean;
-        bloodVisibility?: boolean;
-        chatVisibility?: boolean;
-        lobbySpeed?: boolean;
-        lobbyProtection?: boolean;
-        petVisibility?: boolean;
-        legacyCompass?: boolean;
-        partyInvitePrivacy?: string;
-        friendRequestPrivacy?: string;
-        duelInvitePrivacy?: string;
-        privateMessageSounds?: boolean;
-      };
-      challenges?: {
-        all_time?: {
-          [name: string]: number;
-        };
-      };
-      socialMedia?: {
-        [name: string]:
-          | string
-          | boolean
-          | undefined
-          | {
-              [name: string]: string | undefined;
-            };
-        TWITTER?: string;
-        DISCORD?: string;
-        links?: {
-          [name: string]: string | undefined;
-          HYPIXEL?: string;
-          DISCORD?: string;
-          TWITTER?: string;
-        };
-        prompt?: boolean;
-      };
-      vanityMeta?: {
-        packages?: string[];
-      };
-      channel?: string;
-      petStats?: {
-        [name: string]: {
-          HUNGER?: {
-            timestamp: number;
-            value: number;
-          };
-          THIRST?: {
-            value: number;
-            timestamp: number;
-          };
-          EXERCISE?: {
-            timestamp: number;
-            value: number;
-          };
-          experience?: number;
-        };
-      };
-      petConsumables?: {
-        [name: string]: number;
-      };
-      currentClickEffect?: string;
-      tourney?: {
-        first_join_lobby?: number;
-        quake_solo2_0?: {
-          games_played?: number;
-          playtime?: number;
-          first_game?: number;
-          tributes_earned?: number;
-        };
-        total_tributes?: number;
-      };
-      onetime_achievement_menu_sort_completion_sort?: string;
-      lastAdsenseGenerateTime?: number;
-      voting?: {
-        [name: string]: number;
-      };
-      currentGadget?: string;
-      stats?: {
-        Arcade?: {
-          [name: string]: number | boolean | undefined;
-          coins?: number;
-        };
-        SkyWars?: {
-          packages?: string[];
-          souls?: number;
-        };
-        GingerBread?: {
-          [name: string]: string | number | string[] | undefined;
-          coins?: number;
-          packages?: string[];
-        };
-        MCGO?: {
-          coins?: number;
-        };
-        TrueCombat?: {
-          [name: string]: number | string[] | undefined;
-          win_streak?: number;
-          games?: number;
-          deaths?: number;
-          coins?: number;
-          losses?: number;
-          survived_players?: number;
-          packages?: string[];
-        };
-        VampireZ?: {
-          updated_stats?: boolean;
-        };
-        Quake?: {
-          [name: string]: number | boolean | string[] | undefined;
-          packages?: string[];
-          alternative_gun_cooldown_indicator?: boolean;
-          compass_selected?: boolean;
-          enable_sound?: boolean;
-          instantRespawn?: boolean;
-          showDashCooldown?: boolean;
-          highest_killstreak?: number;
-          showKillPrefix?: boolean;
-          kills?: number;
-          headshots?: number;
-          coins?: number;
-          distance_travelled?: number;
-          shots_fired?: number;
-          deaths?: number;
-        };
-        Paintball?: {
-          [name: string]: number | string | boolean | string[] | undefined;
-          packages?: string[];
-          kills?: number;
-          wins?: number;
-          coins?: number;
-          shots_fired?: number;
-          deaths?: number;
-          showKillPrefix?: boolean;
-          favorite_slots?: string;
-        };
-        Legacy?: {
-          [name: string]: number | undefined;
-          next_tokens_seconds?: number;
-          quakecraft_tokens?: number;
-          total_tokens?: number;
-          tokens?: number;
-          paintball_tokens?: number;
-        };
-        BuildBattle?: {
-          [name: string]: number | undefined;
-          wins_solo_normal?: number;
-          wins?: number;
-        };
-        Bedwars?: {
-          [name: string]: boolean | number | undefined;
-          bedwars_boxes?: number;
-          Experience?: number;
-        };
-        Pit?: {
-          profile?: {
-            renown?: number;
-          };
-        };
-        SkyBlock?: {
-          profiles?: {
-            [name: string]: {
-              profile_id?: string;
-              cute_name?: string;
-            };
-          };
-        };
-        MurderMystery?: {
-          [name: string]: number | string[] | undefined;
-          murdermystery_books?: string[];
-          detective_chance?: number;
-          murderer_chance?: number;
-          coins?: number;
-          coins_pickedup?: number;
-          coins_pickedup_MURDER_CLASSIC?: number;
-          coins_pickedup_skyway_pier?: number;
-          coins_pickedup_skyway_pier_MURDER_CLASSIC?: number;
-          games?: number;
-          games_MURDER_CLASSIC?: number;
-          games_skyway_pier?: number;
-          games_skyway_pier_MURDER_CLASSIC?: number;
-          wins?: number;
-          wins_MURDER_CLASSIC?: number;
-          wins_skyway_pier?: number;
-          wins_skyway_pier_MURDER_CLASSIC?: number;
-        };
-      };
+      firstLogin?: number;
       lastLogin?: number;
       lastLogout?: number;
-      quickjoin_timestamp?: number;
-      quickjoin_uses?: number;
-      levelingReward_1?: boolean;
-      network_update_book?: string;
-      levelUp_VIP_PLUS?: number;
-      achievementRewardsNew?: {
-        [name: string]: number;
-      };
-      lastClaimedReward?: number;
-      rewardHighScore?: number;
-      rewardScore?: number;
-      rewardStreak?: number;
-      totalDailyRewards?: number;
-      totalRewards?: number;
-      eugene?: {
-        [name: string]: number | undefined;
-        dailyTwoKExp?: number;
-      };
-      levelUp_MVP_PLUS?: number;
-      vanityFavorites?: string;
+      knownAliases: string[];
+      knownAliasesLower: string[];
+      /**
+       * Timestamp of when the SkyBlock Century Cake was claimed.
+       */
+      claimed_century_cake?: number;
+      /**
+       * Timestamp of when the Potato Basket was claimed.
+       */
+      claimed_potato_basket?: number;
+      /**
+       * Timestamp of when the Potato Talisman was claimed.
+       */
+      claimed_potato_talisman?: number;
       monthlyPackageRank?: string;
-      mostRecentMonthlyPackageRank?: string;
-      currentPet?: string;
-      quests?: {
-        [name: string]: unknown;
-      };
-      rankPlusColor?: string;
-      monthlycrates?: {
-        [name: string]: {
-          [name: string]: boolean | undefined;
-          REGULAR?: boolean;
-          VIP?: boolean;
-          VIP_PLUS?: boolean;
-          MVP?: boolean;
-        };
-      };
       monthlyRankColor?: string;
-      adsense_tokens?: number;
-      collectibles_menu_sort?: string;
-      outfit?: {
-        BOOTS?: string;
-        CHESTPLATE?: string;
-        LEGGINGS?: string;
-        HELMET?: string;
-      };
-      petJourneyTimestamp?: number;
-      mostRecentGameType?: string;
-      timePlaying?: number;
-      flashingSalePopup?: number;
-      flashingSaleOpens?: number;
-      flashingSalePoppedUp?: number;
-      flashingSaleClicks?: number;
-      fortuneBuff?: number;
+      newPackageRank?: string;
+      packageRank?: string;
+      rank?: string;
+      rankPlusColor?: string;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_NONE?: number;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
       levelUp_VIP?: number;
-      achievementTotem?: {
-        [name: string]:
-          | boolean
-          | number
-          | string[]
-          | undefined
-          | {
-              [name: string]: string;
-            };
-        canCustomize?: boolean;
-        allowed_max_height?: number;
-        unlockedParts?: string[];
-        selectedParts?: {
-          [name: string]: string;
-        };
-        unlockedColors?: string[];
-        selectedColors?: {
-          [name: string]: string;
-        };
-      };
-      questSettings?: {
-        [name: string]: boolean;
-      };
-      customFilter?: string;
-      currentCloak?: string;
-      auto_spawn_pet?: boolean;
-      chat?: boolean;
-      eulaCoins?: boolean;
-      fireworkStorage?: {
-        flight_duration?: number;
-        shape?: string;
-        trail?: boolean;
-        twinkle?: boolean;
-        colors?: string;
-        fade_colors?: string;
-        selected?: boolean;
-      }[];
-      guildNotifications?: boolean;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_VIP_PLUS?: number;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_MVP?: number;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_MVP_PLUS?: number;
+      lastClaimedReward?: number;
+      lastAdsenseGenerateTime?: number;
+      lastMapVote?: number;
+      mcVersionRp?: string;
+      mostRecentGameType?: string;
       mostRecentMinecraftVersion?: number;
+      mostRecentMonthlyPackageRank?: string;
       mostRecentlyThanked?: string;
       mostRecentlyThankedUuid?: string;
       mostRecentlyTipped?: string;
       mostRecentlyTippedUuid?: string;
-      notifications?: boolean;
-      packageRank?: string;
-      seeRequests?: boolean;
-      spectators_invisible?: boolean;
+      petConsumables?: /* This object describes the pet pet consumables the player has. Each property's key is the consumable name. e.g. "APPLE" or "WOOD_SWORD" */ PlayerPetConsumables;
+      petJourneyTimestamp?: number;
+      quickjoin_timestamp?: number;
+      quickjoin_uses?: number;
+      scorpius_bribe_96?: number;
+      testPass?: boolean;
+      watchdogBlockTimestamp?: number;
+      adsense_tokens?: number;
+      networkExp?: number;
+      karma?: number;
+      coins?: number;
+      eulaCoins?: boolean;
+      kills?: number;
+      killstreaks?: number;
+      deaths?: number;
+      wins?: number;
+      fortuneBuff?: number;
+      gifts_grinch?: number;
+      hasTheHotPotato?: boolean;
+      main2017Tutorial?: boolean;
+      monthlycrates?: /* Each property is a month and year like "8-2019" and the value contains booleans indicating which reward tier was claimed. */ PlayerMonthlyCrates;
+      /**
+       * This property represents a version - e.g. "v0.75"
+       */
+      network_update_book?: string;
+      parkourCheckpointBests?: /* Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars". */ PlayerParkourCheckpointBests;
+      parkourCompletions?: /* Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars". */ PlayerParkourCompletions;
+      petStats?: /* Each property key is the name of the pet the stats apply to. */ PlayerPetStats;
+      rewardConsumed?: boolean;
+      rewardHighScore?: number;
+      rewardScore?: number;
+      rewardStreak?: number;
+      skyblock_free_cookie?: number;
+      shots_fired?: number;
+      snowball_fight_intro_2019?: boolean;
+      stats: /* The player stats object contains statistics for individual game modes. */ PlayerStats;
       thanksReceived?: number;
       thanksSent?: number;
+      timePlaying?: number;
+      totalDailyRewards?: number;
+      totalRewards?: number;
+      tourney?: /* Aside from the properties in the schema this object contains properties who's keys follow a format like "GAMEMODE_TYPE_NUMBER". e.g. "sw_insane_doubles_0". These fit the "PlayerTourneyGameData" schema. */ PlayerTourney;
       tournamentTokens?: number;
-      wardrobe?: string;
-      gadget?: string;
-      friendInvisible?: boolean;
-      reverted?: boolean;
-      notifiedOfStuff?: boolean;
-      petUpdate?: number;
-      transformation?: string;
-      coins?: number;
-      rewardConsumed?: boolean;
-      disableSendAll?: boolean;
-      vanityCraftedBoxToday?: number;
-      vanityFirstCraftedBox?: number;
-      vanityFirstConvertedBox?: number;
       vanityConvertedBoxToday?: number;
-      flashingNewsPopup?: string[];
-      flashingNewsPoppedUp?: number;
-      flashingNewsOpens?: number;
-      compassStats?: {
-        compass?: {
-          skywars?: number;
-          prototype?: number;
-          battleground?: number;
-        };
-      };
-      spec_first_person?: boolean;
-      currentHat?: string;
-      currentIp?: string;
-      particlePack?: string;
-      chatAlerts?: boolean;
-      disguise?: string;
-      prefix?: string;
-      votesMissed?: number;
-      buildTeam?: boolean;
+      vanityFirstConvertedBox?: number;
+      voting?: PlayerVoting;
+      vanityTokens?: number;
+      language?: string;
+      autoDetectLanguage?: boolean;
+      auto_spawn_pet?: boolean;
       battlePassGlowStatus?: boolean;
+      channel?: string;
+      chat?: boolean;
+      clock?: boolean;
+      collectibles_menu_sort?: string;
+      collectibles_menu_visibility_sort?: string;
+      combatTracker?: boolean;
+      currentClickEffect?: string;
+      currentCloak?: string;
+      currentEmote?: string;
+      currentGadget?: string;
+      currentHat?: string;
+      currentPet?: string;
+      customFilter?: string;
+      disableTipMessages?: boolean;
+      disguise?: string;
+      gadget?: string;
+      notifications?: boolean;
+      outfit?: PlayerOutfit;
+      onetime_achievement_menu_sort?: string;
+      onetime_achievement_menu_sort_completion_sort?: string;
+      particlePack?: string;
+      petActive?: boolean;
+      /**
+       * Particle pack, e.g. "note", "anger", "enchantment", etc.
+       */
+      pp?: string;
+      questSettings?: PlayerQuestSettings;
+      seeRequests?: boolean;
+      sendCerberusMessages?: boolean;
+      settings?: PlayerSettings;
+      skin?: PlayerSkin;
+      socialMedia?: PlayerSocialMedia;
+      spec_always_flying?: boolean;
+      spec_auto_teleport?: boolean;
+      spec_first_person?: boolean;
+      spectators_invisible?: boolean;
+      tiered_achievement_menu_sort?: string;
+      transformation?: string;
+      userLanguage?: string;
+      vanityFavorites?: string;
+      wardrobe?: string;
+      friendBlocksUuid?: string[];
+      friendRequests?: string[];
+      friendRequestsUuid?: string[];
       guildInvites?: string[];
-    } | null;
+      guildKickReason?: string;
+      guildNotifications?: boolean;
+      challenges?: /**
+       * In addition to the all_time property, other properties may appear that have properties that start with "day_" but have the same schema as all_time.
+       *
+       */
+      PlayerChallenges;
+      quests?: /* An object which has properties which match quests described by the /resources/quests endpoint. */ PlayerQuests;
+      aprilFoolsStaffClicked_0?: string[];
+      anniversaryNPCProgress2020?: number;
+      anniversaryNPCVisited2020?: number[];
+      SANTA_FINISHED?: boolean;
+      SANTA_QUEST_STARTED?: boolean;
+      compassStats?: PlayerCompassStats;
+      cooldowns?: PlayerCooldowns;
+      fireworksStorage?: PlayerFireworksStorage;
+      giftingMeta?: PlayerGiftingMeta;
+      housingMeta?: /* Potentially has properties that follow format "given_cookies_NUMBER" which will be an array of strings. */ PlayerHousingMeta;
+      vanityMeta?: PlayerVanityMeta;
+      flashingSaleClicks?: number;
+      flashingSaleOpens?: number;
+      flashingSalePoppedUp?: number;
+      flashingSalePopup?: number;
+      adventRewards2017?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards2018?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards_v2_2018?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards2019?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards_v2_2019?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      christmas2019Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      summer2020Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      easter2020Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      easter2020Cooldowns2?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      halloween2016Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      halloween2020Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      holiday2016Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      specialtyCooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      upcomingLanguageRelease_Korean?: /**
+       * An object describing what I assume to be testers who've logged in with a specific language.
+       *
+       */
+      PlayerUpcomingLanguageRelease;
+      upcomingLanguageRelease_Portuguese?: /**
+       * An object describing what I assume to be testers who've logged in with a specific language.
+       *
+       */
+      PlayerUpcomingLanguageRelease;
+      upcomingLanguageRelease_Russian?: /**
+       * An object describing what I assume to be testers who've logged in with a specific language.
+       *
+       */
+      PlayerUpcomingLanguageRelease;
+      plotResets?: PlayerPlotResets;
+      achievementPoints: number;
+      achievementRewardsNew?: /* Object property keys are in the format "for_points_NUMBER". */ PlayerAchievementRewardsNew;
+      achievementSync?: PlayerAchievementSync;
+      achievementTotem?: PlayerAchievementTotem;
+      achievementTracking: string[];
+      achievementTrackingHideMessages?: boolean;
+      achievements: /* Tiered / numbered achievements the player has earned. All known properties are listed but given it's Hypixel it's subject to change fairly often. */ PlayerAchievements;
+      /**
+       * Array of values, each value representing an achievement.
+       */
+      achievementsOneTime: string[];
+    }
+    export interface PlayerAchievementData {
+      achievementPoints: number;
+      achievementRewardsNew?: /* Object property keys are in the format "for_points_NUMBER". */ PlayerAchievementRewardsNew;
+      achievementSync?: PlayerAchievementSync;
+      achievementTotem?: PlayerAchievementTotem;
+      achievementTracking: string[];
+      achievementTrackingHideMessages?: boolean;
+      achievements: /* Tiered / numbered achievements the player has earned. All known properties are listed but given it's Hypixel it's subject to change fairly often. */ PlayerAchievements;
+      /**
+       * Array of values, each value representing an achievement.
+       */
+      achievementsOneTime: string[];
+    }
+    /**
+     * Object property keys are in the format "for_points_NUMBER".
+     */
+    export interface PlayerAchievementRewardsNew {
+      [name: string]: number;
+    }
+    export interface PlayerAchievementSync {
+      [name: string]: number;
+      quake_tiered: number;
+    }
+    export interface PlayerAchievementTotem {
+      allowed_max_height: number;
+      canCustomize: boolean;
+      /**
+       * Object property keys are in the format "slotcolor_NUMBER"
+       */
+      selectedColors: {
+        [name: string]: string;
+      };
+      /**
+       * Object property keys are in the format "slot_NUMBER"
+       */
+      selectedParts: {
+        [name: string]: string;
+      };
+      unlockedColors: string[];
+      unlockedParts: string[];
+    }
+    /**
+     * Tiered / numbered achievements the player has earned. All known properties are listed but given it's Hypixel it's subject to change fairly often.
+     */
+    export interface PlayerAchievements {
+      [name: string]: undefined | number;
+      arcade_arcade_banker?: number;
+      arcade_bounty_hunter?: number;
+      arena_climb_the_ranks?: number;
+      bedwars_beds?: number;
+      bedwars_bedwars_killer?: number;
+      bedwars_collectors_edition?: number;
+      bedwars_level?: number;
+      bedwars_loot_box?: number;
+      bedwars_wins?: number;
+      buildbattle_build_battle_points?: number;
+      buildbattle_build_battle_score?: number;
+      buildbattle_build_battle_voter?: number;
+      buildbattle_guess_the_build_guesses?: number;
+      buildbattle_guess_the_build_winner?: number;
+      christmas2017_advent_2019?: number;
+      christmas2017_present_collector?: number;
+      christmas2017_santa_says_rounds?: number;
+      duels_bridge_doubles_wins?: number;
+      duels_bridge_duels_wins?: number;
+      duels_bridge_four_teams_wins?: number;
+      duels_bridge_teams_wins?: number;
+      duels_bridge_win_streak?: number;
+      duels_bridge_wins?: number;
+      duels_duels_division?: number;
+      duels_duels_traveller?: number;
+      duels_duels_win_streak?: number;
+      duels_duels_winner?: number;
+      duels_goals?: number;
+      duels_unique_map_wins?: number;
+      easter_throw_eggs?: number;
+      general_challenger?: number;
+      general_coins?: number;
+      general_quest_master?: number;
+      general_wins?: number;
+      gingerbread_banker?: number;
+      halloween2017_pumpkinator?: number;
+      paintball_coins?: number;
+      paintball_kill_streaks?: number;
+      paintball_kills?: number;
+      pit_contracts?: number;
+      pit_events?: number;
+      pit_gold?: number;
+      pit_kills?: number;
+      quake_coins?: number;
+      quake_headshots?: number;
+      quake_killing_sprees?: number;
+      quake_kills?: number;
+      quake_wins?: number;
+      skyblock_angler?: number;
+      skyblock_augmentation?: number;
+      skyblock_combat?: number;
+      skyblock_concoctor?: number;
+      skyblock_domesticator?: number;
+      skyblock_dungeoneer?: number;
+      skyblock_excavator?: number;
+      skyblock_gatherer?: number;
+      skyblock_harvester?: number;
+      skyblock_minion_lover?: number;
+      skyblock_slayer?: number;
+      skyblock_treasure_hunter?: number;
+      skyblock_treasury?: number;
+      skyblock_unique_gifts?: number;
+      skyclash_cards_unlocked?: number;
+      skywars_cages?: number;
+      skywars_heads?: number;
+      skywars_kills_solo?: number;
+      skywars_kills_team?: number;
+      skywars_kits_solo?: number;
+      skywars_kits_team?: number;
+      skywars_new_day_new_challenge?: number;
+      skywars_wins_lab?: number;
+      skywars_wins_solo?: number;
+      skywars_wins_team?: number;
+      skywars_you_re_a_star?: number;
+      summer_shopaholic?: number;
+      supersmash_hero_slayer?: number;
+      tntgames_block_runner?: number;
+      tntgames_tnt_banker?: number;
+      tntgames_tnt_triathlon?: number;
+      walls3_coins?: number;
+      walls3_guardian?: number;
+      walls3_jack_of_all_trades?: number;
+      walls3_rusher?: number;
+    }
+    /**
+     * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+     * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+     *
+     */
+    export interface PlayerAdventRewards {
+      [name: string]: number;
+    }
+    /**
+     * In addition to the all_time property, other properties may appear that have properties that start with "day_" but have the same schema as all_time.
+     *
+     */
+    export interface PlayerChallenges {
+      [name: string]: /**
+       * Each property key correlates with an ID from the /resources/challenges endpoint.
+       * For example, a key might be "ARCADE__farm_hunt_challenge"
+       *
+       */
+      PlayerChallengesObject;
+      all_time: /**
+       * Each property key correlates with an ID from the /resources/challenges endpoint.
+       * For example, a key might be "ARCADE__farm_hunt_challenge"
+       *
+       */
+      PlayerChallengesObject;
+    }
+    /**
+     * Each property key correlates with an ID from the /resources/challenges endpoint.
+     * For example, a key might be "ARCADE__farm_hunt_challenge"
+     *
+     */
+    export interface PlayerChallengesObject {
+      [name: string]: number;
+    }
+    export interface PlayerCompassStats {
+      compass?: PlayerCompassStatsChild;
+      npc?: PlayerCompassStatsChild;
+    }
+    export interface PlayerCompassStatsChild {
+      [name: string]: undefined | number;
+      arcade?: number;
+      arena?: number;
+      battleground?: number;
+      buildbattle?: number;
+      gingerbread?: number;
+      housing?: number;
+      hungergames?: number;
+      leveling?: number;
+      mainlobby?: number;
+      mcgo?: number;
+      miniwalls?: number;
+      paintball?: number;
+      prototype?: number;
+      quake?: number;
+      skyclash?: number;
+      skywars?: number;
+      speeduhc?: number;
+      supersmash?: number;
+      tntgames?: number;
+      truecombat?: number;
+      uhc?: number;
+      vampirez?: number;
+      walls?: number;
+      walls3?: number;
+    }
+    export interface PlayerCooldowns {
+      fun: {
+        event?: number;
+        events?: number;
+        event_scrambled?: number;
+        event_quickmaths?: number;
+        santaclaus?: number;
+        piano?: number;
+        whatsmyface?: number;
+      };
+    }
+    export interface PlayerEugene {
+      dailyTwoKExp: number;
+      weekly_booster?: number;
+    }
+    /**
+     * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+     * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+     *
+     */
+    export interface PlayerEventCooldown {
+      [name: string]: undefined | boolean;
+    }
+    export type PlayerFireworksStorage = {
+      colors: string;
+      fade_colors: string;
+      flight_duration: number;
+      selected: boolean;
+      shape?: string;
+      trail: boolean;
+      twinkle: boolean;
+    }[];
+    export interface PlayerFriendsData {
+      [name: string]: undefined | string[];
+      friendBlocksUuid?: string[];
+      friendRequests?: string[];
+      friendRequestsUuid?: string[];
+    }
     export interface PlayerGiftingMeta {
-      [name: string]: number | string[] | undefined;
-      realBundlesReceivedInc?: number;
       bundlesReceived?: number;
-      realBundlesReceived?: number;
-      giftsGiven?: number;
       bundlesGiven?: number;
-      realBundlesGiven?: number;
+      giftsGiven?: number;
       milestones?: string[];
+      realBundlesGiven?: number;
+      realBundlesReceived?: number;
+      realBundlesReceivedInc?: number;
+    }
+    export interface PlayerGuildData {
+      guildInvites?: string[];
+      guildKickReason?: string;
+      guildNotifications?: boolean;
+    }
+    /**
+     * Potentially has properties that follow format "given_cookies_NUMBER" which will be an array of strings.
+     */
+    export interface PlayerHousingMeta {
+      [name: string]:
+        | undefined
+        | string
+        | number
+        | boolean
+        | string[]
+        | PlayerHousingMetaPlayerSettings;
+      allowedBlocks?: string[];
+      firstHouseJoinMs?: number;
+      packages?: string[];
+      playerSettings?: PlayerHousingMetaPlayerSettings;
+      plotSize?: string;
+      tutorialStep?: string;
+      playlist?: string;
+      selectedChannels_v3?: string[];
+      purchasedSlots?: number;
+      toggle_BORDER?: boolean;
+      toggle_TIPS?: boolean;
+      visibilityDisabled?: boolean;
+    }
+    export interface PlayerHousingMetaPlayerSettings {
+      [name: string]: undefined | string | number;
+      VISIBILITY?: string;
+      BORDER?: string;
+      TIPS?: string;
+      customVisibility?: number;
+      YT_REPULSOR?: string;
+    }
+    export interface PlayerIndividualPetStats {
+      EXERCISE?: PlayerIndividualPetStatsCare;
+      HUNGER?: PlayerIndividualPetStatsCare;
+      THIRST?: PlayerIndividualPetStatsCare;
+      experience?: number;
+      name?: string;
+    }
+    export interface PlayerIndividualPetStatsCare {
+      timestamp: number;
+      value: number;
+    }
+    export interface PlayerInfoData {
+      _id: string;
+      uuid: string;
+      playername: string;
+      displayname: string;
+      firstLogin?: number;
+      lastLogin?: number;
+      lastLogout?: number;
+      knownAliases: string[];
+      knownAliasesLower: string[];
+      /**
+       * Timestamp of when the SkyBlock Century Cake was claimed.
+       */
+      claimed_century_cake?: number;
+      /**
+       * Timestamp of when the Potato Basket was claimed.
+       */
+      claimed_potato_basket?: number;
+      /**
+       * Timestamp of when the Potato Talisman was claimed.
+       */
+      claimed_potato_talisman?: number;
+      monthlyPackageRank?: string;
+      monthlyRankColor?: string;
+      newPackageRank?: string;
+      packageRank?: string;
+      rank?: string;
+      rankPlusColor?: string;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_NONE?: number;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_VIP?: number;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_VIP_PLUS?: number;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_MVP?: number;
+      /**
+       * Timestamp indicating when they purchased the rank.
+       */
+      levelUp_MVP_PLUS?: number;
+      lastClaimedReward?: number;
+      lastAdsenseGenerateTime?: number;
+      lastMapVote?: number;
+      mcVersionRp?: string;
+      mostRecentGameType?: string;
+      mostRecentMinecraftVersion?: number;
+      mostRecentMonthlyPackageRank?: string;
+      mostRecentlyThanked?: string;
+      mostRecentlyThankedUuid?: string;
+      mostRecentlyTipped?: string;
+      mostRecentlyTippedUuid?: string;
+      petConsumables?: /* This object describes the pet pet consumables the player has. Each property's key is the consumable name. e.g. "APPLE" or "WOOD_SWORD" */ PlayerPetConsumables;
+      petJourneyTimestamp?: number;
+      quickjoin_timestamp?: number;
+      quickjoin_uses?: number;
+      scorpius_bribe_96?: number;
+      testPass?: boolean;
+      watchdogBlockTimestamp?: number;
+    }
+    export interface PlayerMiscData {
+      aprilFoolsStaffClicked_0?: string[];
+      anniversaryNPCProgress2020?: number;
+      anniversaryNPCVisited2020?: number[];
+      SANTA_FINISHED?: boolean;
+      SANTA_QUEST_STARTED?: boolean;
+      compassStats?: PlayerCompassStats;
+      cooldowns?: PlayerCooldowns;
+      fireworksStorage?: PlayerFireworksStorage;
+      giftingMeta?: PlayerGiftingMeta;
+      housingMeta?: /* Potentially has properties that follow format "given_cookies_NUMBER" which will be an array of strings. */ PlayerHousingMeta;
+      vanityMeta?: PlayerVanityMeta;
+      flashingSaleClicks?: number;
+      flashingSaleOpens?: number;
+      flashingSalePoppedUp?: number;
+      flashingSalePopup?: number;
+      adventRewards2017?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards2018?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards_v2_2018?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards2019?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      adventRewards_v2_2019?: /**
+       * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
+       * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
+       *
+       */
+      PlayerAdventRewards;
+      christmas2019Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      summer2020Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      easter2020Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      easter2020Cooldowns2?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      halloween2016Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      halloween2020Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      holiday2016Cooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      specialtyCooldowns?: /**
+       * Event cooldown information where the property keys are a rank + number and the values are booleans. e.g. "NORMAL0" = "TRUE".
+       * The property keys on the player object generally follow the format "eventCooldowns" e.g. "halloween2020Cooldowns".
+       *
+       */
+      PlayerEventCooldown;
+      upcomingLanguageRelease_Korean?: /**
+       * An object describing what I assume to be testers who've logged in with a specific language.
+       *
+       */
+      PlayerUpcomingLanguageRelease;
+      upcomingLanguageRelease_Portuguese?: /**
+       * An object describing what I assume to be testers who've logged in with a specific language.
+       *
+       */
+      PlayerUpcomingLanguageRelease;
+      upcomingLanguageRelease_Russian?: /**
+       * An object describing what I assume to be testers who've logged in with a specific language.
+       *
+       */
+      PlayerUpcomingLanguageRelease;
+      plotResets?: PlayerPlotResets;
+    }
+    /**
+     * Each property is a month and year like "8-2019" and the value contains booleans indicating which reward tier was claimed.
+     */
+    export interface PlayerMonthlyCrates {
+      [name: string]: {
+        [name: string]: undefined | boolean;
+        REGULAR?: boolean;
+        VIP?: boolean;
+        VIP_PLUS?: boolean;
+        MVP?: boolean;
+        MVP_PLUS?: boolean;
+      };
+    }
+    export interface PlayerOutfit {
+      BOOTS?: string;
+      CHESTPLATE?: string;
+      HELMET?: string;
+      LEGGINGS?: string;
+    }
+    /**
+     * Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars".
+     */
+    export interface PlayerParkourCheckpointBests {
+      [name: string]: {
+        [name: string]: number;
+      };
+    }
+    /**
+     * Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars".
+     */
+    export interface PlayerParkourCompletions {
+      [name: string]: {
+        /**
+         * Timestamp of when this parkour was started.
+         */
+        timeStart: number;
+        /**
+         * Time in milliseconds that it took to complete the parkour.
+         */
+        timeTook: number;
+      }[];
+    }
+    /**
+     * This object describes the pet pet consumables the player has. Each property's key is the consumable name. e.g. "APPLE" or "WOOD_SWORD"
+     */
+    export interface PlayerPetConsumables {
+      [name: string]: number;
+    }
+    /**
+     * Each property key is the name of the pet the stats apply to.
+     */
+    export interface PlayerPetStats {
+      [name: string]: PlayerIndividualPetStats;
+    }
+    export interface PlayerPlotResets {
+      /**
+       * Timestamp of when the reset occurred.
+       */
+      time: number;
+      /**
+       * Minecraft UUID
+       */
+      uuid: string;
+    }
+    export interface PlayerQuestSettings {
+      autoActivate?: boolean;
+    }
+    /**
+     * An object which has properties which match quests described by the /resources/quests endpoint.
+     */
+    export interface PlayerQuests {
+      [
+        name: string
+      ]: /* Use this own object's key to find the quest from the /resources/quests endpoint in order to interpret this information. */ PlayerQuestsInfo;
+    }
+    /**
+     * Use this own object's key to find the quest from the /resources/quests endpoint in order to interpret this information.
+     */
+    export interface PlayerQuestsInfo {
+      active?: {
+        /**
+         * The property key is the objective name. e.g. "wins" or "2v2"
+         */
+        objectives: {
+          [name: string]: number | string;
+        };
+        started?: number;
+      };
+      completions?: {
+        time: number;
+      }[];
     }
     export interface PlayerResponse {
-      player: Player;
+      player: NullablePlayer;
+    }
+    export interface PlayerSettings {
+      [name: string]:
+        | undefined
+        | boolean
+        | string
+        | number
+        | {
+            [name: string]: string;
+          };
+      compass?: {
+        [name: string]: string;
+      };
+      allowFriendRequests?: boolean;
+      allowPartyRequests?: boolean;
+      autoSpawnPet?: boolean;
+      bloodVisibility?: boolean;
+      chatVisibility?: boolean;
+      duelInvitePrivacy?: string;
+      friendRequestPrivacy?: string;
+      legacyCompass?: boolean;
+      lobbySpeed?: boolean;
+      lobbyProtection?: boolean;
+      petVisibility?: boolean;
+      partyInvitePrivacy?: string;
+      privateMessageSounds?: boolean;
+      profanityLevel?: string;
+      profanityLevel_GUILD?: string;
+      profanityLevel_PARTY?: string;
+      profanityLevel_PM?: string;
+      spec_speed?: number;
+    }
+    export interface PlayerSettingsData {
+      language?: string;
+      autoDetectLanguage?: boolean;
+      auto_spawn_pet?: boolean;
+      battlePassGlowStatus?: boolean;
+      channel?: string;
+      chat?: boolean;
+      clock?: boolean;
+      collectibles_menu_sort?: string;
+      collectibles_menu_visibility_sort?: string;
+      combatTracker?: boolean;
+      currentClickEffect?: string;
+      currentCloak?: string;
+      currentEmote?: string;
+      currentGadget?: string;
+      currentHat?: string;
+      currentPet?: string;
+      customFilter?: string;
+      disableTipMessages?: boolean;
+      disguise?: string;
+      gadget?: string;
+      notifications?: boolean;
+      outfit?: PlayerOutfit;
+      onetime_achievement_menu_sort?: string;
+      onetime_achievement_menu_sort_completion_sort?: string;
+      particlePack?: string;
+      petActive?: boolean;
+      /**
+       * Particle pack, e.g. "note", "anger", "enchantment", etc.
+       */
+      pp?: string;
+      questSettings?: PlayerQuestSettings;
+      seeRequests?: boolean;
+      sendCerberusMessages?: boolean;
+      settings?: PlayerSettings;
+      skin?: PlayerSkin;
+      socialMedia?: PlayerSocialMedia;
+      spec_always_flying?: boolean;
+      spec_auto_teleport?: boolean;
+      spec_first_person?: boolean;
+      spectators_invisible?: boolean;
+      tiered_achievement_menu_sort?: string;
+      transformation?: string;
+      userLanguage?: string;
+      vanityFavorites?: string;
+      wardrobe?: string;
+    }
+    export interface PlayerSkin {
+      signature: string;
+      timeoutStart: number;
+      value: string;
+    }
+    export interface PlayerSocialMedia {
+      [name: string]: undefined | string | boolean | PlayerSocialMediaLinks;
+      DISCORD?: string;
+      HYPIXEL?: string;
+      INSTAGRAM?: string;
+      TWITCH?: string;
+      TWITTER?: string;
+      YOUTUBE?: string;
+      links: PlayerSocialMediaLinks;
+      prompt: boolean;
+    }
+    export interface PlayerSocialMediaLinks {
+      [name: string]: undefined | string;
+      DISCORD?: string;
+      HYPIXEL?: string;
+      INSTAGRAM?: string;
+      TWITCH?: string;
+      TWITTER?: string;
+      YOUTUBE?: string;
+    }
+    /**
+     * The player stats object contains statistics for individual game modes.
+     */
+    export interface PlayerStats {
+      [name: string]:
+        | undefined
+        | PlayerStatsGameMode
+        | PlayerStatsPit
+        | /* An object which properties describe each individual profile the player is a member of. */ PlayerStatsSkyBlock
+        | PlayerStatsWalls3
+        /**
+         * Housing stats, generally limited to layout items - either the layout_items property will exist or there may be a property in the format of "layout_items_UUID".
+         *
+         */
+        | PlayerStatsHousing;
+      Arcade?: PlayerStatsGameMode;
+      Arena?: PlayerStatsGameMode;
+      Battleground?: PlayerStatsGameMode;
+      Bedwars?: /* Stats for bedwars. */ PlayerStatsBedwars;
+      BuildBattle?: PlayerStatsGameMode;
+      Duels?: PlayerStatsGameMode;
+      GingerBread?: PlayerStatsGameMode;
+      HungerGames?: PlayerStatsGameMode;
+      Legacy?: PlayerStatsGameMode;
+      MCGO?: PlayerStatsGameMode;
+      MurderMystery?: PlayerStatsGameMode;
+      Paintball?: PlayerStatsGameMode;
+      Pit?: PlayerStatsPit;
+      Quake?: PlayerStatsGameMode;
+      SkyBlock?: /* An object which properties describe each individual profile the player is a member of. */ PlayerStatsSkyBlock;
+      SkyWars?: PlayerStatsGameMode;
+      SpeedUHC?: PlayerStatsGameMode;
+      SuperSmash?: PlayerStatsGameMode;
+      TNTGames?: PlayerStatsGameMode;
+      TrueCombat?: PlayerStatsGameMode;
+      UHC?: PlayerStatsGameMode;
+      VampireZ?: PlayerStatsGameMode;
+      Walls?: PlayerStatsGameMode;
+      Walls3?: PlayerStatsWalls3;
+      SkyClash?: PlayerStatsGameMode;
+      Housing?: /**
+       * Housing stats, generally limited to layout items - either the layout_items property will exist or there may be a property in the format of "layout_items_UUID".
+       *
+       */
+      PlayerStatsHousing;
+    }
+    /**
+     * Stats for bedwars.
+     */
+    export type PlayerStatsBedwars = PlayerStatsGameMode &
+      PlayerStatsBedwarsInfo &
+      PlayerStatsBedwarsStats;
+    /**
+     * These properties generally have to do with either settings, info (like coins, exp, items), and some universal stats.
+     *
+     * Some properties aren't listed but certain values can be expected based on the property's key.
+     *
+     * * Properties that have keys which start with "voted_" (e.g. voted_enderman) will be a boolean.
+     * * Properties that have keys which start with "quickjoin_uses_" (e.g. quickjoin_uses_Amazon) will be a number.
+     *
+     */
+    export interface PlayerStatsBedwarsInfo {
+      [name: string]:
+        | undefined
+        | number
+        | string
+        | boolean
+        | string[]
+        | PlayerStatsBedwarsPrivateGamesSettings;
+      chest_history?: string;
+      chest_history_new?: string[];
+      coins?: number;
+      Experience?: number;
+      Experience_new?: number;
+      Bedwars_openedChests?: number;
+      Bedwars_openedCommons?: number;
+      Bedwars_openedEpics?: number;
+      Bedwars_openedLegendaries?: number;
+      Bedwars_openedRares?: number;
+      activeBedDestroy?: string;
+      activeDeathCry?: string;
+      activeGlyph?: string;
+      activeIslandTopper?: string;
+      activeKillEffect?: string;
+      activeKillMessages?: string;
+      activeNPCSkin?: string;
+      activeProjectileTrail?: string;
+      activeSprays?: string;
+      activeVictoryDance?: string;
+      activeWoodType?: string;
+      favourites_1?: string;
+      favourites_2?: string;
+      first_join_7?: boolean;
+      understands_resource_bank?: boolean;
+      understands_streaks?: boolean;
+      privategames?: PlayerStatsBedwarsPrivateGamesSettings;
+    }
+    export interface PlayerStatsBedwarsPrivateGamesSettings {
+      bed_instabreak?: boolean;
+      disable_block_protection?: boolean;
+      event_time?: string;
+      health_buff?: string;
+      low_gravity?: boolean;
+      max_team_upgrades?: boolean;
+      no_diamonds?: boolean;
+      no_emeralds?: boolean;
+      one_hit_one_kill?: boolean;
+      respawn_time?: string;
+      speed?: string;
+    }
+    /**
+     * This interface lists keys that should be fairly common.
+     * All of these calls have variant specific values that get prepended by a game mode.
+     *
+     * ###  Modes
+     * * castle_
+     * * two_four_
+     * * four_three_
+     * * four_four_
+     * * eight_one_
+     * * eight_two_
+     * * tourney_bedwars4s_-1_
+     * * tourney_bedwars4s_0_
+     * * tourney_bedwars4s_1_
+     * * tourney_bedwars_two_four_0_
+     *
+     * #### Sub Modes
+     * * armed_
+     * * lucky_
+     * * no_void_
+     * * rush_
+     * * ultimate_
+     * * voidless_
+     *
+     * ### Explanation
+     *
+     * So aside from the base / default mode which this interface describes, you can find the stats for a specific game mode by joining the above values.
+     *
+     * For example, if you want the "wins_bedwars" value but for rush on four four you'd find that on the key "four_four_rush_wins_bedwars", if it exists.
+     *
+     */
+    export interface PlayerStatsBedwarsStats {
+      _items_purchased_bedwars?: number;
+      beds_broken_bedwars?: number;
+      beds_lost_bedwars?: number;
+      deaths_bedwars?: number;
+      diamond_resources_collected_bedwars?: number;
+      emerald_resources_collected_bedwars?: number;
+      entity_attack_deaths_bedwars?: number;
+      entity_attack_final_deaths_bedwars?: number;
+      entity_attack_final_kills_bedwars?: number;
+      entity_attack_kills_bedwars?: number;
+      entity_explosion_deaths_bedwars?: number;
+      entity_explosion_final_deaths_bedwars?: number;
+      entity_explosion_final_kills_bedwars?: number;
+      entity_explosion_kills_bedwars?: number;
+      fall_deaths_bedwars?: number;
+      fall_final_deaths_bedwars?: number;
+      fall_final_kills_bedwars?: number;
+      fall_kills_bedwars?: number;
+      final_deaths_bedwars?: number;
+      final_kills_bedwars?: number;
+      fire_deaths_bedwars?: number;
+      fire_final_deaths_bedwars?: number;
+      fire_tick_deaths_bedwars?: number;
+      fire_tick_final_deaths_bedwars?: number;
+      games_played_bedwars?: number;
+      gold_resources_collected_bedwars?: number;
+      iron_resources_collected_bedwars?: number;
+      items_purchased_bedwars?: number;
+      kills_bedwars?: number;
+      losses_bedwars?: number;
+      "permanent _items_purchased_bedwars"?: number;
+      permanent_items_purchased_bedwars?: number;
+      projectile_deaths_bedwars?: number;
+      projectile_final_deaths_bedwars?: number;
+      projectile_final_kills_bedwars?: number;
+      projectile_kills_bedwars?: number;
+      resources_collected_bedwars?: number;
+      suffocation_deaths_bedwars?: number;
+      void_deaths_bedwars?: number;
+      void_final_deaths_bedwars?: number;
+      void_final_kills_bedwars?: number;
+      void_kills_bedwars?: number;
+      wins_bedwars?: number;
+      winstreak?: number;
+    }
+    export interface PlayerStatsData {
+      adsense_tokens?: number;
+      networkExp?: number;
+      karma?: number;
+      coins?: number;
+      eulaCoins?: boolean;
+      kills?: number;
+      killstreaks?: number;
+      deaths?: number;
+      wins?: number;
+      fortuneBuff?: number;
+      gifts_grinch?: number;
+      hasTheHotPotato?: boolean;
+      main2017Tutorial?: boolean;
+      monthlycrates?: /* Each property is a month and year like "8-2019" and the value contains booleans indicating which reward tier was claimed. */ PlayerMonthlyCrates;
+      /**
+       * This property represents a version - e.g. "v0.75"
+       */
+      network_update_book?: string;
+      parkourCheckpointBests?: /* Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars". */ PlayerParkourCheckpointBests;
+      parkourCompletions?: /* Each property key describes the location of the parkour. e.g. "Prototype" or "Bedwars". */ PlayerParkourCompletions;
+      petStats?: /* Each property key is the name of the pet the stats apply to. */ PlayerPetStats;
+      rewardConsumed?: boolean;
+      rewardHighScore?: number;
+      rewardScore?: number;
+      rewardStreak?: number;
+      skyblock_free_cookie?: number;
+      shots_fired?: number;
+      snowball_fight_intro_2019?: boolean;
+      stats: /* The player stats object contains statistics for individual game modes. */ PlayerStats;
+      thanksReceived?: number;
+      thanksSent?: number;
+      timePlaying?: number;
+      totalDailyRewards?: number;
+      totalRewards?: number;
+      tourney?: /* Aside from the properties in the schema this object contains properties who's keys follow a format like "GAMEMODE_TYPE_NUMBER". e.g. "sw_insane_doubles_0". These fit the "PlayerTourneyGameData" schema. */ PlayerTourney;
+      tournamentTokens?: number;
+      vanityConvertedBoxToday?: number;
+      vanityFirstConvertedBox?: number;
+      voting?: PlayerVoting;
+      vanityTokens?: number;
+    }
+    export interface PlayerStatsGameMode {
+      [name: string]: undefined | number | boolean | string | string[];
+      packages?: string[];
+    }
+    /**
+     * Housing stats, generally limited to layout items - either the layout_items property will exist or there may be a property in the format of "layout_items_UUID".
+     *
+     */
+    export interface PlayerStatsHousing {
+      [name: string]: undefined | PlayerStatsHousingLayoutItems;
+      layout_items?: PlayerStatsHousingLayoutItems;
+    }
+    export interface PlayerStatsHousingLayoutItems {
+      [name: string]: string;
+    }
+    export interface PlayerStatsPit {
+      [name: string]:
+        | undefined
+        | number
+        | boolean
+        | string
+        | string[]
+        | PlayerStatsGameMode
+        | PlayerStatsPitProfile;
+      packages?: string[];
+      pit_stats_ptl?: PlayerStatsGameMode;
+      profile: PlayerStatsPitProfile;
+    }
+    export interface PlayerStatsPitProfile {
+      [name: string]:
+        | undefined
+        | null
+        | number
+        | boolean
+        | string
+        | string[]
+        | PlayerStatsPitProfileBounty[]
+        | PlayerStatsPitProfileContract
+        | PlayerStatsPitProfileContract[]
+        | PlayerStatsPitProfileEndedContract[]
+        | PlayerStatsPitProfileTransaction[]
+        | PlayerStatsPitProfileLeaderboardStats
+        | /* No properties known. */ PlayerStatsPitProfileOutgoingOffer[]
+        | PlayerStatsPitProfileInventory
+        | PlayerStatsPitProfilePrestige[]
+        | PlayerStatsPitProfileUnlock[]
+        | number[];
+      packages?: string[];
+      bounties?: PlayerStatsPitProfileBounty[];
+      cash?: number;
+      contract?: PlayerStatsPitProfileContract;
+      contract_choices?: PlayerStatsPitProfileContract[];
+      death_recaps?: PlayerStatsPitProfileInventory;
+      ended_contracts?: PlayerStatsPitProfileEndedContract[];
+      gold_transactions?: PlayerStatsPitProfileTransaction[];
+      hotbar_favorites?: number[];
+      inv_armor: PlayerStatsPitProfileInventory;
+      inv_contents: PlayerStatsPitProfileInventory;
+      inv_enderchest?: PlayerStatsPitProfileInventory;
+      item_stash?: PlayerStatsPitProfileInventory;
+      items_last_buy?: PlayerStatsPitProfileLastBoughtItems;
+      /**
+       * Timestamp.
+       */
+      last_contract?: number;
+      /**
+       * Timestamp.
+       */
+      last_midfight_disconnect?: number;
+      /**
+       * Timestamp.
+       */
+      last_save: number;
+      leaderboard_stats?: PlayerStatsPitProfileLeaderboardStats;
+      login_messages: string[];
+      outgoing_offers?: /* No properties known. */ PlayerStatsPitProfileOutgoingOffer[];
+      prestiges?: PlayerStatsPitProfilePrestige[];
+      /**
+       * Timestamp.
+       */
+      reconessence_day?: number;
+      renown?: number;
+      renown_unlocks?: PlayerStatsPitProfileUnlock[];
+      selected_killstreak_0?: string | null;
+      selected_killstreak_1?: string | null;
+      selected_killstreak_2?: string | null;
+      selected_killstreak_3?: string | null;
+      selected_perk_0?: string | null;
+      selected_perk_1?: string | null;
+      selected_perk_2?: string | null;
+      selected_perk_3?: string | null;
+      spire_stash_armor?: PlayerStatsPitProfileInventory;
+      spire_stash_inv?: PlayerStatsPitProfileInventory;
+      trade_timestamps?: number[];
+      /**
+       * Other properties of this type might appear with the key "unlocks_NUMBER" e.g. "unlocks_10"
+       */
+      unlocks?: PlayerStatsPitProfileUnlock[];
+      xp?: number;
+      zero_point_three_gold_transfer?: boolean;
+    }
+    export interface PlayerStatsPitProfileBounty {
+      amount: number;
+      issuer: string;
+      remainingTicks: number;
+      timestamp: number;
+    }
+    export interface PlayerStatsPitProfileContract {
+      [name: string]:
+        | undefined
+        | number
+        | string
+        | /* Property key is the type of requirement. */ PlayerStatsPitProfileContractRequirements;
+      chunk_of_viles_reward?: number;
+      completion_date: number;
+      difficulty: string;
+      progress: /* Property key is the type of requirement. */ PlayerStatsPitProfileContractRequirements;
+      remaining_ticks: number;
+      requirements: /* Property key is the type of requirement. */ PlayerStatsPitProfileContractRequirements;
+      gold_reward: number;
+      key: string;
+    }
+    /**
+     * Property key is the type of requirement.
+     */
+    export interface PlayerStatsPitProfileContractRequirements {
+      [name: string]: undefined | number;
+    }
+    export interface PlayerStatsPitProfileEndedContract {
+      [name: string]:
+        | undefined
+        | number
+        | string
+        | /* Property key is the type of requirement. */ PlayerStatsPitProfileContractRequirements;
+      chunk_of_viles_reward?: number;
+      completion_date: number;
+      difficulty: string;
+      progress: /* Property key is the type of requirement. */ PlayerStatsPitProfileContractRequirements;
+      remaining_ticks: number;
+      requirements: /* Property key is the type of requirement. */ PlayerStatsPitProfileContractRequirements;
+    }
+    export interface PlayerStatsPitProfileInventory {
+      data: number[];
+      type: number;
+    }
+    export interface PlayerStatsPitProfileLastBoughtItems {
+      [name: string]: number;
+    }
+    export interface PlayerStatsPitProfileLeaderboardStats {
+      [name: string]: number;
+    }
+    /**
+     * No properties known.
+     */
+    export interface PlayerStatsPitProfileOutgoingOffer {
+      [name: string]: unknown;
+    }
+    export interface PlayerStatsPitProfilePrestige {
+      index: number;
+      timestamp: number;
+      xp_on_prestige: number;
+    }
+    export interface PlayerStatsPitProfileTransaction {
+      amount: number;
+      timestamp: number;
+    }
+    export interface PlayerStatsPitProfileUnlock {
+      acquireDate: number;
+      key: string;
+      tier: number;
+    }
+    /**
+     * An object which properties describe each individual profile the player is a member of.
+     */
+    export interface PlayerStatsSkyBlock {
+      profiles: {
+        [name: string]: {
+          cute_name: string;
+          profile_id: string;
+        };
+      };
+    }
+    export interface PlayerStatsWalls3 {
+      [name: string]:
+        | undefined
+        | number
+        | boolean
+        | string
+        | string[]
+        | /* Each property key describes a class name. */ PlayerStatsWalls3Classes;
+      packages?: string[];
+      classes?: /* Each property key describes a class name. */ PlayerStatsWalls3Classes;
+    }
+    /**
+     * Each property key describes a class name.
+     */
+    export interface PlayerStatsWalls3Classes {
+      [name: string]: {
+        [name: string]: boolean | number;
+      };
+    }
+    export interface PlayerTaskData {
+      challenges?: /**
+       * In addition to the all_time property, other properties may appear that have properties that start with "day_" but have the same schema as all_time.
+       *
+       */
+      PlayerChallenges;
+      quests?: /* An object which has properties which match quests described by the /resources/quests endpoint. */ PlayerQuests;
+    }
+    /**
+     * Aside from the properties in the schema this object contains properties who's keys follow a format like "GAMEMODE_TYPE_NUMBER". e.g. "sw_insane_doubles_0". These fit the "PlayerTourneyGameData" schema.
+     */
+    export interface PlayerTourney {
+      [name: string]:
+        | undefined
+        | number
+        | string
+        | boolean
+        | {
+            [name: string]: number;
+          }
+        | PlayerTourneyGameData;
+      first_join_lobby?: number;
+      hide_purchased?: boolean;
+      playtime?: {
+        [name: string]: number;
+      };
+      shop_sort?: string;
+      total_tributes?: number;
+    }
+    export interface PlayerTourneyGameData {
+      claimed_ranking_reward?: number;
+      first_win?: number;
+      games_played?: number;
+      playtime?: number;
+      seenRPbook?: boolean;
+      tributes_earned?: number;
+    }
+    /**
+     * An object describing what I assume to be testers who've logged in with a specific language.
+     *
+     */
+    export interface PlayerUpcomingLanguageRelease {
+      logins: number;
+    }
+    export interface PlayerVanityMeta {
+      packages: string[];
+    }
+    export interface PlayerVoting {
+      [name: string]: undefined | number;
+      last_mcf?: number;
+      last_mcipl?: number;
+      last_mcmp?: number;
+      last_mcsl?: number;
+      last_mcsorg?: number;
+      last_minestatus?: number;
+      last_pact?: number;
+      last_pmc?: number;
+      last_topg?: number;
+      last_vote?: number;
+      secondary_mcf?: number;
+      secondary_mcipl?: number;
+      secondary_mcmp?: number;
+      secondary_mcsl?: number;
+      secondary_mcsorg?: number;
+      secondary_minestatus?: number;
+      secondary_pact?: number;
+      secondary_pmc?: number;
+      secondary_topg?: number;
+      total: number;
+      total_mcf?: number;
+      total_mcipl?: number;
+      total_mcmp?: number;
+      total_mcsl?: number;
+      total_mcsorg?: number;
+      total_minestatus?: number;
+      total_pact?: number;
+      total_pmc?: number;
+      total_topg?: number;
+      votesToday?: number;
     }
     export type QuestDataArray = {
       id: string;
@@ -1232,7 +2423,7 @@ export declare namespace Components {
      * Each property key is the collection's item, and the value is the XP.
      */
     export interface SkyBlockProfileCollection {
-      [name: string]: number | undefined;
+      [name: string]: undefined | number;
       BLAZE_ROD?: number;
       BONE?: number;
       CACTUS?: number;
@@ -1391,7 +2582,7 @@ export declare namespace Components {
     }
     export interface SkyBlockProfileDungeonJournal {
       journal_entries?: {
-        [name: string]: SkyBlockProfileDungeonJournalEntries | undefined;
+        [name: string]: undefined | SkyBlockProfileDungeonJournalEntries;
         expedition_volume_1?: SkyBlockProfileDungeonJournalEntries;
         expedition_volume_2?: SkyBlockProfileDungeonJournalEntries;
         karylles_diary?: SkyBlockProfileDungeonJournalEntries;
@@ -1652,40 +2843,40 @@ export declare namespace Components {
       visited_zones: string[];
     }
     export interface SkyBlockProfileObjective {
-      [name: string]: boolean | number | string | undefined;
+      [name: string]: undefined | boolean | number | string;
       completed_at: number;
       progress: number;
       status: string;
     }
     export interface SkyBlockProfileObjectives {
-      [name: string]: SkyBlockProfileObjective | undefined;
+      [name: string]: undefined | SkyBlockProfileObjective;
       chop_tree?: SkyBlockProfileObjective;
       collect_birch_logs?: SkyBlockProfileObjective;
       collect_clay?: SkyBlockProfileObjective;
       collect_dark_oak_logs?: SkyBlockProfileObjective;
       collect_diamond?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
         DIAMOND?: boolean;
       };
       collect_emerald?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
         EMERALD?: boolean;
       };
       collect_end_stone?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
         ENDER_STONE?: boolean;
       };
       collect_farm_animal_resources?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1694,7 +2885,7 @@ export declare namespace Components {
         RAW_CHICKEN?: boolean;
       };
       collect_farm_animal_resources_2?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1702,7 +2893,7 @@ export declare namespace Components {
         RABBIT?: boolean;
       };
       collect_farming_resources?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1712,7 +2903,7 @@ export declare namespace Components {
         PUMPKIN?: boolean;
       };
       collect_farming_resources_2?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1721,7 +2912,7 @@ export declare namespace Components {
         SUGAR_CANE?: boolean;
       };
       collect_ingots?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1729,7 +2920,7 @@ export declare namespace Components {
         IRON_INGOT?: boolean;
       };
       collect_lapis?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1737,7 +2928,7 @@ export declare namespace Components {
       };
       collect_log?: SkyBlockProfileObjective;
       collect_nether_resources?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1745,7 +2936,7 @@ export declare namespace Components {
         NETHER_STALK?: boolean;
       };
       collect_nether_resources_2?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -1754,21 +2945,21 @@ export declare namespace Components {
         QUARTZ?: boolean;
       };
       collect_obsidian?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
         OBSIDIAN?: boolean;
       };
       collect_redstone?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
         REDSTONE?: boolean;
       };
       collect_spider?: {
-        [name: string]: boolean | number | string | undefined;
+        [name: string]: undefined | boolean | number | string;
         completed_at: number;
         progress: number;
         status: string;
@@ -2008,7 +3199,7 @@ export declare namespace Components {
       status: string;
     }
     export interface SkyBlockProfileQuests {
-      [name: string]: SkyBlockProfileQuest | undefined;
+      [name: string]: undefined | SkyBlockProfileQuest;
       collect_log?: SkyBlockProfileQuest;
       explore_hub?: SkyBlockProfileQuest;
       explore_village?: SkyBlockProfileQuest;
@@ -2040,7 +3231,7 @@ export declare namespace Components {
      * The contents of their sacks.
      */
     export interface SkyBlockProfileSacksCounts {
-      [name: string]: number | undefined;
+      [name: string]: undefined | number;
       BLAZE_ROD?: number;
       BONE?: number;
       CACTUS?: number;
@@ -2117,17 +3308,17 @@ export declare namespace Components {
     }
     export interface SkyBlockProfileSlayerBoss {
       [name: string]:
-        | number
         | undefined
+        | number
         | {
-            [name: string]: boolean | undefined;
+            [name: string]: undefined | boolean;
           };
       boss_kills_tier_0?: number;
       boss_kills_tier_1?: number;
       boss_kills_tier_2?: number;
       boss_kills_tier_3?: number;
       claimed_levels: {
-        [name: string]: boolean | undefined;
+        [name: string]: undefined | boolean;
         level_1?: boolean;
         level_2?: boolean;
         level_3?: boolean;
@@ -2162,7 +3353,7 @@ export declare namespace Components {
       xp_on_last_follower_spawn?: number;
     }
     export interface SkyBlockProfileStats {
-      [name: string]: number | undefined;
+      [name: string]: undefined | number;
       auctions_bids?: number;
       auctions_bought_common?: number;
       auctions_bought_epic?: number;
@@ -3642,7 +4833,7 @@ export declare namespace Paths {
            * Whether or not the request succeeded.
            */
           success: boolean;
-          player: Components.Schemas.Player;
+          player: Components.Schemas.NullablePlayer;
         }
         export type $400 = Components.Responses.MissingFields;
         export type $403 = Components.Responses.Unauthorized;

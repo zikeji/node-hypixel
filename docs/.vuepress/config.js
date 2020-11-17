@@ -87,7 +87,9 @@ module.exports = config({
           icon: "helper",
           children: [
             "helpers/player-ranks",
-            "helpers/skyblock-item-data"
+            "helpers/network-level",
+            "helpers/bedwars-level-info",
+            "helpers/minecraft-item-data"
           ]
         },
         {

@@ -21,10 +21,6 @@ An unopinionated async/await API wrapper for [Hypixel's Public API][hypixel] dev
 
 The library aims to replicate the [Hypixel API][hypixel] as closely as possible, and as such won't alter the results, merely offering intellisense suggestions, rate-limit handling, and helpers.
 
-## Project Status
-
-Working on adding more helpers to make your life easier, but all other features are implemented and ready to go.
-
 ## Installation
 
 Use [npm](https://www.npmjs.com) to install this library.
@@ -48,52 +44,13 @@ const client = new Client("API_KEY");
 })();
 ```
 
-## Roadmap
-
-- [x] Add rate limiting support
-- [x] Add cache support
-- [x] Add method, typing, testing, and documentation for:
-  - [x] Boosters
-  - [x] Find Guild
-  - [x] Friends
-  - [x] Game Counts
-  - [x] Guild
-  - [x] Key
-  - [x] Leaderboards
-  - [x] Player
-  - [x] Player Count
-  - [x] Recent Games
-  - [x] **Resources**
-    - [x] Achievements
-    - [x] Challenges
-    - [x] Quests
-    - [x] **Guilds**
-      - [x] Achievements
-      - [x] Permissions
-    - [x] **SkyBlock**
-      - [x] Collections
-      - [x] Skills
-  - [x] **SkyBlock**
-    - [x] Auction
-    - [x] Auctions
-    - [x] Bazaar
-    - [x] News
-    - [x] Profile
-    - [x] Profiles
-  - [x] Status
-  - [x] Watchdog Stats
-- [ ] Add extended documentation, and helpers for:
-  - [ ] Player endpoint
-    - [ ] XP to network level
-    - [x] Rank info helper
-  - [ ] SkyBlock Profile endpoint
-    - [ ] collection amounts to collection tier
-    - [ ] skill xp to skill level
-
 ## Contributing
 If some API result isn't documented / typed out fully, please open an issue and I can add it ASAP. Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 All changes must ensure they pass eslint, tests, and that testing is updated to meet or exceed the previous coverage.
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+## Licenses
+
+This projected is licensed under the MIT license. For additional details see [LICENSE](LICENSE).
+
+This library contains derivative work based on classes from the [hypixel-php](https://github.com/Plancke/hypixel-php) library. Code that is derivative work of [hypixel-php](https://github.com/Plancke/hypixel-php) will be marked as such with a header comment. See [LICENSE-HYPIXEL-PHP.md](LICENSE-HYPIXEL-PHP.md) for additional details on the original license.
