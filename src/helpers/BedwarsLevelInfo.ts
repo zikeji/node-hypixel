@@ -18,7 +18,6 @@ enum BEDWARS_LEVEL_CONSTANTS {
   XPP = 96 * 5000 + 7000,
   LPP = 100,
   HP = 10,
-  HPXLPP = (() => BEDWARS_LEVEL_CONSTANTS.HP * BEDWARS_LEVEL_CONSTANTS.LPP)(),
 }
 
 export interface BedwarsLevelInfo {
@@ -51,18 +50,10 @@ export function getBedwarsLevelInfo(
     currentExp - prestiges * BEDWARS_LEVEL_CONSTANTS.XPP;
   for (let i = 1; i <= BEDWARS_LEVEL_CONSTANTS.EL; i += 1) {
     let elExp = 500;
-    let rL: number;
-    if (i > BEDWARS_LEVEL_CONSTANTS.HPXLPP) {
-      rL = i - BEDWARS_LEVEL_CONSTANTS.HPXLPP;
-    } else {
-      rL = i % BEDWARS_LEVEL_CONSTANTS.LPP;
-    }
+    const rL = i % BEDWARS_LEVEL_CONSTANTS.LPP;
 
     for (let ii = 0; ii < rL; ii += 1) {
       elExp += ii * 500;
-      if (elExp >= 5000) {
-        elExp = 5000;
-      }
     }
 
     if (expWithoutPrestiges < elExp) {

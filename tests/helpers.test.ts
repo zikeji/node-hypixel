@@ -3,6 +3,7 @@
 import { expect } from "chai";
 import {
   Components,
+  getBedwarsLevelInfo,
   getExpToNetworkLevel,
   getNetworkLevel,
   getPlayerRank,
@@ -448,5 +449,135 @@ describe("Test getExpToNetworkLevel with float", function () {
     expect(getExpToNetworkLevel(13.37))
       .to.be.a("number")
       .that.equals(299799.99999999994);
+  });
+});
+
+describe("Test getBedwarsLevelInfo", function () {
+  it("should return prestige 0", function () {
+    const levelInfo = getBedwarsLevelInfo({
+      stats: { Bedwars: { Experience_new: 0 } },
+    } as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(0);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(0);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("None");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§7");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("AAAAAA");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(0);
+  });
+  it("should return prestige 1", function () {
+    const levelInfo = getBedwarsLevelInfo({
+      stats: { Bedwars: { Experience: null, Experience_new: 615361 } },
+    } as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(128);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(1);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Iron");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§f");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("FFFFFF");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(28);
+  });
+  it("should return prestige 2", function () {
+    const levelInfo = getBedwarsLevelInfo(1075728);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(222);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(2);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Gold");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§6");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("FFAA00");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(22);
+  });
+  it("should return prestige 3", function () {
+    const levelInfo = getBedwarsLevelInfo(1515127);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(313);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(3);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Diamond");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§b");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("55FFFF");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(13);
+  });
+  it("should return prestige 4", function () {
+    const levelInfo = getBedwarsLevelInfo(2126213);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(438);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(4);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Emerald");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§2");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("00AA00");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(38);
+  });
+  it("should return prestige 5", function () {
+    const levelInfo = getBedwarsLevelInfo(2441234);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(503);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(5);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Sapphire");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§3");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("00AAAA");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(3);
+  });
+  it("should return prestige 6", function () {
+    const levelInfo = getBedwarsLevelInfo(3172582);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(652);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(6);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Ruby");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§4");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("AA0000");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(52);
+  });
+  it("should return prestige 7", function () {
+    const levelInfo = getBedwarsLevelInfo(3511245);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(723);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(7);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Crystal");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§d");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("FF55FF");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(23);
+  });
+  it("should return prestige 8", function () {
+    const levelInfo = getBedwarsLevelInfo(4321000);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(887);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(8);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Opal");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§9");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("5555FF");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(87);
+  });
+  it("should return prestige 9", function () {
+    const levelInfo = getBedwarsLevelInfo(4567890);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(939);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(9);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Amethyst");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§5");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("AA00AA");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(39);
+  });
+  it("should return prestige 10", function () {
+    const levelInfo = getBedwarsLevelInfo({
+      stats: { Bedwars: { Experience: 7273056 } },
+    } as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(1493);
+    expect(levelInfo.prestige).to.be.a("number").that.equals(10);
+    expect(levelInfo.prestigeName).to.be.a("string").that.equals("Rainbow");
+    expect(levelInfo.prestigeColor).to.be.a("string").that.equals("§f");
+    expect(levelInfo.prestigeColorHex).to.be.a("string").that.equals("FFFFFF");
+    expect(levelInfo.levelInCurrentPrestige).to.be.a("number").that.equals(493);
+  });
+  it("should throw typeError", function () {
+    try {
+      getBedwarsLevelInfo({
+        stats: {},
+      } as never);
+    } catch (e) {
+      expect(e.message).to.equal(
+        "Data supplied does not contain player Bedwars experience."
+      );
+    }
   });
 });
