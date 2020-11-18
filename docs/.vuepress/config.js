@@ -70,7 +70,7 @@ module.exports = config({
         ]
       },
     ],
-    pageInfo: ["Category", "Tag"],
+    pageInfo: ["Author", "Category", "Tag"],
     sidebar: {
       "/guide/": [
         {
@@ -134,30 +134,7 @@ module.exports = config({
     }
   },
   plugins: [
-    [
-      "vuepress-plugin-typedoc",
-      {
-        mode: "file",
-        inputFiles: ["src/"],
-        out: "ts-api",
-        readme: "none",
-        categoryOrder: ["Public", "*", "Custom", "Other"],
-        toc: [
-          "Classes",
-          "Interfaces"
-        ],
-        excludeExternals: true,
-        excludeNotExported: true,
-        excludePrivate: true,
-        excludeProtected: true,
-        stripInternal: true,
-        sidebar: {
-          fullNames: false,
-          parentCategory: "none",
-        },
-        plugin: ["typedoc-plugin-no-inherit"],
-      },
-    ],
     require("./plugins/pages"),
+    require("./plugins/typedoc"),
   ],
 });
