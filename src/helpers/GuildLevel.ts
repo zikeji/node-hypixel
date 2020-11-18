@@ -9,6 +9,9 @@
 
 import { Components } from "../types/api";
 
+/**
+ * Describes the results of the {@link getGuildLevel} output object.
+ */
 export interface GuildLevel {
   level: number;
   preciseLevel: number;
@@ -18,6 +21,7 @@ export interface GuildLevel {
   remainingExpToNextLevel: number;
 }
 
+/** @internal */
 const EXP_NEEDED = [
   100000,
   150000,
@@ -39,6 +43,7 @@ const EXP_NEEDED = [
 /**
  * Calculates the guild level and returns a {@link GuildLevel} interface.
  * @param data The guild object or the raw EXP number.
+ * @category Helper
  */
 export function getGuildLevel(
   data: Components.Schemas.Guild | number

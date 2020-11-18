@@ -1,3 +1,6 @@
+/**
+ * An enum describing color names and their Minecraft format variants.
+ */
 export enum MinecraftFormatting {
   BLACK = "§0",
   DARK_BLUE = "§1",
@@ -23,6 +26,9 @@ export enum MinecraftFormatting {
   MAGIC = "§k",
 }
 
+/**
+ * An enum that'll let you you get a hex color code for a specific Minecraft color formatting sequence.
+ */
 export enum MinecraftColorAsHex {
   "§0" = "000000",
   "§1" = "0000AA",
@@ -42,7 +48,14 @@ export enum MinecraftColorAsHex {
   "§f" = "FFFFFF",
 }
 
+/** @internal */
 const REMOVE_FORMATTING_REGEX = /§[0-9a-flmnokr]/gi;
+
+/**
+ * This helper will take a string and remove any of Minecraft's formatting sequence. Useful when parsing item lore or similar elements.
+ * @param value Any string with minecraft formatting.
+ * @category Helper
+ */
 export function removeMinecraftFormatting(value: string): string {
   return value.replace(REMOVE_FORMATTING_REGEX, "");
 }

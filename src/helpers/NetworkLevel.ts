@@ -9,6 +9,9 @@
 
 import { Components } from "../types/api";
 
+/**
+ * Describes the results from a {@link getNetworkLevel} function call.
+ */
 export interface NetworkLevel {
   level: number;
   preciseLevel: number;
@@ -18,6 +21,7 @@ export interface NetworkLevel {
   remainingExpToNextLevel: number;
 }
 
+/** @internal */
 enum NETWORK_LEVEL_CONSTANTS {
   START = 10000,
   GROWTH = 2500,
@@ -27,7 +31,12 @@ enum NETWORK_LEVEL_CONSTANTS {
   IPQP = (() => NETWORK_LEVEL_CONSTANTS.RPQP * NETWORK_LEVEL_CONSTANTS.RPQP)(),
 }
 
-export function getExpToNetworkLevel(level: number): number {
+/**
+ * Calculates the total EXP required for a specific network level.
+ * @param level Level you're getting the EXP required for. Can be a float or an integer.
+ * @category Helper
+ */
+export function getExpFromNetworkLevel(level: number): number {
   const flooredLevel = Math.floor(level);
   const expToFlooredLevel =
     (NETWORK_LEVEL_CONSTANTS.GROWTH * 0.5 * (flooredLevel - 2) +
@@ -37,7 +46,8 @@ export function getExpToNetworkLevel(level: number): number {
     return expToFlooredLevel;
   }
   return (
-    (getExpToNetworkLevel(flooredLevel + 1) - expToFlooredLevel) * (level % 1) +
+    (getExpFromNetworkLevel(flooredLevel + 1) - expToFlooredLevel) *
+      (level % 1) +
     expToFlooredLevel
   );
 }
@@ -45,6 +55,7 @@ export function getExpToNetworkLevel(level: number): number {
 /**
  * Calculates the network level and returns a {@link NetworkLevel} interface.
  * @param data The player object or the raw EXP number.
+ * @category Helper
  */
 export function getNetworkLevel(
   data: Components.Schemas.Player | number
@@ -64,8 +75,8 @@ export function getNetworkLevel(
           (2 / NETWORK_LEVEL_CONSTANTS.GROWTH) * currentExp
       )
   );
-  const expToLevel = getExpToNetworkLevel(level);
-  const nextLevelExp = getExpToNetworkLevel(level + 1);
+  const expToLevel = getExpFromNetworkLevel(level);
+  const nextLevelExp = getExpFromNetworkLevel(level + 1);
   const expToNextLevel = nextLevelExp - expToLevel;
   const expInCurrentLevel = currentExp - expToLevel;
   const remainingExpToNextLevel = nextLevelExp - currentExp;
