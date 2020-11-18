@@ -1,15 +1,13 @@
 const { readFileSync } = require("fs");
 const { resolve } = require("path");
 
-/**
- * @type {import('@mr-hope/vuepress-types/types/plugin').PluginOptionAPI}
- */
+/** @type {import('@mr-hope/vuepress-types/types/plugin').PluginOptionAPI} */
 module.exports = {
   name: "pages-plugin",
   additionalPages: [
     {
       path: "/",
-      filePath: resolve(__dirname, "../", "../", "../", "README.md"),
+      content: readFileSync(resolve(__dirname, "..", "..", "..", "README.md"), "utf-8"),
       frontmatter: {
         home: true,
         sidebar: "auto",
@@ -41,31 +39,43 @@ module.exports = {
     },
     {
       path: "/changelog/",
-      filePath: resolve(__dirname, "../", "../", "../", "CHANGELOG.md"),
+      content: [
+        "---",
+        "sidebar: \"auto\"",
+        "sidebarDepth: 1",
+        "---",
+        ...(
+          readFileSync(resolve(__dirname, "..", "..", "..", "CHANGELOG.md"), "utf-8").split("\n").map((line) => {
+            if (/#{3}\s\[\d+\.\d+\.\d+\]/.test(line)) {
+              line = line.slice(1);
+            }
+            const headerMatches = /(#{3,})\s(.*)/.exec(line);
+            if (headerMatches) {
+              const h = `h${headerMatches[1].length}`;
+              const title = headerMatches[2];
+              line = `<${h}>${title}</${h}>`;
+            }
+            return line;
+          })
+        )
+      ].join("\n"),
       frontmatter: {
         sidebar: "auto"
       }
     },
     {
       permalink: "/LICENSE.html",
-      content: readFileSync(resolve(__dirname, "../", "../", "../", "LICENSE")),
+      content: readFileSync(resolve(__dirname, "..", "..", "..", "LICENSE"), "utf-8"),
       frontmatter: {
         sidebar: false
       }
     },
     {
       permalink: "/LICENSE-HYPIXEL-PHP.html",
-      filePath: resolve(__dirname, "../", "../", "../", "LICENSE-HYPIXEL-PHP.md"),
+      content: readFileSync(resolve(__dirname, "..", "..", "..", "LICENSE-HYPIXEL-PHP.md"), "utf-8"),
       frontmatter: {
         sidebar: false
       }
     },
   ],
-  extendPageData($page) {
-    switch ($page.path) {
-      case "/changelog/":
-        $page.headers = $page.headers.filter(h => h.level <= 1 || h.title.match(/^\d+\.\d+\.\d+$/));
-        break;
-    }
-  }
-}
+};
