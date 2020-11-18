@@ -190,6 +190,148 @@ export declare namespace Components {
         battleground: ChallengeData;
       };
     }
+    export interface Guild {
+      _id: string;
+      achievements: GuildAchievements;
+      banner?: GuildBanner;
+      chatMute?: number;
+      coins: number;
+      coinsEver: number;
+      created: number;
+      description?: string | null;
+      exp: number;
+      guildExpByGameType: /**
+       * Earned guild exp in each game mode, where the property key is the gamemode and the value is the exp.
+       * Most of the properties in the schema always show up, however in some instances they were absent. Additional unlisted properties can be assumed to be numbers.
+       *
+       */
+      GuildExpByGameType;
+      hideGmTag?: boolean;
+      joinable?: boolean;
+      legacyRanking?: number;
+      members: GuildMember[];
+      name: string;
+      name_lower: string;
+      preferredGames?: string[];
+      publiclyListed?: boolean;
+      ranks: GuildRank[];
+      tag?: string;
+      tagColor?: string;
+    }
+    export interface GuildAchievements {
+      WINNERS: number;
+      EXPERIENCE_KINGS: number;
+      ONLINE_PLAYERS: number;
+    }
+    export interface GuildBanner {
+      Base: number | string;
+      Patterns: {
+        Color: number | string;
+        Pattern: string;
+      }[];
+    }
+    /**
+     * Earned guild exp in each game mode, where the property key is the gamemode and the value is the exp.
+     * Most of the properties in the schema always show up, however in some instances they were absent. Additional unlisted properties can be assumed to be numbers.
+     *
+     */
+    export interface GuildExpByGameType {
+      [name: string]: undefined | number;
+      ARCADE?: number;
+      ARENA?: number;
+      BATTLEGROUND?: number;
+      BEDWARS?: number;
+      BUILD_BATTLE?: number;
+      DUELS?: number;
+      GINGERBREAD?: number;
+      HOUSING?: number;
+      LEGACY?: number;
+      MCGO?: number;
+      MURDER_MYSTERY?: number;
+      PAINTBALL?: number;
+      PIT?: number;
+      PROTOTYPE?: number;
+      QUAKECRAFT?: number;
+      REPLAY?: number;
+      SKYBLOCK?: number;
+      SKYWARS?: number;
+      SPEED_UHC?: number;
+      SUPER_SMASH?: number;
+      SURVIVAL_GAMES?: number;
+      TNTGAMES?: number;
+      UHC?: number;
+      VAMPIREZ?: number;
+      WALLS?: number;
+      WALLS3?: number;
+    }
+    export interface GuildMember {
+      /**
+       * Property keys are the date in the format YYYY-MM-DD, and the value is how much guild exp they earned on that date.
+       *
+       * Stores the last 7 days, so you can expect at maximum 7 properties on this exp history object.
+       *
+       * Example:
+       * ```typescript
+       * console.log(guild.members[0].expHistory['2020-11-17']);
+       * // output:
+       * 163214
+       * ```
+       *
+       */
+      expHistory: {
+        [name: string]: number;
+      };
+      /**
+       * Timestamp of when this guild member joined the guild.
+       */
+      joined: number;
+      /**
+       * If they have been muted in guild chat, this is the timestamp of when they're unmuted.
+       */
+      mutedTill?: number;
+      /**
+       * Old value describing the member's username. This is not used anymore and rarely shows up as a valid property.
+       */
+      name?: string;
+      questParticipation?: number;
+      /**
+       * The name of their rank, it may match the name of a rank in the rank object - otherwise they may be unranked / the GM (GM ranks are usually "GUILDMASTER" or "Guild Master")
+       */
+      rank: string;
+      /**
+       * Minecraft UUID of the guild memeber.
+       */
+      uuid: string;
+    }
+    export interface GuildRank {
+      /**
+       * Timestamp of the rank creation.
+       */
+      created: number;
+      /**
+       * Whether or not this the default rank players receive upon joining.
+       */
+      default?: boolean;
+      /**
+       * Name of the rank.
+       */
+      name: string;
+      /**
+       * Rank priority from lowest to highest.
+       */
+      priority: number;
+      /**
+       * Rank tag (short version of rank name or whatever else the guildmaster wants it to be).
+       */
+      tag?: string | null;
+    }
+    export interface GuildResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      guild: Guild | null;
+    }
     export interface GuildsAchievementsResourceResponse {
       /**
        * Whether or not the request succeeded.
@@ -4503,246 +4645,7 @@ export declare namespace Paths {
         Parameters.Name;
       }
       namespace Responses {
-        export interface $200 {
-          /**
-           * Whether or not the request succeeded.
-           */
-          success: boolean;
-          /**
-           * example:
-           * {
-           *   "guild": {
-           *     "_id": "553490650cf26f12ae5bac8f",
-           *     "name": "Mini Squid",
-           *     "coins": 425310,
-           *     "coinsEver": 1835310,
-           *     "created": 1429508197967,
-           *     "members": [
-           *       {
-           *         "uuid": "20934ef9488c465180a78f861586b4cf",
-           *         "rank": "GUILDMASTER",
-           *         "joined": 1429508197967,
-           *         "questParticipation": 139,
-           *         "expHistory": {
-           *           "2020-11-06": 2226,
-           *           "2020-11-05": 0,
-           *           "2020-11-04": 4059,
-           *           "2020-11-03": 0,
-           *           "2020-11-02": 1102,
-           *           "2020-11-01": 0,
-           *           "2020-10-31": 0
-           *         }
-           *       },
-           *       {
-           *         "uuid": "6a12d6f63e134c8bbebc70d90a797281",
-           *         "rank": "Famous",
-           *         "joined": 1518021755919,
-           *         "questParticipation": 325,
-           *         "expHistory": {
-           *           "2020-11-06": 0,
-           *           "2020-11-05": 0,
-           *           "2020-11-04": 0,
-           *           "2020-11-03": 2399,
-           *           "2020-11-02": 758,
-           *           "2020-11-01": 4309,
-           *           "2020-10-31": 740
-           *         }
-           *       },
-           *       {
-           *         "uuid": "a99d9661fe2d4594a6b3d910c85cc4a4",
-           *         "rank": "MEMBER",
-           *         "joined": 1530770040736,
-           *         "questParticipation": 800,
-           *         "expHistory": {
-           *           "2020-11-06": 0,
-           *           "2020-11-05": 0,
-           *           "2020-11-04": 0,
-           *           "2020-11-03": 0,
-           *           "2020-11-02": 0,
-           *           "2020-11-01": 0,
-           *           "2020-10-31": 0
-           *         }
-           *       },
-           *       {
-           *         "uuid": "8a8bcd44c2034281a008ff7a1e0ead2f",
-           *         "rank": "MEMBER",
-           *         "joined": 1532204533230,
-           *         "questParticipation": 634,
-           *         "expHistory": {
-           *           "2020-11-06": 0,
-           *           "2020-11-05": 0,
-           *           "2020-11-04": 0,
-           *           "2020-11-03": 0,
-           *           "2020-11-02": 0,
-           *           "2020-11-01": 0,
-           *           "2020-10-31": 0
-           *         }
-           *       }
-           *     ],
-           *     "tag": "§a1§e2§c3§7",
-           *     "banner": {
-           *       "Base": 15,
-           *       "Patterns": [
-           *         {
-           *           "Pattern": "bo",
-           *           "Color": 9
-           *         },
-           *         {
-           *           "Pattern": "bri",
-           *           "Color": 5
-           *         }
-           *       ]
-           *     },
-           *     "achievements": {
-           *       "WINNERS": 1080,
-           *       "EXPERIENCE_KINGS": 316804,
-           *       "ONLINE_PLAYERS": 125
-           *     },
-           *     "exp": 274641340,
-           *     "legacyRanking": 2891,
-           *     "ranks": [
-           *       {
-           *         "name": "Famous",
-           *         "default": false,
-           *         "tag": "F",
-           *         "created": 1562382958149,
-           *         "priority": 3
-           *       },
-           *       {
-           *         "name": "Member",
-           *         "default": true,
-           *         "tag": null,
-           *         "created": 1562383012859,
-           *         "priority": 2
-           *       },
-           *       {
-           *         "name": "Big Nerd",
-           *         "default": false,
-           *         "tag": "B",
-           *         "created": 1588882422793,
-           *         "priority": 7
-           *       },
-           *       {
-           *         "name": "Notorious Nerd",
-           *         "default": false,
-           *         "tag": "NERD",
-           *         "created": 1588882818050,
-           *         "priority": 5
-           *       }
-           *     ],
-           *     "name_lower": "mini squid",
-           *     "chatMute": 0,
-           *     "preferredGames": [
-           *       "SKYWARS"
-           *     ],
-           *     "publiclyListed": true,
-           *     "tagColor": "GRAY",
-           *     "guildExpByGameType": {
-           *       "DUELS": 25270418,
-           *       "BUILD_BATTLE": 10772932,
-           *       "HOUSING": 22601152,
-           *       "GINGERBREAD": 888064,
-           *       "SURVIVAL_GAMES": 3504037,
-           *       "WALLS": 1472671,
-           *       "TNTGAMES": 7419981,
-           *       "QUAKECRAFT": 857167,
-           *       "MCGO": 1245579,
-           *       "ARENA": 300356,
-           *       "VAMPIREZ": 1497562,
-           *       "BEDWARS": 127334623,
-           *       "SKYWARS": 111325349,
-           *       "MURDER_MYSTERY": 8704331,
-           *       "SUPER_SMASH": 308906,
-           *       "SPEED_UHC": 311651,
-           *       "PIT": 0,
-           *       "SKYBLOCK": 0,
-           *       "BATTLEGROUND": 897997,
-           *       "UHC": 12670118,
-           *       "ARCADE": 10589782,
-           *       "PROTOTYPE": 206060467,
-           *       "LEGACY": 0,
-           *       "REPLAY": 0,
-           *       "WALLS3": 3467841,
-           *       "PAINTBALL": 429708
-           *     }
-           *   }
-           * }
-           */
-          guild: {
-            _id: string;
-            name: string;
-            coins: number;
-            coinsEver: number;
-            created: number;
-            members: {
-              uuid: string;
-              rank: string;
-              joined: number;
-              questParticipation?: number;
-              expHistory: {
-                [name: string]: number;
-              };
-              mutedTill?: number;
-            }[];
-            tag: string;
-            banner?: {
-              Base: number | string;
-              Patterns: {
-                Pattern: string;
-                Color: number | string;
-              }[];
-            };
-            achievements: {
-              WINNERS: number;
-              EXPERIENCE_KINGS: number;
-              ONLINE_PLAYERS: number;
-            };
-            exp: number;
-            legacyRanking?: number;
-            ranks: {
-              name: string;
-              default: boolean;
-              tag: string | null;
-              created: number;
-              priority: number;
-            }[];
-            name_lower: string;
-            chatMute?: number;
-            preferredGames?: string[];
-            publiclyListed: boolean;
-            tagColor: string;
-            guildExpByGameType: {
-              DUELS: number;
-              BUILD_BATTLE: number;
-              HOUSING: number;
-              GINGERBREAD: number;
-              SURVIVAL_GAMES: number;
-              WALLS: number;
-              TNTGAMES: number;
-              QUAKECRAFT: number;
-              MCGO: number;
-              ARENA: number;
-              VAMPIREZ: number;
-              BEDWARS: number;
-              SKYWARS: number;
-              MURDER_MYSTERY: number;
-              SUPER_SMASH: number;
-              SPEED_UHC: number;
-              PIT: number;
-              SKYBLOCK: number;
-              BATTLEGROUND: number;
-              UHC: number;
-              ARCADE: number;
-              PROTOTYPE: number;
-              LEGACY: number;
-              REPLAY: number;
-              WALLS3: number;
-              PAINTBALL: number;
-            };
-            joinable?: boolean;
-            description?: string;
-          } | null;
-        }
+        export type $200 = Components.Schemas.GuildResponse;
         export type $400 = Components.Schemas.ApiError;
         export type $403 = Components.Responses.Unauthorized;
         export type $422 = Components.Schemas.ApiError;

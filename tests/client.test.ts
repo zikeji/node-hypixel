@@ -201,91 +201,122 @@ describe("Get guild by id", function () {
   CheckMeta(() => results[2]);
   it("required keys should exist", function () {
     for (const guild of results) {
-      expect(guild).to.be.an("object");
-      if (!guild) throw new Error("no guild returned");
       expect(guild._id).to.be.a("string");
-      expect(guild.achievements).to.be.a("object");
-      expect(guild.achievements.EXPERIENCE_KINGS).to.be.a("number");
-      expect(guild.achievements.ONLINE_PLAYERS).to.be.a("number");
-      expect(guild.achievements.WINNERS).to.be.a("number");
+      const achievements = guild.achievements;
+      expect(achievements).to.be.an("object");
+      expect(achievements.WINNERS).to.be.a("number");
+      expect(achievements.EXPERIENCE_KINGS).to.be.a("number");
+      expect(achievements.ONLINE_PLAYERS).to.be.a("number");
       if (guild.banner) {
-        expect(guild.banner).to.be.a("object");
-        expect(guild.banner.Base).to.satisfy(function (base: number | string) {
-          return typeof base === "number" || typeof base === "string";
+        const banner = guild.banner;
+        expect(banner).to.be.an("object");
+        expect(banner.Base).to.satisfy(function (val: number | string) {
+          return typeof val === "number" || typeof val === "string";
         });
-        expect(guild.banner.Patterns).to.be.a("array");
-        for (const pattern of guild.banner.Patterns) {
-          expect(pattern.Color).to.satisfy(function (color: number | string) {
-            return typeof color === "number" || typeof color === "string";
+        expect(banner.Patterns).to.be.an("array");
+        for (const pattern of banner.Patterns) {
+          expect(pattern.Color).to.satisfy(function (val: number | string) {
+            return typeof val === "number" || typeof val === "string";
           });
           expect(pattern.Pattern).to.be.a("string");
         }
       }
-      if (guild.chatMute) expect(guild.chatMute).to.be.a("number");
+      if (guild.chatMute) {
+        expect(guild.chatMute).to.be.a("number");
+      }
       expect(guild.coins).to.be.a("number");
       expect(guild.coinsEver).to.be.a("number");
       expect(guild.created).to.be.a("number");
-      if (guild.description) expect(guild.description).to.be.a("string");
-      expect(guild.exp).to.be.a("number");
-      expect(guild.guildExpByGameType).to.be.a("object");
-      for (const gameType of Object.keys(guild.guildExpByGameType)) {
-        expect(
-          guild.guildExpByGameType[
-            gameType as keyof typeof guild.guildExpByGameType
-          ]
-        ).to.be.a("number");
+      expect(new Date(guild.created).getFullYear()).to.be.greaterThan(2010);
+      if (typeof guild.description !== "undefined") {
+        expect(guild.description).to.satisfy(function (val: string | null) {
+          return typeof val === "string" || val === null;
+        });
       }
-      if (guild.joinable) expect(guild.joinable).to.be.a("boolean");
-      if (guild.legacyRanking) expect(guild.legacyRanking).to.be.a("number");
-      expect(guild.members).to.be.an("array");
-      for (const member of guild.members) {
-        expect(member.expHistory).to.be.an("object");
-        for (const date of Object.keys(member.expHistory)) {
-          expect(date).to.be.not.null.and.satisfy(function (date: string) {
-            expect(new Date(date).getTime()).to.be.a("number").and.not.be.NaN;
+      expect(guild.exp).to.be.a("number");
+      const guildExpByGameType = guild.guildExpByGameType;
+      expect(guildExpByGameType).to.be.an("object");
+      for (const gameType of Object.keys(guildExpByGameType) as [
+        keyof typeof guildExpByGameType
+      ]) {
+        expect(gameType)
+          .to.be.a("string")
+          .that.satisfies(function (val: string) {
+            return val === val.toUpperCase();
           });
+        expect(guildExpByGameType[gameType]).to.be.a("number");
+      }
+      if (guild.hideGmTag) {
+        expect(guild.hideGmTag).to.be.a("boolean");
+      }
+      if (guild.joinable) {
+        expect(guild.joinable).to.be.a("boolean");
+      }
+      if (guild.legacyRanking) {
+        expect(guild.legacyRanking).to.be.a("number");
+      }
+      const members = guild.members;
+      expect(members).to.be.an("array");
+      for (const member of members) {
+        for (const date of Object.keys(member.expHistory)) {
+          expect(new Date(date).getFullYear()).to.be.greaterThan(2010);
           expect(member.expHistory[date]).to.be.a("number");
         }
         expect(member.joined).to.be.a("number");
-        expect(member.mutedTill).to.satisfy(function (
-          mutedTill: undefined | number
-        ) {
-          return (
-            typeof mutedTill === "undefined" || typeof mutedTill === "number"
+        expect(new Date(member.joined).getFullYear()).to.be.greaterThan(2010);
+        if (member.mutedTill) {
+          expect(member.mutedTill).to.be.a("number");
+          expect(new Date(member.mutedTill).getFullYear()).to.be.greaterThan(
+            2010
           );
-        });
-        expect(member.questParticipation).to.satisfy(function (
-          questParticipation: undefined | number
-        ) {
-          return (
-            typeof questParticipation === "undefined" ||
-            typeof questParticipation === "number"
-          );
-        });
+        }
+        if (member.name) {
+          expect(member.name).to.be.a("string");
+        }
+        if (member.questParticipation) {
+          expect(member.questParticipation).to.be.a("number");
+        }
         expect(member.rank).to.be.a("string");
         expect(member.uuid).to.be.a("string");
       }
       expect(guild.name).to.be.a("string");
-      expect(guild.name_lower).to.be.a("string");
+      expect(guild.name_lower)
+        .to.be.a("string")
+        .that.satisfies(function (val: string) {
+          return val === val.toLowerCase();
+        });
       if (guild.preferredGames) {
-        expect(guild.preferredGames).to.be.a("array");
-        for (const game of guild.preferredGames) {
-          expect(game).to.be.a("string");
-        }
+        expect(guild.preferredGames)
+          .to.be.an("array")
+          .that.satisfies(function (value: string[]) {
+            return value.every((v) => typeof v === "string");
+          });
       }
-      expect(guild.publiclyListed).to.be.a("boolean");
-      expect(guild.ranks).to.be.an("array");
-      for (const rank of guild.ranks) {
+      if (guild.publiclyListed) {
+        expect(guild.publiclyListed).to.be.a("boolean");
+      }
+      const ranks = guild.ranks;
+      expect(ranks).to.be.an("array");
+      for (const rank of ranks) {
         expect(rank.created).to.be.a("number");
-        expect(rank.default).to.be.a("boolean");
+        expect(new Date(rank.created).getFullYear()).to.be.greaterThan(2010);
+        if (typeof rank.default !== "undefined") {
+          expect(rank.default).to.be.a("boolean");
+        }
         expect(rank.name).to.be.a("string");
         expect(rank.priority).to.be.a("number");
-        expect(rank.tag).to.satisfy(function (tag: null | string) {
-          return tag === null || typeof tag === "string";
-        });
+        if (typeof rank.tag !== "undefined") {
+          expect(rank.tag).to.satisfy(function (val: string | null) {
+            return typeof val === "string" || val === null;
+          });
+        }
       }
-      expect(guild.tag).to.be.a("string");
-      expect(guild.tagColor).to.be.a("string");
+      if (guild.tag) {
+        expect(guild.tag).to.be.a("string");
+      }
+      if (guild.tagColor) {
+        expect(guild.tagColor).to.be.a("string");
+      }
     }
   });
 });
