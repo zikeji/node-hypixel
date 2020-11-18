@@ -1,3 +1,9 @@
+---
+category: Advanced
+tags:
+  - advanced
+  - cache
+---
 # Cache
 
 ## Introduction

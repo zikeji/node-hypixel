@@ -1,3 +1,10 @@
+---
+category: Helpers
+tags:
+  - helper
+  - player
+  - rank
+---
 # Player Ranks
 
 ## Introduction
