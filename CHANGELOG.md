@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.0](https://github.com/zikeji/node-hypixel/compare/v1.16.0...v1.17.0) (2020-11-17)
+
+
+### Features
+
+* **api:** completely explore and type out /player endpoint and update testing to validate ([9e674bd](https://github.com/zikeji/node-hypixel/commit/9e674bdf9167cf0f3997f92445bcd734a0472e64))
+* **api:** expand typing to the player.stats.Bedwars object ([4a469af](https://github.com/zikeji/node-hypixel/commit/4a469af75a4124a9bf352e2558c6067b3a832d9b))
+* **api:** update player schema to include more social links ([2d43066](https://github.com/zikeji/node-hypixel/commit/2d430667ef3a8dc1652384609764784b345fc404))
+* **helpers:** add Bedwars helper for level / prestige info ([485c010](https://github.com/zikeji/node-hypixel/commit/485c0105503e8fd2072772beb1ba4c56e9ff7310))
+* **helpers:** add NetworkLevel helper and add licensing information for the work ([21e2342](https://github.com/zikeji/node-hypixel/commit/21e2342aad614b806a15a536d5ca1c0aef38d77c))
+* **helpers:** revise skyblock item data into minecraft item data and added usage example for pit ([398f3a9](https://github.com/zikeji/node-hypixel/commit/398f3a9029d91e2ff28fcc9a1117bd3fef721d33))
+
+
+### Bug Fixes
+
+* **helpers:** add rank and plus color as they are separate ([c61aba0](https://github.com/zikeji/node-hypixel/commit/c61aba0c1ec0b2becb019d366d86045182f18b25))
+* **package:** removed redundant line ([f21ef7f](https://github.com/zikeji/node-hypixel/commit/f21ef7fa4a636ade7af17ab644d4fd5b105af274))
+
+
+### Code Refactoring
+
+* **helpers:** remove NonNullable due to earlier changes making it redundant ([648e476](https://github.com/zikeji/node-hypixel/commit/648e476814fe18cc4248514a9023d61ddcffcb5e))
+
+
+### Documentation
+
+* **helpers:** add description for network level helper. ([e1508a7](https://github.com/zikeji/node-hypixel/commit/e1508a785394ad0603058dde0dd80fb37cc8a814))
+* **helpers:** add documentation for Bedwars helper ([90f0408](https://github.com/zikeji/node-hypixel/commit/90f0408c72a355572654b95e5efea32cebda7af1))
+* **helpers:** add documentation for network level ([c9f2cdd](https://github.com/zikeji/node-hypixel/commit/c9f2cdd50b0d7fdb0f929026d4e0642d3b9a9132))
+
+
+### Tests
+
+* **helpers:** add bedwarslevelinfo test and trim fat ([2883d57](https://github.com/zikeji/node-hypixel/commit/2883d57b2bb5f2701d2c83725e06cb43b2994dd0))
+
 ## [1.16.0](https://github.com/zikeji/node-hypixel/compare/v1.15.0...v1.16.0) (2020-11-14)
 
 
