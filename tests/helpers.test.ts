@@ -4,7 +4,7 @@ import { expect } from "chai";
 import {
   Components,
   getBedwarsLevelInfo,
-  getExpToNetworkLevel,
+  getExpFromNetworkLevel,
   getGuildLevel,
   getNetworkLevel,
   getPlayerRank,
@@ -447,7 +447,7 @@ describe("Test getNetworkLevel", function () {
 
 describe("Test getExpToNetworkLevel with float", function () {
   it("should equal 299799.99999999994", function () {
-    expect(getExpToNetworkLevel(13.37))
+    expect(getExpFromNetworkLevel(13.37))
       .to.be.a("number")
       .that.equals(299799.99999999994);
   });
