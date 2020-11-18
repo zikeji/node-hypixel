@@ -88,6 +88,7 @@ module.exports = config({
           children: [
             "helpers/player-ranks",
             "helpers/network-level",
+            "helpers/guild-level",
             "helpers/bedwars-level-info",
             "helpers/minecraft-item-data"
           ]
