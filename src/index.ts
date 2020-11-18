@@ -3,6 +3,7 @@ export * from "./errors/GenericHTTPError";
 export * from "./errors/InvalidKeyError";
 export * from "./errors/RateLimitError";
 export * from "./helpers/BedwarsLevelInfo";
+export * from "./helpers/GuildLevel";
 export * from "./helpers/MinecraftFormatting";
 export * from "./helpers/NetworkLevel";
 export * from "./helpers/PlayerRank";

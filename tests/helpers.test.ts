@@ -5,6 +5,7 @@ import {
   Components,
   getBedwarsLevelInfo,
   getExpToNetworkLevel,
+  getGuildLevel,
   getNetworkLevel,
   getPlayerRank,
   NBTInventory,
@@ -449,6 +450,59 @@ describe("Test getExpToNetworkLevel with float", function () {
     expect(getExpToNetworkLevel(13.37))
       .to.be.a("number")
       .that.equals(299799.99999999994);
+  });
+});
+
+describe("Test getGuildLevel", function () {
+  it("should return level 0", function () {
+    for (const exp of [{}, -42]) {
+      const levelInfo = getGuildLevel(exp as never);
+      expect(levelInfo).to.be.a("object");
+      expect(levelInfo.level).to.be.a("number").that.equals(0);
+      expect(levelInfo.preciseLevel).to.be.a("number").that.equals(0);
+      expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
+      expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
+      expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(100000);
+      expect(levelInfo.remainingExpToNextLevel)
+        .to.be.a("number")
+        .that.equals(100000);
+    }
+  });
+  it("should return level 0 with flair", function () {
+    const levelInfo = getGuildLevel({ exp: 1337 } as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(0);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(0.01337);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(1337);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(100000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(98663);
+  });
+  it("should return level 42", function () {
+    const levelInfo = getGuildLevel(104401100);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(42);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(42.1337);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(104401100);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(104000000);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(3000000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(2598900);
+  });
+  it("should return level 9001", function () {
+    const levelInfo = getGuildLevel(26983700300);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(9001);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(9001.9001);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(26983700300);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(26981000000);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(3000000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(299700);
   });
 });
 
