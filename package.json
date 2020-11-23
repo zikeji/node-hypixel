@@ -244,7 +244,7 @@
     "react-dom": "^16.14.0",
     "remarkable": "^2.0.1",
     "rimraf": "^3.0.2",
-    "semantic-release": "^17.2.4",
+    "semantic-release": "^17.3.0",
     "stylus-svg": "^1.2.0",
     "swagger-ui": "^3.37.0",
     "ts-node": "^9.0.0",
