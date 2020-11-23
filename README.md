@@ -50,6 +50,10 @@ const client = new Client("API_KEY");
 })();
 ```
 
+## Helpers
+
+This library adds multiple helpers to facilitate using the Hypixel API. If you would like to request a helper that doesn't exist, please open an issue. Otherwise if you would like to contribute one refer to the below section.
+
 ## Contributing
 If some API result isn't documented / typed out fully, please open an issue and I can add it ASAP. Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
