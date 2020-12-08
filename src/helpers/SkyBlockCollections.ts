@@ -73,25 +73,29 @@ export interface SkyBlockProfileCollection {
 export type SkyBlockProfileCollections = SkyBlockProfileCollectionGroup[];
 
 /**
- * This helper takes a profile and scans all of it's member's to get the most accurate collection information possible.
+ * This helper takes a profile and scans all of it's member's to get the most accurate collection information possible. Returns false is none of the members of the profile had their collections API enabled.
  * @param profile The SkyBlock profile object you want to check.
  * @param collections The collections resource object.
  */
 export function getSkyBlockProfileMemberCollections(
-  profile: NonNullable<Components.Schemas.SkyBlockProfile>,
+  profile: Pick<NonNullable<Components.Schemas.SkyBlockProfile>, "members">,
   collections: Components.Schemas.SkyBlockResourcesParentCollections
 ): SkyBlockProfileCollections | false {
   const profileCollectionValues = Object.values(profile.members).reduce(
     (acc, member) => {
+      /* istanbul ignore else */
       if (member.unlocked_coll_tiers) {
         member.unlocked_coll_tiers.forEach((uTier) => {
           acc.unlockedCollTiers.add(uTier);
         });
       }
+      /* istanbul ignore else */
       if (member.collection) {
         Object.entries(member.collection).forEach(([key, quantity]) => {
+          /* istanbul ignore else */
           if (!acc.collectionQuantities[key]) acc.collectionQuantities[key] = 0;
-          acc.collectionQuantities[key] += quantity || 0;
+          acc.collectionQuantities[key] +=
+            quantity /* istanbul ignore next */ || 0;
         });
       }
       return acc;
@@ -126,7 +130,7 @@ export function getSkyBlockProfileMemberCollections(
                   `${collectionId}_${tierInfo.tier}`
                 ) ||
                 (profileCollectionValues.collectionQuantities[collectionId] ??
-                  0) > (tierInfo.amountRequired ?? 0)
+                  0) > (tierInfo.amountRequired /* istanbul ignore next */ || 0)
               ) {
                 // eslint-disable-next-line no-param-reassign
                 tier = tierInfo.tier as number;
@@ -148,10 +152,11 @@ export function getSkyBlockProfileMemberCollections(
           } else {
             child.nextTier = child.tier + 1;
             child.nextTierAmountRequired =
+              /* istanbul ignore next */
               collection.tiers.find((tInfo) => tInfo.tier === child.nextTier)
-                ?.amountRequired ?? 0;
+                ?.amountRequired /* istanbul ignore next */ || 0;
             child.progress =
-              ((profileCollectionValues.collectionQuantities[collectionId] ??
+              ((profileCollectionValues.collectionQuantities[collectionId] ||
                 0) /
                 child.nextTierAmountRequired) *
               100;
@@ -159,12 +164,8 @@ export function getSkyBlockProfileMemberCollections(
           group.children.push(child);
         }
       );
-      if (group.maxedChildCollections === group.totalCollections) {
-        group.progress = 100;
-      } else {
-        group.progress =
-          (group.maxedChildCollections / group.totalCollections) * 100;
-      }
+      group.progress =
+        (group.maxedChildCollections / group.totalCollections) * 100;
       acc.push(group);
       return acc;
     },

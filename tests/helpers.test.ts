@@ -8,8 +8,10 @@ import {
   getGuildLevel,
   getNetworkLevel,
   getPlayerRank,
+  getSkyBlockProfileMemberCollections,
   NBTInventory,
   removeMinecraftFormatting,
+  romanize,
   SkyBlockProfileTransformedInventories,
   transformItemData,
   transformSkyBlockProfileMemberInventories,
@@ -633,5 +635,61 @@ describe("Test getBedwarsLevelInfo", function () {
         "Data supplied does not contain player Bedwars experience."
       );
     }
+  });
+});
+
+describe("Test getSkyBlockProfileMemberCollections", function () {
+  const collectionsResource: Components.Schemas.SkyBlockResourcesParentCollections = require("./data/resources/collections.json");
+  const profiles: NonNullable<
+    Components.Schemas.SkyBlockProfileCuteName
+  >[] = require("./data/profiles.json");
+  let collections: ReturnType<typeof getSkyBlockProfileMemberCollections>;
+  it("should go over data without throwing", function () {
+    const profile = profiles[0];
+    collections = getSkyBlockProfileMemberCollections(
+      profile,
+      collectionsResource
+    );
+  });
+  it("should not be a boolean", function () {
+    expect(collections).to.not.be.a("boolean");
+  });
+  it("should contain required properties", function () {
+    if (typeof collections === "boolean") return;
+    for (const category of collections) {
+      expect(category.id).to.be.a("string");
+      expect(category.name).to.be.a("string");
+      expect(category.progress).to.be.a("number");
+      expect(category.maxedChildCollections).to.be.a("number");
+      expect(category.totalCollections).to.be.a("number");
+      expect(category.children).to.be.an("array");
+      for (const collection of category.children) {
+        expect(collection.id).to.be.a("string");
+        expect(collection.name).to.be.a("string");
+        expect(collection.tier).to.be.a("number");
+        expect(collection.maxTier).to.be.a("number");
+        expect(collection.amount).to.be.a("number");
+        expect(collection.progress).to.be.a("number");
+        if (collection.nextTier) {
+          expect(collection.nextTier).to.be.a("number");
+        }
+        if (collection.nextTierAmountRequired) {
+          expect(collection.nextTierAmountRequired).to.be.a("number");
+        }
+      }
+    }
+  });
+  it("should return false", function () {
+    const result = getSkyBlockProfileMemberCollections(
+      { members: { null: {} as never } },
+      collectionsResource
+    );
+    expect(result).to.be.false;
+  });
+});
+
+describe("Test romanize", function () {
+  it("should return X", function () {
+    expect(romanize(10)).to.be.a("string").that.equals("X");
   });
 });
