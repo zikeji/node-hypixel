@@ -18,9 +18,9 @@ export class GuildsResources extends Method {
     >
   > {
     return getResultObject(
-      await this.client.call<
-        Paths.ResourcesGuildsAchievements.Get.Responses.$200
-      >("resources/guilds/achievements"),
+      await this.client.call<Paths.ResourcesGuildsAchievements.Get.Responses.$200>(
+        "resources/guilds/achievements"
+      ),
       ["success", "lastUpdated"]
     );
   }
@@ -39,9 +39,9 @@ export class GuildsResources extends Method {
     >
   > {
     return getResultArray(
-      await this.client.call<
-        Paths.ResourcesGuildsPermissions.Get.Responses.$200
-      >("resources/guilds/permissions"),
+      await this.client.call<Paths.ResourcesGuildsPermissions.Get.Responses.$200>(
+        "resources/guilds/permissions"
+      ),
       "permissions"
     );
   }
