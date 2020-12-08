@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.0](https://github.com/zikeji/node-hypixel/compare/v1.17.0...v1.18.0) (2020-12-08)
+
+
+### Features
+
+* **tests:** add tests for collections helper ([01a37aa](https://github.com/zikeji/node-hypixel/commit/01a37aa3bfc7ce8adcc2a85fe6c5576d84ec34ea))
+* add skyblock collections helper ([55d0efb](https://github.com/zikeji/node-hypixel/commit/55d0efbd72ba2072177a66b5c90a9f0ff5328255))
+* **api:** build out Guild schema more ([2e9c09a](https://github.com/zikeji/node-hypixel/commit/2e9c09a933c88dc5fc271a49c2d6af0df1923b24))
+* **helpers:** add guild level helper ([2bed9c3](https://github.com/zikeji/node-hypixel/commit/2bed9c3f3d22d30eeaa1cef9eb98674ab6b1082a))
+
+
+### Bug Fixes
+
+* **client:** fix reset date in limited event ([1874bbc](https://github.com/zikeji/node-hypixel/commit/1874bbc4086e19f659b3af79db0de1f4299405c3))
+* **docs:** resolve error generating TS documentation ([9b9ab7d](https://github.com/zikeji/node-hypixel/commit/9b9ab7db90ee5c9476e15eaae395621fb8cfdeae))
+* **docs:** update navbar style to reflect vuepress theme update changes ([6d723b4](https://github.com/zikeji/node-hypixel/commit/6d723b4b62eceab3651c5af8db2a7539048ca2bf))
+* **lint:** fixed lint errors from newer lint preset ([6afa7e5](https://github.com/zikeji/node-hypixel/commit/6afa7e56bcf972b5f6cd0ecf046140e729a90973))
+
+
+### Tests
+
+* update helpers test to reflect name change ([ed11e26](https://github.com/zikeji/node-hypixel/commit/ed11e262cdd7fa2234132726f6ae74984f25c6f9))
+
+
+### Documentation
+
+* **helpers:** add documentation for profile collections helper ([ad637f5](https://github.com/zikeji/node-hypixel/commit/ad637f54ceef9697db1d158a1d0f6b5371a6d0a6))
+* **readme:** add helpers excerpt ([99d4648](https://github.com/zikeji/node-hypixel/commit/99d46482af0b041c2dbe85705c25880955866181))
+* add frontmatter category and tags ([0a528f1](https://github.com/zikeji/node-hypixel/commit/0a528f187072da6619b68e79ccb32d0e3e32c738))
+* update last-updated date to be more readable ([3beb18e](https://github.com/zikeji/node-hypixel/commit/3beb18e592783a604df734d1c81dd602d106570c))
+* **changelog:** update pages.js to rebuild changelog with better formatting ([6469178](https://github.com/zikeji/node-hypixel/commit/6469178a5a63eeb63f27946f926f3fa7dc54a461))
+* add more notes to helpers ([f3f733f](https://github.com/zikeji/node-hypixel/commit/f3f733f08a8f75c857c5ba67a6be89424fbb787c))
+* **helpers:** add guild level documentation ([6e3a977](https://github.com/zikeji/node-hypixel/commit/6e3a9778ed1c05b61aa82a7c5cf47b15766edce2))
+* **helpers:** fix typo on network-level doc ([cb3309b](https://github.com/zikeji/node-hypixel/commit/cb3309bf0c42376cd885cf13dbe5102c878f4ee3))
+* **readme:** add 2.0 description to readme ([8c46629](https://github.com/zikeji/node-hypixel/commit/8c46629bc42a14d4778eb44deec1abe979754346))
+
 ## [1.17.0](https://github.com/zikeji/node-hypixel/compare/v1.16.0...v1.17.0) (2020-11-17)
 
 
