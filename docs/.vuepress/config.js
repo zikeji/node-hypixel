@@ -90,7 +90,8 @@ module.exports = config({
             "helpers/network-level",
             "helpers/guild-level",
             "helpers/bedwars-level-info",
-            "helpers/minecraft-item-data"
+            "helpers/minecraft-item-data",
+            "helpers/skyblock-profile-collections"
           ]
         },
         {
