@@ -453,7 +453,7 @@ export class Client {
       this.emitter.emit(
         "limited",
         this.rateLimit.limit,
-        new Date(Date.now() + this.rateLimit.reset)
+        new Date(Date.now() + timeout)
       );
       await new Promise((resolve) => {
         setTimeout(resolve, timeout);
