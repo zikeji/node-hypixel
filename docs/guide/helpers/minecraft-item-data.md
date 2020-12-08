@@ -1,3 +1,12 @@
+---
+category: Helpers
+tags:
+  - helper
+  - nbt data
+  - inventory
+  - skyblock
+  - pit
+---
 # Minecraft Item Data
 
 ## Introduction

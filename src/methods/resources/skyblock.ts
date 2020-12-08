@@ -14,9 +14,9 @@ export class SkyBlockResources extends Method {
     >
   > {
     return getResultObject(
-      await this.client.call<
-        Paths.ResourcesSkyblockCollections.Get.Responses.$200
-      >("resources/skyblock/collections"),
+      await this.client.call<Paths.ResourcesSkyblockCollections.Get.Responses.$200>(
+        "resources/skyblock/collections"
+      ),
       ["collections"]
     );
   }

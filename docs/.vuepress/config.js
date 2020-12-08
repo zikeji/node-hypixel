@@ -70,7 +70,7 @@ module.exports = config({
         ]
       },
     ],
-    pageInfo: ["Category", "Tag"],
+    pageInfo: ["Author", "Category", "Tag"],
     sidebar: {
       "/guide/": [
         {
@@ -88,8 +88,10 @@ module.exports = config({
           children: [
             "helpers/player-ranks",
             "helpers/network-level",
+            "helpers/guild-level",
             "helpers/bedwars-level-info",
-            "helpers/minecraft-item-data"
+            "helpers/minecraft-item-data",
+            "helpers/skyblock-profile-collections"
           ]
         },
         {
@@ -133,30 +135,28 @@ module.exports = config({
     }
   },
   plugins: [
-    [
-      "vuepress-plugin-typedoc",
-      {
-        mode: "file",
-        inputFiles: ["src/"],
-        out: "ts-api",
-        readme: "none",
-        categoryOrder: ["Public", "*", "Custom", "Other"],
-        toc: [
-          "Classes",
-          "Interfaces"
-        ],
-        excludeExternals: true,
-        excludeNotExported: true,
-        excludePrivate: true,
-        excludeProtected: true,
-        stripInternal: true,
-        sidebar: {
-          fullNames: false,
-          parentCategory: "none",
-        },
-        plugin: ["typedoc-plugin-no-inherit"],
-      },
-    ],
     require("./plugins/pages"),
+    require("./plugins/typedoc"),
+    ["@mr-hope/vuepress-plugin-last-update", {
+      transformer: (timestamp) => {
+        return new Date(timestamp).toLocaleString('en-US', { year: "numeric", month: "long", weekday: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: 'America/New_York' })
+          .match(/^(\w+,\s\w+\s)(\d{1,2})(,\s\d{4}),(\s\d{1,2}:\d{1,2}\s[AP]M)/)
+          .map((m, i) => {
+            if (i === 2) {
+              let day = parseInt(m);
+              if (day === 1 || (day > 20 && day % 10 === 1)) return `${day}st`;
+              if (day === 2 || (day > 20 && day % 10 === 2)) return `${day}nd`;
+              if (day === 3 || (day > 20 && day % 10 === 3)) return `${day}rd`;
+              return `${day}th`;
+            }
+            if (i === 4) {
+              return ` at${m} EST`;
+            }
+            return m;
+          })
+          .slice(1)
+          .join("");
+      }
+    }]
   ],
 });

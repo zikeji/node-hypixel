@@ -1,6 +1,9 @@
 import { Components } from "../types/api";
 import { NBTInventory, transformItemData } from "./TransformItemData";
 
+/**
+ * Interface used in the {@link SkyBlockProfileMemberWithTransformedInventories} intersection to describe the intellisense for the inventory after being transformed.
+ */
 export interface SkyBlockProfileTransformedInventories {
   inv_armor: NBTInventory;
   candy_inventory_contents?: NBTInventory;
@@ -13,12 +16,16 @@ export interface SkyBlockProfileTransformedInventories {
   wardrobe_contents?: NBTInventory;
 }
 
+/**
+ * This type is a intersection type omitting the default inventory types and including the transformed inventory types.
+ */
 export type SkyBlockProfileMemberWithTransformedInventories = Omit<
   Components.Schemas.SkyBlockProfileMember,
   keyof SkyBlockProfileTransformedInventories
 > &
   SkyBlockProfileTransformedInventories;
 
+/** @internal */
 const SKYBLOCK_INVENTORIES: (keyof SkyBlockProfileTransformedInventories)[] = [
   "inv_armor",
   "candy_inventory_contents",
@@ -34,6 +41,7 @@ const SKYBLOCK_INVENTORIES: (keyof SkyBlockProfileTransformedInventories)[] = [
 /**
  * This helper will loop over all the possible inventories on a profile and run the {@link transformSkyBlockItemData} helper on them, returning the member object with the transformed properties.
  * @param member The profile member object that you want to transform the inventory data of.
+ * @category Helper
  */
 export async function transformSkyBlockProfileMemberInventories(
   member: Components.Schemas.SkyBlockProfileMember

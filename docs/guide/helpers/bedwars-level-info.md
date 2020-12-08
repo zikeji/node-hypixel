@@ -1,3 +1,11 @@
+---
+category: Helpers
+tags:
+  - helper
+  - bedwars
+  - level
+  - prestige
+---
 # Bedwars Level & Prestige Info
 
 ## Introduction

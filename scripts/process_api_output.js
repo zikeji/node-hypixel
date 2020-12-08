@@ -24,6 +24,10 @@ for (let line of content.split("\n")) {
   }
 
   if (lines.length > 0) {
+    if(lines[lines.length - 1].match(/export interface GuildExpByGameType/)) {
+      line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
+    }
+
     // Player types
     if(lines[lines.length - 1].match(/export interface Player/)) {
       line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");

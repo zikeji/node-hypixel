@@ -4,6 +4,7 @@ import {
   MinecraftFormatting,
 } from "./MinecraftFormatting";
 
+/** @internal */
 export enum PlayerRanks {
   NON_DONOR = 1,
   VIP = 2,
@@ -18,6 +19,9 @@ export enum PlayerRanks {
   ADMIN = 100,
 }
 
+/**
+ * Describes the results from the {@link getPlayerRank} helper.
+ */
 export interface PlayerRank {
   /**
    * The priority of this rank as it relates to other ranks.
@@ -72,9 +76,10 @@ export interface PlayerRank {
 }
 
 /**
- * Get an object describing the player's rank in more detail without the need to figure out how to parse it yourself.
+ * Get an {@link PlayerRank} object describing the player's rank in more detail without the need to figure out how to parse it yourself.
  * @param player The result of `client.player.uuid()`.
  * @param onlyPackages Whether to ignore their staff / youtube rank and only get their donor rank.
+ * @category Helper
  */
 export function getPlayerRank(
   player: NonNullable<Components.Schemas.Player>,

@@ -4,11 +4,14 @@ import { expect } from "chai";
 import {
   Components,
   getBedwarsLevelInfo,
-  getExpToNetworkLevel,
+  getExpFromNetworkLevel,
+  getGuildLevel,
   getNetworkLevel,
   getPlayerRank,
+  getSkyBlockProfileMemberCollections,
   NBTInventory,
   removeMinecraftFormatting,
+  romanize,
   SkyBlockProfileTransformedInventories,
   transformItemData,
   transformSkyBlockProfileMemberInventories,
@@ -446,9 +449,62 @@ describe("Test getNetworkLevel", function () {
 
 describe("Test getExpToNetworkLevel with float", function () {
   it("should equal 299799.99999999994", function () {
-    expect(getExpToNetworkLevel(13.37))
+    expect(getExpFromNetworkLevel(13.37))
       .to.be.a("number")
       .that.equals(299799.99999999994);
+  });
+});
+
+describe("Test getGuildLevel", function () {
+  it("should return level 0", function () {
+    for (const exp of [{}, -42]) {
+      const levelInfo = getGuildLevel(exp as never);
+      expect(levelInfo).to.be.a("object");
+      expect(levelInfo.level).to.be.a("number").that.equals(0);
+      expect(levelInfo.preciseLevel).to.be.a("number").that.equals(0);
+      expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
+      expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
+      expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(100000);
+      expect(levelInfo.remainingExpToNextLevel)
+        .to.be.a("number")
+        .that.equals(100000);
+    }
+  });
+  it("should return level 0 with flair", function () {
+    const levelInfo = getGuildLevel({ exp: 1337 } as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(0);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(0.01337);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(1337);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(100000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(98663);
+  });
+  it("should return level 42", function () {
+    const levelInfo = getGuildLevel(104401100);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(42);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(42.1337);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(104401100);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(104000000);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(3000000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(2598900);
+  });
+  it("should return level 9001", function () {
+    const levelInfo = getGuildLevel(26983700300);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(9001);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(9001.9001);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(26983700300);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(26981000000);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(3000000);
+    expect(levelInfo.remainingExpToNextLevel)
+      .to.be.a("number")
+      .that.equals(299700);
   });
 });
 
@@ -579,5 +635,61 @@ describe("Test getBedwarsLevelInfo", function () {
         "Data supplied does not contain player Bedwars experience."
       );
     }
+  });
+});
+
+describe("Test getSkyBlockProfileMemberCollections", function () {
+  const collectionsResource: Components.Schemas.SkyBlockResourcesParentCollections = require("./data/resources/collections.json");
+  const profiles: NonNullable<
+    Components.Schemas.SkyBlockProfileCuteName
+  >[] = require("./data/profiles.json");
+  let collections: ReturnType<typeof getSkyBlockProfileMemberCollections>;
+  it("should go over data without throwing", function () {
+    const profile = profiles[0];
+    collections = getSkyBlockProfileMemberCollections(
+      profile,
+      collectionsResource
+    );
+  });
+  it("should not be a boolean", function () {
+    expect(collections).to.not.be.a("boolean");
+  });
+  it("should contain required properties", function () {
+    if (typeof collections === "boolean") return;
+    for (const category of collections) {
+      expect(category.id).to.be.a("string");
+      expect(category.name).to.be.a("string");
+      expect(category.progress).to.be.a("number");
+      expect(category.maxedChildCollections).to.be.a("number");
+      expect(category.totalCollections).to.be.a("number");
+      expect(category.children).to.be.an("array");
+      for (const collection of category.children) {
+        expect(collection.id).to.be.a("string");
+        expect(collection.name).to.be.a("string");
+        expect(collection.tier).to.be.a("number");
+        expect(collection.maxTier).to.be.a("number");
+        expect(collection.amount).to.be.a("number");
+        expect(collection.progress).to.be.a("number");
+        if (collection.nextTier) {
+          expect(collection.nextTier).to.be.a("number");
+        }
+        if (collection.nextTierAmountRequired) {
+          expect(collection.nextTierAmountRequired).to.be.a("number");
+        }
+      }
+    }
+  });
+  it("should return false", function () {
+    const result = getSkyBlockProfileMemberCollections(
+      { members: { null: {} as never } },
+      collectionsResource
+    );
+    expect(result).to.be.false;
+  });
+});
+
+describe("Test romanize", function () {
+  it("should return X", function () {
+    expect(romanize(10)).to.be.a("string").that.equals("X");
   });
 });

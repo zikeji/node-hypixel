@@ -21,6 +21,12 @@ An unopinionated async/await API wrapper for [Hypixel's Public API][hypixel] dev
 
 The library aims to replicate the [Hypixel API][hypixel] as closely as possible, and as such won't alter the results, merely offering intellisense suggestions, rate-limit handling, and helpers.
 
+## 2.0
+
+As I mentioned previously in the readme, 1.X.X is not following semver (due to an oversight with semantic-releases). So breaking changes may only be a minor version change instead of a major version change.
+
+However, for the most part at this time all I'm doing is adding new helpers and refining schema - I have 3 more helpers planned before I bump to 2.0. A SkyWars level & prestige helper, a SkyBlock collections helper, and a SkyBlock skills helper.
+
 ## Installation
 
 Use [npm](https://www.npmjs.com) to install this library.
@@ -43,6 +49,10 @@ const client = new Client("API_KEY");
   // {watchdog_lastMinute: 1, staff_rollingDaily: 2609, watchdog_total: 5591714, watchdog_rollingDaily: 4213, …}
 })();
 ```
+
+## Helpers
+
+This library adds multiple helpers to facilitate using the Hypixel API. If you would like to request a helper that doesn't exist, please open an issue. Otherwise if you would like to contribute one refer to the below section.
 
 ## Contributing
 If some API result isn't documented / typed out fully, please open an issue and I can add it ASAP. Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

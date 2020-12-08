@@ -1,8 +1,15 @@
+---
+category: Helpers
+tags:
+  - helper
+  - player
+  - level
+---
 # Network Level
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">getNetworkLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#getnetworklevel) calculates the network level from either a Player object or a network exp value.
+The [<code class="language-javascript"><span class="token function">getNetworkLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#getnetworklevel) helper calculates the network level from either a Player object or a network exp value.
 
 ## Example
 

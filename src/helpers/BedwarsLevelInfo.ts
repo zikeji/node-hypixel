@@ -13,6 +13,7 @@ import {
   MinecraftFormatting,
 } from "./MinecraftFormatting";
 
+/** @internal */
 enum BEDWARS_LEVEL_CONSTANTS {
   EL = 4,
   XPP = 96 * 5000 + 7000,
@@ -20,6 +21,9 @@ enum BEDWARS_LEVEL_CONSTANTS {
   HP = 10,
 }
 
+/**
+ * Describes the results of the {@link getBedwarsLevelInfo} helper.
+ */
 export interface BedwarsLevelInfo {
   level: number;
   prestige: number;
@@ -31,6 +35,7 @@ export interface BedwarsLevelInfo {
 
 /**
  * Calculates the BedWars prestige and level of a player and returns a {@link BedwarsLevelInfo} interface.
+ * @category Helper
  */
 export function getBedwarsLevelInfo(
   data: Components.Schemas.Player | number

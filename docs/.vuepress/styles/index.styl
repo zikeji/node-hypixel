@@ -49,9 +49,9 @@ body.theme-light
   .nav-item > .nav-link:not([href="/"])
     &.router-link-active
       color var(--accent-color)
-    &:hover, &.router-link-active
-      margin-bottom -2px
-      border-bottom 2px solid var(--accent-color-l10)
+      &::after
+        visibility visible
+        transform scaleX(1)
 
 .navbar
   .site-name

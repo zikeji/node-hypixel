@@ -3,6 +3,9 @@
  */
 export type NBTInventory = (NBTInventoryItem | null)[];
 
+/**
+ * The NBT information for a slot in the inventory you are reading.
+ */
 export interface NBTInventoryItem {
   /** Minecraft Item ID of this item. */
   id: number;
@@ -13,6 +16,9 @@ export interface NBTInventoryItem {
   tag?: NBTTag;
 }
 
+/**
+ * If an inventory slot contains tag data, this interface describes possible values commonly seen in observations of the inventory data.
+ */
 export interface NBTTag {
   Unbreakable?: number;
   HideFlags?: number;
@@ -23,12 +29,18 @@ export interface NBTTag {
   CustomPotionEffects?: NBTCustomPotionEffect[];
 }
 
+/**
+ * An extremely common {@link NBTTag} property containing the name and lore that show up when you hover over the item.
+ */
 export interface NBTDisplay {
   Lore?: string[];
   Name?: string;
   color?: number;
 }
 
+/**
+ * Extra attributes that appear on extraAttributes property of the {@link NBTTag} property. Commonly used to describe items in more detail and their underlying settings.
+ */
 export interface NBTExtraAttributes {
   [key: string]:
     | string
@@ -76,17 +88,26 @@ export interface NBTExtraAttributes {
   new_year_cake_bag_data?: NBTInventory;
 }
 
+/**
+ * If the inventory item is a potion, this property will describe the effects of that potion.
+ */
 export interface NBTExtraAttributesPotionEffect {
   level: number;
   effect: string;
   duration_ticks: number;
 }
 
+/**
+ * Basic enchantment information for the inventory item.
+ */
 export interface NBTEnch {
   id: number;
   lvl: number;
 }
 
+/**
+ * If the {@link NBTInventoryItem} is a skull type this will describe it's skull information.
+ */
 export interface NBTSkullOwner {
   Id: string;
   Properties: {
@@ -107,6 +128,9 @@ export interface NBTSkullOwner {
   ExtraProperties?: NonNullable<NBTSkullOwner["Properties"]>[];
 }
 
+/**
+ * Generally shows up on SkyBlock unique potions.
+ */
 export interface NBTCustomPotionEffect {
   Ambient: number;
   Duration: number;
@@ -117,6 +141,7 @@ export interface NBTCustomPotionEffect {
 /**
  * This helper will transform NBT data into a typed object using prismarine-nbt. It will also transform any backpacks/bags with item data so you can explore those as well.
  * @param value A Base64 item data string, NBT byte array, or buffer.
+ * @category Helper
  */
 export async function transformItemData(
   value: number[] | string | Buffer
@@ -151,7 +176,6 @@ export async function transformItemData(
   return Promise.all(
     data.map(
       async (item): Promise<NBTInventory[number]> => {
-        // console.log(item);
         if (Object.entries(item).length === 0) {
           return null;
         }
