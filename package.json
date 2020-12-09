@@ -232,7 +232,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "dtsgenerator": "^3.3.1",
     "eslint-config-airbnb-typescript-prettier": "^4.1.0",
-    "eslint": "^7.14.0",
+    "eslint": "^7.15.0",
     "esm": "^3.2.25",
     "mocha": "^8.2.1",
     "node-env-run": "^4.0.2",
