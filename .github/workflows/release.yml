@@ -14,7 +14,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v2.1.3
         with:
           node-version: 14.x
       - name: Install dependencies
@@ -56,7 +56,7 @@ jobs:
         with:
           ref: main
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v2.1.3
         with:
           node-version: 14.x
       - run: npm ci
