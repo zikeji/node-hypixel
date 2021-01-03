@@ -7036,6 +7036,39 @@ paths:
                     claimed_bidders:
                     highest_bid_amount: 0
                     bids: []
+  /skyblock/auctions_ended:
+    get:
+      tags:
+        - skyblock
+      externalDocs:
+        url: https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/auctions_ended.md
+      summary: Returns SkyBlock auctions which ended in the last 60 seconds (More precisely, whatever time is defined in the "Cache-Control" header of the response).
+      description: |
+        Returns SkyBlock auctions which ended in the last 60 seconds (More precisely, whatever time is defined in the "Cache-Control" header of the response).
+        #### Usage
+        ```typescript
+        const response = await client.skyblock.auctions_ended();
+        ```
+      security: []
+      responses:
+        '200':
+          description: An object describing the ended auctions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkyBlockAuctionsEndedResponse'
+              example:
+                success: true
+                lastUpdated: 1607456463916
+                auctions:
+                  - auction_id: 015fe0c67e6041e69797bbe0c2725a21
+                    seller: fc76242bf64a4698ae0ebc136d900929
+                    seller_profile: 85b96cd3e73e4580b8379162ec059141
+                    buyer: c1eff55de0d24ec6b44848799e9323ba
+                    timestamp: 1607456400329
+                    price: 190000
+                    bin: true
+                    item_bytes: H4sIAAAAAAAAAEWR3W7TQBCFx2mBxKgtSH2ArUACZKL6L9jtndUYBdHQyGlV7qq1PXZX9U+03kB6yYNw7ffwo/AgiHEC4m7mmz1nz87qACPQhA4A2gAGItUGGjy5qNeV0nTYUzzX4PlNFUvkDzwuUNuD0Uyk+LHgeUOi3zo8S0WzKvjjCPYva4lDoofwsmu9KS95juesaxPDN+GY0FJJrHJ1v4PWxKTDAfGQy4rQB8M2WVKLqqHGy2RdsrKuGoWSPYiiaNjbS/yGBQ3RMo3+TF0Vj+/I5NXWj+2u7Acr0hCbmGbfbdWgd60/5xtmOBM4JPq5p9sofY43W4tfP3+wfyn/++Bfn+91nYJBxS0VlLQoMFGCIvYu6FnvXcenindtMQ++htMT8u11dPH1vWiYUFiyhFcsRiYxq2WO6Qm86NozUkRBFLLl7VU0HcL+F14iHNAg4rRuyYINgg5H4UZJHiglRbxW2AxhVEuRi+qa53CwnF0t7hY30cUsWIbD/jdBj4JP0zC6ozBkul4Teu34Tua7vj124tQduz73xtxOvbGVoZtMbN/xnIyMlSixUbxcwZFln/qn9DX2ue2wxRxgAE93q6b3wR9BYJa/RAIAAA==
   /skyblock/bazaar:
     get:
       tags:
@@ -10990,6 +11023,54 @@ components:
         - claimed_bidders
         - highest_bid_amount
         - bids
+    SkyBlockAuctionsEndedResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiSuccess'
+        - type: object
+          properties:
+            lastUpdated:
+              type: number
+            auctions:
+              type: array
+              items:
+                type: object
+                properties:
+                  auction_id:
+                    type: string
+                    description: Unique ID associated with the auction.
+                  seller:
+                    type: string
+                    description: Minecraft UUID of the seller.
+                  seller_profile:
+                    type: string
+                    description: SkyBlock profile ID of the seller.
+                  buyer:
+                    type: string
+                    description: Minecraft UUID of the buyer.
+                  timestamp:
+                    type: number
+                    description: Auction end timestamp.
+                  price:
+                    type: number
+                    description: Coins the buyer spent.
+                  bin:
+                    type: boolean
+                    description: Whether or not it was a buy it now auction.
+                  item_bytes:
+                    description: Base64 encoded NBT data for the item.
+                    type: string
+                required:
+                  - auction_id
+                  - seller
+                  - seller_profile
+                  - buyer
+                  - timestamp
+                  - price
+                  - bin
+                  - item_bytes
+          required:
+            - lastUpdated
+            - auctions
     SkyBlockBazaarResponse:
       allOf:
         - $ref: '#/components/schemas/ApiSuccess'

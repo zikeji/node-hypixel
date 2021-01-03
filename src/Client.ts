@@ -498,6 +498,7 @@ export class Client {
     if (
       path.startsWith("resources") ||
       path === "skyblock/auctions" ||
+      path === "skyblock/auctions_ended" ||
       path === "skyblock/bazaar"
     ) {
       noRateLimit = true;

@@ -2014,6 +2014,29 @@ describe("Get SkyBlock auctions page 1 & each skyblock.auction method once", fun
   );
 });
 
+describe("Get ended SkyBlock auctions", function () {
+  this.timeout(30000);
+  this.slow(1000);
+  let response: AsyncReturnType<typeof client.skyblock.auctions_ended>;
+  it("expect success on /skyblock/auctions_ended", async function () {
+    response = await client.skyblock.auctions_ended();
+  });
+  CheckMeta(() => response, true);
+  it("required keys should exist on auctions response", function () {
+    expect(response.lastUpdated).to.be.a("number");
+    for (const auction of response.auctions) {
+      expect(auction.auction_id).to.be.a("string");
+      expect(auction.seller).to.be.a("string");
+      expect(auction.seller_profile).to.be.a("string");
+      expect(auction.buyer).to.be.a("string");
+      expect(auction.timestamp).to.be.a("number");
+      expect(auction.price).to.be.a("number");
+      expect(auction.bin).to.be.a("boolean");
+      expect(auction.item_bytes).to.be.a("string");
+    }
+  });
+});
+
 describe("Get SkyBlock bazaar products", function () {
   this.timeout(30000);
   this.slow(1000);

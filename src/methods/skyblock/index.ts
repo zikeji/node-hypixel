@@ -28,6 +28,24 @@ export class SkyBlock extends Method {
   public auctions: SkyBlockAuctions = new SkyBlockAuctions(this.client);
 
   /**
+   * Returns SkyBlock auctions which ended in the last 60 seconds (More precisely, whatever time is defined in the "Cache-Control" header of the response).
+   * @example
+   * ```typescript
+   * const { auctions } = await client.skyblock.auctions_ended();
+   * ```
+   */
+  public async auctions_ended(): Promise<
+    ResultObject<Paths.SkyblockAuctionsEnded.Get.Responses.$200, ["success"]>
+  > {
+    return getResultObject(
+      await this.client.call<Paths.SkyblockAuctionsEnded.Get.Responses.$200>(
+        "skyblock/auctions_ended"
+      ),
+      ["success"]
+    );
+  }
+
+  /**
    * Returns the list of [products](https://github.com/HypixelDev/PublicAPI/blob/master/Documentation/methods/skyblock/bazaar.md#product-description) along with their sell summary, buy summary and quick status.
    * @example
    * ```typescript
