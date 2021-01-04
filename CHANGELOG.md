@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.0](https://github.com/zikeji/node-hypixel/compare/v1.18.0...v1.19.0) (2021-01-04)
+
+
+### Features
+
+* **api:** add /skyblock/auctions_ended endpoint ([1b8a4f6](https://github.com/zikeji/node-hypixel/commit/1b8a4f6a85be6c9b641e3e8bccf15d4f4f1493de))
+
+
+### Bug Fixes
+
+* **deps:** duplicate line ([f0359c1](https://github.com/zikeji/node-hypixel/commit/f0359c1c8cdc25050251e33e1f12a37fecf75461))
+* **docs:** fix issue with newer typedoc not generating properly ([9ad8e8f](https://github.com/zikeji/node-hypixel/commit/9ad8e8fd0d39bfff791eb6344dc31a08d945ca0a))
+
+
+### Documentation
+
+* **helpers:** add information on using the item data helper for auctions ([2fb1ece](https://github.com/zikeji/node-hypixel/commit/2fb1ecef4ae870c6a49ddb1ad3f64636923d3182))
+
+
+### Miscellaneous Chores
+
+* **dependencies:** update prismarine, and typings ([524ba52](https://github.com/zikeji/node-hypixel/commit/524ba5224187519ddda5d23e18c1016a4d159447))
+
 ## [1.18.0](https://github.com/zikeji/node-hypixel/compare/v1.17.0...v1.18.0) (2020-12-08)
 
 
