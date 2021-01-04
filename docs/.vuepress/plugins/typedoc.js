@@ -1,14 +1,38 @@
+const fs = require("fs");
 const { join, resolve } = require("path");
-const { Application } = require("typedoc");
-const { FrontMatterComponent } = require("typedoc-plugin-markdown/dist/components/front-matter.component");
+const { promisify } = require("util");
+const { Application, TSConfigReader, TypeDocReader } = require("typedoc");
+const { FrontMatterComponent } = require("typedoc-plugin-markdown/dist/components/front-matter");
+
+const readdir = promisify(fs.readdir);
+const statFile = promisify(fs.stat);
+
+const readdirRecursive = async (path, base) => {
+  const files = await readdir(path);
+  let outFiles = [];
+  for (const file of files) {
+    const stat = await statFile(join(path, file));
+    if (stat.isDirectory()) {
+      outFiles = [...outFiles, ...(await readdirRecursive(join(path, file), `${base}/${file}`))];
+    } else {
+      if (file.endsWith(".md")) {
+        outFiles.push({
+          relative: `${base}/${file}`,
+          filePath: join(path, file)
+        });
+      }
+    }
+  }
+  return outFiles;
+}
 
 const app = new Application();
 
-let rendered = false;
-module.exports = function (_, { sourceDir }) {
+module.exports = function(_, { sourceDir }) {
   const outFolder = "ts-api";
   const typedocOptions = {
-    mode: "file",
+    entryPoints: [resolve(__dirname, "..", "..", "..", "src/index.ts")],
+    tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
     readme: "none",
     categoryOrder: ["Public", "*", "Custom", "Other"],
     toc: [
@@ -16,13 +40,14 @@ module.exports = function (_, { sourceDir }) {
       "Interfaces"
     ],
     excludeExternals: true,
-    excludeNotExported: true,
     excludePrivate: true,
     excludeProtected: true,
-    stripInternal: true,
     plugin: ["typedoc-plugin-no-inherit", "typedoc-plugin-markdown"],
     theme: resolve(__dirname, "..", "..", "..", "node_modules", "vuepress-plugin-typedoc", "dist", "theme")
   };
+
+  app.options.addReader(new TypeDocReader());
+  app.options.addReader(new TSConfigReader());
 
   app.bootstrap(typedocOptions);
 
@@ -31,17 +56,21 @@ module.exports = function (_, { sourceDir }) {
     new FrontMatterComponent(app.renderer),
   );
 
-  const project = app.convert(app.expandInputFiles(["src/"]));
+  const project = app.convert();
 
-  if (!rendered && project) {
-    app.generateDocs(project, join(sourceDir, outFolder));
+  if (!project) {
+    return;
   }
-
-  rendered = true;
 
   /** @type {import("@mr-hope/vuepress-types/types/plugin").PluginOptionAPI} */
   const plugin = {
     name: "typedoc-plugin",
+    additionalPages: async () => {
+      await app.generateDocs(project, join(sourceDir, outFolder));
+      const files = await readdirRecursive(join(sourceDir, outFolder), outFolder);
+      console.log (files);
+      return files;
+    },
     enhanceAppFiles: () =>
       ({
         name: "typedoc-sidebar",
