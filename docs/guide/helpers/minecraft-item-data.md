@@ -58,6 +58,29 @@ const client = new Hypixel("API_KEY");
 })();
 ```
 
+### SkyBlock Auction Item
+
+You can get the specific item information on an item sold in an auction using this helper as well.
+
+```typescript
+import { Client as Hypixel, transformItemData } from "@zikeji/hypixel";
+const client = new Hypixel("API_KEY");
+(async () => {
+  const endedAuctions = await client.skyblock.auctions_ended();
+  const item = await transformItemData(endedAuctions.auctions[0].item_bytes);
+
+  console.log(item);
+  // output:
+  [{…}]
+
+  console.log(item.map((item) => item.tag.display.Name));
+  // output:
+  [
+    "§5Ender Leggings"
+  ]
+})();
+```
+
 ### All SkyBlock Inventories
 
 If you need all inventories resolved, the [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockprofilememberinventories) helper will do that for you by transforming the member object you pass and adding the appropriate inventory data.

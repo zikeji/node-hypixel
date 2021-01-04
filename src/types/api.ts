@@ -2196,6 +2196,47 @@ export declare namespace Components {
         };
       }[];
     }
+    export interface SkyBlockAuctionsEndedResponse {
+      /**
+       * Whether or not the request succeeded.
+       */
+      success: boolean;
+      lastUpdated: number;
+      auctions: {
+        /**
+         * Unique ID associated with the auction.
+         */
+        auction_id: string;
+        /**
+         * Minecraft UUID of the seller.
+         */
+        seller: string;
+        /**
+         * SkyBlock profile ID of the seller.
+         */
+        seller_profile: string;
+        /**
+         * Minecraft UUID of the buyer.
+         */
+        buyer: string;
+        /**
+         * Auction end timestamp.
+         */
+        timestamp: number;
+        /**
+         * Coins the buyer spent.
+         */
+        price: number;
+        /**
+         * Whether or not it was a buy it now auction.
+         */
+        bin: boolean;
+        /**
+         * Base64 encoded NBT data for the item.
+         */
+        item_bytes: string;
+      }[];
+    }
     export interface SkyBlockAuctionsResponse {
       /**
        * Whether or not the request succeeded.
@@ -6112,6 +6153,13 @@ export declare namespace Paths {
       }
       namespace Responses {
         export type $200 = Components.Schemas.SkyBlockAuctionsResponse;
+      }
+    }
+  }
+  namespace SkyblockAuctionsEnded {
+    namespace Get {
+      namespace Responses {
+        export type $200 = Components.Schemas.SkyBlockAuctionsEndedResponse;
       }
     }
   }
