@@ -91,7 +91,8 @@ module.exports = config({
             "helpers/guild-level",
             "helpers/bedwars-level-info",
             "helpers/minecraft-item-data",
-            "helpers/skyblock-profile-collections"
+            "helpers/skyblock-profile-collections",
+            "helpers/skyblock-profile-skills"
           ]
         },
         {
