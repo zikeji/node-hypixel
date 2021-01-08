@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.0](https://github.com/zikeji/node-hypixel/compare/v1.19.0...v1.20.0) (2021-01-08)
+
+
+### Features
+
+* **helpers:** add SkyBlock skills helper ([2ec2d34](https://github.com/zikeji/node-hypixel/commit/2ec2d34426743ee8b9d02084a7e42c7d37064e2b))
+
+
+### Documentation
+
+* **helpers:** add documentation for the profile skills helper ([b5427d9](https://github.com/zikeji/node-hypixel/commit/b5427d959098d86056c5032c1fe91a13295154e7))
+* **readme:** remove 2.0 mention ([5f24c6b](https://github.com/zikeji/node-hypixel/commit/5f24c6b15341f66fd692f4d0badede71d1fa5a41))
+* **typedoc:** resolve issue with ts api docs missing ([4d2dd71](https://github.com/zikeji/node-hypixel/commit/4d2dd710f8cdf7dfc787fc29b88d2fe6788fb145))
+* **vuepress:** remove erroneous console.log statement ([2926b8c](https://github.com/zikeji/node-hypixel/commit/2926b8c55b01cb730d33fb6dfe82ff44703bd328))
+* **vuepress:** update all urls to point to new ts-api links ([7beecf8](https://github.com/zikeji/node-hypixel/commit/7beecf8bc6c5e8316e307840050618cbc71bbeba))
+
+
+### Miscellaneous Chores
+
+* **deps:** update a few documentation related dependencies ([58409f0](https://github.com/zikeji/node-hypixel/commit/58409f04e3082c434d5c03291c128fb7f15b0f13))
+* **deps:** update dts generator and update processing to account for changes ([05cef05](https://github.com/zikeji/node-hypixel/commit/05cef05d8c856fb1b31262e1c04a4e20a50c114c))
+
 ## [1.19.0](https://github.com/zikeji/node-hypixel/compare/v1.18.0...v1.19.0) (2021-01-04)
 
 
