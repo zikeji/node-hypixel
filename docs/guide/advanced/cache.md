@@ -8,7 +8,7 @@ tags:
 
 ## Introduction
 
-Instead of forcing you to write your own wrapper for this library just to get caching, I've opted to instead add a basic get/set optional cache. You must implement it in order to use it, but you can be flexible with how you implement it. You can find the type information for the [BasicCache here](/ts-api/interfaces/basiccache/). The "key" used in the get/set method is always the path + parameters, but split by colons instead of slashes. For example `skyblock/auctions?page=1` becomes `skyblock:auctions:1`.
+Instead of forcing you to write your own wrapper for this library just to get caching, I've opted to instead add a basic get/set optional cache. You must implement it in order to use it, but you can be flexible with how you implement it. You can find the type information for the [BasicCache here](/ts-api/interfaces/client.basiccache/#hierarchy). The "key" used in the get/set method is always the path + parameters, but split by colons instead of slashes. For example `skyblock/auctions?page=1` becomes `skyblock:auctions:1`.
 
 ## Basic Example
 

@@ -9,6 +9,7 @@ import {
   getNetworkLevel,
   getPlayerRank,
   getSkyBlockProfileMemberCollections,
+  getSkyBlockProfileMemberSkills,
   NBTInventory,
   removeMinecraftFormatting,
   romanize,
@@ -640,9 +641,7 @@ describe("Test getBedwarsLevelInfo", function () {
 
 describe("Test getSkyBlockProfileMemberCollections", function () {
   const collectionsResource: Components.Schemas.SkyBlockResourcesParentCollections = require("./data/resources/collections.json");
-  const profiles: NonNullable<
-    Components.Schemas.SkyBlockProfileCuteName
-  >[] = require("./data/profiles.json");
+  const profiles: NonNullable<Components.Schemas.SkyBlockProfileCuteName>[] = require("./data/profiles.json");
   let collections: ReturnType<typeof getSkyBlockProfileMemberCollections>;
   it("should go over data without throwing", function () {
     const profile = profiles[0];
@@ -691,5 +690,53 @@ describe("Test getSkyBlockProfileMemberCollections", function () {
 describe("Test romanize", function () {
   it("should return X", function () {
     expect(romanize(10)).to.be.a("string").that.equals("X");
+  });
+});
+
+describe("Test getSkyBlockProfileMemberSkills", function () {
+  const skillsResource: Components.Schemas.SkyBlockResourcesSkills = require("./data/resources/skills.json");
+  const profiles: NonNullable<Components.Schemas.SkyBlockProfileCuteName>[] = require("./data/profiles.json");
+  let skills: ReturnType<typeof getSkyBlockProfileMemberSkills>;
+  it("should go over data without throwing", function () {
+    const profile = profiles[0];
+    skills = getSkyBlockProfileMemberSkills(
+      Object.values(profile.members)[0],
+      skillsResource
+    );
+  });
+  it("should not be a boolean", function () {
+    expect(skills).to.not.be.a("boolean");
+  });
+  it("should contain required properties", function () {
+    if (typeof skills === "boolean") return;
+
+    for (const skillName of Object.keys(skills)) {
+      const skill = skills[skillName];
+      expect(skillName).to.be.a("string");
+      expect(skill.name).to.be.a("string");
+      expect(skill.description).to.be.a("string");
+      expect(skill.level).to.be.a("number");
+      expect(skill.exp).to.be.a("number");
+      expect(skill.totalExpToLevel).to.be.a("number");
+      expect(skill.expToNextLevel).to.be.a("number");
+      expect(skill.maxLevel).to.be.a("number");
+    }
+
+    expect(skills.FARMING).to.be.a("object");
+    expect(skills.MINING).to.be.a("object");
+    expect(skills.COMBAT).to.be.a("object");
+    expect(skills.DUNGEONEERING).to.be.a("object");
+    expect(skills.FORAGING).to.be.a("object");
+    expect(skills.FISHING).to.be.a("object");
+    expect(skills.ENCHANTING).to.be.a("object");
+    expect(skills.ALCHEMY).to.be.a("object");
+    expect(skills.CARPENTRY).to.be.a("object");
+    expect(skills.RUNECRAFTING).to.be.a("object");
+    expect(skills.SOCIAL).to.be.a("object");
+    expect(skills.TAMING).to.be.a("object");
+  });
+  it("should return false", function () {
+    const result = getSkyBlockProfileMemberSkills({} as never, skillsResource);
+    expect(result).to.be.false;
   });
 });

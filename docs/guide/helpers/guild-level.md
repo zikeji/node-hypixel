@@ -9,7 +9,7 @@ tags:
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">getGuildLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#getguildlevel) helper calculates the level of a guild from either a Guild object or a guild exp value.
+The [<code class="language-javascript"><span class="token function">getGuildLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_guildlevel/#getguildlevel) helper calculates the level of a guild from either a [Guild object](/ts-api/interfaces/types/api.components.schemas.guild/#hierarchy) or a guild exp value.
 
 ## Example
 

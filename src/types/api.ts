@@ -509,11 +509,11 @@ export declare namespace Components {
     export interface Player {
       [name: string]:
         | undefined
-        | boolean
         | string
         | number
-        | number[]
+        | boolean
         | string[]
+        | number[]
         /**
          * An object where each property is the day of the reward and the value is the timestamp it was claimed. Property keys look like "dayNUMBER" e.g. day1.
          * The property keys on the player object generally follow the format "adventRewardsYEAR" or "adventrewards_v2_YEAR".
@@ -1057,7 +1057,7 @@ export declare namespace Components {
      *
      */
     export interface PlayerEventCooldown {
-      [name: string]: undefined | boolean;
+      [name: string]: boolean;
     }
     export type PlayerFireworksStorage = {
       colors: string;
@@ -1487,17 +1487,11 @@ export declare namespace Components {
       timeoutStart: number;
       value: string;
     }
-    export interface PlayerSocialMedia {
-      [name: string]: undefined | string | boolean | PlayerSocialMediaLinks;
-      DISCORD?: string;
-      HYPIXEL?: string;
-      INSTAGRAM?: string;
-      TWITCH?: string;
-      TWITTER?: string;
-      YOUTUBE?: string;
+    export type PlayerSocialMedia = PlayerSocialMediaLinks & {
+      [name: string]: string | boolean | PlayerSocialMediaLinks;
       links: PlayerSocialMediaLinks;
       prompt: boolean;
-    }
+    };
     export interface PlayerSocialMediaLinks {
       [name: string]: undefined | string;
       DISCORD?: string;
@@ -1514,6 +1508,7 @@ export declare namespace Components {
       [name: string]:
         | undefined
         | PlayerStatsGameMode
+        | /* Stats for bedwars. */ PlayerStatsBedwars
         | PlayerStatsPit
         | /* An object which properties describe each individual profile the player is a member of. */ PlayerStatsSkyBlock
         | PlayerStatsWalls3
@@ -1572,8 +1567,8 @@ export declare namespace Components {
       [name: string]:
         | undefined
         | number
-        | string
         | boolean
+        | string
         | string[]
         | PlayerStatsBedwarsPrivateGamesSettings;
       chest_history?: string;

@@ -9050,7 +9050,7 @@ components:
         - timeoutStart
         - value
     PlayerSocialMedia:
-      allOf:
+      anyOf:
         - $ref: '#/components/schemas/PlayerSocialMediaLinks'
         - type: object
           properties:
@@ -9142,6 +9142,7 @@ components:
       additionalProperties: 
         anyOf:
           - $ref: '#/components/schemas/PlayerStatsGameMode'
+          - $ref: '#/components/schemas/PlayerStatsBedwars'
           - $ref: '#/components/schemas/PlayerStatsPit'
           - $ref: '#/components/schemas/PlayerStatsSkyBlock'
           - $ref: '#/components/schemas/PlayerStatsWalls3'

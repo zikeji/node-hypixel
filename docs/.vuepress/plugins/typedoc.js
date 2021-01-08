@@ -31,7 +31,7 @@ const app = new Application();
 module.exports = function(_, { sourceDir }) {
   const outFolder = "ts-api";
   const typedocOptions = {
-    entryPoints: [resolve(__dirname, "..", "..", "..", "src/index.ts")],
+    entryPoints: app.expandInputFiles([resolve(__dirname, "..", "..", "..", "src")]),
     tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
     readme: "none",
     categoryOrder: ["Public", "*", "Custom", "Other"],
@@ -68,7 +68,6 @@ module.exports = function(_, { sourceDir }) {
     additionalPages: async () => {
       await app.generateDocs(project, join(sourceDir, outFolder));
       const files = await readdirRecursive(join(sourceDir, outFolder), outFolder);
-      console.log (files);
       return files;
     },
     enhanceAppFiles: () =>

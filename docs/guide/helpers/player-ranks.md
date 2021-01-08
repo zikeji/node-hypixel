@@ -9,7 +9,7 @@ tags:
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">getPlayerRank</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#getplayerrank) helper makes extracting rank information from a `/api/player` response simple and removes the guesswork. As an additional benefit, it also provides you the hex color codes.
+The [<code class="language-javascript"><span class="token function">getPlayerRank</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_playerrank/#getplayerrank) helper makes extracting rank information from a `/api/player` response simple and removes the guesswork. As an additional benefit, it also provides you the hex color codes.
 
 ## Example
 
