@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/zikeji/node-hypixel/compare/v1.20.0...v2.0.0) (2021-01-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* issue with typedoc generation vuepress build
+
+### Bug Fixes
+
+* issue with typedoc generation vuepress build ([17e37c3](https://github.com/zikeji/node-hypixel/commit/17e37c3480c209c19d751af40218d900359cadc7))
+
+
+### Documentation
+
+* **dev:** resolve issue rebuilding in a saturated environment ([bb7fe85](https://github.com/zikeji/node-hypixel/commit/bb7fe85645c77f731964be4c61b7ebef14ea87a3))
+
 ## [1.20.0](https://github.com/zikeji/node-hypixel/compare/v1.19.0...v1.20.0) (2021-01-08)
 
 
