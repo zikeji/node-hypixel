@@ -87,7 +87,7 @@ module.exports = function(_, { sourceDir }) {
               title: navItem.title,
               children: navItem.children.map((innerNavItem) => {
                 return [
-                  innerNavItem.url.replace(".md", ""),
+                  innerNavItem.url.endsWith("index.md") ? `${innerNavItem.url.split("/").slice(0, -1).join("/")}/` : innerNavItem.url.replace(".md", ""),
                   innerNavItem.title.split(".").slice(-1).join()
                 ];
               }),
