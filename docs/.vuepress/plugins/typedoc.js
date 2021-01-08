@@ -68,7 +68,6 @@ module.exports = function(_, { sourceDir }) {
     additionalPages: async () => {
       await app.generateDocs(project, join(sourceDir, outFolder));
       const files = await readdirRecursive(join(sourceDir, outFolder), outFolder);
-      console.log (files);
       return files;
     },
     enhanceAppFiles: () =>
