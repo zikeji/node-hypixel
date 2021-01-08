@@ -6,31 +6,21 @@ const content = fs.readFileSync(path.join(__dirname, "../", "src", "types", "api
 const lines = [];
 
 let inMonthlyCrates = false;
-let inPlayerStatsBedwars = false;
 let inSkyBlockProfileObjective = false;
 let SkyBlockProfileSlayerBoss = false;
+let inPlayerStatsBedwars = false;
 for (let line of content.split("\n")) {
   let shouldPushLine = true;
   line = line.replace(/declare namespace/, "export declare namespace");
-
-  if (inMonthlyCrates) {
-    inMonthlyCrates = false;
-    line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
-  }
-
-  if (SkyBlockProfileSlayerBoss) {
-    SkyBlockProfileSlayerBoss = false;
-    line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
-  }
 
   if (lines.length > 0) {
     if(lines[lines.length - 1].match(/export interface GuildExpByGameType/)) {
       line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
     }
 
-    // Player types
-    if(lines[lines.length - 1].match(/export interface Player/)) {
-      line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
+    // Player types 
+    if(lines[lines.length - 1].match(/export interface Player {/)) {
+      line = line.replace(/\[name: string\]: .*?\/\*\*/, "[name: string]: undefined | string | number | boolean | string[] | number[] | /**");
     }
     if(lines[lines.length - 1].match(/export interface PlayerAchievements/)) {
       line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
@@ -42,10 +32,14 @@ for (let line of content.split("\n")) {
       line = line.replace(/\[name: string\]: string\[\]/, "[name: string]: undefined | string[]");
     }
     if(lines[lines.length - 1].match(/export interface PlayerHousingMeta/)) {
-      line = line.replace(/\[name: string\]: string/, "[name: string]: undefined | string");
+      line = line.replace(/\[name: string\]: string \| number \| boolean \| string\[\] \| PlayerHousingMetaPlayerSettings/, "[name: string]: undefined | string | number | boolean | string[] | PlayerHousingMetaPlayerSettings");
     }
     if(lines[lines.length - 1].match(/export interface PlayerHousingMetaPlayerSettings/)) {
       line = line.replace(/\[name: string\]: string/, "[name: string]: undefined | string");
+    }
+    if (inMonthlyCrates) {
+      inMonthlyCrates = false;
+      line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
     }
     if(lines[lines.length - 1].match(/export interface PlayerMonthlyCrates/)) {
       inMonthlyCrates = true;
@@ -53,13 +47,17 @@ for (let line of content.split("\n")) {
     if(lines[lines.length - 1].match(/export interface PlayerSettings/)) {
       line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
     }
+    line = line.replace(/export type PlayerSocialMedia = PlayerSocialMediaLinks \| {/, "export type PlayerSocialMedia = PlayerSocialMediaLinks & {");
+    if(lines[lines.length - 1].match(/export interface PlayerSocialMediaLinks/)) {
+      line = line.replace(/\[name: string\]: string/, "[name: string]: undefined | string");
+    }
     if(lines[lines.length - 1].match(/export interface PlayerStats/)) {
       line = line.replace(/\[name: string\]: PlayerStatsGameMode/, "[name: string]: undefined | PlayerStatsGameMode");
     }
-    if(lines[lines.length - 1].match(/export interface PlayerStatsGameMode/)) {
-      line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
-    }
     if(lines[lines.length - 1].match(/export interface PlayerStatsBedwars/)) {
+      line = line.replace(/\[name: string\]: .*/, "[name: string]: undefined | number | boolean | string | string[] | PlayerStatsBedwarsPrivateGamesSettings;");
+    }
+    if(lines[lines.length - 1].match(/export interface PlayerStatsGameMode/)) {
       line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
     }
     if(lines[lines.length - 1].match(/export interface PlayerStatsHousing/)) {
@@ -83,49 +81,47 @@ for (let line of content.split("\n")) {
     if(lines[lines.length - 1].match(/export interface PlayerTourney/)) {
       line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
     }
-    if(lines[lines.length - 1].match(/export interface PlayerSocialMedia/)) {
-      line = line.replace(/\[name: string\]: string \| boolean \| PlayerSocialMediaLinks/, "[name: string]: undefined | string | boolean | PlayerSocialMediaLinks");
-    }
-    if(lines[lines.length - 1].match(/export interface PlayerSocialMediaLinks/)) {
-      line = line.replace(/\[name: string\]: string/, "[name: string]: undefined | string");
-    }
     if(lines[lines.length - 1].match(/export interface PlayerVoting/)) {
-      line = line.replace(/\[name: string\]: number/, "[name: string]: undefined| number");
+      line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
     }
 
     // SkyBlock profile types
-  line = line.replace(/\[name: string\]: SkyBlockProfileObjective/, "[name: string]: undefined | SkyBlockProfileObjective");
-  line = line.replace(/\[name: string\]: SkyBlockProfileQuest/, "[name: string]: undefined | SkyBlockProfileQuest");
-  line = line.replace(/\[name: string\]: SkyBlockProfileDungeonJournalEntries/, "[name: string]: undefined | SkyBlockProfileDungeonJournalEntries");
-    if(lines[lines.length - 1].match(/export interface SkyBlockProfileStats/)) {
-      line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
-    }
-    if(lines[lines.length - 1].match(/export interface SkyBlockProfileObjective/)) {
-      line = line.replace(/\[name: string\]: boolean \| number \| string/, "[name: string]: undefined | boolean | number | string");
-    }
     if(lines[lines.length - 1].match(/export interface SkyBlockProfileCollection/)) {
       line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
     }
-    if(lines[lines.length - 1].match(/export interface SkyBlockProfileSacksCounts/)) {
+    line = line.replace(/\[name: string\]: SkyBlockProfileDungeonJournalEntries/, "[name: string]: undefined | SkyBlockProfileDungeonJournalEntries");
+      if(lines[lines.length - 1].match(/export interface SkyBlockProfileObjectives/)) {
+        line = line.replace(/\[name: string\]: SkyBlockProfileObjective/, "[name: string]: undefined | SkyBlockProfileObjective");
+      }
+      if(lines[lines.length - 1].match(/export interface SkyBlockProfileObjective/)) {
+        line = line.replace(/\[name: string\]: boolean \| number \| string/, "[name: string]: undefined | boolean | number | string");
+      }
+      if (line.match(/export interface SkyBlockProfileObjectives/)) {
+        inSkyBlockProfileObjective = true;
+      }
+      if (inSkyBlockProfileObjective) {
+        line = line.replace(/\[name: string\]: boolean \| number \| string/, "[name: string]: undefined | boolean | number | string")
+      }
+      if(lines[lines.length - 1].match(/export interface SkyBlockProfileQuests/)) {
+        line = line.replace(/\[name: string\]: SkyBlockProfileQuest/, "[name: string]: undefined | SkyBlockProfileQuest");
+      }
+      if(lines[lines.length - 1].match(/export interface SkyBlockProfileSacksCounts/)) {
+        line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
+      }
+      if(lines[lines.length - 1].match(/export interface SkyBlockProfileSlayerBoss/)) {
+        SkyBlockProfileSlayerBoss = true;
+        line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
+      }
+      if (SkyBlockProfileSlayerBoss && line.match(/\[name: string\]: boolean/)) {
+        SkyBlockProfileSlayerBoss = false;
+        line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
+      }
+      if(lines[lines.length - 1].match(/claimed_levels:/)) {
+        line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
+      }
+    if(lines[lines.length - 1].match(/export interface SkyBlockProfileStats/)) {
       line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
     }
-    if(lines[lines.length - 1].match(/export interface SkyBlockProfileSlayerBoss/)) {
-      line = line.replace(/\[name: string\]: number/, "[name: string]: undefined | number");
-      SkyBlockProfileSlayerBoss = true;
-    }
-    if(lines[lines.length - 1].match(/claimed_levels:/)) {
-      line = line.replace(/\[name: string\]: boolean/, "[name: string]: undefined | boolean");
-    }
-  }
-
-  if (line.match(/export interface SkyBlockProfileObjectives/)) {
-    inSkyBlockProfileObjective = true;
-  }
-  if (inSkyBlockProfileObjective) {
-    line = line.replace(/\[name: string\]: boolean \| number \| string/, "[name: string]: undefined | boolean | number | string")
-  }
-  if (line.match(/export interface SkyBlockProfilePet/)) {
-    inSkyBlockProfileObjective = false;
   }
 
   if (line.match(/export interface PlayerStatsBedwars \{/)) {
