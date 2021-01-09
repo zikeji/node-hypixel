@@ -31,7 +31,7 @@ const app = new Application();
 module.exports = function(_, { sourceDir }) {
   const outFolder = "ts-api";
   const typedocOptions = {
-    entryPoints: app.expandInputFiles([resolve(__dirname, "..", "..", "..", "src")]),
+    entryPoints: resolve(__dirname, "..", "..", "..", "src", "index.ts"),
     tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
     readme: "none",
     categoryOrder: ["Public", "*", "Custom", "Other"],
