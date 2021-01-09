@@ -42,8 +42,7 @@ module.exports = function(_, { sourceDir }) {
     excludeExternals: true,
     excludePrivate: true,
     excludeProtected: true,
-    plugin: ["typedoc-plugin-markdown"],
-    theme: resolve(__dirname, "..", "..", "..", "node_modules", "vuepress-plugin-typedoc", "dist", "theme")
+    plugin: ["typedoc-plugin-markdown"]
   };
 
   app.options.addReader(new TypeDocReader());
