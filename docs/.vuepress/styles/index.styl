@@ -67,6 +67,15 @@ body.theme-light
           button
             outline unset
 
+@media (min-width ($MQMobile + 1px))
+  .theme-container:not(.has-sidebar)
+    .page
+      padding-left 0
+  .sidebar
+    display none
+    .has-sidebar &
+      display block
+
 .darkmode-switch
   .item
     border 1px solid var(--border-color) !important
