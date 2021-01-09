@@ -76,6 +76,7 @@ export type SkyBlockProfileCollections = SkyBlockProfileCollectionGroup[];
  * This helper takes a profile and scans all of it's member's to get the most accurate collection information possible. Returns false is none of the members of the profile had their collections API enabled.
  * @param profile The SkyBlock profile object you want to check.
  * @param collections The collections resource object.
+ * @category Helper
  */
 export function getSkyBlockProfileMemberCollections(
   profile: Pick<NonNullable<Components.Schemas.SkyBlockProfile>, "members">,
