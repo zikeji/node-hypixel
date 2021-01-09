@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.0.1](https://github.com/zikeji/node-hypixel/compare/v2.0.0...v2.0.1) (2021-01-09)
+
+
+### Bug Fixes
+
+* **docs:** don't include files, only a single entry point ([e734f75](https://github.com/zikeji/node-hypixel/commit/e734f75da53e0aa8410278c04d729309bda41e07))
+
+
+### Documentation
+
+* **readme:** add some more information to readme ([685daf1](https://github.com/zikeji/node-hypixel/commit/685daf1a1887660b7bb2cb429233e8a0129def12))
+* **readme:** update general information in readme header ([49d2227](https://github.com/zikeji/node-hypixel/commit/49d22273e9de7b001378786bd92790e6c4330df9))
+* add category for new helpers ([ca4c2d3](https://github.com/zikeji/node-hypixel/commit/ca4c2d304b7f2fe52f0aa81b6cb64b74ab3d3f3f))
+* add more documentation to methods ([a42eeff](https://github.com/zikeji/node-hypixel/commit/a42eeffd9dc5e54e4f10384e6d9cb4a04212b9df))
+* include full reflection in navbar title ([cbd42e8](https://github.com/zikeji/node-hypixel/commit/cbd42e88905315642226533ae99c226db4e3fddb))
+* remove no-inherit plugin ([ce0faba](https://github.com/zikeji/node-hypixel/commit/ce0faba50cbc508ee57afe94732330df4501361e))
+* remove theme as it was removed in latest release ([8ba4e4b](https://github.com/zikeji/node-hypixel/commit/8ba4e4bf5950f77c898bbb2ed513583426db938e))
+* update broken links ([8a2da51](https://github.com/zikeji/node-hypixel/commit/8a2da5119fdbdb65773a40fad3713822499109a4))
+* update to newer plugin options for cleaner output ([85f8333](https://github.com/zikeji/node-hypixel/commit/85f8333c207c10fc8a8dac23f79cf2a178362f99))
+
+
+### Miscellaneous Chores
+
+* **deps:** update out of date dependencies, resolve migration changes in vuepress-theme-mrhope ([ca71397](https://github.com/zikeji/node-hypixel/commit/ca713971e4d0e9fd32453c4db8b005d7627bdec6))
+
 ## [2.0.0](https://github.com/zikeji/node-hypixel/compare/v1.20.0...v2.0.0) (2021-01-08)
 
 
