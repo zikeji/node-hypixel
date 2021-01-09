@@ -17,9 +17,9 @@
 [docs]: https://node-hypixel.zikeji.com
 [hypixel]: https://api.hypixel.net/
 
-An unopinionated async/await API wrapper for [Hypixel's Public API][hypixel] developed in TypeScript complete with [documentation][docs], typed interfaces for all API responses, rate-limit handling, a few helpers, and support for undocumented endpoints.
+With thorough **[IntelliSense](https://code.visualstudio.com/docs/editor/intellisense)** support & **[100% test coverage](https://coveralls.io/github/zikeji/node-hypixel)**, this is an unopinionated async/await API wrapper for [Hypixel's Public API][hypixel]. It is developed in TypeScript complete with [documentation][docs], [typed interfaces](https://node-hypixel.zikeji.com/ts-api/) for all API responses (and an [OpenAPI.yaml](https://node-hypixel.zikeji.com/api/)!), built-in rate-limit handling, [flexible cache support](https://node-hypixel.zikeji.com/guide/advanced/cache/), [helper functions](https://node-hypixel.zikeji.com/guide/helpers/player-ranks/), and support for undocumented endpoints.
 
-The library aims to replicate the [Hypixel API][hypixel] as closely as possible, and as such won't alter the results, merely offering intellisense suggestions, rate-limit handling, and helpers.
+This library aims to replicate the API paths in it's method usage. As such, the general scheme would be to change the path of an API call by simply replacing the `/` with a `.`, and if the endpoint takes multiple parameters, those are added on the end. For example, `api.hypixel.net/skyblock/profiles?uuid=1234` would simply become `client.skyblock.profiles.uuid('1234')`. Of course, with everything being fully typed if you are using an IDE that supports [IntelliSense](https://code.visualstudio.com/docs/editor/intellisense) you should rarely need to reference documentation.
 
 ## Installation
 
