@@ -9,6 +9,7 @@ export class SkyBlockProfiles extends Method {
    * ```typescript
    * const profiles = await client.skyblock.profiles.uuid("20934ef9488c465180a78f861586b4cf");
    * ```
+   * @category API
    */
   public async uuid(
     uuid: Components.Parameters.PlayerUuidRequired.Uuid

@@ -36,6 +36,7 @@ export interface SkyBlockSkillInfo {
  * This helper takes a profile member and converts raw skill EXP to skill levels using the skills resources. Returns false is none of the profile member does not have their skills API enabled.
  * @param profileMember The SkyBlock profile member object you want to check.
  * @param skills The skills resource object.
+ * @category Helper
  */
 export function getSkyBlockProfileMemberSkills(
   profileMember: Components.Schemas.SkyBlockProfileMember,

@@ -10,7 +10,7 @@ module.exports = {
       content: readFileSync(resolve(__dirname, "..", "..", "..", "README.md"), "utf-8"),
       frontmatter: {
         home: true,
-        sidebar: "auto",
+        sidebar: false,
         heroText: "@zikeji/hypixel",
         heroImage: "/logo.svg",
         tagline: "NodeJS API wrapper for Hypixel's Public API",

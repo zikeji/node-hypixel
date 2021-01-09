@@ -63,6 +63,7 @@ jobs:
       - name: Build documentation
         env:
           NODE_ENV: production
+          NODE_OPTIONS: --max-old-space-size=4096
         run: npm run docs:build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

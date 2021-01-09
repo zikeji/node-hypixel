@@ -6,8 +6,9 @@ export class SkyBlockResources extends Method {
   /**
    * Returns the list of ingame collections.
    * @return An object of [[Collection | Collection interface]] objects.
+   * @category API
    */
-  async collections(): Promise<
+  public async collections(): Promise<
     ResultObject<
       Paths.ResourcesSkyblockCollections.Get.Responses.$200,
       ["collections"]
@@ -21,7 +22,11 @@ export class SkyBlockResources extends Method {
     );
   }
 
-  async skills(): Promise<
+  /**
+   * Returns the current skills from the SkyBlock gamemode.
+   * @category API
+   */
+  public async skills(): Promise<
     ResultObject<
       Paths.ResourcesSkyblockSkills.Get.Responses.$200,
       ["collections"]

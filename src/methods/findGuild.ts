@@ -11,8 +11,9 @@ export class FindGuild extends Method {
    * console.log(boosters);
    * // 553490650cf26f12ae5bac8f
    * ```
+   * @category API
    */
-  async byName(
+  public async byName(
     name: Components.Parameters.ByGuildName.ByName
   ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, ["success"]>> {
     return getResultObject(
@@ -31,8 +32,9 @@ export class FindGuild extends Method {
    * console.log(guild);
    * // 553490650cf26f12ae5bac8f
    * ```
+   * @category API
    */
-  async byUuid(
+  public async byUuid(
     uuid: Components.Parameters.ByUuid.ByUuid
   ): Promise<ResultObject<Paths.FindGuild.Get.Responses.$200, ["success"]>> {
     return getResultObject(

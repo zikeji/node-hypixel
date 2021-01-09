@@ -11,8 +11,9 @@ export class Resources extends Method {
    * ```typescript
    * const achievements = await client.resources.achievements();
    * ```
+   * @category API
    */
-  async achievements(): Promise<
+  public async achievements(): Promise<
     ResultObject<
       Paths.ResourcesAchievements.Get.Responses.$200,
       ["achievements"]
@@ -32,8 +33,9 @@ export class Resources extends Method {
    * ```typescript
    * const challenges = await client.resources.challenges();
    * ```
+   * @category API
    */
-  async challenges(): Promise<
+  public async challenges(): Promise<
     ResultObject<Paths.ResourcesChallenges.Get.Responses.$200, ["challenges"]>
   > {
     return getResultObject(
@@ -50,8 +52,9 @@ export class Resources extends Method {
    * ```typescript
    * const quests = await client.resources.quests();
    * ```
+   * @category API
    */
-  async quests(): Promise<
+  public async quests(): Promise<
     ResultObject<Paths.ResourcesQuests.Get.Responses.$200, ["quests"]>
   > {
     return getResultObject(
@@ -62,7 +65,15 @@ export class Resources extends Method {
     );
   }
 
+  /**
+   * Guild related resources.
+   * @category API
+   */
   public guilds: GuildsResources = new GuildsResources(this.client);
 
+  /**
+   * SkyBlock related resources.
+   * @category API
+   */
   public skyblock: SkyBlockResources = new SkyBlockResources(this.client);
 }

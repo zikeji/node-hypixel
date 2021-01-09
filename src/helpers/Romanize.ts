@@ -18,6 +18,7 @@ enum ROMAN_NUMERALS {
 /**
  * Quick helper function that will help you convert a number to a roman numeral for display purposes.
  * @param value The number you want to convert to a roman numeral.
+ * @category Helper
  */
 export function romanize(value: number): string {
   let roman = "";

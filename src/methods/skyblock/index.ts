@@ -15,6 +15,7 @@ export class SkyBlock extends Method {
    * auctions = await client.skyblock.auction.profile("347ef6c1daac45ed9d1fa02818cf0fb6");
    * auctions = await client.skyblock.auction.uuid("409a1e0f261a49849493278d6cd9305a");
    * ```
+   * @category API
    */
   public auction: SkyBlockAuction = new SkyBlockAuction(this.client);
 
@@ -24,6 +25,7 @@ export class SkyBlock extends Method {
    * ```typescript
    * const { auctions } = await client.skyblock.auctions.page(0);
    * ```
+   * @category API
    */
   public auctions: SkyBlockAuctions = new SkyBlockAuctions(this.client);
 
@@ -33,6 +35,7 @@ export class SkyBlock extends Method {
    * ```typescript
    * const { auctions } = await client.skyblock.auctions_ended();
    * ```
+   * @category API
    */
   public async auctions_ended(): Promise<
     ResultObject<Paths.SkyblockAuctionsEnded.Get.Responses.$200, ["success"]>
@@ -51,6 +54,7 @@ export class SkyBlock extends Method {
    * ```typescript
    * const products = await client.skyblock.bazaar();
    * ```
+   * @category API
    */
   public async bazaar(): Promise<
     ResultObject<Paths.SkyblockBazaar.Get.Responses.$200, ["products"]>
@@ -69,6 +73,7 @@ export class SkyBlock extends Method {
    * ```typescript
    * const news = await client.skyblock.news();
    * ```
+   * @category API
    */
   public async news(): Promise<
     ResultArray<Paths.SkyblockNews.Get.Responses.$200, "items">
@@ -87,6 +92,7 @@ export class SkyBlock extends Method {
    * ```typescript
    * const news = await client.skyblock.profile("20934ef9488c465180a78f861586b4cf");
    * ```
+   * @category API
    */
   public async profile(
     profile: Paths.SkyblockProfile.Get.Parameters.Profile
@@ -108,6 +114,7 @@ export class SkyBlock extends Method {
    * ```typescript
    * const profiles = await client.skyblock.profiles.uuid("20934ef9488c465180a78f861586b4cf");
    * ```
+   * @category API
    */
   public profiles: SkyBlockProfiles = new SkyBlockProfiles(this.client);
 }

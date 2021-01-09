@@ -31,19 +31,16 @@ const app = new Application();
 module.exports = function(_, { sourceDir }) {
   const outFolder = "ts-api";
   const typedocOptions = {
-    entryPoints: app.expandInputFiles([resolve(__dirname, "..", "..", "..", "src")]),
+    entryPoints: resolve(__dirname, "..", "..", "..", "src", "index.ts"),
     tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
     readme: "none",
-    categoryOrder: ["Public", "*", "Custom", "Other"],
-    toc: [
-      "Classes",
-      "Interfaces"
-    ],
+    categoryOrder: ["Public", "API", "*", "Custom", "Other"],
     excludeExternals: true,
     excludePrivate: true,
     excludeProtected: true,
-    plugin: ["typedoc-plugin-no-inherit", "typedoc-plugin-markdown"],
-    theme: resolve(__dirname, "..", "..", "..", "node_modules", "vuepress-plugin-typedoc", "dist", "theme")
+    hideInPageTOC: true,
+    hideBreadcrumbs: true,
+    plugin: ["typedoc-plugin-markdown"]
   };
 
   app.options.addReader(new TypeDocReader());
@@ -88,7 +85,7 @@ module.exports = function(_, { sourceDir }) {
               children: navItem.children.map((innerNavItem) => {
                 return [
                   innerNavItem.url.endsWith("index.md") ? `${innerNavItem.url.split("/").slice(0, -1).join("/")}/` : innerNavItem.url.replace(".md", ""),
-                  innerNavItem.title.split(".").slice(-1).join()
+                  innerNavItem.title
                 ];
               }),
             };
