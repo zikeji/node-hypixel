@@ -9,6 +9,7 @@ export class SkyBlockAuctions extends Method {
    * ```typescript
    * const { auctions } = await client.skyblock.auctions.page(0);
    * ```
+   * @category API
    */
   public async page(
     page: Paths.SkyblockAuctions.Get.Parameters.Page = 0

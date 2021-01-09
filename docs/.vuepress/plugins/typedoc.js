@@ -34,7 +34,7 @@ module.exports = function(_, { sourceDir }) {
     entryPoints: resolve(__dirname, "..", "..", "..", "src", "index.ts"),
     tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
     readme: "none",
-    categoryOrder: ["Public", "*", "Custom", "Other"],
+    categoryOrder: ["Public", "API", "*", "Custom", "Other"],
     excludeExternals: true,
     excludePrivate: true,
     excludeProtected: true,

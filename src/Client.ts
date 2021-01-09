@@ -206,12 +206,15 @@ export class Client {
     this.cache = options?.cache;
   }
 
-  on<E extends keyof ClientEvents>(event: E, listener: ClientEvents[E]): this {
+  public on<E extends keyof ClientEvents>(
+    event: E,
+    listener: ClientEvents[E]
+  ): this {
     this.emitter.on(event, listener);
     return this;
   }
 
-  once<E extends keyof ClientEvents>(
+  public once<E extends keyof ClientEvents>(
     event: E,
     listener: ClientEvents[E]
   ): this {
@@ -219,7 +222,10 @@ export class Client {
     return this;
   }
 
-  off<E extends keyof ClientEvents>(event: E, listener: ClientEvents[E]): this {
+  public off<E extends keyof ClientEvents>(
+    event: E,
+    listener: ClientEvents[E]
+  ): this {
     this.emitter.off(event, listener);
     return this;
   }
@@ -231,8 +237,9 @@ export class Client {
    * const boosters = await client.boosters();
    * console.log(boosters);
    * ```
+   * @category API
    */
-  async boosters(): Promise<
+  public async boosters(): Promise<
     ResultObject<Paths.Boosters.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(
@@ -249,6 +256,7 @@ export class Client {
    * console.log(guild);
    * // 553490650cf26f12ae5bac8f
    * ```
+   * @category API
    */
   public findGuild: FindGuild = new FindGuild(this);
 
@@ -259,6 +267,7 @@ export class Client {
    * const friends = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
    * console.log(friends);
    * ```
+   * @category API
    */
   public friends: Friends = new Friends(this);
 
@@ -269,8 +278,9 @@ export class Client {
    * const response = await client.gameCounts();
    * console.log(response);
    * ```
+   * @category API
    */
-  async gameCounts(): Promise<
+  public async gameCounts(): Promise<
     ResultObject<Paths.GameCounts.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(
@@ -285,6 +295,7 @@ export class Client {
    * ```typescript
    * const guild = await client.guild.id("553490650cf26f12ae5bac8f");
    * ```
+   * @category API
    */
   public guild: Guild = new Guild(this);
 
@@ -295,8 +306,11 @@ export class Client {
    * const key = await client.key();
    * console.log(key);
    * ```
+   * @category API
    */
-  async key(): Promise<ResultObject<Paths.Key.Get.Responses.$200, ["record"]>> {
+  public async key(): Promise<
+    ResultObject<Paths.Key.Get.Responses.$200, ["record"]>
+  > {
     return getResultObject(
       await this.call<Paths.Key.Get.Responses.$200>("key"),
       ["record"]
@@ -310,8 +324,9 @@ export class Client {
    * const leaderboards = await client.leaderboards();
    * console.log(leaderboards);
    * ```
+   * @category API
    */
-  async leaderboards(): Promise<
+  public async leaderboards(): Promise<
     ResultObject<Paths.Leaderboards.Get.Responses.$200, ["leaderboards"]>
   > {
     return getResultObject(
@@ -327,6 +342,7 @@ export class Client {
    * const player = await client.player.uuid("20934ef9488c465180a78f861586b4cf");
    * console.log(player);
    * ```
+   * @category API
    */
   public player: Player = new Player(this);
 
@@ -337,8 +353,9 @@ export class Client {
    * const response = await client.playerCounts();
    * console.log(response);
    * ```
+   * @category API
    */
-  async playerCount(): Promise<
+  public async playerCount(): Promise<
     ResultObject<Paths.PlayerCount.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(
@@ -354,11 +371,20 @@ export class Client {
    * const response = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
    * console.log(response);
    * ```
+   * @category API
    */
   public recentGames: RecentGames = new RecentGames(this);
 
+  /**
+   * Relatively static Hypixel resources that don't change often at all.
+   * @category API
+   */
   public resources: Resources = new Resources(this);
 
+  /**
+   * All SkyBlock related endpoints.
+   * @category API
+   */
   public skyblock: SkyBlock = new SkyBlock(this);
 
   /**
@@ -368,6 +394,7 @@ export class Client {
    * const response = await client.status.uuid("20934ef9488c465180a78f861586b4cf");
    * console.log(response);
    * ```
+   * @category API
    */
   public status: Status = new Status(this);
 
@@ -385,8 +412,9 @@ export class Client {
    * //   staff_total: 1874174
    * // }
    * ```
+   * @category API
    */
-  async watchdogstats(): Promise<
+  public async watchdogstats(): Promise<
     ResultObject<Paths.Watchdogstats.Get.Responses.$200, ["success"]>
   > {
     return getResultObject(

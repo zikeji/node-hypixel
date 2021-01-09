@@ -10,8 +10,9 @@ export class GuildsResources extends Method {
    * ```typescript
    * const achievements = await client.resources.guilds.achievements();
    * ```
+   * @category API
    */
-  async achievements(): Promise<
+  public async achievements(): Promise<
     ResultObject<
       Paths.ResourcesGuildsAchievements.Get.Responses.$200,
       ["success", "lastUpdated"]
@@ -31,8 +32,9 @@ export class GuildsResources extends Method {
    * ```typescript
    * const permissions = await client.resources.guilds.permissions();
    * ```
+   * @category API
    */
-  async permissions(): Promise<
+  public async permissions(): Promise<
     ResultArray<
       Paths.ResourcesGuildsPermissions.Get.Responses.$200,
       "permissions"
