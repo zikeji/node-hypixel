@@ -162,9 +162,6 @@ export declare interface Client {
   off(event: "reset", listener: () => void): this;
 }
 
-/**
- * @noInheritDoc
- */
 export class Client {
   /** @internal */
   private static readonly endpoint = new URL(`https://api.hypixel.net`);

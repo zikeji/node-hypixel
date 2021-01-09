@@ -42,7 +42,7 @@ module.exports = function(_, { sourceDir }) {
     excludeExternals: true,
     excludePrivate: true,
     excludeProtected: true,
-    plugin: ["typedoc-plugin-no-inherit", "typedoc-plugin-markdown"],
+    plugin: ["typedoc-plugin-markdown"],
     theme: resolve(__dirname, "..", "..", "..", "node_modules", "vuepress-plugin-typedoc", "dist", "theme")
   };
 
