@@ -35,13 +35,11 @@ module.exports = function(_, { sourceDir }) {
     tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
     readme: "none",
     categoryOrder: ["Public", "*", "Custom", "Other"],
-    toc: [
-      "Classes",
-      "Interfaces"
-    ],
     excludeExternals: true,
     excludePrivate: true,
     excludeProtected: true,
+    hideInPageTOC: true,
+    hideBreadcrumbs: true,
     plugin: ["typedoc-plugin-markdown"]
   };
 
