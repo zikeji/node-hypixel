@@ -46,12 +46,12 @@ const client = new Client("API_KEY");
 
 ## Helpers
 
-This library adds multiple helpers to facilitate using the Hypixel API. If you would like to request a helper that doesn't exist, please open an issue. Otherwise if you would like to contribute one refer to the below section.
+This library adds multiple helpers to facilitate using the Hypixel API. You can find documentation on each helper [here](https://node-hypixel.zikeji.com/guide/helpers/player-ranks/). If you would like to request a helper that doesn't exist, please open an issue. Otherwise if you would like to contribute one refer to the below section.
 
 ## Contributing
-If some API result isn't documented / typed out fully, please open an issue and I can add it ASAP. Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+If some API result isn't documented / typed out fully, please open an issue and I can see about adding it. However some data is too exhaustive to provide typings to in a reasonable manner, as exhibited [here](https://github.com/zikeji/node-hypixel/issues/119), where it isn't reasonable to add 19.5 thousand lines of code to document the entire dataset.
 
-All changes must ensure they pass eslint, tests, and that testing is updated to meet or exceed the previous coverage.
+Otherwise, pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. All changes must ensure they pass eslint, tests, and that testing is updated to meet or exceed the previous coverage.
 
 ## Licenses
 
