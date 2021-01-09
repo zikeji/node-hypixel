@@ -9,7 +9,7 @@ tags:
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">getSkyBlockProfileMemberSkills</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_skyblockskills/#getskyblockprofilememberskills) helper takes a SkyBlock profile member object (obtained [here](/ts-api/classes/methods/skyblock.skyblock/#profile) or [here](/ts-api/classes/methods/skyblock/profiles.skyblockprofiles/#uuid)) and the [skills resource](/ts-api/classes/methods/resources/skyblock.skyblockresources/#skills) to get usable skill information of a profile member. Additionally, for displaying skill levels in roman numerals (as you would see ingame) you can use the [<code class="language-javascript"><span class="token function">romanize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_romanize/#romanize) helper.
+The [<code class="language-javascript"><span class="token function">getSkyBlockProfileMemberSkills</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#getskyblockprofilememberskills) helper takes a SkyBlock profile member object (obtained [here](/ts-api/classes/skyblock/#profile) or [here](/ts-api/classes/skyblockprofiles/#uuid)) and the [skills resource](/ts-api/classes/skyblockresources/#skills) to get usable skill information of a profile member. Additionally, for displaying skill levels in roman numerals (as you would see ingame) you can use the [<code class="language-javascript"><span class="token function">romanize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#romanize) helper.
 
 ## Example
 

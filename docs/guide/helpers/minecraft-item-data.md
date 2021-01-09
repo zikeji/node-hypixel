@@ -11,9 +11,9 @@ tags:
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">transformItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_transformitemdata/#transformitemdata) and [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_transformskyblockitemdata/#transformskyblockprofilememberinventories) helpers exist to ease the process of consuming NBT data. You can find NBT data in the `/skyblock/profile` & `/skyblock/profiles` endpoint as inventory data, in the `/skyblock/auction`, `/skyblock/auctions`, & `/skyblock/auctions_ended` endpoints as item data, and in the `/player` endpoint for Pit inventories under `player.stats.Pit.profile`.
+The [<code class="language-javascript"><span class="token function">transformItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformitemdata) and [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockprofilememberinventories) helpers exist to ease the process of consuming NBT data. You can find NBT data in the [`/skyblock/profile`](/ts-api/classes/skyblock/#profile) & [`/skyblock/profiles`](/ts-api/classes/skyblockprofiles/#uuid) endpoint as inventory data, in the [`/skyblock/auction`](/ts-api/classes/skyblockauction/#player), [`/skyblock/auctions`](/ts-api/classes/skyblockauctions/#page), & [`/skyblock/auctions_ended`](/classes/skyblock/#auctions-ended) endpoints as item data, and in the [`/player`](/ts-api/classes/player/#uuid) endpoint for Pit inventories under [`player.stats.Pit.profile`](/ts-api/interfaces/components.schemas.playerstatspitprofile/#hierarchy).
 
-These helpers will transform the NBT data into objects that conform to the [InventoryItem interface](/ts-api/interfaces/helpers/transformitemdata.nbtinventoryitem/#hierarchy). You can make use of type hinting to figure out what is available, or browse the type definitions. These definitions cover what I found during discovery, with some unecessary definitions left out. As always you can use <code class="language-javascript"><span class="token function">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> to view the data if you are looking for something specific.
+These helpers will transform the NBT data into objects that conform to the [InventoryItem interface](/ts-api/interfaces/nbtinventoryitem/#hierarchy). You can make use of type hinting to figure out what is available, or browse the type definitions. These definitions cover what I found during discovery, with some unecessary definitions left out. As always you can use <code class="language-javascript"><span class="token function">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code> to view the data if you are looking for something specific.
 
 ## Requirements
 
@@ -33,7 +33,7 @@ The primary function of this helper aside from converting the data using [prisma
 
 ### SkyBlock Inventory
 
-If you only need a specific inventory you should use the [<code class="language-javascript"><span class="token function">transformItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_transformitemdata/#transformitemdata) helper.
+If you only need a specific inventory you should use the [<code class="language-javascript"><span class="token function">transformItemData</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformitemdata) helper.
 
 ```typescript
 import { Client as Hypixel, transformItemData } from "@zikeji/hypixel";
@@ -83,7 +83,7 @@ const client = new Hypixel("API_KEY");
 
 ### All SkyBlock Inventories
 
-If you need all inventories resolved, the [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/modules/helpers_transformskyblockitemdata/#transformskyblockprofilememberinventories) helper will do that for you by transforming the member object you pass and adding the appropriate inventory data.
+If you need all inventories resolved, the [<code class="language-javascript"><span class="token function">transformSkyBlockProfileMemberInventories</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#transformskyblockprofilememberinventories) helper will do that for you by transforming the member object you pass and adding the appropriate inventory data.
 
 ```typescript
 import { Client as Hypixel, transformSkyBlockProfileMemberInventories } from "@zikeji/hypixel";
