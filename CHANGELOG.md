@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.1.1](https://github.com/zikeji/node-hypixel/compare/v2.1.0...v2.1.1) (2021-01-12)
+
+
+### Miscellaneous Chores
+
+* **semantic-releases:** add new releaseRules ([b726ef8](https://github.com/zikeji/node-hypixel/commit/b726ef8f30aee457948360d25c598c66989a08e2))
+
+
+### Documentation
+
+* **readme:** add Discord link to README ([0c583aa](https://github.com/zikeji/node-hypixel/commit/0c583aa884998a29b1ed8ed10f21ca99e6613001))
+* **vuepress:** add Discord link to navigation bar of documentation site ([51d1abb](https://github.com/zikeji/node-hypixel/commit/51d1abb1c561ef241f03d4951fe3c159c365271f))
+
 ## [2.1.0](https://github.com/zikeji/node-hypixel/compare/v2.0.1...v2.1.0) (2021-01-12)
 
 
