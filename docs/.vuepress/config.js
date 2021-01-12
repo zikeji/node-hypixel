@@ -69,6 +69,7 @@ module.exports = config({
         icon: "info",
         items: [
           { text: "Changelog", link: "/changelog/", icon: "changelog" },
+          { text: "Discord Server", link: "https://discord.gg/QkcGHwG", icon: "discord" },
           { text: "NPM Package", link: `https://www.npmjs.com/package/${name}`, icon: "npm" },
           { text: "GitHub Repo", link: `https://github.com/${repo}`, icon: "github" },
         ]
