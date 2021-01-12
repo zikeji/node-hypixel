@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@zikeji/hypixel)][npm]
 [![npm bundle size](https://img.shields.io/bundlephobia/min/@zikeji/hypixel)][npm]
 [![visit docs](https://img.shields.io/badge/docs-VuePress-green)][docs]
+[![Visit our Discord server.](https://img.shields.io/badge/support-Discord-green)](https://discord.gg/QkcGHwG)
 [![Snyk Vulnerabilities for npm package version](https://img.shields.io/snyk/vulnerabilities/npm/@zikeji/hypixel)][npm]
 [![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/@zikeji/hypixel)][npm]
 [![GitHub license](https://img.shields.io/github/license/zikeji/node-hypixel)](https://github.com/zikeji/node-hypixel/blob/master/LICENSE)
