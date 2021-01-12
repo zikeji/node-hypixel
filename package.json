@@ -63,6 +63,11 @@
         "@semantic-release/commit-analyzer",
         {
           "preset": "conventionalcommits",
+          "releaseRules": [
+            {"type": "docs", "release": "patch"},
+            {"type": "refactor", "release": "patch"},
+            {"scope": "no-release", "release": false}
+          ],
           "presetConfig": {
             "types": [
               {
