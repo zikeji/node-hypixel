@@ -52,6 +52,10 @@ module.exports = config({
     ["meta", { name: "og:image:height", content: 640 }],
   ],
   themeConfig: {
+    algolia: {
+      apiKey: process.env.NODE_ENV === 'production' ? 'e69630b617d38ea18d4c4833d93981b5' : '25626fae796133dc1e734c6bcaaeac3c',
+      indexName: process.env.NODE_ENV === 'production' ? 'node-hypixel' : 'docsearch'
+    },
     hostname,
     blog: false,
     logo: "/logo.svg",
