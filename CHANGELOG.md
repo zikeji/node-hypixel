@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/zikeji/node-hypixel/compare/v2.0.1...v2.1.0) (2021-01-12)
+
+
+### Features
+
+* **docs:** add algolia docsearch ([3bf266a](https://github.com/zikeji/node-hypixel/commit/3bf266a84bae59374b99e3beeb7e3d6d33c28a07))
+
 ### [2.0.1](https://github.com/zikeji/node-hypixel/compare/v2.0.0...v2.0.1) (2021-01-09)
 
 
