@@ -9,7 +9,7 @@
   "thumbnail_height": 180,
   "provider_name": "GitHub",
   "provider_url": "https://github.com/zikeji/node-hypixel",
-  "title": "@zikeji/hypixel - v2.1.0",
+  "title": "@zikeji/hypixel - v2.1.1",
   "description": "With thorough IntelliSense support & 100% test coverage, this is an unopinionated async/await API wrapper for Hypixel's Public API. It is developed in TypeScript complete with documentation, typed interfaces for all API responses (and an OpenAPI 3.0 schema!), built-in rate-limit handling, flexible cache support, helper functions, and support for undocumented endpoints.",
   "author_name": "Zikeji",
   "author_url": "https://github.com/zikeji"
