@@ -226,7 +226,7 @@
   "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@mdi/svg": "^5.8.55",
+    "@mdi/svg": "^5.9.55",
     "@mr-hope/vuepress-plugin-last-update": "^1.8.1",
     "@mr-hope/vuepress-types": "^1.8.1",
     "@semantic-release/changelog": "^5.0.1",
