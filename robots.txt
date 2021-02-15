@@ -2,4 +2,4 @@
 User-agent:*
 Disallow:
 
-Sitemap: https://node-hypixel.zikeji.comsitemap.xml
+Sitemap: https://node-hypixel.zikeji.com/sitemap.xml
