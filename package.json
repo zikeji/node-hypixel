@@ -237,7 +237,7 @@
     "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.28",
     "@types/yargs-parser": "^20.2.0",
-    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.0",
     "chai": "^4.3.0",
     "chai-as-promised": "^7.1.1",
