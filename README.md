@@ -1,6 +1,7 @@
 # @zikeji/hypixel
 
 [![npm](https://img.shields.io/npm/v/@zikeji/hypixel)][npm]
+[![Deno](https://img.shields.io/badge/dynamic/json?color=black&label=Deno&prefix=v&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fzikeji%2Fnode-hypixel%2Fmain%2Fpackage.json&style=flat&logo=Deno)](https://deno.land/x/hypixel)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/@zikeji/hypixel)][npm]
 [![visit docs](https://img.shields.io/badge/docs-VuePress-green)][docs]
 [![Visit our Discord server.](https://img.shields.io/badge/support-Discord-green)](https://discord.gg/QkcGHwG)
