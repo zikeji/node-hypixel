@@ -14,7 +14,8 @@
     "strict": true,
     "removeComments": false,
     "stripInternal": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["./src/**/*.ts"]
 }

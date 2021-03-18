@@ -223,12 +223,11 @@
       ]
     ]
   },
-  "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@mdi/svg": "^5.9.55",
     "@mr-hope/vuepress-plugin-last-update": "^1.9.6",
-    "@mr-hope/vuepress-types": "^1.9.6",
+    "@mr-hope/vuepress-types": "^1.12.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@types/chai": "^4.2.15",
@@ -266,7 +265,7 @@
     "typedoc-plugin-markdown": "^3.4.5",
     "typescript": "^4.1.5",
     "vuepress": "^1.8.1",
-    "vuepress-plugin-typedoc": "^0.4.0",
+    "vuepress-plugin-typedoc": "^0.5.0",
     "vuepress-theme-hope": "^1.9.6",
     "yaml-loader": "^0.6.0"
   },
