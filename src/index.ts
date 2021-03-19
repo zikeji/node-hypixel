@@ -41,13 +41,13 @@ export * from "./methods/player";
 // @deno-types="./methods/recentGames.ts"
 export * from "./methods/recentGames";
 // @deno-types="./methods/resources/index.ts"
-export * from "./methods/resources";
+export * from "./methods/resources/index";
 // @deno-types="./methods/resources/guilds.ts"
 export * from "./methods/resources/guilds";
 // @deno-types="./methods/resources/skyblock.ts"
 export * from "./methods/resources/skyblock";
 // @deno-types="./methods/skyblock/index.ts"
-export * from "./methods/skyblock";
+export * from "./methods/skyblock/index";
 // @deno-types="./methods/skyblock/auction.ts"
 export * from "./methods/skyblock/auction";
 // @deno-types="./methods/skyblock/auctions.ts"

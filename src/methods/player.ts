@@ -1,5 +1,5 @@
 // @deno-types="../types/api.ts"
-import type { Components, Paths } from "../types/api";
+import { Components, Paths } from "../types/api";
 // @deno-types="../util/Method.ts"
 import { Method } from "../util/Method";
 // @deno-types="../util/ResultObject.ts"
