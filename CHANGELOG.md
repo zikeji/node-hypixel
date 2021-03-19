@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.2.2](https://github.com/zikeji/node-hypixel/compare/v2.2.1...v2.2.2) (2021-03-19)
+
+
+### Bug Fixes
+
+* **deno:** add deno-types comments ([cd97322](https://github.com/zikeji/node-hypixel/commit/cd9732245a65d85f1c1b9464666f16b9345a5f67))
+
 ### [2.2.1](https://github.com/zikeji/node-hypixel/compare/v2.2.0...v2.2.1) (2021-03-19)
 
 
