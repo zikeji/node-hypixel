@@ -2,7 +2,7 @@ const fs = require("fs");
 const { join, resolve } = require("path");
 const { promisify } = require("util");
 const { Application, TSConfigReader, TypeDocReader } = require("typedoc");
-const { FrontMatterComponent } = require("typedoc-plugin-markdown/dist/components/front-matter");
+const { FrontMatterComponent } = require("vuepress-plugin-typedoc/dist/front-matter");
 
 const readdir = promisify(fs.readdir);
 const statFile = promisify(fs.stat);
@@ -35,6 +35,7 @@ module.exports = function(_, { sourceDir }) {
     tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
     readme: "none",
     categoryOrder: ["Public", "API", "*", "Custom", "Other"],
+    exclude: [resolve(__dirname, "..", "..", "..", "node_modules", "prismarine-nbt")],
     excludeExternals: true,
     excludePrivate: true,
     excludeProtected: true,
