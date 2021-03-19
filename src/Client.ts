@@ -18,14 +18,20 @@ import { Guild } from "./methods/guild";
 import { Player } from "./methods/player";
 // @deno-types="./methods/recentGames.ts"
 import { RecentGames } from "./methods/recentGames";
-// @deno-types="./methods/resources.ts"
-import { Resources } from "./methods/resources";
-// @deno-types="./methods/skyblock.ts"
-import { SkyBlock } from "./methods/skyblock";
+// @deno-types="./methods/resources/index.ts"
+import { Resources } from "./methods/resources/index";
+// @deno-types="./methods/skyblock/index.ts"
+import { SkyBlock } from "./methods/skyblock/index";
 // @deno-types="./methods/status.ts"
 import { Status } from "./methods/status";
 // @deno-types="./types/api.ts"
-import type { Components, Paths } from "./types/api";
+import { Components, Paths } from "./types/api";
+// @deno-types="./types/DefaultMeta.ts"
+import { DefaultMeta } from "./types/DefaultMeta";
+// @deno-types="./types/RateLimitData.ts"
+import { RateLimitData } from "./types/RateLimitData";
+// @deno-types="./util/BaseClient.ts"
+import { BaseClient } from "./util/BaseClient";
 // @deno-types="./util/Queue.ts"
 import { Queue } from "./util/Queue";
 // @deno-types="./util/ResultObject.ts"
@@ -37,58 +43,6 @@ export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
   retries: number;
   noRateLimit: boolean;
   includeApiKey: boolean;
-}
-
-/** @hidden */
-export interface RateLimitData {
-  /**
-   * Remaining API calls until the limit resets.
-   */
-  remaining: number;
-  /**
-   * Time, in seconds, until remaining resets to limit.
-   */
-  reset: number;
-  /**
-   * How many requests per minute your API key can make.
-   */
-  limit: number;
-}
-
-/**
- * Possible meta options returned on the meta variable.
- */
-export interface DefaultMeta {
-  /**
-   * If this request required an API key it returned rate limit information in the headers, which is included here.
-   */
-  ratelimit?: RateLimitData;
-  /**
-   * If you included a cache get/set method in the options, this value will be set to true if that cache was hit.
-   */
-  cached?: boolean;
-  /**
-   * Data from CloudFlare's headers in regards to caching - particularly relevant for resources endpoints.
-   */
-  cloudflareCache?: {
-    /**
-     * Cloudflare cache status.
-     */
-    status: "HIT" | "MISS" | "BYPASS" | "EXPIRED" | "DYNAMIC";
-    /**
-     * Cloudflare cache age.
-     */
-    age?: number;
-    /**
-     * Cloudflare max cache age.
-     */
-    maxAge?: number;
-  };
-}
-
-/** @hidden */
-export interface Parameters {
-  [parameter: string]: string;
 }
 
 /**
@@ -138,7 +92,7 @@ interface ClientEvents {
   reset: () => void;
 }
 
-export declare interface Client {
+export declare interface Client extends BaseClient {
   /**
    * Listen to the "limited" event which emits when the client starts limiting your calls due to hitting the rate limit.
    * @category Events
@@ -454,7 +408,7 @@ export class Client {
    */
   public async call<T extends Components.Schemas.ApiSuccess>(
     path: string,
-    parameters: Parameters = {}
+    parameters: Record<string, string> = {}
   ): Promise<T & { cached?: boolean }> {
     if (!this.cache) {
       return this.executeActionableCall(
@@ -528,7 +482,7 @@ export class Client {
   private createActionableCall<T extends Components.Schemas.ApiSuccess>(
     path: string,
     /* istanbul ignore next */
-    parameters: Parameters = {}
+    parameters: Record<string, string> = {}
   ): ActionableCall<T> {
     let noRateLimit = false;
     let includeApiKey = true;
@@ -565,7 +519,7 @@ export class Client {
     } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
   >(
     path: string,
-    parameters: Parameters,
+    parameters: Record<string, string>,
     noRateLimit: boolean,
     includeApiKey: boolean
   ): Promise<T> {

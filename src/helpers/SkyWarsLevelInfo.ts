@@ -10,11 +10,10 @@
 // @deno-types="../types/api.ts"
 import { Components } from "../types/api";
 // @deno-types="./SkyWarsPrestige.ts"
-import type { SkyWarsPrestige } from "./SkyWarsPrestige";
-// @deno-types="./SkyWarsPrestige.ts"
 import {
   getSkyWarsPrestigeForLevel,
   SkyWarsPrestiges,
+  SkyWarsPrestige,
 } from "./SkyWarsPrestige";
 
 /** @internal */
