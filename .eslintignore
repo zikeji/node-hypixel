@@ -1,3 +1,4 @@
 dist/
 docs/
 tests/
+mod.ts
