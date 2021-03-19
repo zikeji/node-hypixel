@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.0](https://github.com/zikeji/node-hypixel/compare/v2.1.2...v2.2.0) (2021-03-19)
+
+
+### Features
+
+* **helpers:** add SkyWars helpers for level and prestige ([15be627](https://github.com/zikeji/node-hypixel/commit/15be62719ac88af96f0342ad86e065f98a5915fc)), closes [#203](https://github.com/zikeji/node-hypixel/issues/203)
+
+
+### Documentation
+
+* **helpers:** add SkyWars helpers documentation ([ed80716](https://github.com/zikeji/node-hypixel/commit/ed807166c38206f21f25daf3c67cadb4e27ddd46))
+* fix typo in bedwars info ([db7ab77](https://github.com/zikeji/node-hypixel/commit/db7ab77f6e5a11ca1a95a3770f44537a4c246dfd))
+* optimize webp examples ([37abc23](https://github.com/zikeji/node-hypixel/commit/37abc2300d1e692d75e951670e6925f227e7dd93))
+
 ### [2.1.2](https://github.com/zikeji/node-hypixel/compare/v2.1.1...v2.1.2) (2021-03-19)
 
 
