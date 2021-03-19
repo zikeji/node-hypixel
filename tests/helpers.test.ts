@@ -10,10 +10,13 @@ import {
   getPlayerRank,
   getSkyBlockProfileMemberCollections,
   getSkyBlockProfileMemberSkills,
+  getSkyWarsLevelInfo,
+  getSkyWarsPrestigeForLevel,
   NBTInventory,
   removeMinecraftFormatting,
   romanize,
   SkyBlockProfileTransformedInventories,
+  SkyWarsPrestiges,
   transformItemData,
   transformSkyBlockProfileMemberInventories,
 } from "../src";
@@ -634,6 +637,69 @@ describe("Test getBedwarsLevelInfo", function () {
     } catch (e) {
       expect(e.message).to.equal(
         "Data supplied does not contain player Bedwars experience."
+      );
+    }
+  });
+});
+
+describe("Test SkyWarsLevelInfo & SkyWarsPrestige", function () {
+  it("should return level 1", function () {
+    const levelInfo = getSkyWarsLevelInfo({
+      stats: { SkyWars: { skywars_experience: 0 } },
+    } as never);
+    expect(levelInfo).to.be.a("object");
+    expect(levelInfo.level).to.be.a("number").that.equals(1);
+    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(1);
+    expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
+    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(20);
+    expect(levelInfo.remainingExpToNextLevel).to.be.a("number").that.equals(20);
+  });
+  const exp = [
+    83,
+    2638,
+    15179,
+    54715,
+    131139,
+    147585,
+    230200,
+    253038,
+    301656,
+    390383,
+    418689,
+    1462522,
+  ];
+  for (let i = 0; i < exp.length; i += 1) {
+    const prestige = SkyWarsPrestiges[i];
+    it(`should return ${prestige.name} prestige`, function () {
+      const levelInfo = getSkyWarsLevelInfo(exp[i], true);
+      expect(levelInfo).to.be.a("object");
+      expect(levelInfo.prestige).to.be.a("object").that.equals(prestige);
+      if (i + 1 < exp.length) {
+        expect(levelInfo.nextPrestige)
+          .to.be.a("object")
+          .that.equals(SkyWarsPrestiges[i + 1]);
+      }
+      // console.log(levelInfo);
+    });
+  }
+  it("getSkyWarsPrestigeForLevel should throw typeError", function () {
+    try {
+      getSkyWarsPrestigeForLevel({
+        stats: {},
+      } as never);
+    } catch (e) {
+      expect(e.message).to.equal("Not a valid level.");
+    }
+  });
+  it("getSkyWarsLevelInfo should throw typeError", function () {
+    try {
+      getSkyWarsLevelInfo({
+        stats: {},
+      } as never);
+    } catch (e) {
+      expect(e.message).to.equal(
+        "Data supplied does not contain player SkyWars experience."
       );
     }
   });

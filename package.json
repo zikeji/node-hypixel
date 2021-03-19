@@ -19,6 +19,7 @@
     "types:openapi": "dtsgen --out ./src/types/api.ts --target ES2015 ./openapi.yaml && node ./scripts/process_api_output.js && eslint --ext ts ./src/types/api.ts --fix",
     "watch": "npm run clean && tsc -p . -w",
     "test": "nodenv --exec npx -- mocha -r ts-node/register tests/**/*.test.ts",
+    "test:helpers": "nodenv --exec npx -- mocha -r ts-node/register tests/helpers.test.ts",
     "test:ci": "mocha -r ts-node/register tests/**/*.test.ts",
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
