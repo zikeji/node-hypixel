@@ -2,19 +2,33 @@ import { EventEmitter } from "events";
 import { IncomingHttpHeaders } from "http";
 import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
+// @deno-types="./errors/GenericHTTPError.ts"
 import { GenericHTTPError } from "./errors/GenericHTTPError";
+// @deno-types="./errors/InvalidKeyError.ts"
 import { InvalidKeyError } from "./errors/InvalidKeyError";
+// @deno-types="./errors/RateLimitError.ts"
 import { RateLimitError } from "./errors/RateLimitError";
+// @deno-types="./methods/findGuild.ts"
 import { FindGuild } from "./methods/findGuild";
+// @deno-types="./methods/friends.ts"
 import { Friends } from "./methods/friends";
+// @deno-types="./methods/guild.ts"
 import { Guild } from "./methods/guild";
+// @deno-types="./methods/player.ts"
 import { Player } from "./methods/player";
+// @deno-types="./methods/recentGames.ts"
 import { RecentGames } from "./methods/recentGames";
+// @deno-types="./methods/resources.ts"
 import { Resources } from "./methods/resources";
+// @deno-types="./methods/skyblock.ts"
 import { SkyBlock } from "./methods/skyblock";
+// @deno-types="./methods/status.ts"
 import { Status } from "./methods/status";
+// @deno-types="./types/api.ts"
 import type { Components, Paths } from "./types/api";
+// @deno-types="./util/Queue.ts"
 import { Queue } from "./util/Queue";
+// @deno-types="./util/ResultObject.ts"
 import { getResultObject, ResultObject } from "./util/ResultObject";
 
 /** @internal */

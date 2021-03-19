@@ -1,5 +1,8 @@
+// @deno-types="../types/api.ts"
 import type { Components, Paths } from "../types/api";
+// @deno-types="../util/Method.ts"
 import { Method } from "../util/Method";
+// @deno-types="../util/ResultObject.ts"
 import { ResultObject, getResultObject } from "../util/ResultObject";
 
 export class Status extends Method {

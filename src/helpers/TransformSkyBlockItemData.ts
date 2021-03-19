@@ -1,4 +1,6 @@
+// @deno-types="../types/api.ts"
 import { Components } from "../types/api";
+// @deno-types="./TransformItemData.ts"
 import { NBTInventory, transformItemData } from "./TransformItemData";
 
 /**
