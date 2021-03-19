@@ -1,4 +1,6 @@
-import type { DefaultMeta } from "..";
+// @deno-types="../Client.ts"
+import type { DefaultMeta } from "../Client";
+// @deno-types="../types/api.ts"
 import type { Components } from "../types/api";
 
 /**

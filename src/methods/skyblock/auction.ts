@@ -1,5 +1,8 @@
+// @deno-types="../../types/api.ts"
 import type { Paths } from "../../types/api";
+// @deno-types="../../util/Method.ts"
 import { Method } from "../../util/Method";
+// @deno-types="../../util/ResultArray.ts"
 import { getResultArray, ResultArray } from "../../util/ResultArray";
 
 export class SkyBlockAuction extends Method {
