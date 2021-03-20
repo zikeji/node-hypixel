@@ -1,5 +1,3 @@
-/// <reference path="../src/globals.d.ts" />
-
 import { expect } from "chai";
 import { Agent } from "https";
 import { Client, InvalidKeyError } from "../src";
@@ -13,7 +11,6 @@ const timeoutClient = new Client(process.env.HYPIXEL_KEY || "", {
   timeout: 1,
   retries: 3,
   userAgent: "@test/client",
-  agent: new Agent({ timeout: 1 }),
 });
 
 describe("Client throws invalid api key", function () {
