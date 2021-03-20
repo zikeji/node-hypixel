@@ -1,5 +1,4 @@
 import { expect } from "chai";
-import { Agent } from "https";
 import { Client, InvalidKeyError } from "../src";
 import { GenericHTTPError } from "../src/errors/GenericHTTPError";
 import { getResultArray } from "../src/util/ResultArray";
