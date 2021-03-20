@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { toUint8Array } from "https://denopkg.com/chiefbiiko/base64/mod.ts";
 import {
   parse as nbtParse,

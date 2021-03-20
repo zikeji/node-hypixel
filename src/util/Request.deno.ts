@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { GenericHTTPError } from "../errors/GenericHTTPError.ts";
 import { InvalidKeyError } from "../errors/InvalidKeyError.ts";
 import { RateLimitError } from "../errors/RateLimitError.ts";
