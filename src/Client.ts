@@ -1,10 +1,7 @@
 import { EventEmitter } from "events";
-import { IncomingHttpHeaders } from "http";
-import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
 import { GenericHTTPError } from "./errors/GenericHTTPError";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
-import { RateLimitError } from "./errors/RateLimitError";
 import { FindGuild } from "./methods/findGuild";
 import { Friends } from "./methods/friends";
 import { Guild } from "./methods/guild";
@@ -15,6 +12,7 @@ import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";
 import type { Components, Paths } from "./types/api";
 import { Queue } from "./util/Queue";
+import { request } from "./util/Request";
 import { getResultObject, ResultObject } from "./util/ResultObject";
 
 /** @internal */
@@ -73,6 +71,15 @@ export interface DefaultMeta {
 }
 
 /** @hidden */
+export interface RequestOptions {
+  url: string;
+  timeout: number;
+  userAgent: string;
+  noRateLimit: boolean;
+  getRateLimitHeaders: Client["getRateLimitHeaders"];
+}
+
+/** @hidden */
 export interface Parameters {
   [parameter: string]: string;
 }
@@ -98,6 +105,8 @@ export interface ClientOptions {
   retries?: number;
   /**
    * The time, in milliseconds, you want to wait before giving up on the method call.
+   *
+   * **NOTE:** This option is ignored when being [used in Deno](https://github.com/denoland/deno/issues/7019).
    * @default 10000
    */
   timeout?: number;
@@ -107,17 +116,10 @@ export interface ClientOptions {
    */
   userAgent?: string;
   /**
-   * Custom [HTTPS agent](https://nodejs.org/api/https.html#https_class_https_agent) if desired.
-   */
-  agent?: Agent;
-  /**
    * Functions you want to use for caching results. Optional.
    */
   cache?: BasicCache;
 }
-
-/** @internal */
-const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
 
 interface ClientEvents {
   limited: (limit: number, reset: Date) => void;
@@ -178,8 +180,6 @@ export class Client {
   /** @internal */
   private readonly userAgent: string;
   /** @internal */
-  private readonly agent?: Agent;
-  /** @internal */
   private readonly cache?: ClientOptions["cache"];
 
   /** @internal */
@@ -202,7 +202,6 @@ export class Client {
     this.retries = options?.retries ?? 3;
     this.timeout = options?.timeout ?? 10000;
     this.userAgent = options?.userAgent ?? "@zikeji/hypixel";
-    this.agent = options?.agent;
     this.cache = options?.cache;
   }
 
@@ -564,139 +563,17 @@ export class Client {
       url.searchParams.set("key", this.apiKey);
     }
 
-    const options: RequestOptions = {
-      method: "GET",
+    return request({
+      url: url.toString(),
+      userAgent: this.userAgent,
       timeout: this.timeout,
-      headers: {
-        "User-Agent": this.userAgent,
-        Accept: "application/json",
-      },
-    };
-
-    if (this.agent) {
-      options.agent = this.agent;
-    }
-
-    return new Promise((resolve, reject) => {
-      const clientRequest = request(url, options, (incomingMessage) => {
-        let responseBody = "";
-
-        incomingMessage.on("data", (chunk) => {
-          responseBody += chunk;
-        });
-
-        incomingMessage.on("end", () => {
-          if (!noRateLimit) {
-            this.getRateLimitHeaders(incomingMessage.headers);
-          }
-
-          /* istanbul ignore next */
-          if (
-            typeof responseBody !== "string" ||
-            responseBody.trim().length === 0
-          ) {
-            return reject(new Error(`No response body received.`));
-          }
-
-          let responseObject: T | undefined;
-          try {
-            responseObject = JSON.parse(responseBody);
-          } catch (_) {
-            // noop
-          }
-
-          if (incomingMessage.statusCode !== 200) {
-            /* istanbul ignore next */
-            if (incomingMessage.statusCode === 429) {
-              return reject(new RateLimitError(`Hit key throttle.`));
-            }
-
-            if (incomingMessage.statusCode === 403) {
-              return reject(new InvalidKeyError("Invalid API Key"));
-            }
-
-            /* istanbul ignore else */
-            if (
-              /* istanbul ignore next */ responseObject?.cause &&
-              typeof incomingMessage.statusCode === "number"
-            ) {
-              return reject(
-                new GenericHTTPError(
-                  incomingMessage.statusCode,
-                  responseObject.cause
-                )
-              );
-            }
-
-            /**
-             * Generic catch all that probably should never be caught.
-             */
-            /* istanbul ignore next */
-            return reject(
-              new Error(
-                `${incomingMessage.statusCode} ${incomingMessage.statusMessage}. Response: ${responseBody}`
-              )
-            );
-          }
-
-          /* istanbul ignore if */
-          if (typeof responseObject === "undefined") {
-            return reject(
-              new Error(
-                `Invalid JSON response received. Response: ${responseBody}`
-              )
-            );
-          }
-
-          /* istanbul ignore else */
-          if (incomingMessage.headers["cf-cache-status"]) {
-            const age = parseInt(incomingMessage.headers.age as string, 10);
-            const maxAge = CACHE_CONTROL_REGEX.exec(
-              incomingMessage.headers["cache-control"] as string
-            );
-            responseObject.cloudflareCache = {
-              status: incomingMessage.headers["cf-cache-status"] as never,
-              ...(typeof age === "number" && !Number.isNaN(age) && { age }),
-              ...(incomingMessage.headers["cf-cache-status"] === "HIT" &&
-                (typeof age !== "number" ||
-                  Number.isNaN(age)) && /* istanbul ignore next */ { age: 0 }),
-              ...(maxAge &&
-                typeof maxAge === "object" &&
-                maxAge.length === 2 &&
-                parseInt(maxAge[1], 10) > 0 && {
-                  maxAge: parseInt(maxAge[1], 10),
-                }),
-            };
-          }
-
-          return resolve(responseObject);
-        });
-      });
-
-      let abortError: Error;
-      /* istanbul ignore next */
-      clientRequest.once("abort", () => {
-        abortError = abortError ?? new Error("Client aborted this request.");
-        reject(abortError);
-      });
-
-      /* istanbul ignore next */
-      clientRequest.once("error", (error) => {
-        abortError = error;
-        clientRequest.abort();
-      });
-
-      clientRequest.setTimeout(this.timeout, () => {
-        abortError = new Error("Hit configured timeout.");
-        clientRequest.abort();
-      });
-
-      clientRequest.end();
+      noRateLimit,
+      getRateLimitHeaders: this.getRateLimitHeaders.bind(this),
     });
   }
 
   /** @internal */
-  private getRateLimitHeaders(headers: IncomingHttpHeaders): void {
+  private getRateLimitHeaders(headers: Record<string, string>): void {
     Object.keys(this.rateLimit).forEach((key) => {
       const headerKey = `ratelimit-${key}`;
       if (headerKey in headers) {
