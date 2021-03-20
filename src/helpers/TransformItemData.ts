@@ -1,3 +1,5 @@
+import { parse } from "../util/NBT";
+
 /**
  * Array of inventory slots. If that slot is empty it will be null, otherwise it will be an object containing the data.
  */
@@ -140,39 +142,13 @@ export interface NBTCustomPotionEffect {
 
 /**
  * This helper will transform NBT data into a typed object using prismarine-nbt. It will also transform any backpacks/bags with item data so you can explore those as well.
- * @param value A Base64 item data string, NBT byte array, or buffer.
+ * @param value A Base64 item data string, NBT byte array, or buffer. If Deno, no Buffer but a Uint8Array is supported.
  * @category Helper
  */
 export async function transformItemData(
-  value: number[] | string | Buffer
+  value: Parameters<typeof parse>[number]
 ): Promise<NBTInventory> {
-  let nbt: typeof import("prismarine-nbt");
-  try {
-    nbt = await import("prismarine-nbt");
-  } catch (e) {
-    /* istanbul ignore next */
-    throw new Error("prismarine-nbt must be installed to use this helper");
-  }
-  let buffer: Buffer;
-  if (Buffer.isBuffer(value)) {
-    buffer = value;
-  } else {
-    buffer = Array.isArray(value)
-      ? Buffer.from(value)
-      : Buffer.from(value, "base64");
-  }
-  const rawNBT: Parameters<
-    Parameters<typeof nbt.parse>[1]
-  >[1] = await new Promise((resolve, reject) =>
-    nbt.parse(buffer, (err, nbtData) => {
-      /* istanbul ignore if */
-      if (err) {
-        return reject(err);
-      }
-      return resolve(nbtData);
-    })
-  );
-  const data: NBTInventoryItem[] = nbt.simplify(rawNBT.value.i);
+  const data = await parse(value);
   return Promise.all(
     data.map(
       async (item): Promise<NBTInventory[number]> => {
