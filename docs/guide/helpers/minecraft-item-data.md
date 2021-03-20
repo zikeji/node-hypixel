@@ -19,11 +19,11 @@ These helpers will transform the NBT data into objects that conform to the [Inve
 
 ### NodeJS
 
-This library does not require the [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt) library as a dependency when installed. If you would like to make use of these helpers you should install [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt).
+This library does not require the [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt) library as a dependency when installed. If you would like to make use of these helpers you should install [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt). Keep in mind later versions of prismarine-nbt may break this function, so install the latest version this is tested with. As of writing this version is 1.5.0.
 
 
 ```bash
-npm install --save prismarine-nbt
+npm install --save prismarine-nbt@1.5.0
 ```
 
 ### Deno
