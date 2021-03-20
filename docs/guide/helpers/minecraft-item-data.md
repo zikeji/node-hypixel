@@ -17,15 +17,22 @@ These helpers will transform the NBT data into objects that conform to the [Inve
 
 ## Requirements
 
+### NodeJS
+
 This library does not require the [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt) library as a dependency when installed. If you would like to make use of these helpers you should install [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt).
+
 
 ```bash
 npm install --save prismarine-nbt
 ```
 
+### Deno
+
+When used with Deno, this library imports the [nbt_paser](https://deno.land/x/nbt_parser) library. You do not need to install it separately.
+
 ## Type Hinting (IntelliSense)
 
-The primary function of this helper aside from converting the data using [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt) is to add type definitions to the data itself, allowing you to easily use the data. The helper goes as far as resolving backpack and bag data into inventory data as well. This means you get intellisense to help you explore the data and find what you need.
+The primary function of this helper aside from converting the raw NBT data, is to add type definitions to the data itself - allowing you to easily use the data. The helper goes as far as resolving backpack and bag data into inventory data as well. This means you get intellisense to help you explore the data and find what you need.
 
 ![Type hinting example](./inventorydata.example.webp)
 
