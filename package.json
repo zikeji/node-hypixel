@@ -21,6 +21,7 @@
     "test": "nodenv --exec npx -- mocha -r ts-node/register tests/**/*.test.ts",
     "test:helpers": "nodenv --exec npx -- mocha -r ts-node/register tests/helpers.test.ts",
     "test:ci": "mocha -r ts-node/register tests/**/*.test.ts",
+    "test:deno": "deno test --allow-read --allow-net ./tests/mod.test.deno.ts",
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
     "coverage:ci": "nyc npm run test:ci",
