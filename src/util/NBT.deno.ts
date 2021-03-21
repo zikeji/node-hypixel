@@ -17,5 +17,6 @@ export async function parse(
   } else {
     uint8array = toUint8Array(value);
   }
+
   return simplify(nbtParse(uint8array).value.i as never);
 }
