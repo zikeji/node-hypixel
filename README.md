@@ -23,13 +23,23 @@ With thorough **[IntelliSense](https://code.visualstudio.com/docs/editor/intelli
 
 This library aims to replicate the API paths in it's method usage. As such, the general scheme would be to change the path of an API call by simply replacing the `/` with a `.`, and if the endpoint takes multiple parameters, those are added on the end. For example, `api.hypixel.net/skyblock/profiles?uuid=1234` would simply become `client.skyblock.profiles.uuid('1234')`. Of course, with everything being fully typed if you are using an IDE that supports [IntelliSense](https://code.visualstudio.com/docs/editor/intellisense) you should rarely need to reference documentation.
 
+## 2.0 to 3.0 Migration
+
+This library follows semver. As backwards incompatible changes were introduced while making this Deno compatible. Most likely nothing you use has changed, and you should be able to update without issue. The only breaking change is that the Client class no longer accepts agent as a parameter, as Deno does not support this.
+
 ## Installation
+
+### NodeJS
 
 Use [npm](https://www.npmjs.com) to install this library.
 
 ```bash
 npm i --save @zikeji/hypixel
 ```
+
+### Deno
+
+TBD
 
 ## Usage
 
