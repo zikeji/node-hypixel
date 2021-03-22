@@ -1,6 +1,6 @@
 {
   "name": "@zikeji/hypixel",
-  "version": "2.2.3",
+  "version": "3.0.0",
   "description": "With thorough IntelliSense support & 100% test coverage, this is an unopinionated async/await API wrapper for Hypixel's Public API. It is developed in TypeScript complete with documentation, typed interfaces for all API responses (and an OpenAPI 3.0 schema!), built-in rate-limit handling, flexible cache support, helper functions, and support for undocumented endpoints.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -226,7 +226,12 @@
         "@semantic-release/git",
         {
           "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
-          "assets": ["CHANGELOG.md", "package.json", "package-lock.json", "deno_dist/**/*"]
+          "assets": [
+            "CHANGELOG.md",
+            "package.json",
+            "package-lock.json",
+            "deno_dist/**/*"
+          ]
         }
       ]
     ]
