@@ -10,5 +10,6 @@ node_modules/
 *.tgz
 tests/**/*.ts
 !tests/**/*.test.ts
+!tests/**/*.test.deno.ts
 !tests/structures/*.ts
 /deno_dist
