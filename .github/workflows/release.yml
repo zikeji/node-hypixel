@@ -40,6 +40,7 @@ jobs:
           git config --local user.name "ci"
           git add -A
           git commit -am "remove deno_dist [skip-ci]"
+      - run: git push origin main
   merge:
     needs: [release]
     runs-on: ubuntu-latest
