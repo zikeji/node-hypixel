@@ -19,24 +19,28 @@ jobs:
           node-version: 14.x
       - name: Install dependencies
         run: npm ci
-      - name: Run eslint
-        run: npm run test:lint
       - name: Build
-        run: npm run build --if-present
-      - name: Run tests
-        run: npm run coverage:ci
-        env:
-          CI: true
-          HYPIXEL_KEY: ${{ secrets.HYPIXEL_KEY }}
+        run: npm run build
+      - name: Disable deno_dist gitignore
+        run: sed -i 's/\/deno_dist/#\/deno_dist/' .gitignore
       - uses: papeloto/action-zip@v1
         with:
-          files: package.json package-lock.json dist/
+          files: package.json package-lock.json dist/ deno_dist/
           dest: dist.zip
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
+      - name: enable deno_dist gitignore
+        run: sed -i 's/#\/deno_dist//deno_dist/' .gitignore
+      - name: Commit deno_dist
+        run: |
+          git rm --cached `git ls-files -i --exclude-from=.gitignore
+          git config --local user.email "ci@github.com"
+          git config --local user.name "ci"
+          git add -A
+          git commit -am "remove deno_dist [skip-ci]"
   merge:
     needs: [release]
     runs-on: ubuntu-latest

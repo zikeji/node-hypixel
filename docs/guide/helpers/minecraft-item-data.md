@@ -17,15 +17,26 @@ These helpers will transform the NBT data into objects that conform to the [Inve
 
 ## Requirements
 
-This library does not require the [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt) library as a dependency when installed. If you would like to make use of these helpers you should install [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt).
+### NodeJS
+
+This library does not require the [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt) library as a dependency when installed. If you would like to make use of these helpers you should install [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt). Keep in mind later versions of prismarine-nbt may break this function, so install the latest version this is tested with. As of writing this version is 1.5.0.
+
 
 ```bash
-npm install --save prismarine-nbt
+npm install --save prismarine-nbt@1.5.0
 ```
+
+### Deno
+
+When used with Deno, this library imports the [nbt_paser](https://deno.land/x/nbt_parser) library. You do not need to install it separately.
+
+#### Important Note
+
+Due to a possible bug ((#1)[https://github.com/mcbobby123/nbt_parser/issues/1]) in the parsing library, it appears some inventories are not parsed and thus will be missed. I recommend using this helper in Deno with caution.
 
 ## Type Hinting (IntelliSense)
 
-The primary function of this helper aside from converting the data using [prismarine-nbt](https://www.npmjs.com/package/prismarine-nbt) is to add type definitions to the data itself, allowing you to easily use the data. The helper goes as far as resolving backpack and bag data into inventory data as well. This means you get intellisense to help you explore the data and find what you need.
+The primary function of this helper aside from converting the raw NBT data, is to add type definitions to the data itself - allowing you to easily use the data. The helper goes as far as resolving backpack and bag data into inventory data as well. This means you get intellisense to help you explore the data and find what you need.
 
 ![Type hinting example](./inventorydata.example.webp)
 

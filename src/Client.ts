@@ -1,40 +1,18 @@
 import { EventEmitter } from "events";
-import { IncomingHttpHeaders } from "http";
-import { Agent, request, RequestOptions } from "https";
 import { URL } from "url";
-// @deno-types="./errors/GenericHTTPError.ts"
 import { GenericHTTPError } from "./errors/GenericHTTPError";
-// @deno-types="./errors/InvalidKeyError.ts"
 import { InvalidKeyError } from "./errors/InvalidKeyError";
-// @deno-types="./errors/RateLimitError.ts"
-import { RateLimitError } from "./errors/RateLimitError";
-// @deno-types="./methods/findGuild.ts"
 import { FindGuild } from "./methods/findGuild";
-// @deno-types="./methods/friends.ts"
 import { Friends } from "./methods/friends";
-// @deno-types="./methods/guild.ts"
 import { Guild } from "./methods/guild";
-// @deno-types="./methods/player.ts"
 import { Player } from "./methods/player";
-// @deno-types="./methods/recentGames.ts"
 import { RecentGames } from "./methods/recentGames";
-// @deno-types="./methods/resources/index.ts"
-import { Resources } from "./methods/resources/index";
-// @deno-types="./methods/skyblock/index.ts"
-import { SkyBlock } from "./methods/skyblock/index";
-// @deno-types="./methods/status.ts"
+import { Resources } from "./methods/resources";
+import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";
-// @deno-types="./types/api.ts"
-import { Components, Paths } from "./types/api";
-// @deno-types="./types/DefaultMeta.ts"
-import { DefaultMeta } from "./types/DefaultMeta";
-// @deno-types="./types/RateLimitData.ts"
-import { RateLimitData } from "./types/RateLimitData";
-// @deno-types="./util/BaseClient.ts"
-import { BaseClient } from "./util/BaseClient";
-// @deno-types="./util/Queue.ts"
+import type { Components, Paths } from "./types/api";
 import { Queue } from "./util/Queue";
-// @deno-types="./util/ResultObject.ts"
+import { request } from "./util/Request";
 import { getResultObject, ResultObject } from "./util/ResultObject";
 
 /** @internal */
@@ -43,6 +21,67 @@ export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
   retries: number;
   noRateLimit: boolean;
   includeApiKey: boolean;
+}
+
+/** @hidden */
+export interface RateLimitData {
+  /**
+   * Remaining API calls until the limit resets.
+   */
+  remaining: number;
+  /**
+   * Time, in seconds, until remaining resets to limit.
+   */
+  reset: number;
+  /**
+   * How many requests per minute your API key can make.
+   */
+  limit: number;
+}
+
+/**
+ * Possible meta options returned on the meta variable.
+ */
+export interface DefaultMeta {
+  /**
+   * If this request required an API key it returned rate limit information in the headers, which is included here.
+   */
+  ratelimit?: RateLimitData;
+  /**
+   * If you included a cache get/set method in the options, this value will be set to true if that cache was hit.
+   */
+  cached?: boolean;
+  /**
+   * Data from CloudFlare's headers in regards to caching - particularly relevant for resources endpoints.
+   */
+  cloudflareCache?: {
+    /**
+     * Cloudflare cache status.
+     */
+    status: "HIT" | "MISS" | "BYPASS" | "EXPIRED" | "DYNAMIC";
+    /**
+     * Cloudflare cache age.
+     */
+    age?: number;
+    /**
+     * Cloudflare max cache age.
+     */
+    maxAge?: number;
+  };
+}
+
+/** @hidden */
+export interface RequestOptions {
+  url: string;
+  timeout: number;
+  userAgent: string;
+  noRateLimit: boolean;
+  getRateLimitHeaders: Client["getRateLimitHeaders"];
+}
+
+/** @hidden */
+export interface Parameters {
+  [parameter: string]: string;
 }
 
 /**
@@ -66,6 +105,8 @@ export interface ClientOptions {
   retries?: number;
   /**
    * The time, in milliseconds, you want to wait before giving up on the method call.
+   *
+   * **NOTE:** This option is ignored when being [used in Deno](https://github.com/denoland/deno/issues/7019).
    * @default 10000
    */
   timeout?: number;
@@ -75,24 +116,17 @@ export interface ClientOptions {
    */
   userAgent?: string;
   /**
-   * Custom [HTTPS agent](https://nodejs.org/api/https.html#https_class_https_agent) if desired.
-   */
-  agent?: Agent;
-  /**
    * Functions you want to use for caching results. Optional.
    */
   cache?: BasicCache;
 }
-
-/** @internal */
-const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
 
 interface ClientEvents {
   limited: (limit: number, reset: Date) => void;
   reset: () => void;
 }
 
-export declare interface Client extends BaseClient {
+export declare interface Client {
   /**
    * Listen to the "limited" event which emits when the client starts limiting your calls due to hitting the rate limit.
    * @category Events
@@ -146,8 +180,6 @@ export class Client {
   /** @internal */
   private readonly userAgent: string;
   /** @internal */
-  private readonly agent?: Agent;
-  /** @internal */
   private readonly cache?: ClientOptions["cache"];
 
   /** @internal */
@@ -170,7 +202,6 @@ export class Client {
     this.retries = options?.retries ?? 3;
     this.timeout = options?.timeout ?? 10000;
     this.userAgent = options?.userAgent ?? "@zikeji/hypixel";
-    this.agent = options?.agent;
     this.cache = options?.cache;
   }
 
@@ -408,7 +439,7 @@ export class Client {
    */
   public async call<T extends Components.Schemas.ApiSuccess>(
     path: string,
-    parameters: Record<string, string> = {}
+    parameters: Parameters = {}
   ): Promise<T & { cached?: boolean }> {
     if (!this.cache) {
       return this.executeActionableCall(
@@ -482,7 +513,7 @@ export class Client {
   private createActionableCall<T extends Components.Schemas.ApiSuccess>(
     path: string,
     /* istanbul ignore next */
-    parameters: Record<string, string> = {}
+    parameters: Parameters = {}
   ): ActionableCall<T> {
     let noRateLimit = false;
     let includeApiKey = true;
@@ -519,7 +550,7 @@ export class Client {
     } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
   >(
     path: string,
-    parameters: Record<string, string>,
+    parameters: Parameters,
     noRateLimit: boolean,
     includeApiKey: boolean
   ): Promise<T> {
@@ -532,139 +563,17 @@ export class Client {
       url.searchParams.set("key", this.apiKey);
     }
 
-    const options: RequestOptions = {
-      method: "GET",
+    return request({
+      url: url.toString(),
+      userAgent: this.userAgent,
       timeout: this.timeout,
-      headers: {
-        "User-Agent": this.userAgent,
-        Accept: "application/json",
-      },
-    };
-
-    if (this.agent) {
-      options.agent = this.agent;
-    }
-
-    return new Promise((resolve, reject) => {
-      const clientRequest = request(url, options, (incomingMessage) => {
-        let responseBody = "";
-
-        incomingMessage.on("data", (chunk) => {
-          responseBody += chunk;
-        });
-
-        incomingMessage.on("end", () => {
-          if (!noRateLimit) {
-            this.getRateLimitHeaders(incomingMessage.headers);
-          }
-
-          /* istanbul ignore next */
-          if (
-            typeof responseBody !== "string" ||
-            responseBody.trim().length === 0
-          ) {
-            return reject(new Error(`No response body received.`));
-          }
-
-          let responseObject: T | undefined;
-          try {
-            responseObject = JSON.parse(responseBody);
-          } catch (_) {
-            // noop
-          }
-
-          if (incomingMessage.statusCode !== 200) {
-            /* istanbul ignore next */
-            if (incomingMessage.statusCode === 429) {
-              return reject(new RateLimitError(`Hit key throttle.`));
-            }
-
-            if (incomingMessage.statusCode === 403) {
-              return reject(new InvalidKeyError("Invalid API Key"));
-            }
-
-            /* istanbul ignore else */
-            if (
-              /* istanbul ignore next */ responseObject?.cause &&
-              typeof incomingMessage.statusCode === "number"
-            ) {
-              return reject(
-                new GenericHTTPError(
-                  incomingMessage.statusCode,
-                  responseObject.cause
-                )
-              );
-            }
-
-            /**
-             * Generic catch all that probably should never be caught.
-             */
-            /* istanbul ignore next */
-            return reject(
-              new Error(
-                `${incomingMessage.statusCode} ${incomingMessage.statusMessage}. Response: ${responseBody}`
-              )
-            );
-          }
-
-          /* istanbul ignore if */
-          if (typeof responseObject === "undefined") {
-            return reject(
-              new Error(
-                `Invalid JSON response received. Response: ${responseBody}`
-              )
-            );
-          }
-
-          /* istanbul ignore else */
-          if (incomingMessage.headers["cf-cache-status"]) {
-            const age = parseInt(incomingMessage.headers.age as string, 10);
-            const maxAge = CACHE_CONTROL_REGEX.exec(
-              incomingMessage.headers["cache-control"] as string
-            );
-            responseObject.cloudflareCache = {
-              status: incomingMessage.headers["cf-cache-status"] as never,
-              ...(typeof age === "number" && !Number.isNaN(age) && { age }),
-              ...(incomingMessage.headers["cf-cache-status"] === "HIT" &&
-                (typeof age !== "number" ||
-                  Number.isNaN(age)) && /* istanbul ignore next */ { age: 0 }),
-              ...(maxAge &&
-                typeof maxAge === "object" &&
-                maxAge.length === 2 &&
-                parseInt(maxAge[1], 10) > 0 && {
-                  maxAge: parseInt(maxAge[1], 10),
-                }),
-            };
-          }
-
-          return resolve(responseObject);
-        });
-      });
-
-      let abortError: Error;
-      /* istanbul ignore next */
-      clientRequest.once("abort", () => {
-        abortError = abortError ?? new Error("Client aborted this request.");
-        reject(abortError);
-      });
-
-      /* istanbul ignore next */
-      clientRequest.once("error", (error) => {
-        abortError = error;
-        clientRequest.abort();
-      });
-
-      clientRequest.setTimeout(this.timeout, () => {
-        abortError = new Error("Hit configured timeout.");
-        clientRequest.abort();
-      });
-
-      clientRequest.end();
+      noRateLimit,
+      getRateLimitHeaders: this.getRateLimitHeaders.bind(this),
     });
   }
 
   /** @internal */
-  private getRateLimitHeaders(headers: IncomingHttpHeaders): void {
+  private getRateLimitHeaders(headers: Record<string, string>): void {
     Object.keys(this.rateLimit).forEach((key) => {
       const headerKey = `ratelimit-${key}`;
       if (headerKey in headers) {

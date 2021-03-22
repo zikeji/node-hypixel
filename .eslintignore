@@ -1,4 +1,6 @@
 dist/
 docs/
 tests/
-mod.ts
+deno_dist/
+src/**/*.deno.ts
+src/**/*.deno.tsx

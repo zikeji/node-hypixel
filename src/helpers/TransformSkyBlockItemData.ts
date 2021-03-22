@@ -1,6 +1,4 @@
-// @deno-types="../types/api.ts"
 import { Components } from "../types/api";
-// @deno-types="./TransformItemData.ts"
 import { NBTInventory, transformItemData } from "./TransformItemData";
 
 /**
@@ -55,7 +53,12 @@ export async function transformSkyBlockProfileMemberInventories(
         key
       ] as never;
       if (inventoryData && inventoryData.data) {
-        transformedMember[key] = await transformItemData(inventoryData.data);
+        try {
+          transformedMember[key] = await transformItemData(inventoryData.data);
+        } catch (e) {
+          /* istanbul ignore next */
+          delete transformedMember[key];
+        }
       }
     })
   );

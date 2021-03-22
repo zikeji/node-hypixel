@@ -1,399 +1,504 @@
-import { expect } from "chai";
 import {
-  Components,
-  getBedwarsLevelInfo,
-  getExpFromNetworkLevel,
-  getGuildLevel,
-  getNetworkLevel,
+  assertStrictEquals,
+  assert,
+  assertThrowsAsync,
+} from "https://deno.land/std@0.90.0/testing/asserts.ts";
+import { join, fromFileUrl, dirname } from "https://deno.land/std/path/mod.ts";
+import {
   getPlayerRank,
-  getSkyBlockProfileMemberCollections,
-  getSkyBlockProfileMemberSkills,
-  getSkyWarsLevelInfo,
-  getSkyWarsPrestigeForLevel,
-  NBTInventory,
   removeMinecraftFormatting,
-  romanize,
-  SkyBlockProfileTransformedInventories,
-  SkyWarsPrestiges,
-  transformItemData,
+  Components,
   transformSkyBlockProfileMemberInventories,
-} from "../src";
-import { getResultArray } from "../src/util/ResultArray";
-import { getResultObject } from "../src/util/ResultObject";
-import { AsyncReturnType } from "./client.test";
+  SkyBlockProfileTransformedInventories,
+  NBTInventory,
+  transformItemData,
+} from "../deno_dist/mod.ts";
+import { AsyncReturnType } from "./client.test.deno.ts";
+import { getResultArray } from "../deno_dist/util/ResultArray.ts";
+import { getResultObject } from "../deno_dist/util/ResultObject.ts";
 
-describe("Test getResultArray", function () {
+Deno.test("getResultArray", () => {
   const obj = getResultArray({ success: true, items: [] }, "items");
-  it("should not have cloudflare meta", function () {
-    expect(obj.meta.cloudflareCache).to.be.undefined;
-  });
+  assertStrictEquals(
+    obj.meta.cloudflareCache,
+    undefined,
+    "should not have cloudflare meta"
+  );
 });
-describe("Test getResultObject", function () {
+
+Deno.test("getResultObject", () => {
   const obj = getResultObject({ success: true, items: [] }, ["success"]);
-  it("should not have cloudflare meta", function () {
-    expect(obj.meta.cloudflareCache).to.be.undefined;
-  });
+  assertStrictEquals(
+    obj.meta.cloudflareCache,
+    undefined,
+    "should not have cloudflare meta"
+  );
 });
 
-describe("Test PlayerRank helper", function () {
-  it("should return admin", function () {
-    const rank = getPlayerRank({ rank: "ADMIN" } as never, false);
-    expect(rank.name).to.be.a("string").that.equals("ADMIN");
-  });
-  it("should return mod", function () {
-    const rank = getPlayerRank({ rank: "MODERATOR" } as never, false);
-    expect(rank.name).to.be.a("string").that.equals("MODERATOR");
-  });
-  it("should return helper", function () {
-    const rank = getPlayerRank({ rank: "HELPER" } as never, false);
-    expect(rank.name).to.be.a("string").that.equals("HELPER");
-  });
-  it("should return jr helper", function () {
-    const rank = getPlayerRank({ rank: "JR_HELPER" } as never, false);
-    expect(rank.name).to.be.a("string").that.equals("JR_HELPER");
-  });
-  it("should return youtuber", function () {
-    const rank = getPlayerRank(
-      { rank: "YOUTUBER", newPackageRank: "MVP_PLUS" } as never,
-      false
-    );
-    expect(rank.name).to.be.a("string").that.equals("YOUTUBER");
-  });
-  it("should return MVP++", function () {
-    const rank = getPlayerRank(
-      {
-        monthlyPackageRank: "SUPERSTAR",
-        newPackageRank: "MVP_PLUS",
-      } as never,
-      false
-    );
-    expect(rank.name).to.be.a("string").that.equals("SUPERSTAR");
-  });
-  it("should return MVP++ with a blue ++", function () {
-    const rank = getPlayerRank(
-      {
-        monthlyPackageRank: "SUPERSTAR",
-        newPackageRank: "MVP_PLUS",
-        rankPlusColor: "BLUE",
-      } as never,
-      false
-    );
-    expect(rank.prefix).to.be.a("string").that.equals("§6[MVP§9++§6]");
-  });
-  it("should return MVP++ with a aqua color and black ++", function () {
-    const rank = getPlayerRank(
-      {
-        monthlyPackageRank: "SUPERSTAR",
-        newPackageRank: "MVP_PLUS",
-        monthlyRankColor: "AQUA",
-        rankPlusColor: "BLACK",
-      } as never,
-      false
-    );
-    expect(rank.prefix).to.be.a("string").that.equals("§b[MVP§0++§b]");
-  });
-  it("should return MVP++ with a aqua color", function () {
-    const rank = getPlayerRank(
-      {
-        monthlyPackageRank: "SUPERSTAR",
-        newPackageRank: "MVP_PLUS",
-        monthlyRankColor: "AQUA",
-      } as never,
-      false
-    );
-    expect(rank.prefix).to.be.a("string").that.equals("§b[MVP§c++§b]");
-  });
-  it("should return MVP+", function () {
-    const rank = getPlayerRank(
-      { newPackageRank: "MVP_PLUS", rankPlusColor: "BLACK" } as never,
-      false
-    );
-    expect(rank.name).to.be.a("string").that.equals("MVP_PLUS");
-  });
-  it("should return MVP", function () {
-    const rank = getPlayerRank(
-      { newPackageRank: "MVP", packageRank: "VIP" } as never,
-      false
-    );
-    expect(rank.name).to.be.a("string").that.equals("MVP");
-  });
-  it("should return VIP+", function () {
-    const rank = getPlayerRank({ newPackageRank: "VIP_PLUS" } as never, false);
-    expect(rank.name).to.be.a("string").that.equals("VIP_PLUS");
-  });
-  it("should return VIP", function () {
-    const rank = getPlayerRank({ packageRank: "VIP", rank: "NONE" } as never);
-    expect(rank.name).to.be.a("string").that.equals("VIP");
-  });
-  it("should return non donor", function () {
-    const rank = getPlayerRank(
-      {
-        monthlyPackageRank: "PURPLE",
-        newPackageRank: "PURPLE",
-        packageRank: "PURPLE",
-        rank: "PURPLE",
-        rankPlusColor: "BLURPLE",
-      } as never,
-      true
-    );
-    expect(rank.name).to.be.a("string").that.equals("NON_DONOR");
-  });
+Deno.test("getPlayerRank", () => {
+  let rank = getPlayerRank({ rank: "ADMIN" } as never, false);
+  assertStrictEquals(rank.name, "ADMIN", "should return admin");
+
+  rank = getPlayerRank({ rank: "MODERATOR" } as never, false);
+  assertStrictEquals(rank.name, "MODERATOR", "should return moderator");
+
+  rank = getPlayerRank({ rank: "HELPER" } as never, false);
+  assertStrictEquals(rank.name, "HELPER", "should return helper");
+
+  rank = getPlayerRank({ rank: "JR_HELPER" } as never, false);
+  assertStrictEquals(rank.name, "JR_HELPER", "should return jr helper");
+
+  rank = getPlayerRank(
+    { rank: "YOUTUBER", newPackageRank: "MVP_PLUS" } as never,
+    false
+  );
+  assertStrictEquals(rank.name, "YOUTUBER", "should return youtuber");
+
+  rank = getPlayerRank(
+    {
+      monthlyPackageRank: "SUPERSTAR",
+      newPackageRank: "MVP_PLUS",
+    } as never,
+    false
+  );
+  assertStrictEquals(rank.name, "SUPERSTAR", "should return MVP++");
+
+  rank = getPlayerRank(
+    {
+      monthlyPackageRank: "SUPERSTAR",
+      newPackageRank: "MVP_PLUS",
+      rankPlusColor: "BLUE",
+    } as never,
+    false
+  );
+  assertStrictEquals(
+    rank.prefix,
+    "§6[MVP§9++§6]",
+    "should return MVP++ with a blue ++"
+  );
+
+  rank = getPlayerRank(
+    {
+      monthlyPackageRank: "SUPERSTAR",
+      newPackageRank: "MVP_PLUS",
+      monthlyRankColor: "AQUA",
+      rankPlusColor: "BLACK",
+    } as never,
+    false
+  );
+  assertStrictEquals(rank.prefix, "§b[MVP§0++§b]");
+
+  rank = getPlayerRank(
+    {
+      monthlyPackageRank: "SUPERSTAR",
+      newPackageRank: "MVP_PLUS",
+      monthlyRankColor: "AQUA",
+    } as never,
+    false
+  );
+  assertStrictEquals(
+    rank.prefix,
+    "§b[MVP§c++§b]",
+    "should return MVP++ with a aqua color"
+  );
+
+  rank = getPlayerRank(
+    { newPackageRank: "MVP_PLUS", rankPlusColor: "BLACK" } as never,
+    false
+  );
+  assertStrictEquals(rank.name, "MVP_PLUS", "should return MVP+");
+
+  rank = getPlayerRank(
+    { newPackageRank: "MVP", packageRank: "VIP" } as never,
+    false
+  );
+  assertStrictEquals(rank.name, "MVP", "should return MVP");
+
+  rank = getPlayerRank({ newPackageRank: "VIP_PLUS" } as never, false);
+  assertStrictEquals(rank.name, "VIP_PLUS", "should return VIP+");
+
+  rank = getPlayerRank({ packageRank: "VIP", rank: "NONE" } as never);
+  assertStrictEquals(rank.name, "VIP", "should return VIP");
+
+  rank = getPlayerRank(
+    {
+      monthlyPackageRank: "PURPLE",
+      newPackageRank: "PURPLE",
+      packageRank: "PURPLE",
+      rank: "PURPLE",
+      rankPlusColor: "BLURPLE",
+    } as never,
+    true
+  );
+  assertStrictEquals(rank.name, "NON_DONOR", "should return non donor");
 });
 
-describe("Test removeMinecraftFormatting", function () {
-  it("should return MVP++ without formatting", function () {
-    expect(removeMinecraftFormatting("§6[MVP§9++§6]"))
-      .to.be.a("string")
-      .that.equals("[MVP++]");
-  });
+Deno.test("removeMinecraftFormatting", () => {
+  assertStrictEquals(
+    removeMinecraftFormatting("§6[MVP§9++§6]"),
+    "[MVP++]",
+    "should return MVP++ without formatting"
+  );
 });
 
-describe("Test transformSkyBlockProfileMemberInventories", function () {
-  this.slow(250);
-  const profiles: Components.Schemas.SkyBlockProfileCuteName[] = require("./data/profiles.json");
+Deno.test("transformSkyBlockProfileMemberInventories", async () => {
+  const profiles: Components.Schemas.SkyBlockProfileCuteName[] = JSON.parse(
+    await Deno.readTextFile(
+      join(dirname(fromFileUrl(import.meta.url)), "data", "profiles.json")
+    )
+  );
   const members: AsyncReturnType<
     typeof transformSkyBlockProfileMemberInventories
   >[] = [];
-  it("should transform members without throwing", async function () {
-    for (const profile of profiles) {
-      if (profile === null) continue;
-      for (const member of Object.values(profile.members)) {
-        members.push(await transformSkyBlockProfileMemberInventories(member));
-      }
+
+  for (const profile of profiles) {
+    if (profile === null) continue;
+    for (const member of Object.values(profile.members)) {
+      members.push(await transformSkyBlockProfileMemberInventories(member));
     }
-  });
-  it("transformed members should have transformed inventories with appropriate keys", function () {
-    for (const member of members) {
-      expect(member).to.be.an("object");
-      for (const inventoryName of [
-        "inv_armor",
-        "candy_inventory_contents",
-        "ender_chest_contents",
-        "fishing_bag",
-        "inv_contents",
-        "potion_bag",
-        "quiver",
-        "talisman_bag",
-        "wardrobe_contents",
-      ] as (keyof SkyBlockProfileTransformedInventories)[]) {
-        const inventory = member[inventoryName];
-        if (typeof inventory === "undefined") continue;
-        expect(inventory).to.be.an("array");
-        // merge backpacks/bags items into inventory arr
-        inventory.forEach((i) => {
-          if (i === null || !i.tag || !i.tag.ExtraAttributes) return;
-          for (const key of Object.keys(i.tag.ExtraAttributes)) {
-            if (key.endsWith("_backpack_data") || key.endsWith("_bag_data")) {
-              const contents = i.tag.ExtraAttributes[key] as NBTInventory;
-              for (const item of contents) {
-                inventory.push(item);
-              }
+  }
+
+  for (const member of members) {
+    assert(
+      typeof member === "object" && !Array.isArray(member),
+      "member should be an object"
+    );
+    for (const inventoryName of [
+      "inv_armor",
+      "candy_inventory_contents",
+      "ender_chest_contents",
+      "fishing_bag",
+      "inv_contents",
+      "potion_bag",
+      "quiver",
+      "talisman_bag",
+      "wardrobe_contents",
+    ] as (keyof SkyBlockProfileTransformedInventories)[]) {
+      const inventory = member[inventoryName];
+      if (typeof inventory === "undefined") continue;
+      assert(Array.isArray(inventory), "inventory should be array");
+      // merge backpacks/bags items into inventory arr
+      inventory.forEach((i) => {
+        if (i === null || !i.tag || !i.tag.ExtraAttributes) return;
+        for (const key of Object.keys(i.tag.ExtraAttributes)) {
+          if (key.endsWith("_backpack_data") || key.endsWith("_bag_data")) {
+            const contents = i.tag.ExtraAttributes[key] as NBTInventory;
+            for (const item of contents) {
+              inventory.push(item);
             }
           }
-        });
-        for (const item of inventory) {
-          if (item === null) continue;
-          expect(item.id).to.be.a("number");
-          expect(item.Count).to.be.a("number");
-          expect(item.Damage).to.be.a("number");
-          if (item.tag) {
-            expect(item.tag).to.be.an("object");
+        }
+      });
+      for (const item of inventory) {
+        if (item === null) continue;
+        assert(typeof item.id === "number", "item id should be a number");
+        assert(typeof item.Count === "number", "item count should be a number");
+        assert(
+          typeof item.Damage === "number",
+          "item damage should be a number"
+        );
+        if (item.tag) {
+          assert(
+            typeof item.tag === "object" && !Array.isArray(item.tag),
+            "tag should be an object"
+          );
 
-            if (item.tag.Unbreakable) {
-              expect(item.tag.Unbreakable).to.be.a("number");
-            }
-            if (item.tag.HideFlags) {
-              expect(item.tag.HideFlags).to.be.a("number");
-            }
-            if (item.tag.display) {
-              const display = item.tag.display;
-              expect(display).to.be.an("object");
-              if (display.Name) {
-                expect(display.Name).to.be.a("string");
-              }
-              if (display.Lore) {
-                expect(display.Lore)
-                  .to.be.an("array")
-                  .that.satisfies(function (arr: string[]) {
-                    return arr.every((s) => typeof s === "string");
-                  });
-              }
-              if (display.color) expect(display.color).to.be.a("number");
-            }
-            if (item.tag.ExtraAttributes) {
-              const ExtraAttributes = item.tag.ExtraAttributes;
-              for (const key of Object.keys(ExtraAttributes)) {
-                const value = ExtraAttributes[key];
-                if (
-                  [
-                    "id",
-                    "uuid",
-                    "timestamp",
-                    "originTag",
-                    "modifier",
-                    "color",
-                    "backpack_color",
-                    "potion_type",
-                    "potion_name",
-                  ].includes(key)
-                ) {
-                  expect(value).to.be.a("string");
-                  continue;
-                }
-                if (
-                  [
-                    "anvil_uses",
-                    "hot_potato_count",
-                    "rarity_upgrades",
-                    "dungeon_item_level",
-                    "potion_level",
-                    "splash",
-                  ].includes(key)
-                ) {
-                  expect(value).to.be.a("number");
-                  continue;
-                }
-                if (key === "runes" || key === "enchantments") {
-                  expect(value)
-                    .to.be.an("object")
-                    .that.satisfies(function (obj: { [key: string]: number }) {
-                      return Object.values(obj).every(
-                        (v) => typeof v === "number"
-                      );
-                    });
-                  continue;
-                }
-                if (key === "effects") {
-                  expect(value).to.be.an("array");
-                  for (const v of value as NonNullable<
-                    typeof ExtraAttributes.effects
-                  >) {
-                    expect(v.effect).to.be.a("string");
-                    expect(v.duration_ticks).to.be.a("number");
-                    expect(v.level).to.be.a("number");
-                  }
-                  continue;
-                }
+          if (item.tag.Unbreakable) {
+            assert(
+              typeof item.tag.Unbreakable === "number",
+              "Unbreakable should a number"
+            );
+          }
+          if (item.tag.HideFlags) {
+            assert(
+              typeof item.tag.HideFlags === "number",
+              "HideFlags should a number"
+            );
+          }
+          if (item.tag.display) {
+            const display = item.tag.display;
+            assert(
+              typeof display === "object" && !Array.isArray(display),
+              "tag display should be an object"
+            );
 
-                if (Array.isArray(value)) {
-                  for (const v of value) {
-                    if (typeof v === "object") {
-                      if (
-                        v === null ||
-                        typeof (v as { tag: unknown }).tag === "object"
-                      ) {
-                        // It's a NBTInventoryItem, ignore as we already merged it in to check.
-                        continue;
-                      }
-                      // expect NBTExtraAttributesPotionEffect
-                      const effect = v as NonNullable<
-                        typeof ExtraAttributes.effects
-                      >[number];
-                      console.log(value);
-                      expect(effect.effect).to.be.a("string");
-                      expect(effect.duration_ticks).to.be.a("number");
-                      expect(effect.level).to.be.a("number");
-                    } else {
-                      // expect number
-                      expect(v).to.be.a("number");
+            if (display.Name) {
+              assert(typeof display.Name === "string", "name should a string");
+            }
+            if (display.Lore) {
+              assert(Array.isArray(display.Lore), "lore should be array");
+              assert(
+                display.Lore.every((s) => typeof s === "string"),
+                "lore should be string[]"
+              );
+            }
+            if (display.color) {
+              assert(
+                typeof display.color === "number",
+                "color should a number"
+              );
+            }
+          }
+          if (item.tag.ExtraAttributes) {
+            assert(
+              typeof item.tag.ExtraAttributes === "object" &&
+                !Array.isArray(item.tag.ExtraAttributes),
+              "member should be an object"
+            );
+            const ExtraAttributes = item.tag.ExtraAttributes;
+            for (const key of Object.keys(ExtraAttributes)) {
+              const value = ExtraAttributes[key];
+              if (
+                [
+                  "id",
+                  "uuid",
+                  "timestamp",
+                  "originTag",
+                  "modifier",
+                  "color",
+                  "backpack_color",
+                  "potion_type",
+                  "potion_name",
+                ].includes(key)
+              ) {
+                assert(typeof value === "string", "value should be string");
+                continue;
+              }
+              if (
+                [
+                  "anvil_uses",
+                  "hot_potato_count",
+                  "rarity_upgrades",
+                  "dungeon_item_level",
+                  "potion_level",
+                  "splash",
+                ].includes(key)
+              ) {
+                assert(typeof value === "number", "value should be string");
+                continue;
+              }
+              if (key === "runes" || key === "enchantments") {
+                assert(
+                  typeof value === "object" && !Array.isArray(value),
+                  "value should be an object"
+                );
+                assert(
+                  Object.values(value).every((v) => typeof v === "number"),
+                  "all of value properties should be number"
+                );
+                continue;
+              }
+              if (key === "effects") {
+                assert(Array.isArray(value), "value should be an array");
+                assert(
+                  ((value as never) as Record<string, number | string>[]).every(
+                    (v) =>
+                      typeof v.effect === "string" &&
+                      typeof v.duration_ticks === "number" &&
+                      typeof v.level === "number"
+                  ),
+                  "value properties should have correct types"
+                );
+                continue;
+              }
+
+              if (Array.isArray(value)) {
+                for (const v of value) {
+                  if (typeof v === "object") {
+                    if (
+                      v === null ||
+                      typeof (v as { tag: unknown }).tag === "object"
+                    ) {
+                      // It's a NBTInventoryItem, ignore as we already merged it in to check.
+                      continue;
                     }
+                    // expect NBTExtraAttributesPotionEffect
+                    const effect = v as NonNullable<
+                      typeof ExtraAttributes.effects
+                    >[number];
+                    assert(
+                      typeof effect.effect === "string" &&
+                        typeof effect.duration_ticks === "number" &&
+                        typeof effect.level === "number",
+                      "value should be potion effect"
+                    );
+                  } else {
+                    // expect number
+                    assert(typeof v === "number", "value should be number");
                   }
-                  continue;
                 }
+                continue;
+              }
 
-                if (typeof value === "object") {
-                  expect(value)
-                    .to.be.an("object")
-                    .that.satisfies(function (val: { [name: string]: number }) {
-                      return Object.values(val).every(
-                        (v) => typeof v === "number"
-                      );
-                    });
-                  continue;
-                }
+              if (typeof value === "object") {
+                assert(
+                  Object.values(value).every((v) => typeof v === "number"),
+                  "value properties should be numbers"
+                );
+                continue;
+              }
 
-                if (typeof value === "string" || typeof value === "number") {
-                  continue;
-                }
+              if (typeof value === "string" || typeof value === "number") {
+                continue;
+              }
 
-                expect(value).to.be.undefined;
-              }
+              assertStrictEquals(value, undefined);
             }
-            if (item.tag.ench) {
-              expect(item.tag.ench).to.be.an("array");
-              for (const value of item.tag.ench) {
-                expect(value.id).to.be.a("number");
-                expect(value.lvl).to.be.a("number");
+          }
+          if (item.tag.ench) {
+            assert(Array.isArray(item.tag.ench), "should be array");
+            assert(
+              item.tag.ench.every(
+                (v) => typeof v.id === "number" && typeof v.lvl === "number"
+              ),
+              "should have id and lvl number properties"
+            );
+          }
+          if (item.tag.SkullOwner) {
+            const skull = item.tag.SkullOwner;
+            assert(
+              typeof skull === "object" && !Array.isArray(skull),
+              "should be an object"
+            );
+            assert(typeof skull.Id === "string", "id should be string");
+            if (skull.Properties !== null) {
+              if (skull.Properties.profileId) {
+                assert(
+                  typeof skull.Properties.profileId === "string",
+                  "profile id should be string"
+                );
               }
-            }
-            if (item.tag.SkullOwner) {
-              const skull = item.tag.SkullOwner;
-              expect(skull).to.be.an("object");
-              expect(skull.Id).to.be.a("string");
-              if (skull.Properties !== null) {
-                if (skull.Properties.profileId) {
-                  expect(skull.Properties.profileId).to.be.a("string");
-                }
-                if (skull.Properties.profileName) {
-                  expect(skull.Properties.profileName).to.be.a("string");
-                }
-                if (skull.Properties.signatureRequired) {
-                  expect(skull.Properties.signatureRequired).to.be.a("boolean");
-                }
-                if (skull.Properties.timestamp) {
-                  expect(skull.Properties.timestamp).to.be.a("number");
-                }
-                expect(skull.Properties.textures)
-                  .to.be.an("object")
-                  .that.has.property("SKIN")
-                  .that.is.an("object")
-                  .that.has.property("url")
-                  .that.is.a("string");
+              if (skull.Properties.profileName) {
+                assert(
+                  typeof skull.Properties.profileName === "string",
+                  "profile name should be string"
+                );
               }
-            }
-            if (item.tag.CustomPotionEffects) {
-              expect(item.tag.CustomPotionEffects).to.be.an("array");
-              for (const potion of item.tag.CustomPotionEffects) {
-                expect(potion.Id).to.be.a("number");
-                expect(potion.Ambient).to.be.a("number");
-                expect(potion.Amplifier).to.be.a("number");
-                expect(potion.Duration).to.be.a("number");
+              if (skull.Properties.signatureRequired) {
+                assert(
+                  typeof skull.Properties.signatureRequired === "boolean",
+                  "signature required should be boolean"
+                );
               }
+              if (skull.Properties.timestamp) {
+                assert(
+                  typeof skull.Properties.timestamp === "number",
+                  "timestamp should be number"
+                );
+              }
+              assert(
+                typeof skull.Properties.textures === "object" &&
+                  !Array.isArray(skull),
+                "textures should be an object"
+              );
+              assert(
+                typeof skull.Properties.textures.SKIN === "object" &&
+                  !Array.isArray(skull),
+                "SKIN should be an object"
+              );
+              assert(
+                typeof skull.Properties.textures.SKIN.url === "string",
+                "url should be a string"
+              );
             }
+          }
+          if (item.tag.CustomPotionEffects) {
+            assert(
+              Array.isArray(item.tag.CustomPotionEffects),
+              "should be array"
+            );
+            assert(
+              item.tag.CustomPotionEffects.every(
+                (v) =>
+                  typeof v.Id === "number" &&
+                  typeof v.Ambient === "number" &&
+                  typeof v.Amplifier === "number" &&
+                  typeof v.Duration === "number"
+              ),
+              "should have Id, Ambient, Amplifier, and Duration number properties"
+            );
           }
         }
       }
     }
+  }
+});
+
+Deno.test("transformItemData", async () => {
+  const player: Components.Schemas.Player = JSON.parse(
+    await Deno.readTextFile(
+      join(dirname(fromFileUrl(import.meta.url)), "data", "player.json")
+    )
+  );
+  const itemData = await transformItemData(
+    player.stats.Pit?.profile.inv_armor.data as number[]
+  );
+  assert(Array.isArray(itemData), `should transform Pit data`);
+  await assertThrowsAsync(
+    () => {
+      return transformItemData("");
+    },
+    undefined,
+    undefined,
+    "should throw as invalid data is given"
+  );
+
+  const b64data = "H4sIAAAAAAAAAONiYOBkYMzkYmBgYGEAAQCp5xppEQAAAA==";
+  const uint8array = [
+    31,
+    139,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    227,
+    98,
+    96,
+    224,
+    100,
+    96,
+    204,
+    228,
+    98,
+    96,
+    96,
+    96,
+    97,
+    0,
+    1,
+    0,
+    169,
+    231,
+    26,
+    105,
+    17,
+    0,
+    0,
+    0,
+  ];
+
+  const results = await Promise.all([
+    transformItemData(b64data),
+    transformItemData(Uint8Array.from(uint8array)),
+    transformItemData(uint8array),
+  ]);
+  results.forEach((result) => {
+    assert(
+      Array.isArray(result) && result.length === 4,
+      "should return an array that has 4 children"
+    );
+    assert(
+      result.every((v) => v === null),
+      "array should be null[]"
+    );
   });
 });
 
-describe("Test transformItemData", function () {
-  const player: Components.Schemas.Player = require("./data/player.json");
-  it("should transform Pit inventory without throwing", async function () {
-    await transformItemData(
-      player.stats.Pit?.profile.inv_armor.data as number[]
-    );
-  });
-  it("should throw as invalid data is being given", async function () {
-    try {
-      await transformItemData("");
-    } catch (e) {
-      expect(e).to.be.instanceOf(Error);
-    }
-  });
-  it("should return an array 4 in length", async function () {
-    const result = await transformItemData(
-      Buffer.from("H4sIAAAAAAAAAONiYOBkYMzkYmBgYGEAAQCp5xppEQAAAA==", "base64")
-    );
-    expect(result)
-      .to.be.an("array")
-      .and.that.satisfies(function (arr: null[]) {
-        return arr.every((v) => v === null);
-      });
-    expect(result.length).to.be.a("number").that.equals(4);
-  });
-});
-
+/*
 describe("Test getNetworkLevel", function () {
   it("should return level 32", function () {
     const levelInfo = getNetworkLevel(1514993);
@@ -804,3 +909,4 @@ describe("Test getSkyBlockProfileMemberSkills", function () {
     expect(result).to.be.false;
   });
 });
+*/

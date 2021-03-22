@@ -1,5 +1,3 @@
-/// <reference path="../src/globals.d.ts" />
-
 import { expect } from "chai";
 import { Client } from "../src";
 import { AsyncReturnType } from "./client.test";

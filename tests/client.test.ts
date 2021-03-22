@@ -1,5 +1,3 @@
-/// <reference path="../src/globals.d.ts" />
-
 import { expect } from "chai";
 import { Client, Components } from "../src";
 import type { ResultArray } from "../src/util/ResultArray";

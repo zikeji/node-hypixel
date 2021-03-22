@@ -7,9 +7,7 @@
  * For the original full copyright and license information, please view the LICENSE-HYPIXEL-PHP.md that was distributed with this source code.
  */
 
-// @deno-types="../types/api.ts"
 import { Components } from "../types/api";
-// @deno-types="./MinecraftFormatting.ts"
 import {
   MinecraftColorAsHex,
   MinecraftFormatting,

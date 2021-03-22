@@ -5,8 +5,21 @@ on:
   pull_request:
 
 jobs:
-  test:
+  test_lint:
     runs-on: ubuntu-latest
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14.x
+      - run: npm ci
+      - name: Don't continue if lint fails.
+        run: npm run test:lint
+  test_node:
+    runs-on: ubuntu-latest
+    needs: test_lint
     strategy:
       max-parallel: 1
       matrix:
@@ -18,11 +31,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
-      run: npm ci --verbose
-    - name: Run eslint
-      run: npm run test:lint
+      run: npm ci
     - name: Build
-      run: npm run build --if-present
+      run: npm run build
     - name: Run tests
       run: npm run coverage:ci
       env:
@@ -34,8 +45,37 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         flag-name: run-${{ matrix.test_number }}
         parallel: true
+  test_deno:
+    runs-on: ubuntu-latest
+    needs: test_lint
+    steps: 
+    - uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v2.1.4
+      with:
+        node-version: 14.x
+    - name: Install dependencies
+      run: npm ci
+    - name: Deno Cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/deno
+        key: deno-${{ runner.os }}-${{ hashFiles('deno-lock.json') }}
+        restore-keys: |
+           deno-${{ runner.os }}-${{ hashFiles('deno-lock.json') }}
+           deno-${{ runner.os }}-
+           deno-
+    - name: Setup Deno
+      uses: denolib/setup-deno@master
+      with:
+        deno-version: v1.x
+    - run: deno --version
+    - name: Run build to generate denoify'd output
+      run: npm run build
+    - name: Run tests
+      run: npm run test:deno
   finish:
-    needs: test
+    needs: test_node
     runs-on: ubuntu-latest
     steps:
     - name: Coveralls Finished
@@ -43,3 +83,15 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN  }}
         parallel-finished: true
+  trigger_release:
+    needs:
+      - finish
+      - test_deno
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(toJSON(github.event.commits.*.message), '[skip ci]')
+    steps:
+    - name: Dispatch
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        event-type: release
