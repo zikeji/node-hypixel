@@ -1,33 +1,16 @@
 import { EventEmitter } from "events";
 import { URL } from "url";
-// @deno-types="./errors/GenericHTTPError.ts"
 import { GenericHTTPError } from "./errors/GenericHTTPError";
-// @deno-types="./errors/InvalidKeyError.ts"
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { FindGuild } from "./methods/findGuild";
-// @deno-types="./methods/friends.ts"
 import { Friends } from "./methods/friends";
-// @deno-types="./methods/guild.ts"
 import { Guild } from "./methods/guild";
-// @deno-types="./methods/player.ts"
 import { Player } from "./methods/player";
-// @deno-types="./methods/recentGames.ts"
 import { RecentGames } from "./methods/recentGames";
-// @deno-types="./methods/resources/index.ts"
-import { Resources } from "./methods/resources/index";
-// @deno-types="./methods/skyblock/index.ts"
-import { SkyBlock } from "./methods/skyblock/index";
-// @deno-types="./methods/status.ts"
+import { Resources } from "./methods/resources";
+import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";
-// @deno-types="./types/api.ts"
-import { Components, Paths } from "./types/api";
-// @deno-types="./types/DefaultMeta.ts"
-import { DefaultMeta } from "./types/DefaultMeta";
-// @deno-types="./types/RateLimitData.ts"
-import { RateLimitData } from "./types/RateLimitData";
-// @deno-types="./util/BaseClient.ts"
-import { BaseClient } from "./util/BaseClient";
-// @deno-types="./util/Queue.ts"
+import type { Components, Paths } from "./types/api";
 import { Queue } from "./util/Queue";
 import { request } from "./util/Request";
 import { getResultObject, ResultObject } from "./util/ResultObject";
@@ -143,7 +126,7 @@ interface ClientEvents {
   reset: () => void;
 }
 
-export declare interface Client extends BaseClient {
+export declare interface Client {
   /**
    * Listen to the "limited" event which emits when the client starts limiting your calls due to hitting the rate limit.
    * @category Events
@@ -456,7 +439,7 @@ export class Client {
    */
   public async call<T extends Components.Schemas.ApiSuccess>(
     path: string,
-    parameters: Record<string, string> = {}
+    parameters: Parameters = {}
   ): Promise<T & { cached?: boolean }> {
     if (!this.cache) {
       return this.executeActionableCall(
@@ -530,7 +513,7 @@ export class Client {
   private createActionableCall<T extends Components.Schemas.ApiSuccess>(
     path: string,
     /* istanbul ignore next */
-    parameters: Record<string, string> = {}
+    parameters: Parameters = {}
   ): ActionableCall<T> {
     let noRateLimit = false;
     let includeApiKey = true;
@@ -567,7 +550,7 @@ export class Client {
     } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
   >(
     path: string,
-    parameters: Record<string, string>,
+    parameters: Parameters,
     noRateLimit: boolean,
     includeApiKey: boolean
   ): Promise<T> {

@@ -58,7 +58,8 @@
     "src/",
     "!dist/**/*.map",
     "!dist/tsconfig.tsbuildinfo",
-    "!src/**/*.deno.ts{,x}"
+    "!src/**/*.deno.ts{,x}",
+    "!docs/"
   ],
   "release": {
     "branches": [

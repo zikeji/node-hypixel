@@ -1,4 +1,3 @@
-// @deno-types="./BaseClient.ts"
 import { BaseClient } from "./BaseClient";
 
 /** @internal */

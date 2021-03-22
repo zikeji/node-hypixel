@@ -1,10 +1,6 @@
-// @deno-types="../../types/api.ts"
 import { Paths } from "../../types/api";
-// @deno-types="../../util/Method.ts"
 import { Method } from "../../util/Method";
-// @deno-types="../../util/ResultObject.ts"
 import { getResultObject, ResultObject } from "../../util/ResultObject";
-// @deno-types="../../util/ResultArray.ts"
 import { getResultArray, ResultArray } from "../../util/ResultArray";
 
 export class GuildsResources extends Method {

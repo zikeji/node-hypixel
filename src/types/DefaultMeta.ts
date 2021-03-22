@@ -1,4 +1,3 @@
-// @deno-types="./RateLimitData.ts"
 import { RateLimitData } from "./RateLimitData";
 
 /**
