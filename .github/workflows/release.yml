@@ -1,9 +1,8 @@
 name: release
 
 on:
-  push:
-    branches:
-      - main
+  repository_dispatch:
+    types: release
 
 jobs:
   release:
@@ -36,7 +35,7 @@ jobs:
         run: sed -i 's/#\/deno_dist/\/deno_dist/' .gitignore
       - name: Commit removal of deno_dist
         run: |
-          git rm --cached `git ls-files -i --exclude-from=.gitignore
+          git rm --cached `git ls-files -i --exclude-from=.gitignore`
           git config --local user.email "ci@github.com"
           git config --local user.name "ci"
           git add -A
