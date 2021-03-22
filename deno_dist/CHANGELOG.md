@@ -3,23 +3,6 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.1.0](https://github.com/zikeji/node-hypixel/compare/v3.0.3...v3.1.0) (2021-03-22)
-
-
-### Features
-
-* add deno example, add semantic release command to change README.md ([8027a8e](https://github.com/zikeji/node-hypixel/commit/8027a8e559990bf5bf024a130518d9ac5f941687))
-
-
-### Documentation
-
-* **README:** add /mod.ts to docs for Deno ([357e760](https://github.com/zikeji/node-hypixel/commit/357e760627cce25257c4627ba6f0f9d6af46d487))
-
-
-### Miscellaneous Chores
-
-* **deps:** update dependencies ([28eb3b3](https://github.com/zikeji/node-hypixel/commit/28eb3b3135c8ebf808f5008cbba06bbfc9e376d3))
-
 ### [3.0.3](https://github.com/zikeji/node-hypixel/compare/v3.0.2...v3.0.3) (2021-03-22)
 
 
