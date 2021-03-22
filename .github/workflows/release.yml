@@ -34,7 +34,7 @@ jobs:
         run: npx semantic-release
       - name: enable deno_dist gitignore
         run: sed -i 's/#\/deno_dist//deno_dist/' .gitignore
-      - name: Commit deno_dist
+      - name: Commit removal of deno_dist
         run: |
           git rm --cached `git ls-files -i --exclude-from=.gitignore
           git config --local user.email "ci@github.com"
