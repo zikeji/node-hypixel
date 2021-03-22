@@ -1,7 +1,12 @@
+// @deno-types="../../types/api.ts"
 import { Paths } from "../../types/api";
+// @deno-types="../../util/Method.ts"
 import { Method } from "../../util/Method";
+// @deno-types="../../util/ResultObject.ts"
 import { getResultObject, ResultObject } from "../../util/ResultObject";
+// @deno-types="./guilds.ts"
 import { GuildsResources } from "./guilds";
+// @deno-types="./skyblock.ts"
 import { SkyBlockResources } from "./skyblock";
 
 export class Resources extends Method {

@@ -1,5 +1,7 @@
-import type { DefaultMeta } from "..";
-import type { Components } from "../types/api";
+// @deno-types="../types/DefaultMeta.ts"
+import { DefaultMeta } from "../types/DefaultMeta";
+// @deno-types="../types/api.ts"
+import { Components } from "../types/api";
 
 /**
  * Generic intersection type for result arrays to include metadata as a non-enumerable property.

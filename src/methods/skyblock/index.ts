@@ -1,9 +1,16 @@
-import type { Paths } from "../../types/api";
+// @deno-types="../../types/api.ts"
+import { Paths } from "../../types/api";
+// @deno-types="../../util/Method.ts"
 import { Method } from "../../util/Method";
+// @deno-types="../../util/ResultArray.ts"
 import { getResultArray, ResultArray } from "../../util/ResultArray";
+// @deno-types="../../util/ResultObject.ts"
 import { getResultObject, ResultObject } from "../../util/ResultObject";
+// @deno-types="./auction.ts"
 import { SkyBlockAuction } from "./auction";
+// @deno-types="./auctions.ts"
 import { SkyBlockAuctions } from "./auctions";
+// @deno-types="./profiles.ts"
 import { SkyBlockProfiles } from "./profiles";
 
 export class SkyBlock extends Method {

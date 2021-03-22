@@ -1,3 +1,4 @@
+// @deno-types="../types/api.ts"
 import { Components } from "../types/api";
 
 export interface SkyBlockSkillsInfo {

@@ -1,5 +1,8 @@
+// @deno-types="../types/api.ts"
 import { Components, Paths } from "../types/api";
+// @deno-types="../util/Method.ts"
 import { Method } from "../util/Method";
+// @deno-types="../util/ResultObject.ts"
 import { getResultObject, ResultObject } from "../util/ResultObject";
 
 export class FindGuild extends Method {

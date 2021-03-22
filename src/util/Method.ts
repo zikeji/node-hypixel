@@ -1,12 +1,13 @@
-import type { Client } from "../Client";
+// @deno-types="./BaseClient.ts"
+import { BaseClient } from "./BaseClient";
 
 /** @internal */
 export abstract class Method {
   /** @internal */
-  protected client: Client;
+  protected client: BaseClient;
 
   /** @internal */
-  constructor(client: Client) {
+  constructor(client: BaseClient) {
     this.client = client;
   }
 }
