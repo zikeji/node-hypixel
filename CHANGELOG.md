@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.0.1](https://github.com/zikeji/node-hypixel/compare/v3.0.0...v3.0.1) (2021-03-22)
+
+
+### Bug Fixes
+
+* **ci:** fix typo in ci ([0644fd7](https://github.com/zikeji/node-hypixel/commit/0644fd743cb850bbefd6510708d8b7d67ea089c5))
+
 ## [3.0.0](https://github.com/zikeji/node-hypixel/compare/v2.2.3...v3.0.0) (2021-03-22)
 
 

@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/zikeji/node-hypixel/compare/v2.2.3...v3.0.0) (2021-03-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* separate request portion of client and add denoify port
+
+### Features
+
+* add denoify in prep to properly add Deno support ([3315eb4](https://github.com/zikeji/node-hypixel/commit/3315eb4882a464265e9bd2fd700701bf37eb065c))
+* add NBT deno port for TransformItemData ([610aa32](https://github.com/zikeji/node-hypixel/commit/610aa32049715acaa4bb8d7e2db11752f29f5851))
+* ignore bulky files in distribution ([ecbb545](https://github.com/zikeji/node-hypixel/commit/ecbb545aef7f93080de1ec13203ba67bf753eeb0))
+* separate request portion of client and add denoify port ([687acb0](https://github.com/zikeji/node-hypixel/commit/687acb056f03f5cc59548bba3bf2295a938ad603))
+* update release workflow ([72265c2](https://github.com/zikeji/node-hypixel/commit/72265c2010b76b3704bae7f6bc253d42d3282663))
+
+
+### Bug Fixes
+
+* add try/catch to solve issue with nbt_parser ([08228b7](https://github.com/zikeji/node-hypixel/commit/08228b7a260281d7767c22f5f82f07eba32292b3))
+* commit deno test files ([389dcad](https://github.com/zikeji/node-hypixel/commit/389dcadab7bf5e5e9b90908a5d45264a65a70ae1))
+* fix incorrect merge causing issues ([70ba731](https://github.com/zikeji/node-hypixel/commit/70ba7311ae9e12cd318d5a8c83c6ec0824d64835))
+
+
+### Miscellaneous Chores
+
+* **deps:** update prismarine-nbt dev dependency ([6301739](https://github.com/zikeji/node-hypixel/commit/6301739b1f8383673c701a625a10c33fdbbe227f))
+
+
+### Tests
+
+* **coverage:** ignore deno ports for coverage ([7a16dda](https://github.com/zikeji/node-hypixel/commit/7a16dda1d81de5b5973ef0b456fd158c2e1049eb))
+* **fix:** remove unused import ([298bf98](https://github.com/zikeji/node-hypixel/commit/298bf981dcee1d35b1bb90c28865c23715ab8a8b))
+* refer to previous ([50e1509](https://github.com/zikeji/node-hypixel/commit/50e15099f2bda10bc13f19489a3bbc8c8febe916))
+* remove globals.d.ts from test files ([8ce8a07](https://github.com/zikeji/node-hypixel/commit/8ce8a075dba1c05acb31731f862e051a23225f70))
+
+
+### Documentation
+
+* restore changelog ([93efe02](https://github.com/zikeji/node-hypixel/commit/93efe0246f2437dfa2cf7c3db4649d042c0365a3))
+* **helpers:** update minecraft item data docs for deno ([8fda927](https://github.com/zikeji/node-hypixel/commit/8fda927eb8ad2b90bc577a799580f7ad3ee1aed8))
+* **helpers:** update prismarine nbt line ([fb0535d](https://github.com/zikeji/node-hypixel/commit/fb0535d4dd66d0ff43cfcb800f0b10426214d0bc))
+
 ### [2.2.3](https://github.com/zikeji/node-hypixel/compare/v2.2.2...v2.2.3) (2021-03-19)
 
 
