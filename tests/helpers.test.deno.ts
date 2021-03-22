@@ -12,6 +12,9 @@ import {
   SkyBlockProfileTransformedInventories,
   NBTInventory,
   transformItemData,
+  getNetworkLevel,
+  getExpFromNetworkLevel,
+  getGuildLevel,
 } from "../deno_dist/mod.ts";
 import { AsyncReturnType } from "./client.test.deno.ts";
 import { getResultArray } from "../deno_dist/util/ResultArray.ts";
@@ -498,122 +501,83 @@ Deno.test("transformItemData", async () => {
   });
 });
 
-/*
-describe("Test getNetworkLevel", function () {
-  it("should return level 32", function () {
+Deno.test("getNetworkLevel", async () => {
+  () => {
     const levelInfo = getNetworkLevel(1514993);
-    expect(levelInfo).to.be.a("object");
-    expect(levelInfo.level).to.be.a("number").that.equals(32);
-    expect(levelInfo.preciseLevel)
-      .to.be.a("number")
-      .that.equals(32.48563428571428);
-    expect(levelInfo.currentExp).to.be.a("number").that.equals(1514993);
-    expect(levelInfo.expToLevel).to.be.a("number").that.equals(1472500);
-    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(87500);
-    expect(levelInfo.remainingExpToNextLevel)
-      .to.be.a("number")
-      .that.equals(45007);
-  });
-  it("should return level 127", function () {
+    assertStrictEquals(levelInfo.level, 32);
+    assertStrictEquals(levelInfo.preciseLevel, 32.48563428571428);
+    assertStrictEquals(levelInfo.currentExp, 1514993);
+    assertStrictEquals(levelInfo.expToLevel, 1472500);
+    assertStrictEquals(levelInfo.expToNextLevel, 87500);
+    assertStrictEquals(levelInfo.remainingExpToNextLevel, 45007);
+  };
+  () => {
     const levelInfo = getNetworkLevel({ networkExp: 20955390 } as never);
-    expect(levelInfo).to.be.a("object");
-    expect(levelInfo.level).to.be.a("number").that.equals(127);
-    expect(levelInfo.preciseLevel)
-      .to.be.a("number")
-      .that.equals(127.02427692307693);
-    expect(levelInfo.currentExp).to.be.a("number").that.equals(20955390);
-    expect(levelInfo.expToLevel).to.be.a("number").that.equals(20947500);
-    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(325000);
-    expect(levelInfo.remainingExpToNextLevel)
-      .to.be.a("number")
-      .that.equals(317110);
-  });
-  it("should return level 1 with negative exp", function () {
-    const levelInfo = getNetworkLevel(-9001);
-    expect(levelInfo).to.be.a("object");
-    expect(levelInfo.level).to.be.a("number").that.equals(1);
-    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(1);
-    expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
-    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
-    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(10000);
-    expect(levelInfo.remainingExpToNextLevel)
-      .to.be.a("number")
-      .that.equals(10000);
-  });
-  it("should return level 1 with playerdata and no exp", function () {
-    const levelInfo = getNetworkLevel({} as never);
-    expect(levelInfo).to.be.a("object");
-    expect(levelInfo.level).to.be.a("number").that.equals(1);
-    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(1);
-    expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
-    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
-    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(10000);
-    expect(levelInfo.remainingExpToNextLevel)
-      .to.be.a("number")
-      .that.equals(10000);
-  });
+    assertStrictEquals(levelInfo.level, 127);
+    assertStrictEquals(levelInfo.preciseLevel, 127.02427692307693);
+    assertStrictEquals(levelInfo.currentExp, 20955390);
+    assertStrictEquals(levelInfo.expToLevel, 20947500);
+    assertStrictEquals(levelInfo.expToNextLevel, 325000);
+    assertStrictEquals(levelInfo.remainingExpToNextLevel, 317110);
+  };
+  () => {
+    for (const exp of [{}, -9001]) {
+      const levelInfo = getNetworkLevel(exp as never);
+      assertStrictEquals(levelInfo.level, 1);
+      assertStrictEquals(levelInfo.preciseLevel, 1);
+      assertStrictEquals(levelInfo.currentExp, 0);
+      assertStrictEquals(levelInfo.expToLevel, 0);
+      assertStrictEquals(levelInfo.expToNextLevel, 10000);
+      assertStrictEquals(levelInfo.remainingExpToNextLevel, 10000);
+    }
+  };
+  () => {
+    assertStrictEquals(getExpFromNetworkLevel(13.37), 299799.99999999994);
+  };
 });
 
-describe("Test getExpToNetworkLevel with float", function () {
-  it("should equal 299799.99999999994", function () {
-    expect(getExpFromNetworkLevel(13.37))
-      .to.be.a("number")
-      .that.equals(299799.99999999994);
-  });
-});
-
-describe("Test getGuildLevel", function () {
-  it("should return level 0", function () {
+Deno.test("getNetworkLevel", async () => {
+  () => {
     for (const exp of [{}, -42]) {
       const levelInfo = getGuildLevel(exp as never);
-      expect(levelInfo).to.be.a("object");
-      expect(levelInfo.level).to.be.a("number").that.equals(0);
-      expect(levelInfo.preciseLevel).to.be.a("number").that.equals(0);
-      expect(levelInfo.currentExp).to.be.a("number").that.equals(0);
-      expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
-      expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(100000);
-      expect(levelInfo.remainingExpToNextLevel)
-        .to.be.a("number")
-        .that.equals(100000);
+      assertStrictEquals(levelInfo.level, 0);
+      assertStrictEquals(levelInfo.preciseLevel, 0);
+      assertStrictEquals(levelInfo.currentExp, 0);
+      assertStrictEquals(levelInfo.expToLevel, 0);
+      assertStrictEquals(levelInfo.expToNextLevel, 100000);
+      assertStrictEquals(levelInfo.remainingExpToNextLevel, 100000);
     }
-  });
-  it("should return level 0 with flair", function () {
+  };
+  () => {
     const levelInfo = getGuildLevel({ exp: 1337 } as never);
-    expect(levelInfo).to.be.a("object");
-    expect(levelInfo.level).to.be.a("number").that.equals(0);
-    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(0.01337);
-    expect(levelInfo.currentExp).to.be.a("number").that.equals(1337);
-    expect(levelInfo.expToLevel).to.be.a("number").that.equals(0);
-    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(100000);
-    expect(levelInfo.remainingExpToNextLevel)
-      .to.be.a("number")
-      .that.equals(98663);
-  });
-  it("should return level 42", function () {
+    assertStrictEquals(levelInfo.level, 0);
+    assertStrictEquals(levelInfo.preciseLevel, 0.01337);
+    assertStrictEquals(levelInfo.currentExp, 1337);
+    assertStrictEquals(levelInfo.expToLevel, 0);
+    assertStrictEquals(levelInfo.expToNextLevel, 100000);
+    assertStrictEquals(levelInfo.remainingExpToNextLevel, 98663);
+  };
+  () => {
     const levelInfo = getGuildLevel(104401100);
-    expect(levelInfo).to.be.a("object");
-    expect(levelInfo.level).to.be.a("number").that.equals(42);
-    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(42.1337);
-    expect(levelInfo.currentExp).to.be.a("number").that.equals(104401100);
-    expect(levelInfo.expToLevel).to.be.a("number").that.equals(104000000);
-    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(3000000);
-    expect(levelInfo.remainingExpToNextLevel)
-      .to.be.a("number")
-      .that.equals(2598900);
-  });
-  it("should return level 9001", function () {
+    assertStrictEquals(levelInfo.level, 42);
+    assertStrictEquals(levelInfo.preciseLevel, 42.1337);
+    assertStrictEquals(levelInfo.currentExp, 104401100);
+    assertStrictEquals(levelInfo.expToLevel, 104000000);
+    assertStrictEquals(levelInfo.expToNextLevel, 3000000);
+    assertStrictEquals(levelInfo.remainingExpToNextLevel, 2598900);
+  };
+  () => {
     const levelInfo = getGuildLevel(26983700300);
-    expect(levelInfo).to.be.a("object");
-    expect(levelInfo.level).to.be.a("number").that.equals(9001);
-    expect(levelInfo.preciseLevel).to.be.a("number").that.equals(9001.9001);
-    expect(levelInfo.currentExp).to.be.a("number").that.equals(26983700300);
-    expect(levelInfo.expToLevel).to.be.a("number").that.equals(26981000000);
-    expect(levelInfo.expToNextLevel).to.be.a("number").that.equals(3000000);
-    expect(levelInfo.remainingExpToNextLevel)
-      .to.be.a("number")
-      .that.equals(299700);
-  });
+    assertStrictEquals(levelInfo.level, 9001);
+    assertStrictEquals(levelInfo.preciseLevel, 9001.9001);
+    assertStrictEquals(levelInfo.currentExp, 26983700300);
+    assertStrictEquals(levelInfo.expToLevel, 26981000000);
+    assertStrictEquals(levelInfo.expToNextLevel, 3000000);
+    assertStrictEquals(levelInfo.remainingExpToNextLevel, 299700);
+  };
 });
+
+/*
 
 describe("Test getBedwarsLevelInfo", function () {
   it("should return prestige 0", function () {
