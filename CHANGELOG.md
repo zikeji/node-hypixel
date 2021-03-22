@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.0.3](https://github.com/zikeji/node-hypixel/compare/v3.0.2...v3.0.3) (2021-03-22)
+
+
+### Bug Fixes
+
+* **ci:** change token to env ([9251406](https://github.com/zikeji/node-hypixel/commit/925140687b302545aa5da91af186747ba0f54e7e))
+* **ci:** push after removing the deno_dist files ([b81a280](https://github.com/zikeji/node-hypixel/commit/b81a280dac74d1d6ffc04480b4d9084bfd7dced3))
+* **ci:** use API directly ([5f96489](https://github.com/zikeji/node-hypixel/commit/5f96489cdd5e5e5ace0f2f7d8e4132dbde373fd9))
+
 ### [3.0.2](https://github.com/zikeji/node-hypixel/compare/v3.0.1...v3.0.2) (2021-03-22)
 
 
