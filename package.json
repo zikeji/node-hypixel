@@ -194,6 +194,9 @@
           "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file. See\n[Conventional Commits](https://conventionalcommits.org) for commit guidelines."
         }
       ],
+      ["@semantic-release/exec", {
+        "prepareCmd": "sed -i 's/deno\\.land\\/x\\/hypixel@v[[:digit:]]\\+\\.[[:digit:]]\\+\\.[[:digit:]]\\+/deno.land\\/x\\/hypixel\\/v${nextRelease.version}/' README.md"
+      }],
       [
         "@semantic-release/npm",
         {
@@ -242,6 +245,7 @@
     "@mr-hope/vuepress-plugin-last-update": "^1.9.6",
     "@mr-hope/vuepress-types": "^1.12.1",
     "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/exec": "^5.0.0",
     "@semantic-release/git": "^9.0.0",
     "@types/chai": "^4.2.15",
     "@types/chai-as-promised": "^7.1.3",

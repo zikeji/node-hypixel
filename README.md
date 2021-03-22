@@ -39,7 +39,11 @@ npm i --save @zikeji/hypixel
 
 ### Deno
 
-TBD
+As Deno does not require installation, you would simply follow their convention for imports.
+
+```typescript
+import { Client as HypixelClient } from "https://deno.land/x/hypixel@v3.0.3";
+```
 
 ## Usage
 
