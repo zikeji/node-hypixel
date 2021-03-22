@@ -23,12 +23,6 @@ jobs:
         run: npm run build
       - name: Disable deno_dist gitignore
         run: sed -i 's/\/deno_dist/#\/deno_dist/' .gitignore
-      - name: Commit deno_dist
-        run: |
-          git config --local user.email "ci@github.com"
-          git config --local user.name "ci"
-          git add -A
-          git commit -am "commit deno_dist [skip-ci]"
       - uses: papeloto/action-zip@v1
         with:
           files: package.json package-lock.json dist/ deno_dist/
