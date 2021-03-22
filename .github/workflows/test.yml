@@ -86,7 +86,7 @@ jobs:
       - finish
       - test_deno
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(toJSON(github.event.commits.*.message), '[skip ci]')'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(toJSON(github.event.commits.*.message), '[skip ci]')
     steps:
     - name: Dispatch
       uses: peter-evans/repository-dispatch@v1
