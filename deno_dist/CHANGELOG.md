@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-### [3.0.2](https://github.com/zikeji/node-hypixel/compare/v3.0.1...v3.0.2) (2021-03-22)
-
-
-### Bug Fixes
-
-* **ci:** use dispatch, fix missing backtick ([dad1989](https://github.com/zikeji/node-hypixel/commit/dad1989df8ed21db0b236bec68abfe006a4021f8))
-
-
-### Tests
-
-* **helpers:** migrate more deno tests ([1e144bd](https://github.com/zikeji/node-hypixel/commit/1e144bd46e6c3a54d39390f4b67c07033ffe3f72))
-
 ### [3.0.1](https://github.com/zikeji/node-hypixel/compare/v3.0.0...v3.0.1) (2021-03-22)
 
 
