@@ -3,21 +3,6 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-### [3.1.1](https://github.com/zikeji/node-hypixel/compare/v3.1.0...v3.1.1) (2021-03-30)
-
-
-### Bug Fixes
-
-* add bigint check ([8988723](https://github.com/zikeji/node-hypixel/commit/89887236d5f4cf2a2f177ab336819a71eeb65003))
-
-
-### Miscellaneous Chores
-
-* **deps:** update dependencies ([5400617](https://github.com/zikeji/node-hypixel/commit/54006179767eea36750aaacfe099f54896e26759))
-* **deps docs:** bump typedoc plugin ([1f65240](https://github.com/zikeji/node-hypixel/commit/1f65240629de9da946b0667f2faeea8968b026cc))
-* **deps docs:** update documentation deps and update styles to fix issues ([34988f2](https://github.com/zikeji/node-hypixel/commit/34988f266062531b7da582f8f98164d48403a014))
-* **docs:** update CI action ([f737eda](https://github.com/zikeji/node-hypixel/commit/f737edaf43ad428163b191016c270c27650b0c03))
-
 ## [3.1.0](https://github.com/zikeji/node-hypixel/compare/v3.0.3...v3.1.0) (2021-03-22)
 
 
