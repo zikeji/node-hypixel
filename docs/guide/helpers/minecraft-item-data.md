@@ -30,10 +30,6 @@ npm install --save prismarine-nbt@1.5.0
 
 When used with Deno, this library imports the [nbt_paser](https://deno.land/x/nbt_parser) library. You do not need to install it separately.
 
-#### Important Note
-
-Due to a possible bug ((#1)[https://github.com/mcbobby123/nbt_parser/issues/1]) in the parsing library, it appears some inventories are not parsed and thus will be missed. I recommend using this helper in Deno with caution.
-
 ## Type Hinting (IntelliSense)
 
 The primary function of this helper aside from converting the raw NBT data, is to add type definitions to the data itself - allowing you to easily use the data. The helper goes as far as resolving backpack and bag data into inventory data as well. This means you get intellisense to help you explore the data and find what you need.
