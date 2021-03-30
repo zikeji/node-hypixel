@@ -3,7 +3,7 @@ import { toUint8Array } from "https://denopkg.com/chiefbiiko/base64/mod.ts";
 import {
   parse as nbtParse,
   simplify,
-} from "https://deno.land/x/nbt_parser@v1.2.1/index.ts";
+} from "https://deno.land/x/nbt_parser@v1.3.0/index.ts";
 import type { NBTInventoryItem } from "../helpers/TransformItemData.ts";
 
 export async function parse(
