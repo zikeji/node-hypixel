@@ -341,7 +341,11 @@ Deno.test("transformSkyBlockProfileMemberInventories", async () => {
                 continue;
               }
 
-              if (typeof value === "string" || typeof value === "number") {
+              if (
+                typeof value === "string" ||
+                typeof value === "number" ||
+                typeof value === "bigint"
+              ) {
                 continue;
               }
 
