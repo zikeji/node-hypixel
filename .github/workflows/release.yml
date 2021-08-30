@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Merge main back into dev
-        uses: devmasx/merge-branch@v1.3.1
+        uses: devmasx/merge-branch@1.4.0
         with:
           type: now
           head_to_merge: main
