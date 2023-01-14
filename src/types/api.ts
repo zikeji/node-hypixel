@@ -1691,11 +1691,12 @@ export declare namespace Components {
       winstreak?: number;
     }
 
-    export type SkywarsPlayerInventory = {
+    export type PlayerInventoryModel = Record<
+      string,
+      string | number | boolean
+    >;
 
-    }
-
-    export interface PlayerStatsSkywarsStats  {
+    export interface PlayerStatsSkywarsStats {
       packages?: string[];
       soul_well?: number;
       usedSoulWell?: boolean;
@@ -2134,7 +2135,7 @@ export declare namespace Components {
       losses_team_normal?: number;
       kills_team_normal?: number;
       deaths_team_normal?: number;
-      kit_ranked_ranked_armorer_inventory?: SkywarsPlayerInventory;
+      kit_ranked_ranked_armorer_inventory?: PlayerInventoryModel;
       extra_wheels?: number;
       slime_explained_last?: number;
       slime_explained?: number;
@@ -2503,7 +2504,7 @@ export declare namespace Components {
       inGamePresentsCap_2017_15?: number;
       inGamePresentsCap_2017_16?: number;
       inGamePresentsCap_2017_29?: number;
-      kit_basic_solo_ecologist_inventory?: SkywarsPlayerInventory;
+      kit_basic_solo_ecologist_inventory?: PlayerInventoryModel;
       fastest_win_kit_advanced_solo_hunter?: number;
       longest_bow_shot_kit_advanced_solo_hunter?: number;
       longest_bow_kill_kit_advanced_solo_hunter?: number;
@@ -2572,7 +2573,7 @@ export declare namespace Components {
       chests_opened_kit_blacksmith_ranked_blacksmith?: number;
       longest_bow_shot_kit_ranked_ranked_scout?: number;
       arrows_hit_kit_ranked_ranked_scout?: number;
-      kit_advanced_solo_cannoneer_inventory?: SkywarsPlayerInventory;
+      kit_advanced_solo_cannoneer_inventory?: PlayerInventoryModel;
       assists_kit_mega_mega_armorer?: number;
       longest_bow_kill_kit_basic_solo_grenade?: number;
       mega_environmental_expert?: number;
@@ -3133,7 +3134,7 @@ export declare namespace Components {
       luckyBlockResourcePackEnabled?: boolean;
       assists_lab_kit_attacking_team_enderman?: number;
       lab_win_lucky_blocks_lab_kit_attacking_team_enderman?: number;
-      kit_attacking_team_enderman_inventory?: SkywarsPlayerInventory;
+      kit_attacking_team_enderman_inventory?: PlayerInventoryModel;
       fastest_win_kit_advanced_solo_enderman?: number;
       killstreak_kit_advanced_solo_enderman?: number;
       wins_kit_advanced_solo_enderman?: number;
@@ -3183,7 +3184,7 @@ export declare namespace Components {
       heads_meh_kit_supporting_team_rookie?: number;
       heads_salty_kit_supporting_team_rookie?: number;
       heads_yucky_kit_supporting_team_rookie?: number;
-      kit_supporting_team_rookie_inventory?: SkywarsPlayerInventory;
+      kit_supporting_team_rookie_inventory?: PlayerInventoryModel;
       chests_opened_kit_attacking_team_snowman?: number;
       deaths_kit_attacking_team_snowman?: number;
       games_kit_attacking_team_snowman?: number;
@@ -3353,7 +3354,7 @@ export declare namespace Components {
       fastest_win_kit_supporting_team_troll?: number;
       killstreak_kit_supporting_team_troll?: number;
       wins_kit_supporting_team_troll?: number;
-      kit_defending_team_farmer_inventory?: SkywarsPlayerInventory;
+      kit_defending_team_farmer_inventory?: PlayerInventoryModel;
       heads_heavenly_kit_supporting_team_rookie?: number;
       heads_succulent_kit_supporting_team_rookie?: number;
       heads_heavenly_kit_defending_team_farmer?: number;
@@ -3463,10 +3464,6 @@ export declare namespace Components {
       toggle_mega_nourishment?: boolean;
       toggle_solo_necromancer?: boolean;
       shard_seeker?: number;
-    }
-
-    export type DuelsPlayerLayout = {
-
     }
 
     export interface PlayerStatsDuelsStats {
@@ -3653,8 +3650,8 @@ export declare namespace Components {
       duels_openedCommons?: number;
       duels_openedRares?: number;
       active_cosmetictitle?: string;
-      uhc_duel_layout_5: DuelsPlayerLayout;
-      sw_duel_layout_scout_5: DuelsPlayerLayout;
+      uhc_duel_layout_5: PlayerInventoryModel;
+      sw_duel_layout_scout_5: PlayerInventoryModel;
       bow_rookie_title_prestige?: number;
       classic_rookie_title_prestige?: number;
       sumo_rookie_title_prestige?: number;
@@ -3853,9 +3850,9 @@ export declare namespace Components {
       leaderboardPage_goals?: number;
       golem_kit_wins?: number;
       sw_doubles_golem_kit_wins?: number;
-      layout_sw_duel_kit_ranked_ranked_scout: DuelsPlayerLayout;
-      layout_uhc_duel_layout: DuelsPlayerLayout;
-      layout_bridge_duel_layout: DuelsPlayerLayout;
+      layout_sw_duel_kit_ranked_ranked_scout: PlayerInventoryModel;
+      layout_uhc_duel_layout: PlayerInventoryModel;
+      layout_bridge_duel_layout: PlayerInventoryModel;
       bridge_3v3v3v3_blocks_placed?: number;
       bridge_3v3v3v3_bow_hits?: number;
       bridge_3v3v3v3_bow_shots?: number;
