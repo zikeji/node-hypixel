@@ -8,8 +8,9 @@ coverage/
 dist/
 node_modules/
 *.tgz
+*.zip
 tests/**/*.ts
 !tests/**/*.test.ts
 !tests/**/*.test.deno.ts
 !tests/structures/*.ts
-/deno_dist
+/swagger.json
