@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.0.1](https://github.com/zikeji/node-hypixel/compare/v4.0.0...v4.0.1) (2024-09-11)
+
+
+### Bug Fixes
+
+* CI fix for release ([1878274](https://github.com/zikeji/node-hypixel/commit/187827438310a0e226a6ce54c6e5cf261955158e))
+
 ## [4.0.0](https://github.com/zikeji/node-hypixel/compare/v3.1.1...v4.0.0) (2024-09-11)
 
 
