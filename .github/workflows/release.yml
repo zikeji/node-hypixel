@@ -19,7 +19,7 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - uses: papeloto/action-zip@v1
+      - uses: vimtor/action-zip@v1
         with:
           files: package.json package-lock.json dist/
           dest: dist.zip
@@ -57,7 +57,7 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
         run: npm run docs:build
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3.8.0
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/.vuepress/dist
