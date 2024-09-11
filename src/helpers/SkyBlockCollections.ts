@@ -88,8 +88,8 @@ export function getSkyBlockProfileMemberCollections(
   const profileCollectionValues = Object.values(profile.members).reduce(
     (acc, member) => {
       /* istanbul ignore else */
-      if (member.player_data.unlocked_coll_tiers) {
-        member.player_data.unlocked_coll_tiers.forEach((uTier) => {
+      if (member.player_data?.unlocked_coll_tiers) {
+        member.player_data?.unlocked_coll_tiers.forEach((uTier) => {
           acc.unlockedCollTiers.add(uTier);
         });
       }

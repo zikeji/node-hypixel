@@ -94,7 +94,20 @@ export type ResourcesSkyblockItemsResponse = Paths.V2ResourcesSkyblockItems.Get.
   Record<string, unknown>;
 
 export type ResourcesSkyblockSkillsResponse = Paths.V2ResourcesSkyblockSkills.Get.Responses.$200 &
-  Record<string, unknown>;
+  Record<string, unknown> & {
+    skills: {
+      [key: string]: {
+        name: string;
+        description: string;
+        maxLevel: number;
+        levels: {
+          level: number;
+          totalExpRequired: number;
+          unlocks: string[];
+        }[];
+      };
+    };
+  };
 
 export type SkyblockNewsResponse = Paths.V2SkyblockNews.Get.Responses.$200 &
   Record<string, unknown>;
@@ -167,10 +180,13 @@ export type SkyBlockProfileMember = NonNullable<
   Components.Schemas.SkyBlockProfile["members"]
 > &
   Record<string, unknown> & {
-    player_data: {
+    player_data?: {
       unlocked_coll_tiers?: string[];
+      experience?: {
+        [key: string]: number;
+      };
     };
-    inventory: {
+    inventory?: {
       inv_contents: MinecraftInventoryData;
       ender_chest_contents: MinecraftInventoryData;
       backpack_icons: Record<string, MinecraftInventoryData>;
