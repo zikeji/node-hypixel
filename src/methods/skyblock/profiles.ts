@@ -1,7 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
-import type { SkyblockProfiles } from "../../types/AugmentedTypes";
+import type { SkyblockProfilesResponse } from "../../types/AugmentedTypes";
 
 export class SkyBlockProfiles extends Method {
   /**
@@ -14,9 +14,9 @@ export class SkyBlockProfiles extends Method {
    */
   public async uuid(
     uuid: Paths.V2SkyblockProfiles.Get.Parameters.Uuid
-  ): Promise<ResultArray<SkyblockProfiles, "profiles">> {
+  ): Promise<ResultArray<SkyblockProfilesResponse, "profiles">> {
     return getResultArray(
-      await this.client.call<SkyblockProfiles>("skyblock/profiles", {
+      await this.client.call<SkyblockProfilesResponse>("skyblock/profiles", {
         uuid,
       }),
       "profiles"

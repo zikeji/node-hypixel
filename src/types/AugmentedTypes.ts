@@ -64,10 +64,10 @@ export type ResourcesVanityCompanionsResponse = Paths.V2ResourcesVanityCompanion
 export type ResourcesVanityPetsResponse = Paths.V2ResourcesVanityPets.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type ResourcesSkyblockBingo = Paths.V2ResourcesSkyblockBingo.Get.Responses.$200 &
+export type ResourcesSkyblockBingoResponse = Paths.V2ResourcesSkyblockBingo.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type ResourcesSkyblockCollections = Paths.V2ResourcesSkyblockCollections.Get.Responses.$200 &
+export type ResourcesSkyblockCollectionsResponse = Paths.V2ResourcesSkyblockCollections.Get.Responses.$200 &
   Record<string, unknown> & {
     collections: {
       [key: string]: {
@@ -87,53 +87,53 @@ export type ResourcesSkyblockCollections = Paths.V2ResourcesSkyblockCollections.
     };
   };
 
-export type ResourcesSkyblockElection = Paths.V2ResourcesSkyblockElection.Get.Responses.$200 &
+export type ResourcesSkyblockElectionResponse = Paths.V2ResourcesSkyblockElection.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type ResourcesSkyblockItems = Paths.V2ResourcesSkyblockItems.Get.Responses.$200 &
+export type ResourcesSkyblockItemsResponse = Paths.V2ResourcesSkyblockItems.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type ResourcesSkyblockSkills = Paths.V2ResourcesSkyblockSkills.Get.Responses.$200 &
+export type ResourcesSkyblockSkillsResponse = Paths.V2ResourcesSkyblockSkills.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockNews = Paths.V2SkyblockNews.Get.Responses.$200 &
+export type SkyblockNewsResponse = Paths.V2SkyblockNews.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockAuction = Paths.V2SkyblockAuction.Get.Responses.$200 &
+export type SkyblockAuctionResponse = Paths.V2SkyblockAuction.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockAuctions = Paths.V2SkyblockAuctions.Get.Responses.$200 &
+export type SkyblockAuctionsResponse = Paths.V2SkyblockAuctions.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockAuctionsEnded = Paths.V2SkyblockAuctionsEnded.Get.Responses.$200 &
+export type SkyblockAuctionsEndedResponse = Paths.V2SkyblockAuctionsEnded.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockBazaar = Paths.V2SkyblockBazaar.Get.Responses.$200 &
+export type SkyblockBazaarResponse = Paths.V2SkyblockBazaar.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockProfile = Paths.V2SkyblockProfile.Get.Responses.$200 &
+export type SkyblockProfileResponse = Paths.V2SkyblockProfile.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockProfiles = Paths.V2SkyblockProfiles.Get.Responses.$200 &
+export type SkyblockProfilesResponse = Paths.V2SkyblockProfiles.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockMuseum = Paths.V2SkyblockMuseum.Get.Responses.$200 &
+export type SkyblockMuseumResponse = Paths.V2SkyblockMuseum.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockGarden = Paths.V2SkyblockGarden.Get.Responses.$200 &
+export type SkyblockGardenResponse = Paths.V2SkyblockGarden.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockBingo = Paths.V2SkyblockBingo.Get.Responses.$200 &
+export type SkyblockBingoResponse = Paths.V2SkyblockBingo.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockFiresales = Paths.V2SkyblockFiresales.Get.Responses.$200 &
+export type SkyblockFiresalesResponse = Paths.V2SkyblockFiresales.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type HousingActive = Paths.V2HousingActive.Get.Responses.$200 &
+export type HousingActiveResponse = Paths.V2HousingActive.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type HousingHouse = Paths.V2HousingHouse.Get.Responses.$200 &
+export type HousingHouseResponse = Paths.V2HousingHouse.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type HousingHouses = Paths.V2HousingHouses.Get.Responses.$200 &
+export type HousingHousesResponse = Paths.V2HousingHouses.Get.Responses.$200 &
   Record<string, unknown>;

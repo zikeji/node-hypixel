@@ -1,7 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
-import type { HousingHouses as Houses } from "../../types/AugmentedTypes";
+import type { HousingHousesResponse } from "../../types/AugmentedTypes";
 
 export class HousingHouses extends Method {
   /**
@@ -14,9 +14,9 @@ export class HousingHouses extends Method {
    */
   public async player(
     player: Paths.V2HousingHouses.Get.Parameters.Player
-  ): Promise<ResultObject<Houses, ["success"]>> {
+  ): Promise<ResultObject<HousingHousesResponse, ["success"]>> {
     return getResultObject(
-      await this.client.call<Houses>("housing/houses", {
+      await this.client.call<HousingHousesResponse>("housing/houses", {
         player,
       }),
       ["success"]

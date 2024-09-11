@@ -1,6 +1,6 @@
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
-import type { HousingActive, HousingHouse } from "../../types/AugmentedTypes";
+import type { HousingActiveResponse, HousingHouseResponse } from "../../types/AugmentedTypes";
 import { Paths } from "../../types/api";
 import { HousingHouses } from "./houses";
 
@@ -13,9 +13,9 @@ export class Housing extends Method {
    * ```
    * @category API
    */
-  public async active(): Promise<ResultObject<HousingActive, ["success"]>> {
+  public async active(): Promise<ResultObject<HousingActiveResponse, ["success"]>> {
     return getResultObject(
-      await this.client.call<HousingActive>("housing/active"),
+      await this.client.call<HousingActiveResponse>("housing/active"),
       ["success"]
     );
   }
@@ -30,9 +30,9 @@ export class Housing extends Method {
    */
   public async house(
     house: Paths.V2HousingHouse.Get.Parameters.House
-  ): Promise<ResultObject<HousingHouse, ["success"]>> {
+  ): Promise<ResultObject<HousingHouseResponse, ["success"]>> {
     return getResultObject(
-      await this.client.call<HousingHouse>("housing/house", {
+      await this.client.call<HousingHouseResponse>("housing/house", {
         house,
       }),
       ["success"]

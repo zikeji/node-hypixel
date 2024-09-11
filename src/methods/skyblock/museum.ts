@@ -1,7 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
-import type { SkyblockMuseum } from "../../types/AugmentedTypes";
+import type { SkyblockMuseumResponse } from "../../types/AugmentedTypes";
 
 export class SkyBlockMuseum extends Method {
   /**
@@ -14,9 +14,9 @@ export class SkyBlockMuseum extends Method {
    */
   public async profile(
     uuid: Paths.V2SkyblockMuseum.Get.Parameters.Profile
-  ): Promise<ResultObject<SkyblockMuseum, ["success"]>> {
+  ): Promise<ResultObject<SkyblockMuseumResponse, ["success"]>> {
     return getResultObject(
-      await this.client.call<SkyblockMuseum>("skyblock/museum", {
+      await this.client.call<SkyblockMuseumResponse>("skyblock/museum", {
         uuid,
       }),
       ["success"]

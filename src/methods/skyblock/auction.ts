@@ -1,7 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
-import type { SkyblockAuction } from "../../types/AugmentedTypes";
+import type { SkyblockAuctionResponse } from "../../types/AugmentedTypes";
 
 export class SkyBlockAuction extends Method {
   /**
@@ -14,9 +14,9 @@ export class SkyBlockAuction extends Method {
    */
   public async player(
     player: Paths.V2SkyblockAuction.Get.Parameters.Player
-  ): Promise<ResultArray<SkyblockAuction, "auctions">> {
+  ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
-      await this.client.call<SkyblockAuction>("skyblock/auction", {
+      await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
         player,
       }),
       "auctions"
@@ -33,9 +33,9 @@ export class SkyBlockAuction extends Method {
    */
   public async profile(
     profile: Paths.V2SkyblockAuction.Get.Parameters.Profile
-  ): Promise<ResultArray<SkyblockAuction, "auctions">> {
+  ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
-      await this.client.call<SkyblockAuction>("skyblock/auction", {
+      await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
         profile,
       }),
       "auctions"
@@ -52,9 +52,9 @@ export class SkyBlockAuction extends Method {
    */
   public async uuid(
     uuid: Paths.V2SkyblockAuction.Get.Parameters.Uuid
-  ): Promise<ResultArray<SkyblockAuction, "auctions">> {
+  ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
-      await this.client.call<SkyblockAuction>("skyblock/auction", {
+      await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
         uuid,
       }),
       "auctions"

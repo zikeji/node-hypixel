@@ -1,11 +1,11 @@
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
 import type {
-  ResourcesSkyblockBingo,
-  ResourcesSkyblockCollections,
-  ResourcesSkyblockElection,
-  ResourcesSkyblockItems,
-  ResourcesSkyblockSkills,
+  ResourcesSkyblockBingoResponse,
+  ResourcesSkyblockCollectionsResponse,
+  ResourcesSkyblockElectionResponse,
+  ResourcesSkyblockItemsResponse,
+  ResourcesSkyblockSkillsResponse,
 } from "../../types/AugmentedTypes";
 
 export class SkyBlockResources extends Method {
@@ -15,12 +15,12 @@ export class SkyBlockResources extends Method {
    */
   public async bingo(): Promise<
     ResultObject<
-      ResourcesSkyblockBingo,
+      ResourcesSkyblockBingoResponse,
       ["id", "name", "start", "end", "modifier", "goals"]
     >
   > {
     return getResultObject(
-      await this.client.call<ResourcesSkyblockBingo>(
+      await this.client.call<ResourcesSkyblockBingoResponse>(
         "resources/skyblock/bingo"
       ),
       ["id", "name", "start", "end", "modifier", "goals"]
@@ -32,10 +32,10 @@ export class SkyBlockResources extends Method {
    * @category API
    */
   public async collections(): Promise<
-    ResultObject<ResourcesSkyblockCollections, ["collections"]>
+    ResultObject<ResourcesSkyblockCollectionsResponse, ["collections"]>
   > {
     return getResultObject(
-      await this.client.call<ResourcesSkyblockCollections>(
+      await this.client.call<ResourcesSkyblockCollectionsResponse>(
         "resources/skyblock/collections"
       ),
       ["collections"]
@@ -47,10 +47,10 @@ export class SkyBlockResources extends Method {
    * @category API
    */
   public async election(): Promise<
-    ResultObject<ResourcesSkyblockElection, ["mayor", "current"]>
+    ResultObject<ResourcesSkyblockElectionResponse, ["mayor", "current"]>
   > {
     return getResultObject(
-      await this.client.call<ResourcesSkyblockElection>(
+      await this.client.call<ResourcesSkyblockElectionResponse>(
         "resources/skyblock/election"
       ),
       ["mayor", "current"]
@@ -62,10 +62,10 @@ export class SkyBlockResources extends Method {
    * @category API
    */
   public async items(): Promise<
-    ResultObject<ResourcesSkyblockItems, ["items"]>
+    ResultObject<ResourcesSkyblockItemsResponse, ["items"]>
   > {
     return getResultObject(
-      await this.client.call<ResourcesSkyblockItems>(
+      await this.client.call<ResourcesSkyblockItemsResponse>(
         "resources/skyblock/items"
       ),
       ["items"]
@@ -77,10 +77,10 @@ export class SkyBlockResources extends Method {
    * @category API
    */
   public async skills(): Promise<
-    ResultObject<ResourcesSkyblockSkills, ["skils"]>
+    ResultObject<ResourcesSkyblockSkillsResponse, ["skils"]>
   > {
     return getResultObject(
-      await this.client.call<ResourcesSkyblockSkills>(
+      await this.client.call<ResourcesSkyblockSkillsResponse>(
         "resources/skyblock/skills"
       ),
       ["skills"]

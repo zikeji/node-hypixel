@@ -1,7 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
-import type { SkyblockGarden } from "../../types/AugmentedTypes";
+import type { SkyblockGardenResponse } from "../../types/AugmentedTypes";
 
 export class SkyBlockGarden extends Method {
   /**
@@ -14,9 +14,9 @@ export class SkyBlockGarden extends Method {
    */
   public async profile(
     uuid: Paths.V2SkyblockGarden.Get.Parameters.Profile
-  ): Promise<ResultObject<SkyblockGarden, ["success"]>> {
+  ): Promise<ResultObject<SkyblockGardenResponse, ["success"]>> {
     return getResultObject(
-      await this.client.call<SkyblockGarden>("skyblock/garden", {
+      await this.client.call<SkyblockGardenResponse>("skyblock/garden", {
         uuid,
       }),
       ["success"]

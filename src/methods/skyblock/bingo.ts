@@ -1,7 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
-import type { SkyblockBingo } from "../../types/AugmentedTypes";
+import type { SkyblockBingoResponse } from "../../types/AugmentedTypes";
 
 export class SkyBlockBingo extends Method {
   /**
@@ -14,9 +14,9 @@ export class SkyBlockBingo extends Method {
    */
   public async uuid(
     uuid: Paths.V2SkyblockBingo.Get.Parameters.Uuid
-  ): Promise<ResultArray<SkyblockBingo, "events">> {
+  ): Promise<ResultArray<SkyblockBingoResponse, "events">> {
     return getResultArray(
-      await this.client.call<SkyblockBingo>("skyblock/bingo", {
+      await this.client.call<SkyblockBingoResponse>("skyblock/bingo", {
         uuid,
       }),
       "events"
