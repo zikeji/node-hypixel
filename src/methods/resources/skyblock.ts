@@ -77,7 +77,7 @@ export class SkyBlockResources extends Method {
    * @category API
    */
   public async skills(): Promise<
-    ResultObject<ResourcesSkyblockSkillsResponse, ["skils"]>
+    ResultObject<ResourcesSkyblockSkillsResponse, ["skills"]>
   > {
     return getResultObject(
       await this.client.call<ResourcesSkyblockSkillsResponse>(
