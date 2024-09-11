@@ -432,7 +432,7 @@ describe("Test getBedwarsLevelInfo", function () {
         stats: {},
       } as never);
     } catch (e) {
-      expect(e.message).to.equal(
+      expect((e as Error).message).to.equal(
         "Data supplied does not contain player Bedwars experience."
       );
     }
@@ -486,7 +486,7 @@ describe("Test SkyWarsLevelInfo & SkyWarsPrestige", function () {
         stats: {},
       } as never);
     } catch (e) {
-      expect(e.message).to.equal("Not a valid level.");
+      expect((e as Error).message).to.equal("Not a valid level.");
     }
   });
   it("getSkyWarsLevelInfo should throw typeError", function () {
@@ -495,7 +495,7 @@ describe("Test SkyWarsLevelInfo & SkyWarsPrestige", function () {
         stats: {},
       } as never);
     } catch (e) {
-      expect(e.message).to.equal(
+      expect((e as Error).message).to.equal(
         "Data supplied does not contain player SkyWars experience."
       );
     }

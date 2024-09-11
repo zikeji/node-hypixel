@@ -13,7 +13,8 @@ describe("Client throws invalid api key", function () {
     try {
       new Client((123 as unknown) as string);
     } catch (e) {
-      expect(e.message).to.equal("Invalid API key");
+      expect(e).to.be.instanceOf(InvalidKeyError);
+      expect((e as Error).message).to.equal("Invalid API key");
     }
   });
   it("should throw invalid API key on call", async function () {
@@ -31,7 +32,7 @@ describe("A timeout of 1 should throw configured timeout.", function () {
       await timeoutClient.guild.id("asda");
     } catch (e) {
       expect(e).instanceOf(Error);
-      expect(e.message).to.equal("Hit configured timeout.");
+      expect((e as Error).message).to.equal("Hit configured timeout.");
     }
   });
 });
