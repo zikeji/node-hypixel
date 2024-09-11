@@ -158,12 +158,34 @@ export type SkyBlockProfile = Omit<
   };
 };
 
+export type MinecraftInventoryData = {
+  type: number;
+  data: string;
+};
+
 export type SkyBlockProfileMember = NonNullable<
   Components.Schemas.SkyBlockProfile["members"]
 > &
   Record<string, unknown> & {
     player_data: {
       unlocked_coll_tiers?: string[];
+    };
+    inventory: {
+      inv_contents: MinecraftInventoryData;
+      ender_chest_contents: MinecraftInventoryData;
+      backpack_icons: Record<string, MinecraftInventoryData>;
+      backpack_contents: Record<string, MinecraftInventoryData>;
+      bag_contents: {
+        potion_bag: MinecraftInventoryData;
+        talisman_bag: MinecraftInventoryData;
+        fishing_bag: MinecraftInventoryData;
+        sacks_bag: MinecraftInventoryData;
+      };
+      inv_armor: MinecraftInventoryData;
+      equipment_contents: MinecraftInventoryData;
+      wardrobe_equipped_slot: number;
+      sacks_counts: Record<string, number>;
+      wardrobe_contents: MinecraftInventoryData;
     };
     collection?: {
       [key: string]: number;
