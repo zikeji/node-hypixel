@@ -2,7 +2,8 @@ import { request as httpsRequest } from "https";
 import { GenericHTTPError } from "../errors/GenericHTTPError";
 import { InvalidKeyError } from "../errors/InvalidKeyError";
 import { RateLimitError } from "../errors/RateLimitError";
-import type { DefaultMeta, RequestOptions } from "../Client";
+import type { RequestOptions } from "../Client";
+import type { DefaultMeta } from "../types/DefaultMeta";
 
 /** @internal */
 const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
