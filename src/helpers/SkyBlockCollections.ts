@@ -1,4 +1,7 @@
-import { Components } from "../types/api";
+import type {
+  ResourcesSkyblockCollectionsResponse,
+  SkyBlockProfile,
+} from "../types/AugmentedTypes";
 
 /**
  * Interface describing the accumulated information of all members on a profile.
@@ -79,14 +82,14 @@ export type SkyBlockProfileCollections = SkyBlockProfileCollectionGroup[];
  * @category Helper
  */
 export function getSkyBlockProfileMemberCollections(
-  profile: Pick<NonNullable<Components.Schemas.SkyBlockProfile>, "members">,
-  collections: Components.Schemas.SkyBlockResourcesParentCollections
+  profile: Pick<NonNullable<SkyBlockProfile>, "members">,
+  collections: ResourcesSkyblockCollectionsResponse["collections"]
 ): SkyBlockProfileCollections | false {
   const profileCollectionValues = Object.values(profile.members).reduce(
     (acc, member) => {
       /* istanbul ignore else */
-      if (member.unlocked_coll_tiers) {
-        member.unlocked_coll_tiers.forEach((uTier) => {
+      if (member.player_data.unlocked_coll_tiers) {
+        member.player_data.unlocked_coll_tiers.forEach((uTier) => {
           acc.unlockedCollTiers.add(uTier);
         });
       }

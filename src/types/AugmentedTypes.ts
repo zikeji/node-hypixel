@@ -2,7 +2,7 @@
  * This file contains references to the generated types from api.ts as well as extensions to supplement their data.
  */
 
-import { Paths } from "./api";
+import { Components, Paths } from "./api";
 
 export type BoostersResponse = Paths.V2Boosters.Get.Responses.$200 &
   Record<string, unknown>;
@@ -111,11 +111,21 @@ export type SkyblockAuctionsEndedResponse = Paths.V2SkyblockAuctionsEnded.Get.Re
 export type SkyblockBazaarResponse = Paths.V2SkyblockBazaar.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockProfileResponse = Paths.V2SkyblockProfile.Get.Responses.$200 &
-  Record<string, unknown>;
+export type SkyblockProfileResponse = Omit<
+  Paths.V2SkyblockProfile.Get.Responses.$200,
+  "profile"
+> &
+  Record<string, unknown> & {
+    profile: SkyBlockProfile;
+  };
 
-export type SkyblockProfilesResponse = Paths.V2SkyblockProfiles.Get.Responses.$200 &
-  Record<string, unknown>;
+export type SkyblockProfilesResponse = Omit<
+  Paths.V2SkyblockProfiles.Get.Responses.$200,
+  "profiles"
+> &
+  Record<string, unknown> & {
+    profiles: SkyBlockProfile[];
+  };
 
 export type SkyblockMuseumResponse = Paths.V2SkyblockMuseum.Get.Responses.$200 &
   Record<string, unknown>;
@@ -137,3 +147,25 @@ export type HousingHouseResponse = Paths.V2HousingHouse.Get.Responses.$200 &
 
 export type HousingHousesResponse = Paths.V2HousingHouses.Get.Responses.$200 &
   Record<string, unknown>;
+
+/** fix the typing of the members on a SkyBlock profile */
+export type SkyBlockProfile = Omit<
+  Components.Schemas.SkyBlockProfile,
+  "members"
+> & {
+  members: {
+    [key: string]: SkyBlockProfileMember;
+  };
+};
+
+export type SkyBlockProfileMember = NonNullable<
+  Components.Schemas.SkyBlockProfile["members"]
+> &
+  Record<string, unknown> & {
+    player_data: {
+      unlocked_coll_tiers?: string[];
+    };
+    collection?: {
+      [key: string]: number;
+    };
+  };
