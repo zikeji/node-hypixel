@@ -22,6 +22,10 @@ module.exports = {
         ],
         features: [
           {
+            title: "Hypixel API V2 Support",
+            details: "With the V1 API being phased out, it's ever crucial to begin updating your projects to their V2 endpoints."
+          },
+          {
             title: "Rate Limiting Queue",
             details: "Built in async rate limiting queue prevents prevents requests from failing by queueing and waiting for the queue to clear."
           },

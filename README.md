@@ -17,11 +17,13 @@
 [docs]: https://node-hypixel.zikeji.com
 [hypixel]: https://api.hypixel.net/
 
-With thorough **[IntelliSense](https://code.visualstudio.com/docs/editor/intellisense)** support & **[100% test coverage](https://coveralls.io/github/zikeji/node-hypixel)**, this is an unopinionated async/await API wrapper for [Hypixel's Public API][hypixel]. It is developed in TypeScript complete with [documentation][docs], [typed interfaces](https://node-hypixel.zikeji.com/ts-api/) for all API responses, built-in rate-limit handling, [flexible cache support](https://node-hypixel.zikeji.com/guide/advanced/cache/), and some [helper functions](https://node-hypixel.zikeji.com/guide/helpers/player-ranks/).
+With **[IntelliSense](https://code.visualstudio.com/docs/editor/intellisense)** support, this is an unopinionated async/await API wrapper for [Hypixel's Public API][hypixel]. It is developed in TypeScript complete with [documentation][docs], [typed interfaces](https://node-hypixel.zikeji.com/ts-api/) for all API responses, built-in rate-limit handling, [flexible cache support](https://node-hypixel.zikeji.com/guide/advanced/cache/), and some [helper functions](https://node-hypixel.zikeji.com/guide/helpers/player-ranks/).
 
-## 3.0 to 4.0 Migration
+## 4.0.0 Information
 
-This is a major upgrade, where I've rebased types on the v2 endpoints published by Hypixel and removed my previous OpenAPI.yaml. I've added some typing extensions to facilitate type completion, but the initial 4.0 release is very barebones, just aiming to get an API client compatible with v2 up and running. Deno support was also removed.
+4.0 is a major breaking version, where I've rebased types on the v2 endpoints published by Hypixel and removed my previous OpenAPI.yaml.
+
+I've added `AugmentedTypes.ts` to "augment" their typings, but they are very barebones in the current state. Pull requests augmenting types are welcome, I will more than likely not be exploring the typings like I did in the past, and merely add what I want/need.
 
 ## Installation
 
@@ -42,7 +44,7 @@ const client = new Client("API_KEY");
   const status = await client.status.uuid("20934ef9488c465180a78f861586b4cf"); // Minikloon
   console.log(status);
   // {"online": false}
-  const stats = await client.watchdogstats();
+  const stats = await client.punishmentstats();
   console.log(stats);
   // {watchdog_lastMinute: 1, staff_rollingDaily: 2609, watchdog_total: 5591714, watchdog_rollingDaily: 4213, …}
 })();
