@@ -21,7 +21,7 @@ const client = new Hypixel("API_KEY");
   const virmah = await client.player.uuid("3cdbba7d55f8484e81a30a74a6fb7998"); // Virmah
   const typify = await client.player.uuid("deb8dbdbce1e4ec7addf93bce1b3dbb3"); // Typify
 
-  const virmahSkywars = NodeHypixel.getSkyWarsLevelInfo(virmah, true);
+  const virmahSkywars = getSkyWarsLevelInfo(virmah, true);
   console.log(virmahSkywars);
   // output:
   {
@@ -43,7 +43,7 @@ const client = new Hypixel("API_KEY");
     expToPrestige: 495000
   }
 
-  const typifySkywars = NodeHypixel.getSkyWarsLevelInfo(typify, true);
+  const typifySkywars = getSkyWarsLevelInfo(typify, true);
   console.log(typifySkywars);
   // output:
   {
@@ -77,7 +77,7 @@ const client = new Hypixel("API_KEY");
     progressToNextPrestige: 0.7915897435897435
   }
 
-  const skyWarsData = NodeHypixel.getSkyWarsLevelInfo(696969);
+  const skyWarsData = getSkyWarsLevelInfo(696969);
   console.log(skyWarsData);
   // output:
   {
@@ -89,7 +89,7 @@ const client = new Hypixel("API_KEY");
     remainingExpToNextLevel: 8031
   }
 
-  const prestige = NodeHypixel.getSkyWarsPrestigeForLevel(69);
+  const prestige = getSkyWarsPrestigeForLevel(69);
   console.log(prestige);
   // output:
   {

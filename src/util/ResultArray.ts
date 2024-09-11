@@ -1,5 +1,4 @@
 import { DefaultMeta } from "../types/DefaultMeta";
-import { Components } from "../types/api";
 
 /**
  * Generic intersection type for result arrays to include metadata as a non-enumerable property.
@@ -13,7 +12,7 @@ import { Components } from "../types/api";
  * ```
  */
 export type ResultArray<
-  T extends Components.Schemas.ApiSuccess,
+  T extends Record<string, unknown>,
   K extends keyof T
 > = T[K] & {
   meta: Omit<T, K> & DefaultMeta;
@@ -21,17 +20,17 @@ export type ResultArray<
 
 /** @hidden */
 export function getResultArray<
-  T extends Components.Schemas.ApiSuccess,
+  T extends Record<string, unknown>,
   K extends keyof T
 >(response: T & DefaultMeta, key: K): ResultArray<T, K> {
   const clonedResponse: typeof response = JSON.parse(JSON.stringify(response));
   if (!(key in clonedResponse)) {
-    throw new TypeError(`Key "${key}" was not in the response.`);
+    throw new TypeError(`Key "${String(key)}" was not in the response.`);
   }
   const items = clonedResponse[key];
   const { ratelimit, cached, cloudflareCache } = clonedResponse;
   if (!Array.isArray(items)) {
-    throw new TypeError(`Key "${key}" is not an array.`);
+    throw new TypeError(`Key "${String(key)}" is not an array.`);
   }
   delete clonedResponse[key];
   const arr = ([...items] as never) as ResultArray<T, K>;

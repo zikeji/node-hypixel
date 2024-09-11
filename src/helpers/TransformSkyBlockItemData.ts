@@ -1,18 +1,35 @@
-import { Components } from "../types/api";
+import type {
+  SkyBlockProfileMember,
+  MinecraftInventoryData,
+} from "../types/AugmentedTypes";
 import { NBTInventory, transformItemData } from "./TransformItemData";
 
 /**
  * Interface used in the {@link SkyBlockProfileMemberWithTransformedInventories} intersection to describe the intellisense for the inventory after being transformed.
  */
 export interface SkyBlockProfileTransformedInventories {
-  inv_armor: NBTInventory;
-  candy_inventory_contents?: NBTInventory;
-  ender_chest_contents?: NBTInventory;
-  fishing_bag?: NBTInventory;
   inv_contents?: NBTInventory;
-  potion_bag?: NBTInventory;
-  quiver?: NBTInventory;
-  talisman_bag?: NBTInventory;
+  ender_chest_contents?: NBTInventory;
+  backpack_icons?: {
+    [key: string]: NBTInventory;
+  };
+  backpack_contents?: {
+    [key: string]: NBTInventory;
+  };
+  bag_contents?: {
+    fishing_bag?: NBTInventory;
+    potion_bag?: NBTInventory;
+    talisman_bag?: NBTInventory;
+    sacks_bag?: NBTInventory;
+    quiver?: NBTInventory;
+  };
+  inv_armor?: NBTInventory;
+  equipment_contents?: NBTInventory;
+  personal_vault_contents?: NBTInventory;
+  wardrobe_equipped_slots: number;
+  sacks_counts: {
+    [key: string]: number;
+  };
   wardrobe_contents?: NBTInventory;
 }
 
@@ -20,22 +37,26 @@ export interface SkyBlockProfileTransformedInventories {
  * This type is a intersection type omitting the default inventory types and including the transformed inventory types.
  */
 export type SkyBlockProfileMemberWithTransformedInventories = Omit<
-  Components.Schemas.SkyBlockProfileMember,
-  keyof SkyBlockProfileTransformedInventories
-> &
-  SkyBlockProfileTransformedInventories;
+  SkyBlockProfileMember,
+  "inventory"
+> & {
+  inventory: SkyBlockProfileTransformedInventories;
+};
 
 /** @internal */
-const SKYBLOCK_INVENTORIES: (keyof SkyBlockProfileTransformedInventories)[] = [
-  "inv_armor",
-  "candy_inventory_contents",
-  "ender_chest_contents",
-  "fishing_bag",
-  "inv_contents",
-  "potion_bag",
-  "quiver",
-  "talisman_bag",
-  "wardrobe_contents",
+const SKYBLOCK_INVENTORIES: [
+  keyof SkyBlockProfileTransformedInventories,
+  boolean
+][] = [
+  ["inv_contents", false],
+  ["ender_chest_contents", false],
+  ["backpack_icons", true],
+  ["backpack_contents", true],
+  ["bag_contents", true],
+  ["inv_armor", false],
+  ["equipment_contents", false],
+  ["personal_vault_contents", false],
+  ["wardrobe_contents", false],
 ];
 
 /**
@@ -44,21 +65,46 @@ const SKYBLOCK_INVENTORIES: (keyof SkyBlockProfileTransformedInventories)[] = [
  * @category Helper
  */
 export async function transformSkyBlockProfileMemberInventories(
-  member: Components.Schemas.SkyBlockProfileMember
+  member: SkyBlockProfileMember
 ): Promise<SkyBlockProfileMemberWithTransformedInventories> {
   const transformedMember: SkyBlockProfileMemberWithTransformedInventories = member as never;
   await Promise.all(
-    SKYBLOCK_INVENTORIES.map(async (key) => {
-      const inventoryData: Components.Schemas.SkyBlockProfileInventoryData = transformedMember[
-        key
-      ] as never;
-      if (inventoryData && inventoryData.data) {
-        try {
-          transformedMember[key] = await transformItemData(inventoryData.data);
-        } catch (e) {
-          /* istanbul ignore next */
-          delete transformedMember[key];
+    SKYBLOCK_INVENTORIES.map(async ([key, hasKeys]) => {
+      if (!hasKeys) {
+        const inventoryData = transformedMember.inventory[
+          key
+        ] as MinecraftInventoryData;
+        if (inventoryData && (inventoryData as MinecraftInventoryData).data) {
+          try {
+            transformedMember.inventory[key] = (await transformItemData(
+              (inventoryData as MinecraftInventoryData).data
+            )) as never;
+          } catch (e) {
+            /* istanbul ignore next */
+            delete transformedMember.inventory[key];
+          }
         }
+      } else {
+        const inventoryData = transformedMember.inventory[key] as Record<
+          string,
+          MinecraftInventoryData
+        >;
+        await Promise.all(
+          Object.keys(inventoryData).map(async (subKey) => {
+            if (inventoryData[subKey] && inventoryData[subKey].data) {
+              try {
+                (transformedMember.inventory[key] as never)[
+                  subKey
+                ] = (await transformItemData(
+                  inventoryData[subKey].data
+                )) as never;
+              } catch (e) {
+                /* istanbul ignore next */
+                delete (transformedMember.inventory[key] as never)[subKey];
+              }
+            }
+          })
+        );
       }
     })
   );

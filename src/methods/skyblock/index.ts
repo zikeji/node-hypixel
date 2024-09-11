@@ -5,6 +5,16 @@ import { getResultObject, ResultObject } from "../../util/ResultObject";
 import { SkyBlockAuction } from "./auction";
 import { SkyBlockAuctions } from "./auctions";
 import { SkyBlockProfiles } from "./profiles";
+import type {
+  SkyblockAuctionsEndedResponse,
+  SkyblockBazaarResponse,
+  SkyblockFiresalesResponse,
+  SkyblockNewsResponse,
+  SkyblockProfileResponse,
+} from "../../types/AugmentedTypes";
+import { SkyBlockMuseum } from "./museum";
+import { SkyBlockGarden } from "./garden";
+import { SkyBlockBingo } from "./bingo";
 
 export class SkyBlock extends Method {
   /**
@@ -38,10 +48,10 @@ export class SkyBlock extends Method {
    * @category API
    */
   public async auctions_ended(): Promise<
-    ResultObject<Paths.SkyblockAuctionsEnded.Get.Responses.$200, ["success"]>
+    ResultObject<SkyblockAuctionsEndedResponse, ["success"]>
   > {
     return getResultObject(
-      await this.client.call<Paths.SkyblockAuctionsEnded.Get.Responses.$200>(
+      await this.client.call<SkyblockAuctionsEndedResponse>(
         "skyblock/auctions_ended"
       ),
       ["success"]
@@ -57,15 +67,60 @@ export class SkyBlock extends Method {
    * @category API
    */
   public async bazaar(): Promise<
-    ResultObject<Paths.SkyblockBazaar.Get.Responses.$200, ["products"]>
+    ResultObject<SkyblockBazaarResponse, ["products"]>
   > {
     return getResultObject(
-      await this.client.call<Paths.SkyblockBazaar.Get.Responses.$200>(
-        "skyblock/bazaar"
-      ),
+      await this.client.call<SkyblockBazaarResponse>("skyblock/bazaar"),
       ["products"]
     );
   }
+
+  /**
+   * Bingo data for participated events of the provided player.
+   * @example
+   * ```typescript
+   * const bingoEvents = await client.skyblock.bingo.uuid("20934ef9488c465180a78f861586b4cf");
+   * ```
+   * @category API
+   */
+  public bingo: SkyBlockBingo = new SkyBlockBingo(this.client);
+
+  /**
+   * Retrieve the currently active or upcoming Fire Sales for SkyBlock.
+   * @example
+   * ```typescript
+   * const sales = await client.skyblock.firesales();
+   * ```
+   * @category API
+   */
+  public async firesales(): Promise<
+    ResultArray<SkyblockFiresalesResponse, "sales">
+  > {
+    return getResultArray(
+      await this.client.call<SkyblockFiresalesResponse>("skyblock/bazaar"),
+      "sales"
+    );
+  }
+
+  /**
+   * Get SkyBlock garden data.
+   * @example
+   * ```typescript
+   * const garden = await client.skyblock.garden.profile('347ef6c1daac45ed9d1fa02818cf0fb6');
+   * ```
+   * @category API
+   */
+  public garden: SkyBlockGarden = new SkyBlockGarden(this.client);
+
+  /**
+   * Get SkyBlock museum data.
+   * @example
+   * ```typescript
+   * const museum = await client.skyblock.museum.profile('347ef6c1daac45ed9d1fa02818cf0fb6');
+   * ```
+   * @category API
+   */
+  public museum: SkyBlockMuseum = new SkyBlockMuseum(this.client);
 
   /**
    * Returns SkyBlock news, including a title, description and a thread.
@@ -75,13 +130,9 @@ export class SkyBlock extends Method {
    * ```
    * @category API
    */
-  public async news(): Promise<
-    ResultArray<Paths.SkyblockNews.Get.Responses.$200, "items">
-  > {
+  public async news(): Promise<ResultArray<SkyblockNewsResponse, "items">> {
     return getResultArray(
-      await this.client.call<Paths.SkyblockNews.Get.Responses.$200>(
-        "skyblock/news"
-      ),
+      await this.client.call<SkyblockNewsResponse>("skyblock/news"),
       "items"
     );
   }
@@ -95,15 +146,12 @@ export class SkyBlock extends Method {
    * @category API
    */
   public async profile(
-    profile: Paths.SkyblockProfile.Get.Parameters.Profile
-  ): Promise<
-    ResultObject<Paths.SkyblockProfile.Get.Responses.$200, ["profile"]>
-  > {
+    profile: Paths.V2SkyblockProfile.Get.Parameters.Profile
+  ): Promise<ResultObject<SkyblockProfileResponse, ["profile"]>> {
     return getResultObject(
-      await this.client.call<Paths.SkyblockProfile.Get.Responses.$200>(
-        "skyblock/profile",
-        { profile }
-      ),
+      await this.client.call<SkyblockProfileResponse>("skyblock/profile", {
+        profile,
+      }),
       ["profile"]
     );
   }

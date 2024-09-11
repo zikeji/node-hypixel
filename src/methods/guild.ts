@@ -1,6 +1,7 @@
 import { Paths } from "../types/api";
 import { Method } from "../util/Method";
 import { getResultObject, ResultObject } from "../util/ResultObject";
+import type { GuildResponse } from "../types/AugmentedTypes";
 
 export class Guild extends Method {
   /**
@@ -12,14 +13,14 @@ export class Guild extends Method {
    * @category API
    */
   public async id(
-    id: Paths.Guild.Get.Parameters.Id
-  ): Promise<ResultObject<Paths.Guild.Get.Responses.$200, ["guild"]>> {
+    id: Paths.V2Guild.Get.Parameters.Id
+  ): Promise<ResultObject<GuildResponse, ["guild"]>> {
     return getResultObject(
-      await this.client.call<Paths.Guild.Get.Responses.$200>("guild", {
+      await this.client.call<GuildResponse>("guild", {
         id,
       }),
       ["guild"]
-    ) as never;
+    );
   }
 
   /**
@@ -31,14 +32,14 @@ export class Guild extends Method {
    * @category API
    */
   public async player(
-    player: Paths.Guild.Get.Parameters.Player
-  ): Promise<ResultObject<Paths.Guild.Get.Responses.$200, ["guild"]>> {
+    player: Paths.V2Guild.Get.Parameters.Player
+  ): Promise<ResultObject<GuildResponse, ["guild"]>> {
     return getResultObject(
-      await this.client.call<Paths.Guild.Get.Responses.$200>("guild", {
+      await this.client.call<GuildResponse>("guild", {
         player,
       }),
       ["guild"]
-    ) as never;
+    );
   }
 
   /**
@@ -50,13 +51,13 @@ export class Guild extends Method {
    * @category API
    */
   public async name(
-    name: Paths.Guild.Get.Parameters.Name
-  ): Promise<ResultObject<Paths.Guild.Get.Responses.$200, ["guild"]>> {
+    name: Paths.V2Guild.Get.Parameters.Name
+  ): Promise<ResultObject<GuildResponse, ["guild"]>> {
     return getResultObject(
-      await this.client.call<Paths.Guild.Get.Responses.$200>("guild", {
+      await this.client.call<GuildResponse>("guild", {
         name,
       }),
       ["guild"]
-    ) as never;
+    );
   }
 }

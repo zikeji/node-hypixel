@@ -2,15 +2,15 @@ import { request as httpsRequest } from "https";
 import { GenericHTTPError } from "../errors/GenericHTTPError";
 import { InvalidKeyError } from "../errors/InvalidKeyError";
 import { RateLimitError } from "../errors/RateLimitError";
-import type { DefaultMeta, RequestOptions } from "../Client";
-import { Components } from "../types/api";
+import type { RequestOptions } from "../Client";
+import type { DefaultMeta } from "../types/DefaultMeta";
 
 /** @internal */
 const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
 
 /** @internal */
 export function request<
-  T extends Components.Schemas.ApiSuccess & {
+  T extends Record<string, unknown> & {
     cause?: string;
   } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
 >(options: RequestOptions): Promise<T> {

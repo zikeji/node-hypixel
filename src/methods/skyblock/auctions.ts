@@ -1,6 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
+import type { SkyblockAuctionsResponse } from "../../types/AugmentedTypes";
 
 export class SkyBlockAuctions extends Method {
   /**
@@ -12,15 +13,12 @@ export class SkyBlockAuctions extends Method {
    * @category API
    */
   public async page(
-    page: Paths.SkyblockAuctions.Get.Parameters.Page = 0
-  ): Promise<
-    ResultObject<Paths.SkyblockAuctions.Get.Responses.$200, ["success"]>
-  > {
+    page: Paths.V2SkyblockAuctions.Get.Parameters.Page = 0
+  ): Promise<ResultObject<SkyblockAuctionsResponse, ["success"]>> {
     return getResultObject(
-      await this.client.call<Paths.SkyblockAuctions.Get.Responses.$200>(
-        "skyblock/auctions",
-        { page: page.toString(10) }
-      ),
+      await this.client.call<SkyblockAuctionsResponse>("skyblock/auctions", {
+        page: page.toString(10),
+      }),
       ["success"]
     );
   }

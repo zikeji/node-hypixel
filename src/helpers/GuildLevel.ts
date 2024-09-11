@@ -7,7 +7,7 @@
  * For the original full copyright and license information, please view the LICENSE-HYPIXEL-PHP.md that was distributed with this source code.
  */
 
-import { Components } from "../types/api";
+import type { GuildResponse } from "../types/AugmentedTypes";
 
 /**
  * Describes the results of the {@link getGuildLevel} output object.
@@ -46,13 +46,13 @@ const EXP_NEEDED = [
  * @category Helper
  */
 export function getGuildLevel(
-  data: Components.Schemas.Guild | number
+  data: GuildResponse["guild"] | number
 ): GuildLevel {
   let currentExp = 0;
   if (typeof data === "number") {
     currentExp = data;
   } else {
-    currentExp = data.exp ?? 0;
+    currentExp = typeof data.exp === "number" ? data.exp : 0;
   }
   if (currentExp < 0) currentExp = 0;
   let remainingExp = currentExp;

@@ -1,6 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
+import type { SkyblockAuctionResponse } from "../../types/AugmentedTypes";
 
 export class SkyBlockAuction extends Method {
   /**
@@ -12,15 +13,12 @@ export class SkyBlockAuction extends Method {
    * @category API
    */
   public async player(
-    player: Paths.SkyblockAuction.Get.Parameters.Player
-  ): Promise<
-    ResultArray<Paths.SkyblockAuction.Get.Responses.$200, "auctions">
-  > {
+    player: Paths.V2SkyblockAuction.Get.Parameters.Player
+  ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
-      await this.client.call<Paths.SkyblockAuction.Get.Responses.$200>(
-        "skyblock/auction",
-        { player }
-      ),
+      await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
+        player,
+      }),
       "auctions"
     );
   }
@@ -34,15 +32,12 @@ export class SkyBlockAuction extends Method {
    * @category API
    */
   public async profile(
-    profile: Paths.SkyblockAuction.Get.Parameters.Profile
-  ): Promise<
-    ResultArray<Paths.SkyblockAuction.Get.Responses.$200, "auctions">
-  > {
+    profile: Paths.V2SkyblockAuction.Get.Parameters.Profile
+  ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
-      await this.client.call<Paths.SkyblockAuction.Get.Responses.$200>(
-        "skyblock/auction",
-        { profile }
-      ),
+      await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
+        profile,
+      }),
       "auctions"
     );
   }
@@ -56,15 +51,12 @@ export class SkyBlockAuction extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Paths.SkyblockAuction.Get.Parameters.Uuid
-  ): Promise<
-    ResultArray<Paths.SkyblockAuction.Get.Responses.$200, "auctions">
-  > {
+    uuid: Paths.V2SkyblockAuction.Get.Parameters.Uuid
+  ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
-      await this.client.call<Paths.SkyblockAuction.Get.Responses.$200>(
-        "skyblock/auction",
-        { uuid }
-      ),
+      await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
+        uuid,
+      }),
       "auctions"
     );
   }

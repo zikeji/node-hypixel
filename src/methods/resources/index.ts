@@ -1,8 +1,14 @@
-import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
 import { GuildsResources } from "./guilds";
 import { SkyBlockResources } from "./skyblock";
+import { VanityResources } from "./vanity";
+import type {
+  ResourcesAchievementsResponse,
+  ResourcesChallengesResponse,
+  ResourcesGamesResponse,
+  ResourcesQuestsResponse,
+} from "../../types/AugmentedTypes";
 
 export class Resources extends Method {
   /**
@@ -14,13 +20,10 @@ export class Resources extends Method {
    * @category API
    */
   public async achievements(): Promise<
-    ResultObject<
-      Paths.ResourcesAchievements.Get.Responses.$200,
-      ["achievements"]
-    >
+    ResultObject<ResourcesAchievementsResponse, ["achievements"]>
   > {
     return getResultObject(
-      await this.client.call<Paths.ResourcesAchievements.Get.Responses.$200>(
+      await this.client.call<ResourcesAchievementsResponse>(
         "resources/achievements"
       ),
       ["achievements"]
@@ -36,10 +39,10 @@ export class Resources extends Method {
    * @category API
    */
   public async challenges(): Promise<
-    ResultObject<Paths.ResourcesChallenges.Get.Responses.$200, ["challenges"]>
+    ResultObject<ResourcesChallengesResponse, ["challenges"]>
   > {
     return getResultObject(
-      await this.client.call<Paths.ResourcesChallenges.Get.Responses.$200>(
+      await this.client.call<ResourcesChallengesResponse>(
         "resources/challenges"
       ),
       ["challenges"]
@@ -47,21 +50,19 @@ export class Resources extends Method {
   }
 
   /**
-   * Returns all the quests for each gamemode on the Hypixel network.
+   * Returns information about Hypixel Games.
    * @example
    * ```typescript
-   * const quests = await client.resources.quests();
+   * const games = await client.resources.games();
    * ```
    * @category API
    */
-  public async quests(): Promise<
-    ResultObject<Paths.ResourcesQuests.Get.Responses.$200, ["quests"]>
+  public async games(): Promise<
+    ResultObject<ResourcesGamesResponse, ["games"]>
   > {
     return getResultObject(
-      await this.client.call<Paths.ResourcesQuests.Get.Responses.$200>(
-        "resources/quests"
-      ),
-      ["quests"]
+      await this.client.call<ResourcesGamesResponse>("resources/games"),
+      ["games"]
     );
   }
 
@@ -72,8 +73,31 @@ export class Resources extends Method {
   public guilds: GuildsResources = new GuildsResources(this.client);
 
   /**
+   * Returns all the quests for each gamemode on the Hypixel network.
+   * @example
+   * ```typescript
+   * const quests = await client.resources.quests();
+   * ```
+   * @category API
+   */
+  public async quests(): Promise<
+    ResultObject<ResourcesQuestsResponse, ["quests"]>
+  > {
+    return getResultObject(
+      await this.client.call<ResourcesQuestsResponse>("resources/quests"),
+      ["quests"]
+    );
+  }
+
+  /**
    * SkyBlock related resources.
    * @category API
    */
   public skyblock: SkyBlockResources = new SkyBlockResources(this.client);
+
+  /**
+   * SkyBlock related resources.
+   * @category API
+   */
+  public vanity: VanityResources = new VanityResources(this.client);
 }

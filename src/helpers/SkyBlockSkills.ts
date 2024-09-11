@@ -1,4 +1,7 @@
-import { Components } from "../types/api";
+import type {
+  ResourcesSkyblockSkillsResponse,
+  SkyBlockProfileMember,
+} from "../types/AugmentedTypes";
 
 export interface SkyBlockSkillsInfo {
   FARMING: SkyBlockSkillInfo;
@@ -39,19 +42,20 @@ export interface SkyBlockSkillInfo {
  * @category Helper
  */
 export function getSkyBlockProfileMemberSkills(
-  profileMember: Components.Schemas.SkyBlockProfileMember,
-  skills: Components.Schemas.SkyBlockResourcesSkills
+  profileMember: SkyBlockProfileMember,
+  skills: ResourcesSkyblockSkillsResponse["skills"]
 ): SkyBlockSkillsInfo | false {
-  let hasApi = false;
+  if (!profileMember.player_data?.experience) {
+    return false;
+  }
   const result = {} as SkyBlockSkillsInfo;
   for (let i = 0; i < Object.keys(skills).length; i += 1) {
     const skillName = Object.keys(skills)[i];
+    const skillKey = `SKILL_${skillName}`;
     const skill = skills[skillName];
-    const skillKey = `experience_skill_${skillName.toLowerCase()}` as keyof Components.Schemas.SkyBlockProfileMember;
     let exp = 0;
-    if (skillKey in profileMember) {
-      exp = profileMember[skillKey] as number;
-      hasApi = true;
+    if (skillKey in profileMember.player_data.experience) {
+      exp = profileMember.player_data.experience[skillKey];
     }
     let level = 0;
     let totalExpToLevel = 0;
@@ -74,9 +78,6 @@ export function getSkyBlockProfileMemberSkills(
       expToNextLevel,
       maxLevel: skill.maxLevel,
     };
-  }
-  if (hasApi === false) {
-    return false;
   }
   return result;
 }

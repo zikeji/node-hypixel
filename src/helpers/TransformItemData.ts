@@ -142,7 +142,7 @@ export interface NBTCustomPotionEffect {
 
 /**
  * This helper will transform NBT data into a typed object using prismarine-nbt. It will also transform any backpacks/bags with item data so you can explore those as well.
- * @param value A Base64 item data string, NBT byte array, or buffer. If Deno, no Buffer but a Uint8Array is supported.
+ * @param value A Base64 item data string, NBT byte array, or buffer.
  * @category Helper
  */
 export async function transformItemData(

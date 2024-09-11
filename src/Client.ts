@@ -2,21 +2,26 @@ import { EventEmitter } from "events";
 import { URL } from "url";
 import { GenericHTTPError } from "./errors/GenericHTTPError";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
-import { FindGuild } from "./methods/findGuild";
-import { Friends } from "./methods/friends";
 import { Guild } from "./methods/guild";
 import { Player } from "./methods/player";
-import { RecentGames } from "./methods/recentGames";
+import { Recentgames } from "./methods/recentGames";
 import { Resources } from "./methods/resources";
 import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";
-import type { Components, Paths } from "./types/api";
 import { Queue } from "./util/Queue";
 import { request } from "./util/Request";
 import { getResultObject, ResultObject } from "./util/ResultObject";
+import type {
+  BoostersResponse,
+  CountsResponse,
+  LeaderboardsResponse,
+  PunishmentStatsResponse,
+} from "./types/AugmentedTypes";
+import type { DefaultMeta } from "./types/DefaultMeta";
+import { Housing } from "./methods/housing";
 
 /** @internal */
-export interface ActionableCall<T extends Components.Schemas.ApiSuccess> {
+export interface ActionableCall<T> {
   execute: () => Promise<T>;
   retries: number;
   noRateLimit: boolean;
@@ -39,37 +44,6 @@ export interface RateLimitData {
   limit: number;
 }
 
-/**
- * Possible meta options returned on the meta variable.
- */
-export interface DefaultMeta {
-  /**
-   * If this request required an API key it returned rate limit information in the headers, which is included here.
-   */
-  ratelimit?: RateLimitData;
-  /**
-   * If you included a cache get/set method in the options, this value will be set to true if that cache was hit.
-   */
-  cached?: boolean;
-  /**
-   * Data from CloudFlare's headers in regards to caching - particularly relevant for resources endpoints.
-   */
-  cloudflareCache?: {
-    /**
-     * Cloudflare cache status.
-     */
-    status: "HIT" | "MISS" | "BYPASS" | "EXPIRED" | "DYNAMIC";
-    /**
-     * Cloudflare cache age.
-     */
-    age?: number;
-    /**
-     * Cloudflare max cache age.
-     */
-    maxAge?: number;
-  };
-}
-
 /** @hidden */
 export interface RequestOptions {
   url: string;
@@ -88,13 +62,8 @@ export interface Parameters {
  * If you want built in caching, implementing these methods (or utilitizing an library that includes these methods) is a must. Refer to the [cache](https://node-hypixel.zikeji.com/guide/cache) guide.
  */
 export interface BasicCache {
-  get<T extends Components.Schemas.ApiSuccess>(
-    key: string
-  ): Promise<(T & DefaultMeta) | undefined>;
-  set<T extends Components.Schemas.ApiSuccess>(
-    key: string,
-    value: T & DefaultMeta
-  ): Promise<void>;
+  get<T>(key: string): Promise<(T & DefaultMeta) | undefined>;
+  set<T>(key: string, value: T & DefaultMeta): Promise<void>;
 }
 
 export interface ClientOptions {
@@ -105,8 +74,6 @@ export interface ClientOptions {
   retries?: number;
   /**
    * The time, in milliseconds, you want to wait before giving up on the method call.
-   *
-   * **NOTE:** This option is ignored when being [used in Deno](https://github.com/denoland/deno/issues/7019).
    * @default 10000
    */
   timeout?: number;
@@ -166,7 +133,7 @@ export declare interface Client {
 
 export class Client {
   /** @internal */
-  private static readonly endpoint = new URL(`https://api.hypixel.net`);
+  private static readonly endpoint = new URL(`https://api.hypixel.net/v2`);
   /** @internal */
   private readonly emitter = new EventEmitter();
   /** @internal */
@@ -239,53 +206,26 @@ export class Client {
    * @category API
    */
   public async boosters(): Promise<
-    ResultObject<Paths.Boosters.Get.Responses.$200, ["success"]>
+    ResultObject<BoostersResponse, ["success"]>
   > {
-    return getResultObject(
-      await this.call<Paths.Boosters.Get.Responses.$200>("boosters"),
-      ["success"]
-    );
+    return getResultObject(await this.call<BoostersResponse>("boosters"), [
+      "success",
+    ]);
   }
-
-  /**
-   * Returns the id of the requested guild if found.
-   * @example
-   * ```typescript
-   * const { guild } = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
-   * console.log(guild);
-   * // 553490650cf26f12ae5bac8f
-   * ```
-   * @category API
-   */
-  public findGuild: FindGuild = new FindGuild(this);
-
-  /**
-   * Returns friendships for given player.
-   * @example
-   * ```typescript
-   * const friends = await client.friends.uuid("20934ef9488c465180a78f861586b4cf");
-   * console.log(friends);
-   * ```
-   * @category API
-   */
-  public friends: Friends = new Friends(this);
 
   /**
    * Returns the current player count along with the player count of each public game + mode on the server.
    * @example
    * ```typescript
-   * const response = await client.gameCounts();
+   * const response = await client.counts();
    * console.log(response);
    * ```
    * @category API
    */
-  public async gameCounts(): Promise<
-    ResultObject<Paths.GameCounts.Get.Responses.$200, ["success"]>
-  > {
-    return getResultObject(
-      await this.call<Paths.GameCounts.Get.Responses.$200>("gameCounts"),
-      ["success"]
-    );
+  public async counts(): Promise<ResultObject<CountsResponse, ["success"]>> {
+    return getResultObject(await this.call<CountsResponse>("counts"), [
+      "success",
+    ]);
   }
 
   /**
@@ -299,22 +239,15 @@ export class Client {
   public guild: Guild = new Guild(this);
 
   /**
-   * Returns information regarding given key.
+   * Return's housing data, such as active public houses.
    * @example
    * ```typescript
-   * const key = await client.key();
-   * console.log(key);
+   * const housingData = await client.housing.active();
+   * console.log(housingData);
    * ```
    * @category API
    */
-  public async key(): Promise<
-    ResultObject<Paths.Key.Get.Responses.$200, ["record"]>
-  > {
-    return getResultObject(
-      await this.call<Paths.Key.Get.Responses.$200>("key"),
-      ["record"]
-    );
-  }
+  public housing: Housing = new Housing(this);
 
   /**
    * Returns a list of the official leaderboards and their current standings for games on the network.
@@ -326,10 +259,10 @@ export class Client {
    * @category API
    */
   public async leaderboards(): Promise<
-    ResultObject<Paths.Leaderboards.Get.Responses.$200, ["leaderboards"]>
+    ResultObject<LeaderboardsResponse, ["leaderboards"]>
   > {
     return getResultObject(
-      await this.call<Paths.Leaderboards.Get.Responses.$200>("leaderboards"),
+      await this.call<LeaderboardsResponse>("leaderboards"),
       ["leaderboards"]
     );
   }
@@ -346,19 +279,19 @@ export class Client {
   public player: Player = new Player(this);
 
   /**
-   * Returns current player count.
+   * Returns some statistics about punishments.
    * @example
    * ```typescript
-   * const response = await client.playerCounts();
+   * const response = await client.punishmentstats();
    * console.log(response);
    * ```
    * @category API
    */
-  public async playerCount(): Promise<
-    ResultObject<Paths.PlayerCount.Get.Responses.$200, ["success"]>
+  public async punishmentstats(): Promise<
+    ResultObject<PunishmentStatsResponse, ["success"]>
   > {
     return getResultObject(
-      await this.call<Paths.PlayerCount.Get.Responses.$200>("playerCount"),
+      await this.call<PunishmentStatsResponse>("punishmentstats"),
       ["success"]
     );
   }
@@ -367,12 +300,12 @@ export class Client {
    * Returns recent games of a player. A maximum of 100 games are returned and recent games are only stored for up to 3 days at this time.
    * @example
    * ```typescript
-   * const response = await client.recentGames.uuid("20934ef9488c465180a78f861586b4cf");
+   * const response = await client.recentgames.uuid("20934ef9488c465180a78f861586b4cf");
    * console.log(response);
    * ```
    * @category API
    */
-  public recentGames: RecentGames = new RecentGames(this);
+  public recentgames: Recentgames = new Recentgames(this);
 
   /**
    * Relatively static Hypixel resources that don't change often at all.
@@ -398,31 +331,6 @@ export class Client {
   public status: Status = new Status(this);
 
   /**
-   * Returns some statistics about Watchdog & bans.
-   * @example
-   * ```typescript
-   * const response = await client.watchdogstats();
-   * console.log(response);
-   * // {
-   * //   watchdog_lastMinute: 1,
-   * //   staff_rollingDaily: 3014,
-   * //   watchdog_total: 5589923,
-   * //   watchdog_rollingDaily: 4662,
-   * //   staff_total: 1874174
-   * // }
-   * ```
-   * @category API
-   */
-  public async watchdogstats(): Promise<
-    ResultObject<Paths.Watchdogstats.Get.Responses.$200, ["success"]>
-  > {
-    return getResultObject(
-      await this.call<Paths.Watchdogstats.Get.Responses.$200>("watchdogstats"),
-      ["success"]
-    );
-  }
-
-  /**
    * The raw query method used by this library. You may use this if you need to use an undocumented method with this library.
    *
    * @category Custom
@@ -437,10 +345,10 @@ export class Client {
    * // { success: true, guild: '553490650cf26f12ae5bac8f' }
    * ```
    */
-  public async call<T extends Components.Schemas.ApiSuccess>(
+  public async call<T extends Record<string, unknown>>(
     path: string,
     parameters: Parameters = {}
-  ): Promise<T & { cached?: boolean }> {
+  ): Promise<T & DefaultMeta & { cached?: boolean }> {
     if (!this.cache) {
       return this.executeActionableCall(
         this.createActionableCall(path, parameters)
@@ -460,7 +368,7 @@ export class Client {
       cachedResponse.cached = true;
       return cachedResponse;
     }
-    const response: T = await this.executeActionableCall(
+    const response: T & DefaultMeta = await this.executeActionableCall(
       this.createActionableCall(path, parameters)
     );
     await this.cache.set(key, response);
@@ -468,7 +376,7 @@ export class Client {
   }
 
   /** @internal */
-  private async executeActionableCall<T extends Components.Schemas.ApiSuccess>(
+  private async executeActionableCall<T extends Record<string, unknown>>(
     call: ActionableCall<T>
   ): Promise<T> {
     await this.queue.wait();
@@ -486,7 +394,7 @@ export class Client {
     }
     let response: T & DefaultMeta;
     try {
-      response = await call.execute();
+      response = (await call.execute()) as never;
     } catch (error) {
       /* istanbul ignore else */
       if (
@@ -510,7 +418,7 @@ export class Client {
   }
 
   /** @internal */
-  private createActionableCall<T extends Components.Schemas.ApiSuccess>(
+  private createActionableCall<T extends Record<string, unknown>>(
     path: string,
     /* istanbul ignore next */
     parameters: Parameters = {}
@@ -540,12 +448,12 @@ export class Client {
       retries: 0,
       noRateLimit,
       includeApiKey,
-    } as ActionableCall<T>;
+    } as ActionableCall<T extends Record<string, unknown> ? T : never>;
   }
 
   /** @internal */
   private callMethod<
-    T extends Components.Schemas.ApiSuccess & {
+    T extends Record<string, unknown> & {
       cause?: string;
     } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
   >(
@@ -554,7 +462,7 @@ export class Client {
     noRateLimit: boolean,
     includeApiKey: boolean
   ): Promise<T> {
-    const url = new URL(path, Client.endpoint);
+    const url = new URL(`${Client.endpoint}/${path}`);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
     });
