@@ -4,7 +4,7 @@ import { GenericHTTPError } from "./errors/GenericHTTPError";
 import { InvalidKeyError } from "./errors/InvalidKeyError";
 import { Guild } from "./methods/guild";
 import { Player } from "./methods/player";
-import { Recentgames } from "./methods/recentgames";
+import { Recentgames } from "./methods/recentGames";
 import { Resources } from "./methods/resources";
 import { SkyBlock } from "./methods/skyblock";
 import { Status } from "./methods/status";

@@ -16,7 +16,7 @@ export * from "./helpers/TransformItemData";
 export * from "./helpers/TransformSkyBlockItemData";
 export * from "./methods/guild";
 export * from "./methods/player";
-export * from "./methods/recentgames";
+export * from "./methods/recentGames";
 export * from "./methods/resources/index";
 export * from "./methods/resources/guilds";
 export * from "./methods/resources/skyblock";
