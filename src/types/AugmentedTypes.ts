@@ -11,7 +11,9 @@ export type CountsResponse = Paths.V2Counts.Get.Responses.$200 &
   Record<string, unknown>;
 
 export type GuildResponse = Paths.V2Guild.Get.Responses.$200 &
-  Record<string, unknown>;
+  Record<string, unknown> & {
+    guild: Record<string, unknown>;
+  };
 
 export type LeaderboardsResponse = Paths.V2Leaderboards.Get.Responses.$200 &
   Record<string, unknown>;
