@@ -1,6 +1,6 @@
 {
   "name": "@zikeji/hypixel",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "With IntelliSense support & test coverage, this is an unopinionated async/await API wrapper for Hypixel's Public API. It is developed in TypeScript complete with documentation, typed interfaces for all API responses, built-in rate-limit handling, flexible cache support, and helper functions.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
