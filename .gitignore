@@ -11,6 +11,5 @@ node_modules/
 *.zip
 tests/**/*.ts
 !tests/**/*.test.ts
-!tests/**/*.test.deno.ts
 !tests/structures/*.ts
 /swagger.json

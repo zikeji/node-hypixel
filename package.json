@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=10"
+    "node": ">=20"
   },
   "private": false,
   "publishConfig": {
@@ -15,13 +15,12 @@
     "commit": "cz",
     "lint": "eslint --ext ts src --fix",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc -p . && denoify",
+    "build": "npm run clean && tsc -p .",
     "types:openapi": "dtsgen --out ./src/types/api.ts --target ES2015 ./swagger.json && node ./scripts/process_api_output.js && eslint --ext ts ./src/types/api.ts --fix",
     "watch": "npm run clean && tsc -p . -w",
     "test": "nodenv --exec npx -- mocha -r ts-node/register tests/**/*.test.ts",
     "test:helpers": "nodenv --exec npx -- mocha -r ts-node/register tests/helpers.test.ts",
     "test:ci": "mocha -r ts-node/register tests/**/*.test.ts",
-    "test:deno": "deno test --allow-read --allow-net ./tests/mod.test.deno.ts",
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
     "coverage:ci": "nyc npm run test:ci",
@@ -58,7 +57,6 @@
     "src/",
     "!dist/**/*.map",
     "!dist/tsconfig.tsbuildinfo",
-    "!src/**/*.deno.ts{,x}",
     "!docs/"
   ],
   "release": {
@@ -235,8 +233,7 @@
           "assets": [
             "CHANGELOG.md",
             "package.json",
-            "package-lock.json",
-            "deno_dist/**/*"
+            "package-lock.json"
           ]
         }
       ]
@@ -263,7 +260,6 @@
     "commitizen": "^4.2.3",
     "conventional-changelog-conventionalcommits": "^4.5.0",
     "cz-conventional-changelog": "^3.3.0",
-    "denoify": "^0.6.5",
     "dtsgenerator": "^3.7.0",
     "eslint": "^7.23.0",
     "eslint-config-airbnb-typescript-prettier": "^4.1.0",
@@ -294,14 +290,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "denoify": {
-    "includes": [
-      "README.md",
-      "LICENSE",
-      "LICENSE-HYPIXEL-PHP.md",
-      "CHANGELOG.md",
-      "openapi.yaml"
-    ]
   }
 }

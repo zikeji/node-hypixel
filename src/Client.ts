@@ -74,8 +74,6 @@ export interface ClientOptions {
   retries?: number;
   /**
    * The time, in milliseconds, you want to wait before giving up on the method call.
-   *
-   * **NOTE:** This option is ignored when being [used in Deno](https://github.com/denoland/deno/issues/7019).
    * @default 10000
    */
   timeout?: number;
