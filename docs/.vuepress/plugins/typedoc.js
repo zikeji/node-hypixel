@@ -1,8 +1,8 @@
 const fs = require("fs");
 const { join, resolve } = require("path");
 const { promisify } = require("util");
-const { Application, TSConfigReader, TypeDocReader } = require("typedoc");
-const { FrontMatterComponent } = require("vuepress-plugin-typedoc/dist/front-matter");
+const { Application, TSConfigReader, TypeDocReader, ProjectReflection } = require("typedoc");
+const { readFile } = require("fs/promises");
 
 const readdir = promisify(fs.readdir);
 const statFile = promisify(fs.stat);
@@ -26,45 +26,47 @@ const readdirRecursive = async (path, base) => {
   return outFiles;
 }
 
-const app = new Application();
-
-module.exports = function(_, { sourceDir }) {
+module.exports = function (_, { sourceDir }) {
   const outFolder = "ts-api";
+
+  /** @type {import('typedoc').TypeDocOptions} */
   const typedocOptions = {
     entryPoints: resolve(__dirname, "..", "..", "..", "src", "index.ts"),
-    tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.js"),
+    tsconfig: resolve(__dirname, "..", "..", "..", "tsconfig.json"),
     readme: "none",
     categoryOrder: ["Public", "API", "*", "Custom", "Other"],
     exclude: [resolve(__dirname, "..", "..", "..", "node_modules", "prismarine-nbt")],
     excludeExternals: true,
     excludePrivate: true,
     excludeProtected: true,
-    hideInPageTOC: true,
+    disableSources: true,
     hideBreadcrumbs: true,
-    plugin: ["typedoc-plugin-markdown"]
+    out: join(sourceDir, outFolder),
+    plugin: ["typedoc-plugin-markdown", "typedoc-plugin-frontmatter", "typedoc-vitepress-theme"]
   };
 
-  app.options.addReader(new TypeDocReader());
-  app.options.addReader(new TSConfigReader());
+  /** @type {Application} */
+  let app;
+  /** @type {ProjectReflection} */
+  let project;
 
-  app.bootstrap(typedocOptions);
-
-  app.renderer.addComponent(
-    'frontmatter',
-    new FrontMatterComponent(app.renderer),
-  );
-
-  const project = app.convert();
-
-  if (!project) {
-    return;
-  }
+  /** @type {{text: string, items: {text: string; link: string;}[]}[]} */
+  let navItems;
 
   /** @type {import("@mr-hope/vuepress-types/types/plugin").PluginOptionAPI} */
   const plugin = {
     name: "typedoc-plugin",
     additionalPages: async () => {
+      app = await Application.bootstrapWithPlugins(typedocOptions, [new TypeDocReader(), new TSConfigReader()]);
+
+      project = await app.convert();
+
+      if (!project) {
+        return [];
+      }
+
       await app.generateDocs(project, join(sourceDir, outFolder));
+      navItems = JSON.parse(await readFile(join(sourceDir, outFolder, 'typedoc-sidebar.json'), 'utf-8'));
       const files = await readdirRecursive(join(sourceDir, outFolder), outFolder);
       return files;
     },
@@ -73,20 +75,13 @@ module.exports = function(_, { sourceDir }) {
         name: "typedoc-sidebar",
         content: `export default ({ siteData, options }) => {
           siteData.themeConfig.sidebar = Object.assign({}, siteData.themeConfig.sidebar,${JSON.stringify({
-          [`/${outFolder}/`]: app.renderer.theme.getNavigation(project).children.map((navItem) => {
-            if (navItem.url && navItem.children && navItem.children.length === 0) {
-              const urlKey = navItem.url.replace('.md', '');
-              return [
-                urlKey === "README" ? `/${outFolder}/` : "globals",
-                navItem.title,
-              ];
-            }
+            [`/${outFolder}/`]: navItems.map((navItem) => {
             return {
-              title: navItem.title,
-              children: navItem.children.map((innerNavItem) => {
+              title: navItem.text,
+              children: navItem.items.map((innerNavItem) => {
                 return [
-                  innerNavItem.url.endsWith("index.md") ? `${innerNavItem.url.split("/").slice(0, -1).join("/")}/` : innerNavItem.url.replace(".md", ""),
-                  innerNavItem.title
+                  innerNavItem.link.replace('/docs/', '/').replace('.md', ''),
+                  innerNavItem.text
                 ];
               }),
             };

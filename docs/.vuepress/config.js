@@ -62,14 +62,12 @@ module.exports = config({
     nav: [
       { text: "Home", link: "/", icon: "home" },
       { text: "Guide", link: "/guide/", icon: "guide" },
-      { text: "API", link: "/api/", icon: "api" },
       { text: "Typescript API", link: "/ts-api/", icon: "typescript" },
       {
         text: "Info",
         icon: "info",
         items: [
           { text: "Changelog", link: "/changelog/", icon: "changelog" },
-          { text: "Discord Server", link: "https://discord.gg/QkcGHwG", icon: "discord" },
           { text: "NPM Package", link: `https://www.npmjs.com/package/${name}`, icon: "npm" },
           { text: "GitHub Repo", link: `https://github.com/${repo}`, icon: "github" },
         ]
@@ -130,8 +128,7 @@ module.exports = config({
     addThis: process.env.NODE_ENV === "production" ? "ra-5f8d724d4c77d215" : null,
   },
   extraWatchFiles: [
-    "../../README.md",
-    "../../openapi.yaml"
+    "../../README.md"
   ],
   configureWebpack: {
     module: {
@@ -147,7 +144,7 @@ module.exports = config({
     ["@mr-hope/vuepress-plugin-last-update", {
       transformer: (timestamp) => {
         return new Date(timestamp).toLocaleString('en-US', { year: "numeric", month: "long", weekday: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: 'America/New_York' })
-          .match(/^(\w+,\s\w+\s)(\d{1,2})(,\s\d{4}),(\s\d{1,2}:\d{1,2}\s[AP]M)/)
+          .match(/^(\w+,\s\w+\s)(\d{1,2})(,\s\d{4})(\sat\s\d{1,2}:\d{1,2}\s[AP]M)/)
           .map((m, i) => {
             if (i === 2) {
               let day = parseInt(m);
@@ -157,7 +154,7 @@ module.exports = config({
               return `${day}th`;
             }
             if (i === 4) {
-              return ` at${m} EST`;
+              return ` ${m} EST`;
             }
             return m;
           })
