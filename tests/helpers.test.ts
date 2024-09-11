@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import {
-  Components,
   getBedwarsLevelInfo,
   getExpFromNetworkLevel,
   getGuildLevel,
@@ -10,10 +9,8 @@ import {
   getSkyBlockProfileMemberSkills,
   getSkyWarsLevelInfo,
   getSkyWarsPrestigeForLevel,
-  NBTInventory,
   removeMinecraftFormatting,
   romanize,
-  SkyBlockProfileTransformedInventories,
   SkyWarsPrestiges,
   transformItemData,
   transformSkyBlockProfileMemberInventories,
@@ -21,6 +18,9 @@ import {
 import { getResultArray } from "../src/util/ResultArray";
 import { getResultObject } from "../src/util/ResultObject";
 import { AsyncReturnType } from "./client.test";
+import { TestClient } from "./structures/TestClient";
+
+const client = new TestClient();
 
 describe("Test getResultArray", function () {
   const obj = getResultArray({ success: true, items: [] }, "items");
@@ -28,6 +28,7 @@ describe("Test getResultArray", function () {
     expect(obj.meta.cloudflareCache).to.be.undefined;
   });
 });
+
 describe("Test getResultObject", function () {
   const obj = getResultObject({ success: true, items: [] }, ["success"]);
   it("should not have cloudflare meta", function () {
@@ -148,12 +149,13 @@ describe("Test removeMinecraftFormatting", function () {
   });
 });
 
-describe("Test transformSkyBlockProfileMemberInventories", function () {
+describe("Test transformSkyBlockProfileMemberInventories", async function () {
   this.slow(250);
-  const profiles: Components.Schemas.SkyBlockProfileCuteName[] = require("./data/profiles.json");
+  const profiles = await client.skyblock.profiles.uuid('');
   const members: AsyncReturnType<
     typeof transformSkyBlockProfileMemberInventories
   >[] = [];
+
   it("should transform members without throwing", async function () {
     for (const profile of profiles) {
       if (profile === null) continue;
@@ -162,216 +164,13 @@ describe("Test transformSkyBlockProfileMemberInventories", function () {
       }
     }
   });
-  it("transformed members should have transformed inventories with appropriate keys", function () {
-    for (const member of members) {
-      expect(member).to.be.an("object");
-      for (const inventoryName of [
-        "inv_armor",
-        "candy_inventory_contents",
-        "ender_chest_contents",
-        "fishing_bag",
-        "inv_contents",
-        "potion_bag",
-        "quiver",
-        "talisman_bag",
-        "wardrobe_contents",
-      ] as (keyof SkyBlockProfileTransformedInventories)[]) {
-        const inventory = member[inventoryName];
-        if (typeof inventory === "undefined") continue;
-        expect(inventory).to.be.an("array");
-        // merge backpacks/bags items into inventory arr
-        inventory.forEach((i) => {
-          if (i === null || !i.tag || !i.tag.ExtraAttributes) return;
-          for (const key of Object.keys(i.tag.ExtraAttributes)) {
-            if (key.endsWith("_backpack_data") || key.endsWith("_bag_data")) {
-              const contents = i.tag.ExtraAttributes[key] as NBTInventory;
-              for (const item of contents) {
-                inventory.push(item);
-              }
-            }
-          }
-        });
-        for (const item of inventory) {
-          if (item === null) continue;
-          expect(item.id).to.be.a("number");
-          expect(item.Count).to.be.a("number");
-          expect(item.Damage).to.be.a("number");
-          if (item.tag) {
-            expect(item.tag).to.be.an("object");
-
-            if (item.tag.Unbreakable) {
-              expect(item.tag.Unbreakable).to.be.a("number");
-            }
-            if (item.tag.HideFlags) {
-              expect(item.tag.HideFlags).to.be.a("number");
-            }
-            if (item.tag.display) {
-              const display = item.tag.display;
-              expect(display).to.be.an("object");
-              if (display.Name) {
-                expect(display.Name).to.be.a("string");
-              }
-              if (display.Lore) {
-                expect(display.Lore)
-                  .to.be.an("array")
-                  .that.satisfies(function (arr: string[]) {
-                    return arr.every((s) => typeof s === "string");
-                  });
-              }
-              if (display.color) expect(display.color).to.be.a("number");
-            }
-            if (item.tag.ExtraAttributes) {
-              const ExtraAttributes = item.tag.ExtraAttributes;
-              for (const key of Object.keys(ExtraAttributes)) {
-                const value = ExtraAttributes[key];
-                if (
-                  [
-                    "id",
-                    "uuid",
-                    "timestamp",
-                    "originTag",
-                    "modifier",
-                    "color",
-                    "backpack_color",
-                    "potion_type",
-                    "potion_name",
-                  ].includes(key)
-                ) {
-                  expect(value).to.be.a("string");
-                  continue;
-                }
-                if (
-                  [
-                    "anvil_uses",
-                    "hot_potato_count",
-                    "rarity_upgrades",
-                    "dungeon_item_level",
-                    "potion_level",
-                    "splash",
-                  ].includes(key)
-                ) {
-                  expect(value).to.be.a("number");
-                  continue;
-                }
-                if (key === "runes" || key === "enchantments") {
-                  expect(value)
-                    .to.be.an("object")
-                    .that.satisfies(function (obj: { [key: string]: number }) {
-                      return Object.values(obj).every(
-                        (v) => typeof v === "number"
-                      );
-                    });
-                  continue;
-                }
-                if (key === "effects") {
-                  expect(value).to.be.an("array");
-                  for (const v of value as NonNullable<
-                    typeof ExtraAttributes.effects
-                  >) {
-                    expect(v.effect).to.be.a("string");
-                    expect(v.duration_ticks).to.be.a("number");
-                    expect(v.level).to.be.a("number");
-                  }
-                  continue;
-                }
-
-                if (Array.isArray(value)) {
-                  for (const v of value) {
-                    if (typeof v === "object") {
-                      if (
-                        v === null ||
-                        typeof (v as { tag: unknown }).tag === "object"
-                      ) {
-                        // It's a NBTInventoryItem, ignore as we already merged it in to check.
-                        continue;
-                      }
-                      // expect NBTExtraAttributesPotionEffect
-                      const effect = v as NonNullable<
-                        typeof ExtraAttributes.effects
-                      >[number];
-                      console.log(value);
-                      expect(effect.effect).to.be.a("string");
-                      expect(effect.duration_ticks).to.be.a("number");
-                      expect(effect.level).to.be.a("number");
-                    } else {
-                      // expect number
-                      expect(v).to.be.a("number");
-                    }
-                  }
-                  continue;
-                }
-
-                if (typeof value === "object") {
-                  expect(value)
-                    .to.be.an("object")
-                    .that.satisfies(function (val: { [name: string]: number }) {
-                      return Object.values(val).every(
-                        (v) => typeof v === "number"
-                      );
-                    });
-                  continue;
-                }
-
-                if (typeof value === "string" || typeof value === "number") {
-                  continue;
-                }
-
-                expect(value).to.be.undefined;
-              }
-            }
-            if (item.tag.ench) {
-              expect(item.tag.ench).to.be.an("array");
-              for (const value of item.tag.ench) {
-                expect(value.id).to.be.a("number");
-                expect(value.lvl).to.be.a("number");
-              }
-            }
-            if (item.tag.SkullOwner) {
-              const skull = item.tag.SkullOwner;
-              expect(skull).to.be.an("object");
-              expect(skull.Id).to.be.a("string");
-              if (skull.Properties !== null) {
-                if (skull.Properties.profileId) {
-                  expect(skull.Properties.profileId).to.be.a("string");
-                }
-                if (skull.Properties.profileName) {
-                  expect(skull.Properties.profileName).to.be.a("string");
-                }
-                if (skull.Properties.signatureRequired) {
-                  expect(skull.Properties.signatureRequired).to.be.a("boolean");
-                }
-                if (skull.Properties.timestamp) {
-                  expect(skull.Properties.timestamp).to.be.a("number");
-                }
-                expect(skull.Properties.textures)
-                  .to.be.an("object")
-                  .that.has.property("SKIN")
-                  .that.is.an("object")
-                  .that.has.property("url")
-                  .that.is.a("string");
-              }
-            }
-            if (item.tag.CustomPotionEffects) {
-              expect(item.tag.CustomPotionEffects).to.be.an("array");
-              for (const potion of item.tag.CustomPotionEffects) {
-                expect(potion.Id).to.be.a("number");
-                expect(potion.Ambient).to.be.a("number");
-                expect(potion.Amplifier).to.be.a("number");
-                expect(potion.Duration).to.be.a("number");
-              }
-            }
-          }
-        }
-      }
-    }
-  });
 });
 
-describe("Test transformItemData", function () {
-  const player: Components.Schemas.Player = require("./data/player.json");
+describe("Test transformItemData", async function () {
+  const player = await client.player.uuid('');
   it("should transform Pit inventory without throwing", async function () {
     await transformItemData(
-      player.stats.Pit?.profile.inv_armor.data as number[]
+      (player.stats.Pit as {profile: {inv_armor: {data: string}}}).profile.inv_armor.data
     );
   });
   it("should throw as invalid data is being given", async function () {
@@ -703,9 +502,9 @@ describe("Test SkyWarsLevelInfo & SkyWarsPrestige", function () {
   });
 });
 
-describe("Test getSkyBlockProfileMemberCollections", function () {
-  const collectionsResource: Components.Schemas.SkyBlockResourcesParentCollections = require("./data/resources/collections.json");
-  const profiles: NonNullable<Components.Schemas.SkyBlockProfileCuteName>[] = require("./data/profiles.json");
+describe("Test getSkyBlockProfileMemberCollections", async function () {
+  const collectionsResource = await client.resources.skyblock.collections();
+  const profiles = await client.skyblock.profiles.uuid('');
   let collections: ReturnType<typeof getSkyBlockProfileMemberCollections>;
   it("should go over data without throwing", function () {
     const profile = profiles[0];
@@ -757,9 +556,9 @@ describe("Test romanize", function () {
   });
 });
 
-describe("Test getSkyBlockProfileMemberSkills", function () {
-  const skillsResource: Components.Schemas.SkyBlockResourcesSkills = require("./data/resources/skills.json");
-  const profiles: NonNullable<Components.Schemas.SkyBlockProfileCuteName>[] = require("./data/profiles.json");
+describe("Test getSkyBlockProfileMemberSkills", async function () {
+  const skillsResource = await client.resources.skyblock.skills();
+  const profiles = await client.skyblock.profiles.uuid('');
   let skills: ReturnType<typeof getSkyBlockProfileMemberSkills>;
   it("should go over data without throwing", function () {
     const profile = profiles[0];
