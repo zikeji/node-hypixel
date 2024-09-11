@@ -51,10 +51,11 @@ export function getSkyBlockProfileMemberSkills(
   const result = {} as SkyBlockSkillsInfo;
   for (let i = 0; i < Object.keys(skills).length; i += 1) {
     const skillName = Object.keys(skills)[i];
+    const skillKey = `SKILL_${skillName}`;
     const skill = skills[skillName];
     let exp = 0;
-    if (skillName in profileMember.player_data.experience) {
-      exp = profileMember.player_data.experience[skillName];
+    if (skillKey in profileMember.player_data.experience) {
+      exp = profileMember.player_data.experience[skillKey];
     }
     let level = 0;
     let totalExpToLevel = 0;
