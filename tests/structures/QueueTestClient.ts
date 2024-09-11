@@ -1,6 +1,6 @@
 import { Client } from "../../src";
 
-export class TestClient extends Client {
+export class QueueTestClient extends Client {
   private static firstResponseHeaders = {
     "ratelimit-limit": "120",
     "ratelimit-remaining": "119",
@@ -31,7 +31,7 @@ export class TestClient extends Client {
     // @ts-ignore
     this.getRateLimitHeaders(
       this.rateLimit.limit === -1
-        ? TestClient.firstResponseHeaders
+        ? QueueTestClient.firstResponseHeaders
         : {
             "ratelimit-limit": "120",
             "ratelimit-remaining": (this.rateLimit.remaining - 1).toString(),

@@ -1,10 +1,10 @@
 import { expect } from "chai";
-import { TestClient } from "./structures/TestClient";
+import { QueueTestClient } from "./structures/QueueTestClient";
 
 describe("testClient sequential queue & rate limiting", function () {
   this.timeout(120000);
   this.slow(10000);
-  const testClient = new TestClient();
+  const testClient = new QueueTestClient();
 
   const limitedListener = () => {
     throw new Error("We should not have been hit.");
