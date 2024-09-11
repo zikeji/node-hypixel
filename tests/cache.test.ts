@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { TestClient } from "./structures/TestClient";
-import { AsyncReturnType } from "./client.test";
+import { AsyncReturnType } from "./structures/AsyncReturnType";
 
 const basicCache = new Map<string, never>();
 const client = new TestClient({

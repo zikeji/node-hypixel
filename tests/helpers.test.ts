@@ -17,7 +17,7 @@ import {
 } from "../src";
 import { getResultArray } from "../src/util/ResultArray";
 import { getResultObject } from "../src/util/ResultObject";
-import { AsyncReturnType } from "./client.test";
+import { AsyncReturnType } from "./structures/AsyncReturnType";
 import { TestClient } from "./structures/TestClient";
 
 const client = new TestClient();

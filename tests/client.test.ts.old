@@ -3,14 +3,6 @@ import { Client, Components } from "../src";
 import type { ResultArray } from "../src/util/ResultArray";
 import type { ResultObject } from "../src/util/ResultObject";
 
-export type AsyncReturnType<T extends (...args: any) => any> = T extends (
-  ...args: any
-) => Promise<infer U>
-  ? U
-  : T extends (...args: any) => infer U
-  ? U
-  : any;
-
 const client = new Client(process.env.HYPIXEL_KEY || "");
 
 const CheckMeta = (
@@ -61,19 +53,6 @@ const CheckMeta = (
     });
   }
 };
-
-describe("Run basic undocumented call", function () {
-  this.timeout(30000);
-  this.slow(1000);
-  let result: { success: boolean; guild?: string };
-  it("expect success", async function () {
-    result = await client.call("findGuild", { byName: "Mini Squid" });
-    expect(result.success).to.equal(true);
-  });
-  it("expect resulting guild id", function () {
-    expect(result.guild).to.equal("553490650cf26f12ae5bac8f");
-  });
-});
 
 describe("Get boosters", function () {
   this.timeout(30000);
