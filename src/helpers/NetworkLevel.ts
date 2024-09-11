@@ -7,7 +7,7 @@
  * For the original full copyright and license information, please view the LICENSE-HYPIXEL-PHP.md that was distributed with this source code.
  */
 
-import { Components } from "../types/api";
+import type { PlayerResponse } from "../types/AugmentedTypes";
 
 /**
  * Describes the results from a {@link getNetworkLevel} function call.
@@ -58,13 +58,13 @@ export function getExpFromNetworkLevel(level: number): number {
  * @category Helper
  */
 export function getNetworkLevel(
-  data: Components.Schemas.Player | number
+  data: PlayerResponse["player"] | number
 ): NetworkLevel {
   let currentExp = 0;
   if (typeof data === "number") {
     currentExp = data;
   } else {
-    currentExp = data.networkExp ?? 0;
+    currentExp = typeof data.networkExp === "number" ? data.networkExp : 0;
   }
   if (currentExp < 0) currentExp = 0;
   const level = Math.floor(

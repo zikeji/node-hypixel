@@ -7,7 +7,7 @@
  * For the original full copyright and license information, please view the LICENSE-HYPIXEL-PHP.md that was distributed with this source code.
  */
 
-import { Components } from "../types/api";
+import type { PlayerResponse } from "../types/AugmentedTypes";
 import {
   MinecraftColorAsHex,
   MinecraftFormatting,
@@ -38,7 +38,7 @@ export interface BedwarsLevelInfo {
  * @category Helper
  */
 export function getBedwarsLevelInfo(
-  data: Components.Schemas.Player | number
+  data: PlayerResponse["player"] | number
 ): BedwarsLevelInfo {
   const currentExp =
     typeof data === "number"

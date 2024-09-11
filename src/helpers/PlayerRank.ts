@@ -1,4 +1,4 @@
-import { Components } from "../types/api";
+import type { PlayerResponse } from "../types/AugmentedTypes";
 import {
   MinecraftColorAsHex,
   MinecraftFormatting,
@@ -82,7 +82,7 @@ export interface PlayerRank {
  * @category Helper
  */
 export function getPlayerRank(
-  player: NonNullable<Components.Schemas.Player>,
+  player: NonNullable<PlayerResponse["player"]>,
   onlyPackages = false
 ): PlayerRank {
   let foundRank: PlayerRanks = PlayerRanks.NON_DONOR;
