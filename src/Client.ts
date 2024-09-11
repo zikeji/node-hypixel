@@ -462,7 +462,7 @@ export class Client {
     noRateLimit: boolean,
     includeApiKey: boolean
   ): Promise<T> {
-    const url = new URL(path, Client.endpoint);
+    const url = new URL(`${Client.endpoint}/${path}`);
     Object.keys(parameters).forEach((param) => {
       url.searchParams.set(param, parameters[param]);
     });
