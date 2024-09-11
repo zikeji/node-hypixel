@@ -1,6 +1,7 @@
-import { Components, Paths } from "../types/api";
+import { Paths } from "../types/api";
 import { Method } from "../util/Method";
 import { ResultObject, getResultObject } from "../util/ResultObject";
+import type { PlayerResponse } from "../types/AugmentedTypes";
 
 export class Player extends Method {
   /**
@@ -13,13 +14,13 @@ export class Player extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Components.Parameters.PlayerUuid.Uuid
-  ): Promise<ResultObject<Paths.Player.Get.Responses.$200, ["player"]>> {
+    uuid: Paths.V2Player.Get.Parameters.Uuid
+  ): Promise<ResultObject<PlayerResponse, ["player"]>> {
     return getResultObject(
-      await this.client.call<Paths.Player.Get.Responses.$200>("player", {
+      await this.client.call<PlayerResponse>("player", {
         uuid,
       }),
       ["player"]
-    ) as never;
+    );
   }
 }

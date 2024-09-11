@@ -1,7 +1,6 @@
-import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
-import { getResultArray, ResultArray } from "../../util/ResultArray";
+import type { ResourcesGuildsAchievementsResponse } from "../../types/AugmentedTypes";
 
 export class GuildsResources extends Method {
   /**
@@ -14,37 +13,15 @@ export class GuildsResources extends Method {
    */
   public async achievements(): Promise<
     ResultObject<
-      Paths.ResourcesGuildsAchievements.Get.Responses.$200,
+      ResourcesGuildsAchievementsResponse,
       ["success", "lastUpdated"]
     >
   > {
     return getResultObject(
-      await this.client.call<Paths.ResourcesGuildsAchievements.Get.Responses.$200>(
+      await this.client.call<ResourcesGuildsAchievementsResponse>(
         "resources/guilds/achievements"
       ),
       ["success", "lastUpdated"]
-    );
-  }
-
-  /**
-   * Retrieve a list of permissions that a Hypixel guild master can use.
-   * @example
-   * ```typescript
-   * const permissions = await client.resources.guilds.permissions();
-   * ```
-   * @category API
-   */
-  public async permissions(): Promise<
-    ResultArray<
-      Paths.ResourcesGuildsPermissions.Get.Responses.$200,
-      "permissions"
-    >
-  > {
-    return getResultArray(
-      await this.client.call<Paths.ResourcesGuildsPermissions.Get.Responses.$200>(
-        "resources/guilds/permissions"
-      ),
-      "permissions"
     );
   }
 }

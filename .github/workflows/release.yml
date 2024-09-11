@@ -9,44 +9,32 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v2.1.5
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14.x
+          node-version: 24.x
       - name: Install dependencies
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Disable deno_dist gitignore
-        run: sed -i 's/\/deno_dist/#\/deno_dist/' .gitignore
       - uses: papeloto/action-zip@v1
         with:
-          files: package.json package-lock.json dist/ deno_dist/
+          files: package.json package-lock.json dist/
           dest: dist.zip
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-      - name: enable deno_dist gitignore
-        run: sed -i 's/#\/deno_dist/\/deno_dist/' .gitignore
-      - name: Commit removal of deno_dist
-        run: |
-          git rm --cached `git ls-files -i --exclude-from=.gitignore`
-          git config --local user.email "ci@github.com"
-          git config --local user.name "ci"
-          git add -A
-          git commit -am "remove deno_dist [skip-ci]"
       - run: git push origin main
   merge:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
       - name: Merge main back into dev
-        uses: devmasx/merge-branch@v1.3.1
+        uses: devmasx/merge-branch@v1.4.0
         with:
           type: now
           head_to_merge: main
@@ -56,13 +44,12 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v2.1.5
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14.x
+          node-version: 24.x
       - run: npm ci
       - name: Build documentation
         env:

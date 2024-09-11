@@ -1,5 +1,4 @@
 import { DefaultMeta } from "../types/DefaultMeta";
-import { Components } from "../types/api";
 
 /**
  * Generic intersection type for result objects to include metadata as a non-enumerable property.
@@ -13,7 +12,7 @@ import { Components } from "../types/api";
  * ```
  */
 export type ResultObject<
-  T extends Components.Schemas.ApiSuccess,
+  T extends Record<string, unknown>,
   K extends (keyof T)[]
 > = (T[K[number]] extends string | number | boolean
   ? Omit<T, K[number]>
@@ -25,10 +24,10 @@ export type ResultObject<
 };
 
 /** @hidden */
-export function getResultObject<
-  T extends Components.Schemas.ApiSuccess,
-  K extends (keyof T)[]
->(response: T & DefaultMeta, keys: K): ResultObject<T, K> {
+export function getResultObject<T, K extends (keyof T)[]>(
+  response: T & DefaultMeta,
+  keys: K
+): ResultObject<T & Record<string, unknown>, K> {
   const clonedResponse: typeof response = JSON.parse(JSON.stringify(response));
   if (!keys.every((key) => key in clonedResponse)) {
     throw new TypeError(
@@ -36,7 +35,10 @@ export function getResultObject<
     );
   }
 
-  const obj: ResultObject<T, K> = {} as ResultObject<T, K>;
+  const obj: ResultObject<T & Record<string, unknown>, K> = {} as ResultObject<
+    T & Record<string, unknown>,
+    K
+  >;
   const { ratelimit, cached, cloudflareCache } = clonedResponse;
   const meta: DefaultMeta & Record<string | number | symbol, unknown> = {};
   if (cached) {

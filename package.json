@@ -16,7 +16,7 @@
     "lint": "eslint --ext ts src --fix",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p . && denoify",
-    "types:openapi": "dtsgen --out ./src/types/api.ts --target ES2015 ./openapi.yaml && node ./scripts/process_api_output.js && eslint --ext ts ./src/types/api.ts --fix",
+    "types:openapi": "dtsgen --out ./src/types/api.ts --target ES2015 ./swagger.json && node ./scripts/process_api_output.js && eslint --ext ts ./src/types/api.ts --fix",
     "watch": "npm run clean && tsc -p . -w",
     "test": "nodenv --exec npx -- mocha -r ts-node/register tests/**/*.test.ts",
     "test:helpers": "nodenv --exec npx -- mocha -r ts-node/register tests/helpers.test.ts",
