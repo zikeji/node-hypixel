@@ -22,11 +22,11 @@ enum ROMAN_NUMERALS {
  */
 export function romanize(value: number): string {
   let roman = "";
+  let currentValue = value;
   Object.entries(ROMAN_NUMERALS).forEach(([numeral, amount]) => {
-    while (value >= amount) {
+    while (currentValue >= Number(amount)) {
       roman += numeral;
-      // eslint-disable-next-line no-param-reassign
-      value -= amount as number;
+      currentValue -= Number(amount);
     }
   });
   return roman;
