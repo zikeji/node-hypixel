@@ -7,7 +7,7 @@
  * For the original full copyright and license information, please view the LICENSE-HYPIXEL-PHP.md that was distributed with this source code.
  */
 
-import { Components } from "../types/api";
+import type { PlayerResponse } from "../types/AugmentedTypes";
 import {
   getSkyWarsPrestigeForLevel,
   SkyWarsPrestiges,
@@ -66,24 +66,24 @@ export function totalExpToSkyWarsLevel(level: number): number {
 }
 
 /**
- * Get SkyWars level information from a {@link Components.Schemas.Player} object or raw experience value.
- * @param data A {@link Components.Schemas.Player} object or the raw experience value.
+ * Get SkyWars level information from a player object or raw experience value.
+ * @param data A player object or the raw experience value.
  * @param includePrestige Whether or not to return the {@link SkyWarsPrestige} object.
  * @category Helper
  */
 export function getSkyWarsLevelInfo(
-  data: Components.Schemas.Player | number
+  data: PlayerResponse["player"] | number
 ): SkyWarsLevelInfo;
 export function getSkyWarsLevelInfo(
-  data: Components.Schemas.Player | number,
+  data: PlayerResponse["player"] | number,
   includePrestige: true
 ): SkyWarsLevelInfoAndPrestige;
 export function getSkyWarsLevelInfo(
-  data: Components.Schemas.Player | number,
+  data: PlayerResponse["player"] | number,
   includePrestige: false
 ): SkyWarsLevelInfo;
 export function getSkyWarsLevelInfo(
-  data: Components.Schemas.Player | number,
+  data: PlayerResponse["player"] | number,
   includePrestige?: boolean
 ): SkyWarsLevelInfoAndPrestige | SkyWarsLevelInfo {
   const currentExp =

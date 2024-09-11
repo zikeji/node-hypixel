@@ -25,6 +25,9 @@ export type PlayerResponse = Paths.V2Player.Get.Responses.$200 &
         Bedwars: {
           [key: string]: unknown;
         };
+        SkyWars: {
+          [key: string]: unknown;
+        };
         [key: string]: unknown;
       };
       [key: string]: unknown;
