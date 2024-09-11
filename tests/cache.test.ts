@@ -1,9 +1,9 @@
 import { expect } from "chai";
-import { Client } from "../src";
+import { TestClient } from "./structures/TestClient";
 import { AsyncReturnType } from "./client.test";
 
 const basicCache = new Map<string, never>();
-const client = new Client(process.env.HYPIXEL_KEY || "", {
+const client = new TestClient({
   cache: {
     async get(key) {
       if (basicCache.has(key)) {
@@ -19,11 +19,11 @@ const client = new Client(process.env.HYPIXEL_KEY || "", {
 describe("Test cache on a ResultObject", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result: AsyncReturnType<typeof client.watchdogstats>;
-  let resultCached: AsyncReturnType<typeof client.watchdogstats>;
+  let result: AsyncReturnType<typeof client.punishmentstats>;
+  let resultCached: AsyncReturnType<typeof client.punishmentstats>;
   it("expect success", async function () {
-    result = await client.watchdogstats();
-    resultCached = await client.watchdogstats();
+    result = await client.punishmentstats();
+    resultCached = await client.punishmentstats();
   });
   it("expect result not cached", async function () {
     expect(result.meta.cached).to.be.undefined;
@@ -53,11 +53,11 @@ describe("Test cache on a ResultArray", function () {
 describe("Test cache with parameter", function () {
   this.timeout(30000);
   this.slow(1000);
-  let result: AsyncReturnType<typeof client.findGuild.byUuid>;
-  let resultCached: AsyncReturnType<typeof client.findGuild.byUuid>;
+  let result: AsyncReturnType<typeof client.guild.player>;
+  let resultCached: AsyncReturnType<typeof client.guild.player>;
   it("expect success", async function () {
-    result = await client.findGuild.byUuid("20934ef9488c465180a78f861586b4cf");
-    resultCached = await client.findGuild.byUuid(
+    result = await client.guild.player("20934ef9488c465180a78f861586b4cf");
+    resultCached = await client.guild.player(
       "20934ef9488c465180a78f861586b4cf"
     );
   });
