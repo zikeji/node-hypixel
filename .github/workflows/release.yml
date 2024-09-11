@@ -60,7 +60,7 @@ jobs:
       - name: Build documentation
         env:
           NODE_ENV: production
-          NODE_OPTIONS: --max-old-space-size=4096
+          NODE_OPTIONS: --max-old-space-size=4096 --openssl-legacy-provider
         run: npm run docs:build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
