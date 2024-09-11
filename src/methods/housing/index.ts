@@ -1,6 +1,9 @@
 import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
-import type { HousingActiveResponse, HousingHouseResponse } from "../../types/AugmentedTypes";
+import type {
+  HousingActiveResponse,
+  HousingHouseResponse,
+} from "../../types/AugmentedTypes";
 import { Paths } from "../../types/api";
 import { HousingHouses } from "./houses";
 
@@ -13,7 +16,9 @@ export class Housing extends Method {
    * ```
    * @category API
    */
-  public async active(): Promise<ResultObject<HousingActiveResponse, ["success"]>> {
+  public async active(): Promise<
+    ResultObject<HousingActiveResponse, ["success"]>
+  > {
     return getResultObject(
       await this.client.call<HousingActiveResponse>("housing/active"),
       ["success"]

@@ -51,7 +51,9 @@ export class SkyBlock extends Method {
     ResultObject<SkyblockAuctionsEndedResponse, ["success"]>
   > {
     return getResultObject(
-      await this.client.call<SkyblockAuctionsEndedResponse>("skyblock/auctions_ended"),
+      await this.client.call<SkyblockAuctionsEndedResponse>(
+        "skyblock/auctions_ended"
+      ),
       ["success"]
     );
   }
@@ -64,7 +66,9 @@ export class SkyBlock extends Method {
    * ```
    * @category API
    */
-  public async bazaar(): Promise<ResultObject<SkyblockBazaarResponse, ["products"]>> {
+  public async bazaar(): Promise<
+    ResultObject<SkyblockBazaarResponse, ["products"]>
+  > {
     return getResultObject(
       await this.client.call<SkyblockBazaarResponse>("skyblock/bazaar"),
       ["products"]
@@ -89,7 +93,9 @@ export class SkyBlock extends Method {
    * ```
    * @category API
    */
-  public async firesales(): Promise<ResultArray<SkyblockFiresalesResponse, "sales">> {
+  public async firesales(): Promise<
+    ResultArray<SkyblockFiresalesResponse, "sales">
+  > {
     return getResultArray(
       await this.client.call<SkyblockFiresalesResponse>("skyblock/bazaar"),
       "sales"
