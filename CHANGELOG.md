@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/zikeji/node-hypixel/compare/v3.1.1...v4.0.0) (2024-09-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* prepare 4.0.0 release
+
+### Features
+
+* enhance collections typing ([c038ee1](https://github.com/zikeji/node-hypixel/commit/c038ee1b565a9f1ff6418a5cc0c82ca0cc96a12a)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* prepare 4.0.0 release ([52d620c](https://github.com/zikeji/node-hypixel/commit/52d620c6242c20f83b6fc73bf5ce786148d93c3b))
+* refactor for v2 endpoints and swagger typing ([378eb4d](https://github.com/zikeji/node-hypixel/commit/378eb4d9841a5feb35e91a4b61e6ab02f00389cb))
+* update exports ([c4a35a6](https://github.com/zikeji/node-hypixel/commit/c4a35a601c43df57b877f34d4fb9ff0dc949094b)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+
+
+### Bug Fixes
+
+* broken types ([2917d0e](https://github.com/zikeji/node-hypixel/commit/2917d0ede045ddff4bc3f91c5be24e191bda45af)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* guild level helper typing ([40e61fa](https://github.com/zikeji/node-hypixel/commit/40e61fae1839e0d8e7e3a16927cbe7bfd0408f5d)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* lint ([4e50686](https://github.com/zikeji/node-hypixel/commit/4e5068637abfcb674685d5d339accdd31147fa58)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* player helpers ([f436bfa](https://github.com/zikeji/node-hypixel/commit/f436bfaf3deb384617e31439ff9edde4db9b9dab)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* resolve proper skills ([60d0e6c](https://github.com/zikeji/node-hypixel/commit/60d0e6cc24050a59403a48f2ea025a49c23fd8dc)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* romanize ([2740917](https://github.com/zikeji/node-hypixel/commit/2740917e980b026ab746ce2bc798e39effafcebc)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* sky wars helper ([952f6ba](https://github.com/zikeji/node-hypixel/commit/952f6baebd6bc2410d39c099046609d2eee965f4)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* skyblock item data transform ([6939a4d](https://github.com/zikeji/node-hypixel/commit/6939a4d0ea059e7c14b6a4ccbcb582c7df8300a5)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* skyblock skills helper ([1990a2e](https://github.com/zikeji/node-hypixel/commit/1990a2ecb209e8e98e1183cc55b3baaa925b6cee)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* typings and path on collections helper ([74d095a](https://github.com/zikeji/node-hypixel/commit/74d095a15082f7f8f771d5b97b7e268ee2ac96b6)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* typo in skills endpoint ([ef99d0b](https://github.com/zikeji/node-hypixel/commit/ef99d0b9edf22e66b95ab286cb04a1404e8a78c5)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* URL constructor resulting in v1 endpoitns getting called ([0bd3ecb](https://github.com/zikeji/node-hypixel/commit/0bd3ecb1e5d33528cbd9255b9579f0aa79ba239c)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+
+
+### Code Refactoring
+
+* augment naming to fit nature ([bb7f9d6](https://github.com/zikeji/node-hypixel/commit/bb7f9d6f513a941749c076b159375b6a861e8c3c)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+
+
+### Documentation
+
+* update documentation generation ([d2e4b8a](https://github.com/zikeji/node-hypixel/commit/d2e4b8aafd26f60a48eda596fc508ef43db9ca13))
+
+
+### Tests
+
+* begin to fix tests ([c2fe76b](https://github.com/zikeji/node-hypixel/commit/c2fe76b516857ff114ab5f92207eb03bfb47aacd)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* omit client test (for now) ([1875da7](https://github.com/zikeji/node-hypixel/commit/1875da79bdca0bec1da036ca7ee294bd6dc2082d)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* resolve test failures ([4b10d8d](https://github.com/zikeji/node-hypixel/commit/4b10d8d967ef20f33f136b7e64d11301f5f7fd33))
+* update cache test, add test client mocking from data directory ([9839f1b](https://github.com/zikeji/node-hypixel/commit/9839f1b738d83eb810254d4859761fc7f0957a58)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* update errors test ([8c0608d](https://github.com/zikeji/node-hypixel/commit/8c0608d64802bd4acd370f655c63be61a8b386fd)), closes [#437](https://github.com/zikeji/node-hypixel/issues/437)
+* update helpers test ([c6a4e1a](https://github.com/zikeji/node-hypixel/commit/c6a4e1a5b7cea63ca1bb60d5d1267c288fb5763d))
+
 ### [3.1.1](https://github.com/zikeji/node-hypixel/compare/v3.1.0...v3.1.1) (2021-03-30)
 
 
