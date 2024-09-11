@@ -68,7 +68,24 @@ export type ResourcesSkyblockBingo = Paths.V2ResourcesSkyblockBingo.Get.Response
   Record<string, unknown>;
 
 export type ResourcesSkyblockCollections = Paths.V2ResourcesSkyblockCollections.Get.Responses.$200 &
-  Record<string, unknown>;
+  Record<string, unknown> & {
+    collections: {
+      [key: string]: {
+        name: string;
+        items: {
+          [key: string]: {
+            name: string;
+            maxTiers: number;
+            tiers: {
+              tier: number;
+              amountRequired: number;
+              unlocks: string[];
+            }[];
+          };
+        };
+      };
+    };
+  };
 
 export type ResourcesSkyblockElection = Paths.V2ResourcesSkyblockElection.Get.Responses.$200 &
   Record<string, unknown>;
