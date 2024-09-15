@@ -3,6 +3,7 @@
  */
 
 import type { Paths } from "./api";
+import type { Player } from "./Augmented/Player";
 import type { SkyBlockProfile } from "./Augmented/SkyBlock/Profile";
 
 export type BoostersResponse = Paths.V2Boosters.Get.Responses.$200 &
@@ -21,18 +22,7 @@ export type LeaderboardsResponse = Paths.V2Leaderboards.Get.Responses.$200 &
 
 export type PlayerResponse = Paths.V2Player.Get.Responses.$200 &
   Record<string, unknown> & {
-    player: {
-      stats: {
-        Bedwars: {
-          [key: string]: unknown;
-        };
-        SkyWars: {
-          [key: string]: unknown;
-        };
-        [key: string]: unknown;
-      };
-      [key: string]: unknown;
-    };
+    player: Player;
   };
 
 export type PunishmentStatsResponse = Paths.V2Punishmentstats.Get.Responses.$200 &
