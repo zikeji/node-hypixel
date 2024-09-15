@@ -2,7 +2,8 @@
  * This file contains references to the generated types from api.ts as well as extensions to supplement their data.
  */
 
-import { Components, Paths } from "./api";
+import type { Paths } from "./api";
+import type { SkyBlockProfile } from "./SkyBlock/Profile";
 
 export type BoostersResponse = Paths.V2Boosters.Get.Responses.$200 &
   Record<string, unknown>;
@@ -161,49 +162,7 @@ export type HousingHouseResponse = Paths.V2HousingHouse.Get.Responses.$200 &
 export type HousingHousesResponse = Paths.V2HousingHouses.Get.Responses.$200 &
   Record<string, unknown>;
 
-/** fix the typing of the members on a SkyBlock profile */
-export type SkyBlockProfile = Omit<
-  Components.Schemas.SkyBlockProfile,
-  "members"
-> & {
-  members: {
-    [key: string]: SkyBlockProfileMember;
-  };
-};
-
 export type MinecraftInventoryData = {
   type: number;
   data: string;
 };
-
-export type SkyBlockProfileMember = NonNullable<
-  Components.Schemas.SkyBlockProfile["members"]
-> &
-  Record<string, unknown> & {
-    player_data?: {
-      unlocked_coll_tiers?: string[];
-      experience?: {
-        [key: string]: number;
-      };
-    };
-    inventory?: {
-      inv_contents: MinecraftInventoryData;
-      ender_chest_contents: MinecraftInventoryData;
-      backpack_icons: Record<string, MinecraftInventoryData>;
-      backpack_contents: Record<string, MinecraftInventoryData>;
-      bag_contents: {
-        potion_bag: MinecraftInventoryData;
-        talisman_bag: MinecraftInventoryData;
-        fishing_bag: MinecraftInventoryData;
-        sacks_bag: MinecraftInventoryData;
-      };
-      inv_armor: MinecraftInventoryData;
-      equipment_contents: MinecraftInventoryData;
-      wardrobe_equipped_slot: number;
-      sacks_counts: Record<string, number>;
-      wardrobe_contents: MinecraftInventoryData;
-    };
-    collection?: {
-      [key: string]: number;
-    };
-  };
