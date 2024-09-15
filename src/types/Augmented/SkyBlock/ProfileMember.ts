@@ -1,5 +1,5 @@
-import type { Components } from "../api";
-import type { MinecraftInventoryData } from "../AugmentedTypes";
+import type { Components } from "../../api";
+import type { MinecraftInventoryData } from "../../AugmentedTypes";
 
 export type SkyBlockProfileMember = NonNullable<
   Components.Schemas.SkyBlockProfile["members"]

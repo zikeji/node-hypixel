@@ -3,7 +3,7 @@
  */
 
 import type { Paths } from "./api";
-import type { SkyBlockProfile } from "./SkyBlock/Profile";
+import type { SkyBlockProfile } from "./Augmented/SkyBlock/Profile";
 
 export type BoostersResponse = Paths.V2Boosters.Get.Responses.$200 &
   Record<string, unknown>;

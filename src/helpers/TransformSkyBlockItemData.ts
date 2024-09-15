@@ -1,5 +1,5 @@
 import type { MinecraftInventoryData } from "../types/AugmentedTypes";
-import type { SkyBlockProfileMember } from "../types/SkyBlock/ProfileMember";
+import type { SkyBlockProfileMember } from "../types/Augmented/SkyBlock/ProfileMember";
 import { NBTInventory, transformItemData } from "./TransformItemData";
 
 /**

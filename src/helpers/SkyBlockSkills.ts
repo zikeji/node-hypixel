@@ -1,5 +1,5 @@
 import type { ResourcesSkyblockSkillsResponse } from "../types/AugmentedTypes";
-import type { SkyBlockProfileMember } from "../types/SkyBlock/ProfileMember";
+import type { SkyBlockProfileMember } from "../types/Augmented/SkyBlock/ProfileMember";
 
 export interface SkyBlockSkillsInfo {
   FARMING: SkyBlockSkillInfo;

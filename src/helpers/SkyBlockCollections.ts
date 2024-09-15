@@ -1,5 +1,5 @@
 import type { ResourcesSkyblockCollectionsResponse } from "../types/AugmentedTypes";
-import type { SkyBlockProfile } from "../types/SkyBlock/Profile";
+import type { SkyBlockProfile } from "../types/Augmented/SkyBlock/Profile";
 
 /**
  * Interface describing the accumulated information of all members on a profile.

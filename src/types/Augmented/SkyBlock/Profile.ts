@@ -1,4 +1,4 @@
-import type { Components } from "../api";
+import type { Components } from "../../api";
 import type { SkyBlockProfileMember } from "./ProfileMember";
 
 /** fix the typing of the members on a SkyBlock profile */
