@@ -5,6 +5,13 @@ import type {
   ResourcesVanityPetsResponse,
 } from "../../types/AugmentedTypes";
 
+/**
+ * @example
+ * ```typescript
+ * const bingo = await client.resources.vanity.companions();
+ * ```
+ * @category Client
+ */
 export class VanityResources extends Method {
   /**
    * Retrieve a list of vanity companions.

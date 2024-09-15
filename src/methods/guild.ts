@@ -3,6 +3,13 @@ import { Method } from "../util/Method";
 import { getResultObject, ResultObject } from "../util/ResultObject";
 import type { GuildResponse } from "../types/AugmentedTypes";
 
+/**
+ * @example
+ * ```typescript
+ * const guild = await client.guild.id("553490650cf26f12ae5bac8f");
+ * ```
+ * @category Client
+ */
 export class Guild extends Method {
   /**
    * Returns the guild by the requested ID if found.

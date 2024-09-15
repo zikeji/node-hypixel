@@ -16,6 +16,13 @@ import { SkyBlockMuseum } from "./museum";
 import { SkyBlockGarden } from "./garden";
 import { SkyBlockBingo } from "./bingo";
 
+/**
+ * @example
+ * ```typescript
+ * const products = await client.skyblock.bazaar();
+ * ```
+ * @category Client
+ */
 export class SkyBlock extends Method {
   /**
    * Returns SkyBlock auctions by either player, profile or auction uuid. Only "active" auctions are returned, these are auctions that are still open or that have not had all bids/items claimed.

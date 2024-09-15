@@ -3,6 +3,13 @@ import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
 import type { SkyblockBingoResponse } from "../../types/AugmentedTypes";
 
+/**
+ * @example
+ * ```typescript
+ * const bingoEvents = await client.skyblock.bingo.uuid("20934ef9488c465180a78f861586b4cf");
+ * ```
+ * @category Client
+ */
 export class SkyBlockBingo extends Method {
   /**
    * Bingo data for participated events of the provided player.

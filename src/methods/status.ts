@@ -3,6 +3,9 @@ import { Method } from "../util/Method";
 import { ResultObject, getResultObject } from "../util/ResultObject";
 import type { StatusResponse } from "../types/AugmentedTypes";
 
+/**
+ * @category Client
+ */
 export class Status extends Method {
   /**
    * Returns online status information for given player, including game, mode and map when available.

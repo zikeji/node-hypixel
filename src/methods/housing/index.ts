@@ -7,6 +7,13 @@ import type {
 import { Paths } from "../../types/api";
 import { HousingHouses } from "./houses";
 
+/**
+ * @example
+ * ```typescript
+ * const active = await client.housing.active();
+ * ```
+ * @category Client
+ */
 export class Housing extends Method {
   /**
    * The currently active public houses.
