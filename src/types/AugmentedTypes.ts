@@ -3,6 +3,7 @@
  */
 
 import type { Paths } from "./api";
+import { Guild } from "./Augmented/Guild";
 import type { Player } from "./Augmented/Player";
 import type { SkyBlockProfile } from "./Augmented/SkyBlock/Profile";
 
@@ -14,7 +15,7 @@ export type CountsResponse = Paths.V2Counts.Get.Responses.$200 &
 
 export type GuildResponse = Paths.V2Guild.Get.Responses.$200 &
   Record<string, unknown> & {
-    guild: Record<string, unknown>;
+    guild: Guild | null;
   };
 
 export type LeaderboardsResponse = Paths.V2Leaderboards.Get.Responses.$200 &
