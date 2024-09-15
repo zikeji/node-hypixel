@@ -80,7 +80,7 @@ export class SkyBlockResources extends Method {
    * Returns the current items from the SkyBlock gamemode.
    * @example
    * ```typescript
-   * const bingo = await client.resources.skyblock.items();
+   * const items = await client.resources.skyblock.items();
    * ```
    * @category API
    */

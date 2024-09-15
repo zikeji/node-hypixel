@@ -3,8 +3,12 @@
  */
 
 import type { Paths } from "./api";
-import { Guild } from "./Augmented/Guild";
+import type { Guild } from "./Augmented/Guild";
 import type { Player } from "./Augmented/Player";
+import type {
+  ElectionCurrent,
+  ElectionMayor,
+} from "./Augmented/Resources/SkyBlock/Election";
 import type { SkyBlockProfile } from "./Augmented/SkyBlock/Profile";
 
 export type BoostersResponse = Paths.V2Boosters.Get.Responses.$200 &
@@ -80,7 +84,10 @@ export type ResourcesSkyblockCollectionsResponse = Paths.V2ResourcesSkyblockColl
   };
 
 export type ResourcesSkyblockElectionResponse = Paths.V2ResourcesSkyblockElection.Get.Responses.$200 &
-  Record<string, unknown>;
+  Record<string, unknown> & {
+    mayor: ElectionMayor;
+    current: ElectionCurrent | null;
+  };
 
 export type ResourcesSkyblockItemsResponse = Paths.V2ResourcesSkyblockItems.Get.Responses.$200 &
   Record<string, unknown>;
