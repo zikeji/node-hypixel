@@ -151,7 +151,7 @@ describe("Test removeMinecraftFormatting", function () {
 
 describe("Test transformSkyBlockProfileMemberInventories", async function () {
   this.slow(250);
-  const profiles = await client.skyblock.profiles.uuid('');
+  const profiles = await client.skyblock.profiles.uuid("");
   const members: AsyncReturnType<
     typeof transformSkyBlockProfileMemberInventories
   >[] = [];
@@ -167,10 +167,10 @@ describe("Test transformSkyBlockProfileMemberInventories", async function () {
 });
 
 describe("Test transformItemData", async function () {
-  const player = await client.player.uuid('');
+  const player = await client.player.uuid("");
   it("should transform Pit inventory without throwing", async function () {
     await transformItemData(
-      (player.stats.Pit as {profile: {inv_armor: {data: string}}}).profile.inv_armor.data
+      player.stats.Pit?.profile.inv_armor.data as number[]
     );
   });
   it("should throw as invalid data is being given", async function () {
@@ -504,7 +504,7 @@ describe("Test SkyWarsLevelInfo & SkyWarsPrestige", function () {
 
 describe("Test getSkyBlockProfileMemberCollections", async function () {
   const collectionsResource = await client.resources.skyblock.collections();
-  const profiles = await client.skyblock.profiles.uuid('');
+  const profiles = await client.skyblock.profiles.uuid("");
   let collections: ReturnType<typeof getSkyBlockProfileMemberCollections>;
   it("should go over data without throwing", function () {
     const profile = profiles[0];
@@ -558,7 +558,7 @@ describe("Test romanize", function () {
 
 describe("Test getSkyBlockProfileMemberSkills", async function () {
   const skillsResource = await client.resources.skyblock.skills();
-  const profiles = await client.skyblock.profiles.uuid('');
+  const profiles = await client.skyblock.profiles.uuid("");
   let skills: ReturnType<typeof getSkyBlockProfileMemberSkills>;
   it("should go over data without throwing", function () {
     const profile = profiles[0];
