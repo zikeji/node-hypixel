@@ -1,12 +1,12 @@
 export type Player = {
-  _id: string;
-  uuid: string;
-  firstLogin: number;
-  playername: string;
-  displayname: string;
+  _id?: string;
+  uuid?: string;
+  firstLogin?: number;
+  playername?: string;
+  displayname?: string;
   lastLogin?: number;
   achievementPoints?: number;
-  achievementRewardsNew: {
+  achievementRewardsNew?: {
     [key: `for_points_${number}`]: number | undefined;
   };
   achievementSync?: { quake_tiered: number };
@@ -23,12 +23,12 @@ export type Player = {
     };
   };
   achievementTracking?: string[];
-  achievements: { [key: string]: number };
-  achievementsOneTime: string[];
+  achievements?: { [key: string]: number };
+  achievementsOneTime?: string[];
   adsense_tokens?: number;
-  channel: string;
-  challenges: {
-    all_time: {
+  channel?: string;
+  challenges?: {
+    all_time?: {
       [key: string]: number | undefined;
     };
     [key: string]: unknown;
@@ -41,7 +41,7 @@ export type Player = {
   disabledProjectileTrails?: boolean;
   eugene?: { dailyTwoKExp?: number };
   fortuneBuff?: number;
-  giftingMeta: {
+  giftingMeta?: {
     bundlesReceived?: number;
     realBundlesReceived?: number;
     bundlesGiven?: number;
@@ -75,7 +75,7 @@ export type Player = {
   levelUp_VIP?: number;
   levelUp_VIP_PLUS?: number;
   leveling?: { claimedRewards: number };
-  monthlycrates: {
+  monthlycrates?: {
     /** keys are in the format of M-YYYY (month is non zero leading, so april 2024 would be 4-2024) */
     [key: `${number}-${number}`]:
       | {
@@ -91,9 +91,9 @@ export type Player = {
   monthlyRankColor?: string;
   mostRecentGameType?: string;
   mostRecentMonthlyPackageRank?: string;
-  networkExp: number;
+  networkExp?: number;
   network_update_book?: string;
-  newPackageRank: string;
+  newPackageRank?: string;
   onetime_achievement_menu_sort?: string;
   outfit?: {
     BOOTS?: string;
@@ -193,7 +193,7 @@ export type Player = {
         }
       | undefined;
   };
-  quests: {
+  quests?: {
     [key: string]:
       | {
           active?: {
@@ -209,7 +209,7 @@ export type Player = {
       | undefined;
   };
   questSettings?: { autoActivate: boolean };
-  rankPlusColor: string;
+  rankPlusColor?: string;
   rewardHighScore?: number;
   rewardScore?: number;
   rewardStreak?: number;
@@ -223,7 +223,7 @@ export type Player = {
     prompt?: boolean;
   };
   spec_first_person?: boolean;
-  stats: PlayerStats;
+  stats?: PlayerStats;
   totalDailyRewards?: number;
   totalRewards?: number;
   tourney?: {
