@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/zikeji/node-hypixel/compare/v4.0.2...v4.1.0) (2024-09-16)
+
+
+### Features
+
+* add augmented skyblock profiles endpoint typings ([6ad6c41](https://github.com/zikeji/node-hypixel/commit/6ad6c41dda16e84b979443943d1a9500577f5ef2))
+* add guild type augment ([47e15d8](https://github.com/zikeji/node-hypixel/commit/47e15d8a815ed5159c1d5fd5fb81e90f031e49d1))
+* augment election endpoint ([d3ee25f](https://github.com/zikeji/node-hypixel/commit/d3ee25f7784c8bb50ba12b3b37fc7912876d4751))
+* augmented types for the /v2/player endpoint ([45075da](https://github.com/zikeji/node-hypixel/commit/45075da2eb91fc250d9885fd85318091651aa270))
+* more augmented types, some clean up ([282d0cf](https://github.com/zikeji/node-hypixel/commit/282d0cfb4e1770f4393d6deb95267a26cb06ddf5))
+* move augment files for better organization ([2435dd6](https://github.com/zikeji/node-hypixel/commit/2435dd6e37d219978237a68e0f6bb6e1fe4b98bc))
+
+
+### Bug Fixes
+
+* regression from removing the record augment ([962801d](https://github.com/zikeji/node-hypixel/commit/962801d80bc6d609bb5d53d8bd53b6e54d3c20a9))
+* type resolution errors ([1a57979](https://github.com/zikeji/node-hypixel/commit/1a579798cba60a94505d7bf516111209da579f3c))
+
+
+### Miscellaneous Chores
+
+* bump typescript version to latest ([bf519fc](https://github.com/zikeji/node-hypixel/commit/bf519fce945887a1bdee4b84c3d57c4741d6f53f))
+* more dependency updates (with an override!) ([7f94df9](https://github.com/zikeji/node-hypixel/commit/7f94df93d3128539492d27f8d96d1b86fcb3ee67))
+
+
+### Tests
+
+* update helper type resolution ([1e2fc01](https://github.com/zikeji/node-hypixel/commit/1e2fc010a14071d87d7887324a5d00af9a4b1381))
+
+
+### Documentation
+
+* add category to client methods ([90a7373](https://github.com/zikeji/node-hypixel/commit/90a7373428dcfde894b74e8a53a07eb4e42bd402))
+
 ### [4.0.2](https://github.com/zikeji/node-hypixel/compare/v4.0.1...v4.0.2) (2024-09-11)
 
 
