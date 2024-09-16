@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.1.1](https://github.com/zikeji/node-hypixel/compare/v4.1.0...v4.1.1) (2024-09-16)
+
+
+### Bug Fixes
+
+* properly type hint the nature of values being undefined in the event a player has never touched Hypixel ([569d245](https://github.com/zikeji/node-hypixel/commit/569d24523327cab13e8ec771103b7f5f08023d0d))
+* return an empty result properly ([be12a07](https://github.com/zikeji/node-hypixel/commit/be12a075ffd3c3fa378976608250e508ecbfcd06))
+
 ## [4.1.0](https://github.com/zikeji/node-hypixel/compare/v4.0.2...v4.1.0) (2024-09-16)
 
 
