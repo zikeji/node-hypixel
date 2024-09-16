@@ -52,7 +52,7 @@ export function getGuildLevel(
   if (typeof data === "number") {
     currentExp = data;
   } else {
-    currentExp = typeof data.exp === "number" ? data.exp : 0;
+    currentExp = typeof data?.exp === "number" ? data.exp : 0;
   }
   if (currentExp < 0) currentExp = 0;
   let remainingExp = currentExp;

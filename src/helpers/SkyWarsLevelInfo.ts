@@ -47,6 +47,7 @@ export interface SkyWarsLevelInfoAndPrestige extends SkyWarsLevelInfo {
 /**
  * Returns the total amount of exp it takes to get to a certain level.
  * @param level The level of the player.
+ * @category Helper
  */
 export function totalExpToSkyWarsLevel(level: number): number {
   let acc = 0;

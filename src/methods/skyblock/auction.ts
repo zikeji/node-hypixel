@@ -3,6 +3,13 @@ import { Method } from "../../util/Method";
 import { getResultArray, ResultArray } from "../../util/ResultArray";
 import type { SkyblockAuctionResponse } from "../../types/AugmentedTypes";
 
+/**
+ * @example
+ * ```typescript
+ * const auctions = await client.skyblock.auctions.player("347ef6c1daac45ed9d1fa02818cf0fb6");
+ * ```
+ * @category Client
+ */
 export class SkyBlockAuction extends Method {
   /**
    * Returns SkyBlock auctions by either player, profile or auction uuid. Only "active" auctions are returned, these are auctions that are still open or that have not had all bids/items claimed.

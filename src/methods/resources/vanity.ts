@@ -5,12 +5,19 @@ import type {
   ResourcesVanityPetsResponse,
 } from "../../types/AugmentedTypes";
 
+/**
+ * @example
+ * ```typescript
+ * const bingo = await client.resources.vanity.companions();
+ * ```
+ * @category Client
+ */
 export class VanityResources extends Method {
   /**
    * Retrieve a list of vanity companions.
    * @example
    * ```typescript
-   * const achievements = await client.resources.vanity.companions();
+   * const companions = await client.resources.vanity.companions();
    * ```
    * @category API
    */
@@ -29,7 +36,7 @@ export class VanityResources extends Method {
    * Retrieve a list of vanity pets.
    * @example
    * ```typescript
-   * const achievements = await client.resources.vanity.pets();
+   * const pets = await client.resources.vanity.pets();
    * ```
    * @category API
    */

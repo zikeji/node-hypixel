@@ -57,3 +57,40 @@ export function getResultArray<
   });
   return arr;
 }
+
+export type FlatResultArray<T> = T & {
+  meta: DefaultMeta;
+};
+
+/** @hidden */
+export function getFlatResultArray<T>(
+  response: T & DefaultMeta
+): FlatResultArray<T> {
+  if (!Array.isArray(response)) {
+    throw new TypeError(`Response was not an array!`);
+  }
+  const { ratelimit, cached, cloudflareCache } = response;
+  delete response.ratelimit;
+  delete response.cached;
+  delete response.cloudflareCache;
+  const meta: DefaultMeta = {};
+  if (cached) {
+    meta.cached = true;
+  }
+  if (cloudflareCache) {
+    meta.cloudflareCache = cloudflareCache;
+  }
+  if (ratelimit) {
+    if (
+      !cached &&
+      (!meta.cloudflareCache || meta.cloudflareCache.status !== "HIT")
+    ) {
+      meta.ratelimit = ratelimit;
+    }
+  }
+  Object.defineProperty(response, "meta", {
+    enumerable: false,
+    value: meta,
+  });
+  return response as never;
+}

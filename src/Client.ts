@@ -92,7 +92,6 @@ interface ClientEvents {
   limited: (limit: number, reset: Date) => void;
   reset: () => void;
 }
-
 export declare interface Client {
   /**
    * Listen to the "limited" event which emits when the client starts limiting your calls due to hitting the rate limit.
@@ -131,6 +130,15 @@ export declare interface Client {
   off(event: "reset", listener: () => void): this;
 }
 
+/**
+ * The main API client, instantiate it with your API key.
+ * @example
+ * ```typescript
+ * import { Client as HypixelClient } from "@zikeji/hypixel";
+ * const client = new HypixelClient("legit-api-key-heye");
+ * ```
+ * @category Client
+ */
 export class Client {
   /** @internal */
   private static readonly endpoint = new URL(`https://api.hypixel.net/v2`);

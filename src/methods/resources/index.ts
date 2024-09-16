@@ -10,6 +10,13 @@ import type {
   ResourcesQuestsResponse,
 } from "../../types/AugmentedTypes";
 
+/**
+ * @example
+ * ```typescript
+ * const achievements = await client.resources.achievements();
+ * ```
+ * @category Client
+ */
 export class Resources extends Method {
   /**
    * Returns all the achievements for each gamemode on the Hypixel network.

@@ -1,7 +1,5 @@
-import type {
-  ResourcesSkyblockSkillsResponse,
-  SkyBlockProfileMember,
-} from "../types/AugmentedTypes";
+import type { ResourcesSkyblockSkillsResponse } from "../types/AugmentedTypes";
+import type { SkyBlockProfileMember } from "../types/Augmented/SkyBlock/ProfileMember";
 
 export interface SkyBlockSkillsInfo {
   FARMING: SkyBlockSkillInfo;
@@ -55,7 +53,7 @@ export function getSkyBlockProfileMemberSkills(
     const skill = skills[skillName];
     let exp = 0;
     if (skillKey in profileMember.player_data.experience) {
-      exp = profileMember.player_data.experience[skillKey];
+      exp = profileMember.player_data.experience[skillKey] as number;
     }
     let level = 0;
     let totalExpToLevel = 0;

@@ -3,6 +3,13 @@ import { Method } from "../../util/Method";
 import { getResultObject, ResultObject } from "../../util/ResultObject";
 import type { SkyblockAuctionsResponse } from "../../types/AugmentedTypes";
 
+/**
+ * @example
+ * ```typescript
+ * const {auctions} = await client.skyblock.auctions.page(0);
+ * ```
+ * @category Client
+ */
 export class SkyBlockAuctions extends Method {
   /**
    * Returns SkyBlock auctions that are currently active in the in-game Auction House.
