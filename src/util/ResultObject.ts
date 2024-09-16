@@ -1,6 +1,14 @@
 import { DefaultMeta } from "../types/DefaultMeta";
 
 /**
+ * A utility to properly Omit in newer Typescript
+ * @internal
+ */
+type OmitRespectingRemapping<T, K extends PropertyKey> = {
+  [P in keyof T as Exclude<P, K>]: T[P];
+};
+
+/**
  * Generic intersection type for result objects to include metadata as a non-enumerable property.
  * @example
  * ```typescript
@@ -13,32 +21,45 @@ import { DefaultMeta } from "../types/DefaultMeta";
  */
 export type ResultObject<
   T extends Record<string, unknown>,
-  K extends (keyof T)[]
-> = (T[K[number]] extends string | number | boolean
-  ? Omit<T, K[number]>
+  K extends (keyof T)[],
+  // if this is true, the object won't omit/pick anything
+  B extends true | void = void
+> = (B extends true
+  ? T
+  : T[K[number]] extends string | number | boolean | undefined
+  ? OmitRespectingRemapping<T, K[number]>
   : T[K[number]]) & {
-  meta: (T[K[number]] extends string | number | boolean
-    ? Pick<T, K[number]>
-    : Omit<T, K[number]>) &
-    DefaultMeta;
+  meta: B extends true
+    ? DefaultMeta
+    : (T[K[number]] extends string | number | boolean | undefined
+        ? Pick<T, K[number]>
+        : OmitRespectingRemapping<T, K[number]>) &
+        DefaultMeta;
 };
 
 /** @hidden */
-export function getResultObject<T, K extends (keyof T)[]>(
+export function getResultObject<
+  T,
+  K extends (keyof T)[],
+  B extends true | void = void
+>(
   response: T & DefaultMeta,
-  keys: K
-): ResultObject<T & Record<string, unknown>, K> {
+  keys?: K
+): ResultObject<T & Record<string, unknown>, K, B> {
   const clonedResponse: typeof response = JSON.parse(JSON.stringify(response));
-  if (!keys.every((key) => key in clonedResponse)) {
+  if (!(keys ?? []).every((key) => key in clonedResponse)) {
     throw new TypeError(
-      `One or more key in "${keys.join('"," ')}" was not in the response.`
+      `One or more key in "${(keys ?? []).join(
+        '"," '
+      )}" was not in the response.`
     );
   }
 
-  const obj: ResultObject<T & Record<string, unknown>, K> = {} as ResultObject<
+  const obj: ResultObject<
     T & Record<string, unknown>,
-    K
-  >;
+    K,
+    B
+  > = {} as ResultObject<T & Record<string, unknown>, K, B>;
   const { ratelimit, cached, cloudflareCache } = clonedResponse;
   const meta: DefaultMeta & Record<string | number | symbol, unknown> = {};
   if (cached) {
@@ -60,13 +81,14 @@ export function getResultObject<T, K extends (keyof T)[]>(
   }
 
   let assignedMeta = false;
-  keys.forEach((key) => {
+  (keys ?? []).forEach((key) => {
     const value = clonedResponse[key];
 
     if (
       typeof value === "string" ||
       typeof value === "number" ||
-      typeof value === "boolean"
+      typeof value === "boolean" ||
+      typeof value === "undefined"
     ) {
       delete clonedResponse[key];
       assignedMeta = true;
@@ -74,7 +96,7 @@ export function getResultObject<T, K extends (keyof T)[]>(
     }
   });
 
-  if (assignedMeta) {
+  if ((keys ?? []).length === 0 || assignedMeta) {
     // we want the remainder merged into the object.
     Object.assign(obj, clonedResponse);
     Object.defineProperty(obj, "meta", {
@@ -85,7 +107,7 @@ export function getResultObject<T, K extends (keyof T)[]>(
   }
 
   // we want all the keys merged with the root and the remainder assigned to meta.
-  keys.forEach((key) => {
+  (keys ?? []).forEach((key) => {
     Object.assign(obj, clonedResponse[key]);
     delete clonedResponse[key];
   });

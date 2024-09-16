@@ -7,6 +7,7 @@ import type {
   ResourcesSkyblockItemsResponse,
   ResourcesSkyblockSkillsResponse,
 } from "../../types/AugmentedTypes";
+import { getResultArray, ResultArray } from "../../util/ResultArray";
 
 /**
  * @example
@@ -25,16 +26,13 @@ export class SkyBlockResources extends Method {
    * @category API
    */
   public async bingo(): Promise<
-    ResultObject<
-      ResourcesSkyblockBingoResponse,
-      ["id", "name", "start", "end", "modifier", "goals"]
-    >
+    ResultObject<ResourcesSkyblockBingoResponse, ["success", "lastUpdated"]>
   > {
     return getResultObject(
       await this.client.call<ResourcesSkyblockBingoResponse>(
         "resources/skyblock/bingo"
       ),
-      ["id", "name", "start", "end", "modifier", "goals"]
+      ["success", "lastUpdated"]
     );
   }
 
@@ -42,7 +40,8 @@ export class SkyBlockResources extends Method {
    * Returns the list of ingame collections.
    * @example
    * ```typescript
-   * const bingo = await client.resources.skyblock.collections();
+   * const collections = await client.resources.skyblock.collections();
+   * console.log(collections.FARMING);
    * ```
    * @category API
    */
@@ -61,18 +60,18 @@ export class SkyBlockResources extends Method {
    * Information regarding the current mayor and ongoing election in SkyBlock.
    * @example
    * ```typescript
-   * const bingo = await client.resources.skyblock.election();
+   * const electionInfo = await client.resources.skyblock.election();
    * ```
    * @category API
    */
   public async election(): Promise<
-    ResultObject<ResourcesSkyblockElectionResponse, ["mayor", "current"]>
+    ResultObject<ResourcesSkyblockElectionResponse, ["success", "lastUpdated"]>
   > {
     return getResultObject(
       await this.client.call<ResourcesSkyblockElectionResponse>(
         "resources/skyblock/election"
       ),
-      ["mayor", "current"]
+      ["success", "lastUpdated"]
     );
   }
 
@@ -85,13 +84,13 @@ export class SkyBlockResources extends Method {
    * @category API
    */
   public async items(): Promise<
-    ResultObject<ResourcesSkyblockItemsResponse, ["items"]>
+    ResultArray<ResourcesSkyblockItemsResponse, "items">
   > {
-    return getResultObject(
+    return getResultArray(
       await this.client.call<ResourcesSkyblockItemsResponse>(
         "resources/skyblock/items"
       ),
-      ["items"]
+      "items"
     );
   }
 
@@ -99,7 +98,7 @@ export class SkyBlockResources extends Method {
    * Returns the current skills from the SkyBlock gamemode.
    * @example
    * ```typescript
-   * const bingo = await client.resources.skyblock.skills();
+   * const skills = await client.resources.skyblock.skills();
    * ```
    * @category API
    */

@@ -19,16 +19,13 @@ export class GuildsResources extends Method {
    * @category API
    */
   public async achievements(): Promise<
-    ResultObject<
-      ResourcesGuildsAchievementsResponse,
-      ["success", "lastUpdated"]
-    >
+    ResultObject<ResourcesGuildsAchievementsResponse, ["achievements"]>
   > {
     return getResultObject(
       await this.client.call<ResourcesGuildsAchievementsResponse>(
         "resources/guilds/achievements"
       ),
-      ["success", "lastUpdated"]
+      ["achievements"]
     );
   }
 }

@@ -6,7 +6,7 @@ import type {
 } from "../../types/AugmentedTypes";
 import { Paths } from "../../types/api";
 import { HousingHouses } from "./houses";
-
+import { FlatResultArray, getFlatResultArray } from "../../util/ResultArray";
 /**
  * @example
  * ```typescript
@@ -23,13 +23,8 @@ export class Housing extends Method {
    * ```
    * @category API
    */
-  public async active(): Promise<
-    ResultObject<HousingActiveResponse, ["success"]>
-  > {
-    return getResultObject(
-      await this.client.call<HousingActiveResponse>("housing/active"),
-      ["success"]
-    );
+  public async active(): Promise<FlatResultArray<HousingActiveResponse>> {
+    return getFlatResultArray(await this.client.call<never>("housing/active"));
   }
 
   /**
@@ -42,12 +37,11 @@ export class Housing extends Method {
    */
   public async house(
     house: Paths.V2HousingHouse.Get.Parameters.House
-  ): Promise<ResultObject<HousingHouseResponse, ["success"]>> {
+  ): Promise<ResultObject<HousingHouseResponse, [], true>> {
     return getResultObject(
-      await this.client.call<HousingHouseResponse>("housing/house", {
+      await this.client.call<never>("housing/house", {
         house,
-      }),
-      ["success"]
+      })
     );
   }
 

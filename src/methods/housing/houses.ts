@@ -1,7 +1,7 @@
 import { Paths } from "../../types/api";
 import { Method } from "../../util/Method";
-import { getResultObject, ResultObject } from "../../util/ResultObject";
 import type { HousingHousesResponse } from "../../types/AugmentedTypes";
+import { FlatResultArray, getFlatResultArray } from "../../util/ResultArray";
 
 /**
  * @example
@@ -21,12 +21,11 @@ export class HousingHouses extends Method {
    */
   public async player(
     player: Paths.V2HousingHouses.Get.Parameters.Player
-  ): Promise<ResultObject<HousingHousesResponse, ["success"]>> {
-    return getResultObject(
-      await this.client.call<HousingHousesResponse>("housing/houses", {
+  ): Promise<FlatResultArray<HousingHousesResponse>> {
+    return getFlatResultArray(
+      await this.client.call<never>("housing/houses", {
         player,
-      }),
-      ["success"]
+      })
     );
   }
 }

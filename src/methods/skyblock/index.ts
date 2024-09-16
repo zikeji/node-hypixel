@@ -55,13 +55,13 @@ export class SkyBlock extends Method {
    * @category API
    */
   public async auctions_ended(): Promise<
-    ResultObject<SkyblockAuctionsEndedResponse, ["success"]>
+    ResultArray<SkyblockAuctionsEndedResponse, "auctions">
   > {
-    return getResultObject(
+    return getResultArray(
       await this.client.call<SkyblockAuctionsEndedResponse>(
         "skyblock/auctions_ended"
       ),
-      ["success"]
+      "auctions"
     );
   }
 

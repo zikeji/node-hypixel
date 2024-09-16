@@ -21,12 +21,12 @@ export class SkyBlockGarden extends Method {
    */
   public async profile(
     uuid: Paths.V2SkyblockGarden.Get.Parameters.Profile
-  ): Promise<ResultObject<SkyblockGardenResponse, ["success"]>> {
+  ): Promise<ResultObject<SkyblockGardenResponse, ["garden"]>> {
     return getResultObject(
       await this.client.call<SkyblockGardenResponse>("skyblock/garden", {
         uuid,
       }),
-      ["success"]
+      ["garden"]
     );
   }
 }

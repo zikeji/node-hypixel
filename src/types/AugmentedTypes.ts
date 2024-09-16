@@ -66,7 +66,13 @@ export type ResourcesSkyblockBingoResponse = Paths.V2ResourcesSkyblockBingo.Get.
 export type ResourcesSkyblockCollectionsResponse = Paths.V2ResourcesSkyblockCollections.Get.Responses.$200 &
   Record<string, unknown> & {
     collections: {
-      [key: string]: {
+      [key in
+        | "FARMING"
+        | "MINING"
+        | "COMBAT"
+        | "FORAGING"
+        | "FISHING"
+        | "RIFT"]: {
         name: string;
         items: {
           [key: string]: {
@@ -80,14 +86,30 @@ export type ResourcesSkyblockCollectionsResponse = Paths.V2ResourcesSkyblockColl
           };
         };
       };
+    } & {
+      [key: string]:
+        | {
+            name: string;
+            items: {
+              [key: string]: {
+                name: string;
+                maxTiers: number;
+                tiers: {
+                  tier: number;
+                  amountRequired: number;
+                  unlocks: string[];
+                }[];
+              };
+            };
+          }
+        | undefined;
     };
   };
 
-export type ResourcesSkyblockElectionResponse = Paths.V2ResourcesSkyblockElection.Get.Responses.$200 &
-  Record<string, unknown> & {
-    mayor: ElectionMayor;
-    current: ElectionCurrent | null;
-  };
+export type ResourcesSkyblockElectionResponse = Paths.V2ResourcesSkyblockElection.Get.Responses.$200 & {
+  mayor: ElectionMayor;
+  current: ElectionCurrent | null;
+} & Record<string, unknown>;
 
 export type ResourcesSkyblockItemsResponse = Paths.V2ResourcesSkyblockItems.Get.Responses.$200 &
   Record<string, unknown>;
@@ -151,14 +173,12 @@ export type SkyblockBingoResponse = Paths.V2SkyblockBingo.Get.Responses.$200 &
 export type SkyblockFiresalesResponse = Paths.V2SkyblockFiresales.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type HousingActiveResponse = Paths.V2HousingActive.Get.Responses.$200 &
-  Record<string, unknown>;
+export type HousingActiveResponse = Paths.V2HousingActive.Get.Responses.$200;
 
 export type HousingHouseResponse = Paths.V2HousingHouse.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type HousingHousesResponse = Paths.V2HousingHouses.Get.Responses.$200 &
-  Record<string, unknown>;
+export type HousingHousesResponse = Paths.V2HousingHouses.Get.Responses.$200;
 
 export type MinecraftInventoryData = {
   type: number;

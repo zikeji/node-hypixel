@@ -21,12 +21,12 @@ export class SkyBlockMuseum extends Method {
    */
   public async profile(
     uuid: Paths.V2SkyblockMuseum.Get.Parameters.Profile
-  ): Promise<ResultObject<SkyblockMuseumResponse, ["success"]>> {
+  ): Promise<ResultObject<SkyblockMuseumResponse, ["profile"]>> {
     return getResultObject(
       await this.client.call<SkyblockMuseumResponse>("skyblock/museum", {
         uuid,
       }),
-      ["success"]
+      ["profile"]
     );
   }
 }

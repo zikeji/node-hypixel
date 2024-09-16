@@ -114,13 +114,13 @@ export function getSkyBlockProfileMemberCollections(
     (acc, [collectionGroupId, collectionGroup]) => {
       const group: SkyBlockProfileCollectionGroup = {
         id: collectionGroupId,
-        name: collectionGroup.name,
+        name: collectionGroup?.name ?? "Unknown",
         progress: 0,
         maxedChildCollections: 0,
         totalCollections: 0,
         children: [],
       };
-      Object.entries(collectionGroup.items).forEach(
+      Object.entries(collectionGroup?.items ?? []).forEach(
         ([collectionId, collection]) => {
           group.totalCollections += 1;
           const child: SkyBlockProfileCollection = {
