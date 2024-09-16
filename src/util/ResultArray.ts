@@ -27,13 +27,18 @@ export function getResultArray<
   if (!(key in clonedResponse)) {
     throw new TypeError(`Key "${String(key)}" was not in the response.`);
   }
-  const items = clonedResponse[key];
+  let items = clonedResponse[key];
   const { ratelimit, cached, cloudflareCache } = clonedResponse;
   if (!Array.isArray(items)) {
-    throw new TypeError(`Key "${String(key)}" is not an array.`);
+    if (items !== null) {
+      throw new TypeError(
+        `Key "${String(key)}" has an unexpected type ${typeof items}.`
+      );
+    }
+    items = [] as never;
   }
   delete clonedResponse[key];
-  const arr = ([...items] as never) as ResultArray<T, K>;
+  const arr = [...(items as never[])] as ResultArray<T, K>;
   const meta: Omit<T, K> & DefaultMeta = {
     ...clonedResponse,
   };
