@@ -170,7 +170,7 @@ describe("Test transformItemData", async function () {
   const player = await client.player.uuid("");
   it("should transform Pit inventory without throwing", async function () {
     await transformItemData(
-      player.stats.Pit?.profile.inv_armor.data as number[]
+      player.stats?.Pit?.profile.inv_armor.data as number[]
     );
   });
   it("should throw as invalid data is being given", async function () {

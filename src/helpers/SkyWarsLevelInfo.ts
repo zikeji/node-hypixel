@@ -90,7 +90,7 @@ export function getSkyWarsLevelInfo(
   const currentExp =
     typeof data === "number"
       ? data
-      : (data.stats.SkyWars?.skywars_experience as number);
+      : (data.stats?.SkyWars?.skywars_experience as number);
   if (typeof currentExp !== "number" || Number.isNaN(currentExp)) {
     throw new TypeError(
       "Data supplied does not contain player SkyWars experience."

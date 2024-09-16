@@ -27,7 +27,7 @@ export type LeaderboardsResponse = Paths.V2Leaderboards.Get.Responses.$200 &
 
 export type PlayerResponse = Paths.V2Player.Get.Responses.$200 &
   Record<string, unknown> & {
-    player: Player;
+    player: Player | null;
   };
 
 export type PunishmentStatsResponse = Paths.V2Punishmentstats.Get.Responses.$200 &
