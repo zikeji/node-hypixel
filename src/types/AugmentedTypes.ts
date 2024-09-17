@@ -9,6 +9,7 @@ import type {
   ElectionCurrent,
   ElectionMayor,
 } from "./Augmented/Resources/SkyBlock/Election";
+import type { SkyBlockAuction } from "./Augmented/SkyBlock/Auction";
 import type { SkyBlockProfile } from "./Augmented/SkyBlock/Profile";
 
 export type BoostersResponse = Paths.V2Boosters.Get.Responses.$200 &
@@ -143,16 +144,18 @@ export type SkyblockNewsResponse = Paths.V2SkyblockNews.Get.Responses.$200 &
     }[];
   };
 
-export type SkyblockAuctionResponse = Paths.V2SkyblockAuction.Get.Responses.$200 & {
-  auctions?: {
-    bin?: boolean;
-  }[];
+export type SkyblockAuctionResponse = Omit<
+  Paths.V2SkyblockAuction.Get.Responses.$200,
+  "auctions"
+> & {
+  auctions?: SkyBlockAuction[];
 } & Record<string, unknown>;
 
-export type SkyblockAuctionsResponse = Paths.V2SkyblockAuctions.Get.Responses.$200 & {
-  auctions?: {
-    bin?: boolean;
-  }[];
+export type SkyblockAuctionsResponse = Omit<
+  Paths.V2SkyblockAuctions.Get.Responses.$200,
+  "auctions"
+> & {
+  auctions?: SkyBlockAuction[];
 } & Record<string, unknown>;
 
 export type SkyblockAuctionsEndedResponse = Paths.V2SkyblockAuctionsEnded.Get.Responses.$200 &
