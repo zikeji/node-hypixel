@@ -143,11 +143,17 @@ export type SkyblockNewsResponse = Paths.V2SkyblockNews.Get.Responses.$200 &
     }[];
   };
 
-export type SkyblockAuctionResponse = Paths.V2SkyblockAuction.Get.Responses.$200 &
-  Record<string, unknown>;
+export type SkyblockAuctionResponse = Paths.V2SkyblockAuction.Get.Responses.$200 & {
+  auctions?: {
+    bin?: boolean;
+  }[];
+} & Record<string, unknown>;
 
-export type SkyblockAuctionsResponse = Paths.V2SkyblockAuctions.Get.Responses.$200 &
-  Record<string, unknown>;
+export type SkyblockAuctionsResponse = Paths.V2SkyblockAuctions.Get.Responses.$200 & {
+  auctions?: {
+    bin?: boolean;
+  }[];
+} & Record<string, unknown>;
 
 export type SkyblockAuctionsEndedResponse = Paths.V2SkyblockAuctionsEnded.Get.Responses.$200 &
   Record<string, unknown> & {
