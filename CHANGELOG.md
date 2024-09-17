@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.1.3](https://github.com/zikeji/node-hypixel/compare/v4.1.2...v4.1.3) (2024-09-17)
+
+
+### Bug Fixes
+
+* override SkyBlockAuction component to ensure consistent typing ([a99c061](https://github.com/zikeji/node-hypixel/commit/a99c061e39db4cbd4415726b2bd8e205f9dda30a))
+
 ### [4.1.2](https://github.com/zikeji/node-hypixel/compare/v4.1.1...v4.1.2) (2024-09-17)
 
 
