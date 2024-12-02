@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.1.4](https://github.com/zikeji/node-hypixel/compare/v4.1.3...v4.1.4) (2024-12-02)
+
+
+### Documentation
+
+* **issue template:** add template for reporting missing type completion ([5fddda0](https://github.com/zikeji/node-hypixel/commit/5fddda0fd7123639371606395996dbd82599a6f4))
+
 ### [4.1.3](https://github.com/zikeji/node-hypixel/compare/v4.1.2...v4.1.3) (2024-09-17)
 
 
