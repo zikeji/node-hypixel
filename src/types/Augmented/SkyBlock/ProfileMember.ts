@@ -303,6 +303,7 @@ export type SkyBlockProfileMemberInventory = {
   };
   inv_armor?: MinecraftInventoryData;
   equipment_contents?: MinecraftInventoryData;
+  personal_vault_contents?: MinecraftInventoryData;
   wardrobe_equipped_slot?: number;
   sacks_counts?: Record<string, number>;
   wardrobe_contents?: MinecraftInventoryData;
