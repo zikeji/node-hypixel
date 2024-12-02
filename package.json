@@ -78,6 +78,10 @@
               "release": "patch"
             },
             {
+              "type": "types",
+              "release": "patch"
+            },
+            {
               "scope": "no-release",
               "release": false
             }
@@ -91,6 +95,10 @@
               {
                 "type": "fix",
                 "section": "Bug Fixes"
+              },
+              {
+                "type": "types",
+                "section": "API Type Coverage"
               },
               {
                 "type": "docs",
