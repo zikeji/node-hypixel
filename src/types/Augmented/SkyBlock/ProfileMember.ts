@@ -658,6 +658,11 @@ export type SkyBlockProfileMemberPlayerStats = {
       | number
       | undefined;
   };
+  shard_combat_hunts?: number;
+  unique_shards?: number;
+  shard_fishing_hunts?: number;
+  shard_forest_hunts?: number;
+  shard_trap_hunts?: number;
 };
 
 export type SkyBlockProfileMemberObjectives = {
