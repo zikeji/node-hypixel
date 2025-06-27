@@ -289,7 +289,7 @@
     "typescript": "^5.6.2",
     "vuepress": "^1.8.1",
     "vuepress-theme-hope": "^1.13.3",
-    "yaml-loader": "^0.6.0"
+    "yaml-loader": "^0.8.1"
   },
   "overrides": {
     "typescript": "$typescript"
