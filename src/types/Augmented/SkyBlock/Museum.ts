@@ -1,5 +1,5 @@
 import type { Components } from "../../api";
-import { MinecraftInventoryData } from "../../AugmentedTypes";
+import type { MinecraftInventoryData } from "../../AugmentedTypes";
 
 export type SkyBlockMuseumItem = {
   donated_time: number;
