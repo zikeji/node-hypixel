@@ -176,7 +176,9 @@ export declare namespace Components {
        *   "team_normal": "Doubles"
        * }
        */
-      modeNames?: unknown;
+      modeNames?: {
+        [key: string]: unknown;
+      };
       /**
        * True if the game is retired and no longer playable.
        */
@@ -335,7 +337,9 @@ export declare namespace Components {
          *   "andrew": 3
          * }
          */
-        visits?: unknown;
+        visits?: {
+          [key: string]: unknown;
+        };
         /**
          * A map of visitor identifier to completed count
          * example:
@@ -345,7 +349,9 @@ export declare namespace Components {
          *   "andrew": 2
          * }
          */
-        completed?: unknown;
+        completed?: {
+          [key: string]: unknown;
+        };
         total_completed?: number; // int32
         unique_npcs_served?: number; // int32
       };
@@ -367,7 +373,9 @@ export declare namespace Components {
        *   }
        * }
        */
-      composter_data?: unknown;
+      composter_data?: {
+        [key: string]: unknown;
+      };
       /**
        * example:
        * {
@@ -438,7 +446,9 @@ export declare namespace Components {
        *   }
        * }
        */
-      active_commissions?: unknown;
+      active_commissions?: {
+        [key: string]: unknown;
+      };
       /**
        * A map of resource ID to amount collected
        * example:
@@ -448,7 +458,9 @@ export declare namespace Components {
        *   "INK_SACK:3": 100
        * }
        */
-      resources_collected?: unknown;
+      resources_collected?: {
+        [key: string]: unknown;
+      };
       /**
        * example:
        * {
@@ -457,7 +469,9 @@ export declare namespace Components {
        *   "INK_SACK:3": 3
        * }
        */
-      crop_upgrade_levels?: unknown;
+      crop_upgrade_levels?: {
+        [key: string]: unknown;
+      };
       /**
        * example:
        * [
@@ -524,7 +538,9 @@ export declare namespace Components {
     export interface SkyBlockMuseum {
       value?: number; // int64
       appraisal?: boolean;
-      items?: unknown;
+      items?: {
+        [key: string]: unknown;
+      };
       special?: unknown[];
     }
     export interface SkyBlockProfile {
@@ -551,7 +567,9 @@ export declare namespace Components {
        * Whether or not this is the currently selected profile, only provided on the profiles endpoint
        */
       selected?: boolean | null;
-      community_upgrades?: unknown | null;
+      community_upgrades?: {
+        [key: string]: unknown;
+      } | null;
       /**
        * Information about the bank account for this profile, only present if the API banking setting is enabled
        */
@@ -608,7 +626,9 @@ export declare namespace Paths {
            *   }
            * }
            */
-          games?: unknown;
+          games?: {
+            [key: string]: unknown;
+          };
         }
         export type $403 = Components.Responses.InvalidKey;
         export type $429 = Components.Responses.RateLimited;
@@ -630,7 +650,9 @@ export declare namespace Paths {
       namespace Responses {
         export interface $200 {
           success?: boolean;
-          guild?: unknown;
+          guild?: {
+            [key: string]: unknown;
+          };
         }
         export type $400 = Components.Responses.DataMissing;
         export type $403 = Components.Responses.InvalidKey;
@@ -683,7 +705,9 @@ export declare namespace Paths {
       namespace Responses {
         export interface $200 {
           success?: boolean;
-          leaderboards?: unknown;
+          leaderboards?: {
+            [key: string]: unknown;
+          };
         }
         export type $403 = Components.Responses.InvalidKey;
         export type $429 = Components.Responses.RateLimited;
@@ -720,7 +744,9 @@ export declare namespace Paths {
             firstLogin?: number | null;
             lastLogin?: number | null;
             lastLogout?: number | null;
-            stats?: unknown | null;
+            stats?: {
+              [key: string]: unknown;
+            } | null;
           };
         }
         export type $400 = Components.Responses.DataMissing;
@@ -779,7 +805,9 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          achievements?: unknown;
+          achievements?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -790,7 +818,9 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          challenges?: unknown;
+          challenges?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -830,8 +860,12 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          one_time?: unknown;
-          tiered?: unknown;
+          one_time?: {
+            [key: string]: unknown;
+          };
+          tiered?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -842,7 +876,9 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          quests?: unknown;
+          quests?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -934,7 +970,9 @@ export declare namespace Paths {
            * 0.11.22
            */
           version?: string;
-          collections?: unknown;
+          collections?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -948,11 +986,15 @@ export declare namespace Paths {
           /**
            * Data regarding the current mayor
            */
-          mayor?: unknown;
+          mayor?: {
+            [key: string]: unknown;
+          };
           /**
            * Data regarding the current election, will not be provided if there is no open election ongoing
            */
-          current?: unknown;
+          current?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -995,7 +1037,9 @@ export declare namespace Paths {
            * 0.11.22
            */
           version?: string;
-          skills?: unknown;
+          skills?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -1006,8 +1050,12 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          types?: unknown;
-          rarities?: unknown;
+          types?: {
+            [key: string]: unknown;
+          };
+          rarities?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -1018,8 +1066,12 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          types?: unknown;
-          rarities?: unknown;
+          types?: {
+            [key: string]: unknown;
+          };
+          rarities?: {
+            [key: string]: unknown;
+          };
         }
       }
     }
@@ -1226,7 +1278,9 @@ export declare namespace Paths {
            *   }
            * }
            */
-          products?: unknown;
+          products?: {
+            [key: string]: unknown;
+          };
         }
         export type $503 = Components.Responses.NotPopulated;
       }
