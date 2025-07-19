@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.1.6](https://github.com/zikeji/node-hypixel/compare/v4.1.5...v4.1.6) (2025-07-19)
+
+
+### Miscellaneous Chores
+
+* **types:** rebase api.ts from latest swagger.json ([6b7b44b](https://github.com/zikeji/node-hypixel/commit/6b7b44bf5fabcc16b9e49cc0744880d8158fe340))
+
+
+### API Type Coverage
+
+* **museum:** correct & augment museum endpoint typing ([6c70216](https://github.com/zikeji/node-hypixel/commit/6c7021605fe90183b4033e149175b6d583e4e299)), closes [#461](https://github.com/zikeji/node-hypixel/issues/461)
+
 ### [4.1.5](https://github.com/zikeji/node-hypixel/compare/v4.1.4...v4.1.5) (2025-06-25)
 
 ### [4.1.4](https://github.com/zikeji/node-hypixel/compare/v4.1.3...v4.1.4) (2024-12-02)
