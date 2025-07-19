@@ -221,11 +221,14 @@ export type SkyblockProfilesResponse = Omit<
     profiles: SkyBlockProfile[];
   };
 
-export type SkyblockMuseumResponse = Omit<Paths.V2SkyblockMuseum.Get.Responses.$200, 'profile'> &
+export type SkyblockMuseumResponse = Omit<
+  Paths.V2SkyblockMuseum.Get.Responses.$200,
+  "profile"
+> &
   Record<string, unknown> & {
     success?: true;
     members: {
-      [key: string]: SkyBlockMuseumMember | undefined
+      [key: string]: SkyBlockMuseumMember | undefined;
     };
   };
 
