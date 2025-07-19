@@ -10,6 +10,7 @@ import type {
   ElectionMayor,
 } from "./Augmented/Resources/SkyBlock/Election";
 import type { SkyBlockAuction } from "./Augmented/SkyBlock/Auction";
+import type { SkyBlockMuseumMember } from "./Augmented/SkyBlock/Museum";
 import type { SkyBlockProfile } from "./Augmented/SkyBlock/Profile";
 
 export type BoostersResponse = Paths.V2Boosters.Get.Responses.$200 &
@@ -220,8 +221,16 @@ export type SkyblockProfilesResponse = Omit<
     profiles: SkyBlockProfile[];
   };
 
-export type SkyblockMuseumResponse = Paths.V2SkyblockMuseum.Get.Responses.$200 &
-  Record<string, unknown>;
+export type SkyblockMuseumResponse = Omit<
+  Paths.V2SkyblockMuseum.Get.Responses.$200,
+  "profile"
+> &
+  Record<string, unknown> & {
+    success?: true;
+    members: {
+      [key: string]: SkyBlockMuseumMember | undefined;
+    };
+  };
 
 export type SkyblockGardenResponse = Paths.V2SkyblockGarden.Get.Responses.$200 &
   Record<string, unknown>;

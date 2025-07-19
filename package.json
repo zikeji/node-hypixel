@@ -155,6 +155,10 @@
                 "section": "Bug Fixes"
               },
               {
+                "type": "types",
+                "section": "API Type Coverage"
+              },
+              {
                 "type": "docs",
                 "section": "Documentation"
               },
