@@ -275,6 +275,9 @@ export function getPlayerRank(
           customPlusColor as keyof typeof MinecraftColorAsHex
         ];
     }
+    if (out.priority === PlayerRanks.MVP_PLUS) {
+      out.prefix = `§b[MVP${customPlusColor ?? "§c"}+§b]`;
+    }
     if (out.priority === PlayerRanks.SUPERSTAR) {
       out.prefix = `${customRankColor ?? "§6"}[MVP${customPlusColor ?? "§c"}++${
         customRankColor ?? "§6"
