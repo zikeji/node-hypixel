@@ -111,6 +111,13 @@ describe("Test PlayerRank helper", function () {
     );
     expect(rank.name).to.be.a("string").that.equals("MVP_PLUS");
   });
+  it("should return MVP+ with black +", function () {
+    const rank = getPlayerRank(
+      { newPackageRank: "MVP_PLUS", rankPlusColor: "BLACK" } as never,
+      false
+    );
+    expect(rank.prefix).to.be.a("string").that.equals("§b[MVP§0+§b]");
+  });
   it("should return MVP", function () {
     const rank = getPlayerRank(
       { newPackageRank: "MVP", packageRank: "VIP" } as never,
