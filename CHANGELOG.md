@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.1.7](https://github.com/zikeji/node-hypixel/compare/v4.1.6...v4.1.7) (2025-09-22)
+
+
+### Bug Fixes
+
+* mvp+ supports '+' color change ([ac3ccaa](https://github.com/zikeji/node-hypixel/commit/ac3ccaa17ca262835b468ab803cddb1892588714))
+
 ### [4.1.6](https://github.com/zikeji/node-hypixel/compare/v4.1.5...v4.1.6) (2025-07-19)
 
 
