@@ -8,6 +8,9 @@ on:
 
 jobs:
   release:
+    permissions:
+      contents: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: 'Generate token'
@@ -22,6 +25,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: latest
+          registry-url: https://registry.npmjs.org
+          always-auth: true
       - name: Install dependencies
         run: npm ci
       - name: Build
@@ -33,7 +38,7 @@ jobs:
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
         run: npx semantic-release
   merge:
     needs: [release]
