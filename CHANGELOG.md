@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>4.1.8 (2026-02-16)</small>
+
+* chore(ci): support NPM trusted publisher ([89a7bf2](https://github.com/zikeji/node-hypixel/commit/89a7bf2))
+* Merge main into dev ([d2035dd](https://github.com/zikeji/node-hypixel/commit/d2035dd))
+* Merge main into dev ([deae0af](https://github.com/zikeji/node-hypixel/commit/deae0af))
+* Merge pull request #465 from zikeji:zikeji/issue464 ([c8719cf](https://github.com/zikeji/node-hypixel/commit/c8719cf)), closes [#465](https://github.com/zikeji/node-hypixel/issues/465)
+* Merge pull request #466 from zikeji/dev ([adf9628](https://github.com/zikeji/node-hypixel/commit/adf9628)), closes [#466](https://github.com/zikeji/node-hypixel/issues/466)
+* types(resources): Missing "UNOBTAINABLE" tier from SkyBlockItems ([873c833](https://github.com/zikeji/node-hypixel/commit/873c833)), closes [#464](https://github.com/zikeji/node-hypixel/issues/464)
+
 ### [4.1.7](https://github.com/zikeji/node-hypixel/compare/v4.1.6...v4.1.7) (2025-09-22)
 
 
