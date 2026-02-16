@@ -62,7 +62,8 @@ module.exports = config({
     nav: [
       { text: "Home", link: "/", icon: "home" },
       { text: "Guide", link: "/guide/", icon: "guide" },
-      { text: "Typescript API", link: "/ts-api/", icon: "typescript" },
+      // Disabled TypeScript API docs due to incompatibility with Node 24+
+      // { text: "Typescript API", link: "/ts-api/", icon: "typescript" },
       {
         text: "Info",
         icon: "info",
@@ -140,7 +141,8 @@ module.exports = config({
   },
   plugins: [
     require("./plugins/pages"),
-    require("./plugins/typedoc"),
+    // Disabled typedoc plugin due to incompatibility with Node 24+
+    // require("./plugins/typedoc"),
     ["@mr-hope/vuepress-plugin-last-update", {
       transformer: (timestamp) => {
         return new Date(timestamp).toLocaleString('en-US', { year: "numeric", month: "long", weekday: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: 'America/New_York' })

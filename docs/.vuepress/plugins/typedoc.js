@@ -42,7 +42,8 @@ module.exports = function (_, { sourceDir }) {
     disableSources: true,
     hideBreadcrumbs: true,
     out: join(sourceDir, outFolder),
-    plugin: ["typedoc-plugin-markdown", "typedoc-plugin-frontmatter", "typedoc-vitepress-theme"]
+    outputFileStrategy: 'modules',
+    plugin: ["typedoc-plugin-markdown", "typedoc-plugin-frontmatter"]
   };
 
   /** @type {Application} */
