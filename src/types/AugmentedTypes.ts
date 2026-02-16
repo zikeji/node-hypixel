@@ -2,7 +2,7 @@
  * This file contains references to the generated types from api.ts as well as extensions to supplement their data.
  */
 
-import type { Paths } from "./api";
+import type { Components, Paths } from "./api";
 import type { Guild } from "./Augmented/Guild";
 import type { Player } from "./Augmented/Player";
 import type {
@@ -114,8 +114,27 @@ export type ResourcesSkyblockElectionResponse = Paths.V2ResourcesSkyblockElectio
     current: ElectionCurrent | null;
   };
 
-export type ResourcesSkyblockItemsResponse = Paths.V2ResourcesSkyblockItems.Get.Responses.$200 &
-  Record<string, unknown>;
+export type SkyBlockItem = Omit<Components.Schemas.SkyBlockItem, "tier"> & {
+  tier?:
+    | "COMMON"
+    | "UNCOMMON"
+    | "RARE"
+    | "EPIC"
+    | "LEGENDARY"
+    | "MYTHIC"
+    | "SUPREME"
+    | "SPECIAL"
+    | "VERY_SPECIAL"
+    | "UNOBTAINABLE";
+};
+
+export type ResourcesSkyblockItemsResponse = Omit<
+  Paths.V2ResourcesSkyblockItems.Get.Responses.$200,
+  "items"
+> &
+  Record<string, unknown> & {
+    items?: SkyBlockItem[];
+  };
 
 export type ResourcesSkyblockSkillsResponse = Paths.V2ResourcesSkyblockSkills.Get.Responses.$200 &
   Record<string, unknown> & {
