@@ -3,7 +3,12 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airbnb-typescript-prettier"],
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -12,19 +17,40 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "settings": {
     "react": {
       "version": "999.999.999"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
     }
   },
   "rules": {
+    "prettier/prettier": "error",
     "camelcase": 0,
     "import/prefer-default-export": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never"
+      }
+    ],
     "lines-between-class-members": 0,
     "no-shadow": 0,
     "@typescript-eslint/no-namespace": 0,
     "@typescript-eslint/no-shadow": 2,
+    "@typescript-eslint/no-redundant-type-constituents": 0,
+    "@typescript-eslint/no-unsafe-declaration-merging": 0,
+    "@typescript-eslint/no-unsafe-assignment": 0,
+    "@typescript-eslint/no-unsafe-return": 0,
+    "@typescript-eslint/no-unsafe-enum-comparison": 0,
+    "@typescript-eslint/restrict-template-expressions": 0,
+    "@typescript-eslint/no-unnecessary-type-assertion": 0,
+    "@typescript-eslint/no-array-delete": 0,
     "no-param-reassign": [
       2,
       {
@@ -32,12 +58,25 @@
       }
     ],
     "no-unused-vars": 0,
-    "@typescript-eslint/no-unused-vars": 2,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
     "no-use-before-define": 0,
     "@typescript-eslint/no-use-before-define": [
       2,
       {
         "ignoreTypeReferences": true
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
       }
     ]
   }

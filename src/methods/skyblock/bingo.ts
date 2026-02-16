@@ -20,13 +20,13 @@ export class SkyBlockBingo extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Paths.V2SkyblockBingo.Get.Parameters.Uuid
+    uuid: Paths.V2SkyblockBingo.Get.Parameters.Uuid,
   ): Promise<ResultArray<SkyblockBingoResponse, "events">> {
     return getResultArray(
       await this.client.call<SkyblockBingoResponse>("skyblock/bingo", {
         uuid,
       }),
-      "events"
+      "events",
     );
   }
 }

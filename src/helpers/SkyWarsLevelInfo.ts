@@ -53,7 +53,7 @@ export function totalExpToSkyWarsLevel(level: number): number {
   let acc = 0;
   const easyLevelCount = Math.min(
     level,
-    skyWarsLevelConstants.easyLevelExp.length
+    skyWarsLevelConstants.easyLevelExp.length,
   );
   for (let i = 0; i < easyLevelCount; i += 1) {
     acc += skyWarsLevelConstants.easyLevelExp[i];
@@ -73,19 +73,19 @@ export function totalExpToSkyWarsLevel(level: number): number {
  * @category Helper
  */
 export function getSkyWarsLevelInfo(
-  data: PlayerResponse["player"] | number
+  data: PlayerResponse["player"] | number,
 ): SkyWarsLevelInfo;
 export function getSkyWarsLevelInfo(
   data: PlayerResponse["player"] | number,
-  includePrestige: true
+  includePrestige: true,
 ): SkyWarsLevelInfoAndPrestige;
 export function getSkyWarsLevelInfo(
   data: PlayerResponse["player"] | number,
-  includePrestige: false
+  includePrestige: false,
 ): SkyWarsLevelInfo;
 export function getSkyWarsLevelInfo(
   data: PlayerResponse["player"] | number,
-  includePrestige?: boolean
+  includePrestige?: boolean,
 ): SkyWarsLevelInfoAndPrestige | SkyWarsLevelInfo {
   const currentExp =
     typeof data === "number"
@@ -93,7 +93,7 @@ export function getSkyWarsLevelInfo(
       : (data.stats?.SkyWars?.skywars_experience as number);
   if (typeof currentExp !== "number" || Number.isNaN(currentExp)) {
     throw new TypeError(
-      "Data supplied does not contain player SkyWars experience."
+      "Data supplied does not contain player SkyWars experience.",
     );
   }
 
@@ -127,14 +127,14 @@ export function getSkyWarsLevelInfo(
   const remainingExpToNextLevel = nextLevelExp - currentExp;
   const nextLevelProgress = expInCurrentLevel / expToNextLevel;
   const preciseLevel = level + nextLevelProgress;
-  const info = ({
+  const info = {
     level,
     preciseLevel,
     currentExp,
     expToLevel,
     expToNextLevel,
     remainingExpToNextLevel,
-  } as never) as SkyWarsLevelInfoAndPrestige;
+  } as never as SkyWarsLevelInfoAndPrestige;
   if (includePrestige !== true) {
     return info;
   }
@@ -147,7 +147,7 @@ export function getSkyWarsLevelInfo(
   }
   info.nextPrestige = SkyWarsPrestiges[prestigeIndex + 1];
   info.expToNextPrestige = totalExpToSkyWarsLevel(
-    info.nextPrestige.minimumLevel
+    info.nextPrestige.minimumLevel,
   );
   info.remainingExpToNextPrestige = info.expToNextPrestige - info.currentExp;
   info.progressToNextPrestige = info.currentExp / info.expToNextPrestige;

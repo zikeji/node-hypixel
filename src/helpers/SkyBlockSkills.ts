@@ -41,7 +41,7 @@ export interface SkyBlockSkillInfo {
  */
 export function getSkyBlockProfileMemberSkills(
   profileMember: SkyBlockProfileMember,
-  skills: ResourcesSkyblockSkillsResponse["skills"]
+  skills: ResourcesSkyblockSkillsResponse["skills"],
 ): SkyBlockSkillsInfo | false {
   if (!profileMember.player_data?.experience) {
     return false;

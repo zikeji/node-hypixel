@@ -20,13 +20,13 @@ export class Guild extends Method {
    * @category API
    */
   public async id(
-    id: Paths.V2Guild.Get.Parameters.Id
+    id: Paths.V2Guild.Get.Parameters.Id,
   ): Promise<ResultObject<GuildResponse, ["guild"]>> {
     return getResultObject(
       await this.client.call<GuildResponse>("guild", {
         id,
       }),
-      ["guild"]
+      ["guild"],
     );
   }
 
@@ -39,13 +39,13 @@ export class Guild extends Method {
    * @category API
    */
   public async player(
-    player: Paths.V2Guild.Get.Parameters.Player
+    player: Paths.V2Guild.Get.Parameters.Player,
   ): Promise<ResultObject<GuildResponse, ["guild"]>> {
     return getResultObject(
       await this.client.call<GuildResponse>("guild", {
         player,
       }),
-      ["guild"]
+      ["guild"],
     );
   }
 
@@ -58,13 +58,13 @@ export class Guild extends Method {
    * @category API
    */
   public async name(
-    name: Paths.V2Guild.Get.Parameters.Name
+    name: Paths.V2Guild.Get.Parameters.Name,
   ): Promise<ResultObject<GuildResponse, ["guild"]>> {
     return getResultObject(
       await this.client.call<GuildResponse>("guild", {
         name,
       }),
-      ["guild"]
+      ["guild"],
     );
   }
 }

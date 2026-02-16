@@ -20,13 +20,13 @@ export class SkyBlockAuctions extends Method {
    * @category API
    */
   public async page(
-    page: Paths.V2SkyblockAuctions.Get.Parameters.Page = 0
+    page: Paths.V2SkyblockAuctions.Get.Parameters.Page = 0,
   ): Promise<ResultObject<SkyblockAuctionsResponse, ["success"]>> {
     return getResultObject(
       await this.client.call<SkyblockAuctionsResponse>("skyblock/auctions", {
         page: page.toString(10),
       }),
-      ["success"]
+      ["success"],
     );
   }
 }

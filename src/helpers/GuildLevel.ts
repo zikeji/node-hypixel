@@ -23,21 +23,8 @@ export interface GuildLevel {
 
 /** @internal */
 const EXP_NEEDED = [
-  100000,
-  150000,
-  250000,
-  500000,
-  750000,
-  1000000,
-  1250000,
-  1500000,
-  2000000,
-  2500000,
-  2500000,
-  2500000,
-  2500000,
-  2500000,
-  3000000,
+  100000, 150000, 250000, 500000, 750000, 1000000, 1250000, 1500000, 2000000,
+  2500000, 2500000, 2500000, 2500000, 2500000, 3000000,
 ];
 
 /**
@@ -46,7 +33,7 @@ const EXP_NEEDED = [
  * @category Helper
  */
 export function getGuildLevel(
-  data: GuildResponse["guild"] | number
+  data: GuildResponse["guild"] | number,
 ): GuildLevel {
   let currentExp = 0;
   if (typeof data === "number") {

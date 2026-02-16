@@ -663,7 +663,8 @@ export declare namespace Paths {
   namespace V2HousingActive {
     namespace Get {
       namespace Responses {
-        export type $200 = /* Information about a player's house. */ Components.Schemas.HousingHouse[];
+        export type $200 =
+          /* Information about a player's house. */ Components.Schemas.HousingHouse[];
         export type $403 = Components.Responses.InvalidKey;
         export type $429 = Components.Responses.RateLimited;
       }
@@ -678,7 +679,8 @@ export declare namespace Paths {
         house: Parameters.House;
       }
       namespace Responses {
-        export type $200 = /* Information about a player's house. */ Components.Schemas.HousingHouse;
+        export type $200 =
+          /* Information about a player's house. */ Components.Schemas.HousingHouse;
         export type $403 = Components.Responses.InvalidKey;
         export type $404 = Components.Responses.NoResult;
         export type $429 = Components.Responses.RateLimited;
@@ -694,7 +696,8 @@ export declare namespace Paths {
         player?: Parameters.Player;
       }
       namespace Responses {
-        export type $200 = /* Information about a player's house. */ Components.Schemas.HousingHouse[];
+        export type $200 =
+          /* Information about a player's house. */ Components.Schemas.HousingHouse[];
         export type $403 = Components.Responses.InvalidKey;
         export type $429 = Components.Responses.RateLimited;
       }
@@ -1005,7 +1008,7 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          items?: /**
+          items /**
            * example:
            * {
            *   "material": "LEATHER_CHESTPLATE",
@@ -1020,8 +1023,7 @@ export declare namespace Paths {
            *   "npc_sell_price": 5200,
            *   "id": "FARM_ARMOR_CHESTPLATE"
            * }
-           */
-          Components.Schemas.SkyBlockItem[];
+           */?: Components.Schemas.SkyBlockItem[];
         }
       }
     }
@@ -1091,7 +1093,7 @@ export declare namespace Paths {
       namespace Responses {
         export interface $200 {
           success?: boolean;
-          auctions?: /**
+          auctions /**
            * example:
            * {
            *   "uuid": "409a1e0f261a49849493278d6cd9305a",
@@ -1125,8 +1127,7 @@ export declare namespace Paths {
            *     }
            *   ]
            * }
-           */
-          Components.Schemas.SkyBlockAuction[];
+           */?: Components.Schemas.SkyBlockAuction[];
         }
         export type $400 = Components.Responses.DataMissing;
         export type $403 = Components.Responses.InvalidKey;
@@ -1162,7 +1163,7 @@ export declare namespace Paths {
            * 1571065561345
            */
           lastUpdated?: number; // int64
-          auctions?: /**
+          auctions /**
            * example:
            * {
            *   "uuid": "409a1e0f261a49849493278d6cd9305a",
@@ -1196,8 +1197,7 @@ export declare namespace Paths {
            *     }
            *   ]
            * }
-           */
-          Components.Schemas.SkyBlockAuction[];
+           */?: Components.Schemas.SkyBlockAuction[];
         }
         export type $404 = Components.Responses.MissingPage;
         export type $422 = Components.Responses.InvalidPage;

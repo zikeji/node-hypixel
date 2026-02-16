@@ -44,7 +44,7 @@ export type SkyBlockProfileMemberWithTransformedInventories = Omit<
 /** @internal */
 const SKYBLOCK_INVENTORIES: [
   keyof SkyBlockProfileTransformedInventories,
-  boolean
+  boolean,
 ][] = [
   ["inv_contents", false],
   ["ender_chest_contents", false],
@@ -63,21 +63,22 @@ const SKYBLOCK_INVENTORIES: [
  * @category Helper
  */
 export async function transformSkyBlockProfileMemberInventories(
-  member: SkyBlockProfileMember
+  member: SkyBlockProfileMember,
 ): Promise<SkyBlockProfileMemberWithTransformedInventories> {
-  const transformedMember: SkyBlockProfileMemberWithTransformedInventories = member as never;
+  const transformedMember: SkyBlockProfileMemberWithTransformedInventories =
+    member as never;
   await Promise.all(
     SKYBLOCK_INVENTORIES.map(async ([key, hasKeys]) => {
       if (!hasKeys) {
         const inventoryData = transformedMember.inventory[
           key
         ] as MinecraftInventoryData;
-        if (inventoryData && (inventoryData as MinecraftInventoryData).data) {
+        if (inventoryData && inventoryData.data) {
           try {
             transformedMember.inventory[key] = (await transformItemData(
-              (inventoryData as MinecraftInventoryData).data
+              inventoryData.data,
             )) as never;
-          } catch (e) {
+          } catch (_e) {
             /* istanbul ignore next */
             delete transformedMember.inventory[key];
           }
@@ -91,20 +92,19 @@ export async function transformSkyBlockProfileMemberInventories(
           Object.keys(inventoryData).map(async (subKey) => {
             if (inventoryData[subKey] && inventoryData[subKey].data) {
               try {
-                (transformedMember.inventory[key] as never)[
-                  subKey
-                ] = (await transformItemData(
-                  inventoryData[subKey].data
-                )) as never;
-              } catch (e) {
+                (transformedMember.inventory[key] as never)[subKey] =
+                  (await transformItemData(
+                    inventoryData[subKey].data,
+                  )) as never;
+              } catch (_e) {
                 /* istanbul ignore next */
                 delete (transformedMember.inventory[key] as never)[subKey];
               }
             }
-          })
+          }),
         );
       }
-    })
+    }),
   );
   return transformedMember;
 }

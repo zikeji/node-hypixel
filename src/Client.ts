@@ -182,7 +182,7 @@ export class Client {
 
   public on<E extends keyof ClientEvents>(
     event: E,
-    listener: ClientEvents[E]
+    listener: ClientEvents[E],
   ): this {
     this.emitter.on(event, listener);
     return this;
@@ -190,7 +190,7 @@ export class Client {
 
   public once<E extends keyof ClientEvents>(
     event: E,
-    listener: ClientEvents[E]
+    listener: ClientEvents[E],
   ): this {
     this.emitter.once(event, listener);
     return this;
@@ -198,7 +198,7 @@ export class Client {
 
   public off<E extends keyof ClientEvents>(
     event: E,
-    listener: ClientEvents[E]
+    listener: ClientEvents[E],
   ): this {
     this.emitter.off(event, listener);
     return this;
@@ -271,7 +271,7 @@ export class Client {
   > {
     return getResultObject(
       await this.call<LeaderboardsResponse>("leaderboards"),
-      ["leaderboards"]
+      ["leaderboards"],
     );
   }
 
@@ -300,7 +300,7 @@ export class Client {
   > {
     return getResultObject(
       await this.call<PunishmentStatsResponse>("punishmentstats"),
-      ["success"]
+      ["success"],
     );
   }
 
@@ -355,29 +355,28 @@ export class Client {
    */
   public async call<T extends Record<string, unknown>>(
     path: string,
-    parameters: Parameters = {}
+    parameters: Parameters = {},
   ): Promise<T & DefaultMeta & { cached?: boolean }> {
     if (!this.cache) {
       return this.executeActionableCall(
-        this.createActionableCall(path, parameters)
+        this.createActionableCall(path, parameters),
       );
     }
     const key = `${path.split("/").join(":")}${
       Object.values(parameters).length === 0
         ? ""
         : `:${Object.values(parameters).map((v) =>
-            v.toLowerCase().replace(/-/g, "")
+            v.toLowerCase().replace(/-/g, ""),
           )}`
     }`;
-    const cachedResponse:
-      | (T & { cached?: boolean })
-      | undefined = await this.cache.get<T>(key);
+    const cachedResponse: (T & { cached?: boolean }) | undefined =
+      await this.cache.get<T>(key);
     if (cachedResponse) {
       cachedResponse.cached = true;
       return cachedResponse;
     }
     const response: T & DefaultMeta = await this.executeActionableCall(
-      this.createActionableCall(path, parameters)
+      this.createActionableCall(path, parameters),
     );
     await this.cache.set(key, response);
     return response;
@@ -385,7 +384,7 @@ export class Client {
 
   /** @internal */
   private async executeActionableCall<T extends Record<string, unknown>>(
-    call: ActionableCall<T>
+    call: ActionableCall<T>,
   ): Promise<T> {
     await this.queue.wait();
     if (this.rateLimit.remaining === 0) {
@@ -393,7 +392,7 @@ export class Client {
       this.emitter.emit(
         "limited",
         this.rateLimit.limit,
-        new Date(Date.now() + timeout)
+        new Date(Date.now() + timeout),
       );
       await new Promise((resolve) => {
         setTimeout(resolve, timeout);
@@ -429,7 +428,7 @@ export class Client {
   private createActionableCall<T extends Record<string, unknown>>(
     path: string,
     /* istanbul ignore next */
-    parameters: Parameters = {}
+    parameters: Parameters = {},
   ): ActionableCall<T> {
     let noRateLimit = false;
     let includeApiKey = true;
@@ -451,7 +450,7 @@ export class Client {
         path,
         parameters,
         noRateLimit,
-        includeApiKey
+        includeApiKey,
       ),
       retries: 0,
       noRateLimit,
@@ -463,12 +462,12 @@ export class Client {
   private callMethod<
     T extends Record<string, unknown> & {
       cause?: string;
-    } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
+    } & { cloudflareCache?: DefaultMeta["cloudflareCache"] },
   >(
     path: string,
     parameters: Parameters,
     noRateLimit: boolean,
-    includeApiKey: boolean
+    includeApiKey: boolean,
   ): Promise<T> {
     const url = new URL(`${Client.endpoint}/${path}`);
     Object.keys(parameters).forEach((param) => {
@@ -494,8 +493,8 @@ export class Client {
       const headerKey = `ratelimit-${key}`;
       if (headerKey in headers) {
         this.rateLimit[key as keyof Client["rateLimit"]] = parseInt(
-          headers[headerKey] as string,
-          10
+          headers[headerKey],
+          10,
         );
       }
     });

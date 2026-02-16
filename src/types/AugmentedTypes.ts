@@ -32,8 +32,8 @@ export type PlayerResponse = Paths.V2Player.Get.Responses.$200 &
     player: Player | null;
   };
 
-export type PunishmentStatsResponse = Paths.V2Punishmentstats.Get.Responses.$200 &
-  Record<string, unknown>;
+export type PunishmentStatsResponse =
+  Paths.V2Punishmentstats.Get.Responses.$200 & Record<string, unknown>;
 
 export type RecentGamesResponse = Paths.V2Recentgames.Get.Responses.$200 &
   Record<string, unknown>;
@@ -44,75 +44,78 @@ export type StatusResponse = Paths.V2Status.Get.Responses.$200 &
 export type ResourcesGamesResponse = Paths.V2ResourcesGames.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type ResourcesAchievementsResponse = Paths.V2ResourcesAchievements.Get.Responses.$200 &
-  Record<string, unknown>;
+export type ResourcesAchievementsResponse =
+  Paths.V2ResourcesAchievements.Get.Responses.$200 & Record<string, unknown>;
 
-export type ResourcesChallengesResponse = Paths.V2ResourcesChallenges.Get.Responses.$200 &
-  Record<string, unknown>;
+export type ResourcesChallengesResponse =
+  Paths.V2ResourcesChallenges.Get.Responses.$200 & Record<string, unknown>;
 
-export type ResourcesQuestsResponse = Paths.V2ResourcesQuests.Get.Responses.$200 &
-  Record<string, unknown>;
+export type ResourcesQuestsResponse =
+  Paths.V2ResourcesQuests.Get.Responses.$200 & Record<string, unknown>;
 
-export type ResourcesGuildsAchievementsResponse = Paths.V2ResourcesAchievements.Get.Responses.$200 &
-  Record<string, unknown>;
+export type ResourcesGuildsAchievementsResponse =
+  Paths.V2ResourcesAchievements.Get.Responses.$200 & Record<string, unknown>;
 
-export type ResourcesVanityCompanionsResponse = Paths.V2ResourcesVanityCompanions.Get.Responses.$200 &
-  Record<string, unknown>;
+export type ResourcesVanityCompanionsResponse =
+  Paths.V2ResourcesVanityCompanions.Get.Responses.$200 &
+    Record<string, unknown>;
 
-export type ResourcesVanityPetsResponse = Paths.V2ResourcesVanityPets.Get.Responses.$200 &
-  Record<string, unknown>;
+export type ResourcesVanityPetsResponse =
+  Paths.V2ResourcesVanityPets.Get.Responses.$200 & Record<string, unknown>;
 
-export type ResourcesSkyblockBingoResponse = Paths.V2ResourcesSkyblockBingo.Get.Responses.$200 &
-  Record<string, unknown>;
+export type ResourcesSkyblockBingoResponse =
+  Paths.V2ResourcesSkyblockBingo.Get.Responses.$200 & Record<string, unknown>;
 
-export type ResourcesSkyblockCollectionsResponse = Paths.V2ResourcesSkyblockCollections.Get.Responses.$200 &
-  Record<string, unknown> & {
-    collections: {
-      [key in
-        | "FARMING"
-        | "MINING"
-        | "COMBAT"
-        | "FORAGING"
-        | "FISHING"
-        | "RIFT"]: {
-        name: string;
-        items: {
-          [key: string]: {
-            name: string;
-            maxTiers: number;
-            tiers: {
-              tier: number;
-              amountRequired: number;
-              unlocks: string[];
-            }[];
+export type ResourcesSkyblockCollectionsResponse =
+  Paths.V2ResourcesSkyblockCollections.Get.Responses.$200 &
+    Record<string, unknown> & {
+      collections: {
+        [key in
+          | "FARMING"
+          | "MINING"
+          | "COMBAT"
+          | "FORAGING"
+          | "FISHING"
+          | "RIFT"]: {
+          name: string;
+          items: {
+            [key: string]: {
+              name: string;
+              maxTiers: number;
+              tiers: {
+                tier: number;
+                amountRequired: number;
+                unlocks: string[];
+              }[];
+            };
           };
         };
-      };
-    } & {
-      [key: string]:
-        | {
-            name: string;
-            items: {
-              [key: string]: {
-                name: string;
-                maxTiers: number;
-                tiers: {
-                  tier: number;
-                  amountRequired: number;
-                  unlocks: string[];
-                }[];
+      } & {
+        [key: string]:
+          | {
+              name: string;
+              items: {
+                [key: string]: {
+                  name: string;
+                  maxTiers: number;
+                  tiers: {
+                    tier: number;
+                    amountRequired: number;
+                    unlocks: string[];
+                  }[];
+                };
               };
-            };
-          }
-        | undefined;
+            }
+          | undefined;
+      };
     };
-  };
 
-export type ResourcesSkyblockElectionResponse = Paths.V2ResourcesSkyblockElection.Get.Responses.$200 &
-  Record<string, unknown> & {
-    mayor: ElectionMayor;
-    current: ElectionCurrent | null;
-  };
+export type ResourcesSkyblockElectionResponse =
+  Paths.V2ResourcesSkyblockElection.Get.Responses.$200 &
+    Record<string, unknown> & {
+      mayor: ElectionMayor;
+      current: ElectionCurrent | null;
+    };
 
 export type SkyBlockItem = Omit<Components.Schemas.SkyBlockItem, "tier"> & {
   tier?:
@@ -136,21 +139,22 @@ export type ResourcesSkyblockItemsResponse = Omit<
     items?: SkyBlockItem[];
   };
 
-export type ResourcesSkyblockSkillsResponse = Paths.V2ResourcesSkyblockSkills.Get.Responses.$200 &
-  Record<string, unknown> & {
-    skills: {
-      [key: string]: {
-        name: string;
-        description: string;
-        maxLevel: number;
-        levels: {
-          level: number;
-          totalExpRequired: number;
-          unlocks: string[];
-        }[];
+export type ResourcesSkyblockSkillsResponse =
+  Paths.V2ResourcesSkyblockSkills.Get.Responses.$200 &
+    Record<string, unknown> & {
+      skills: {
+        [key: string]: {
+          name: string;
+          description: string;
+          maxLevel: number;
+          levels: {
+            level: number;
+            totalExpRequired: number;
+            unlocks: string[];
+          }[];
+        };
       };
     };
-  };
 
 export type SkyblockNewsResponse = Paths.V2SkyblockNews.Get.Responses.$200 &
   Record<string, unknown> & {
@@ -178,20 +182,21 @@ export type SkyblockAuctionsResponse = Omit<
   auctions?: SkyBlockAuction[];
 } & Record<string, unknown>;
 
-export type SkyblockAuctionsEndedResponse = Paths.V2SkyblockAuctionsEnded.Get.Responses.$200 &
-  Record<string, unknown> & {
-    auctions: {
-      auction_id: string;
-      seller: string;
-      seller_profile: string;
-      buyer: string;
-      buyer_profile: string;
-      timestamp: number;
-      price: number;
-      bin: boolean;
-      item_bytes: string;
-    }[];
-  };
+export type SkyblockAuctionsEndedResponse =
+  Paths.V2SkyblockAuctionsEnded.Get.Responses.$200 &
+    Record<string, unknown> & {
+      auctions: {
+        auction_id: string;
+        seller: string;
+        seller_profile: string;
+        buyer: string;
+        buyer_profile: string;
+        timestamp: number;
+        price: number;
+        bin: boolean;
+        item_bytes: string;
+      }[];
+    };
 
 export type SkyblockBazaarResponse = Paths.V2SkyblockBazaar.Get.Responses.$200 &
   Record<string, unknown> & {
@@ -257,8 +262,8 @@ export type SkyblockGardenResponse = Paths.V2SkyblockGarden.Get.Responses.$200 &
 export type SkyblockBingoResponse = Paths.V2SkyblockBingo.Get.Responses.$200 &
   Record<string, unknown>;
 
-export type SkyblockFiresalesResponse = Paths.V2SkyblockFiresales.Get.Responses.$200 &
-  Record<string, unknown>;
+export type SkyblockFiresalesResponse =
+  Paths.V2SkyblockFiresales.Get.Responses.$200 & Record<string, unknown>;
 
 export type HousingActiveResponse = Paths.V2HousingActive.Get.Responses.$200;
 
