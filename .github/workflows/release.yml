@@ -51,25 +51,27 @@ jobs:
           head_to_merge: main
           target_branch: dev
           github_token: ${{ secrets.GITHUB_TOKEN }}
-  publish_docs:
-    needs: [release]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-      - uses: actions/setup-node@v4
-        with:
-          node-version: latest
-      - run: npm ci
-      - name: Build documentation
-        env:
-          NODE_ENV: production
-          NODE_OPTIONS: --max-old-space-size=4096 --openssl-legacy-provider
-        run: npm run docs:build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/.vuepress/dist
-          cname: node-hypixel.zikeji.com
+  # Documentation publishing disabled - VuePress 1.x incompatible with Node 24+
+  # To re-enable, migrate to VuePress 2 or VitePress
+  # publish_docs:
+  #   needs: [release]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         ref: main
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: latest
+  #     - run: npm ci
+  #     - name: Build documentation
+  #       env:
+  #         NODE_ENV: production
+  #         NODE_OPTIONS: --max-old-space-size=4096
+  #       run: npm run docs:build
+  #     - name: Deploy
+  #       uses: peaceiris/actions-gh-pages@v4
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         publish_dir: ./docs/.vuepress/dist
+  #         cname: node-hypixel.zikeji.com

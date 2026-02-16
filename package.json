@@ -24,10 +24,10 @@
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
     "coverage:ci": "nyc npm run test:ci",
-    "docs:dev": "npm run docs:clean:ts-api && vuepress dev docs",
+    "docs:dev": "echo 'Documentation build disabled (VuePress 1.x incompatible with Node 24+). Use Node 20.x or migrate to VuePress 2/VitePress.'",
     "docs:clean:ts-api": "rimraf docs/ts-api",
-    "docs:build": "npm run docs:clean:ts-api && vuepress build docs",
-    "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage && npm run docs:build"
+    "docs:build": "echo 'Documentation build disabled (VuePress 1.x incompatible with Node 24+). Use Node 20.x or migrate to VuePress 2/VitePress.'",
+    "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage"
   },
   "homepage": "https://node-hypixel.zikeji.com/",
   "author": "Zikeji <me@zikeji.com>",
@@ -296,8 +296,7 @@
     "yaml-loader": "^0.9.0"
   },
   "overrides": {
-    "typescript": "$typescript",
-    "lru-cache": "4.1.5"
+    "typescript": "$typescript"
   },
   "config": {
     "commitizen": {
