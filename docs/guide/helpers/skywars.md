@@ -10,7 +10,7 @@ tags:
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">getSkyWarsLevelInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/#getskywarslevelinfo) helper calculates level & prestige info from SkyWars experience or the [`/api/player`](/api/classes/player/#uuid) endpoint. If you supply a player object it will throw an error if they have no SkyWars experience. You can also get the prestige for a certain level using the [<code class="language-javascript"><span class="token function">getSkyWarsPrestigeForLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/#getskywarsprestigeforlevel) helper.
+The [<code class="language-javascript"><span class="token function">getSkyWarsLevelInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/functions/getSkyWarsLevelInfo) helper calculates level & prestige info from SkyWars experience or the [`/api/player`](/api/classes/Player#uuid) endpoint. If you supply a player object it will throw an error if they have no SkyWars experience. You can also get the prestige for a certain level using the [<code class="language-javascript"><span class="token function">getSkyWarsPrestigeForLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/functions/getSkyWarsPrestigeForLevel) helper.
 
 ## Example
 

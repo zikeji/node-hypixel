@@ -9,7 +9,7 @@ tags:
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">getSkyBlockProfileMemberCollections</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/#getskyblockprofilemembercollections) helper takes a SkyBlock profile object (obtained [here](/api/classes/skyblock/#profile) or [here](/api/classes/skyblockprofiles/#uuid)) and the [collections resource](/api/classes/skyblockresources/#collections) to get usable collection information from the profile. Additionally, for displaying collection tiers in roman numerals (as you would see ingame) you can use the [<code class="language-javascript"><span class="token function">romanize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/#romanize) helper.
+The [<code class="language-javascript"><span class="token function">getSkyBlockProfileMemberCollections</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/functions/getSkyBlockProfileMemberCollections) helper takes a SkyBlock profile object (obtained [here](/api/classes/SkyBlock#profile) or [here](/api/classes/SkyBlockProfiles#uuid)) and the [collections resource](/api/classes/SkyBlockResources#collections) to get usable collection information from the profile. Additionally, for displaying collection tiers in roman numerals (as you would see ingame) you can use the [<code class="language-javascript"><span class="token function">romanize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/functions/romanize) helper.
 
 ## Example
 
