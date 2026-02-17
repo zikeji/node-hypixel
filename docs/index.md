@@ -5,6 +5,9 @@ hero:
   name: "@zikeji/hypixel"
   text: "Hypixel API Wrapper"
   tagline: Unopinionated async/await API wrapper for Hypixel's Public API with TypeScript support
+  image:
+    src: /logo.svg
+    alt: "@zikeji/hypixel logo"
   actions:
     - theme: brand
       text: Get Started

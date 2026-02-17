@@ -24,7 +24,7 @@
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
     "coverage:ci": "nyc npm run test:ci",
-    "docs:dev": "vitepress dev docs",
+    "docs:dev": "npm run build && typedoc && vitepress dev docs",
     "docs:build": "typedoc && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage"
