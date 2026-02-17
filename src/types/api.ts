@@ -1008,7 +1008,7 @@ export declare namespace Paths {
         export interface $200 {
           success?: boolean;
           lastUpdated?: number;
-          /**
+          items /**
            * example:
            * {
            *   "material": "LEATHER_CHESTPLATE",
@@ -1023,8 +1023,7 @@ export declare namespace Paths {
            *   "npc_sell_price": 5200,
            *   "id": "FARM_ARMOR_CHESTPLATE"
            * }
-           */
-          items?: Components.Schemas.SkyBlockItem[];
+           */?: Components.Schemas.SkyBlockItem[];
         }
       }
     }
@@ -1094,7 +1093,7 @@ export declare namespace Paths {
       namespace Responses {
         export interface $200 {
           success?: boolean;
-          /**
+          auctions /**
            * example:
            * {
            *   "uuid": "409a1e0f261a49849493278d6cd9305a",
@@ -1128,8 +1127,7 @@ export declare namespace Paths {
            *     }
            *   ]
            * }
-           */
-          auctions?: Components.Schemas.SkyBlockAuction[];
+           */?: Components.Schemas.SkyBlockAuction[];
         }
         export type $400 = Components.Responses.DataMissing;
         export type $403 = Components.Responses.InvalidKey;
@@ -1165,7 +1163,7 @@ export declare namespace Paths {
            * 1571065561345
            */
           lastUpdated?: number; // int64
-          /**
+          auctions /**
            * example:
            * {
            *   "uuid": "409a1e0f261a49849493278d6cd9305a",
@@ -1199,8 +1197,7 @@ export declare namespace Paths {
            *     }
            *   ]
            * }
-           */
-          auctions?: Components.Schemas.SkyBlockAuction[];
+           */?: Components.Schemas.SkyBlockAuction[];
         }
         export type $404 = Components.Responses.MissingPage;
         export type $422 = Components.Responses.InvalidPage;
