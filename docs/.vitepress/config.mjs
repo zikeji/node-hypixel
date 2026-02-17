@@ -28,6 +28,11 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.svg',
     
+    outline: {
+      level: [2, 3],
+      label: 'On this page'
+    },
+    
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },

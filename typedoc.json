@@ -10,5 +10,6 @@
   "hideGenerator": true,
   "categorizeByGroup": true,
   "categoryOrder": ["Public", "API", "*", "Custom", "Other"],
-  "exclude": ["**/node_modules/**"]
+  "exclude": ["**/node_modules/**"],
+  "docsRoot": "./docs"
 }
