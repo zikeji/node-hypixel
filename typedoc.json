@@ -1,5 +1,16 @@
 {
-  "entryPoints": ["./src/index.ts"],
+  "entryPoints": [
+    "./src/index.ts",
+    "./src/types/Augmented/Player.ts",
+    "./src/types/Augmented/Guild.ts",
+    "./src/types/Augmented/SkyBlock/Profile.ts",
+    "./src/types/Augmented/SkyBlock/ProfileMember.ts",
+    "./src/types/Augmented/SkyBlock/Auction.ts",
+    "./src/types/Augmented/SkyBlock/Museum.ts",
+    "./src/types/Augmented/Resources/SkyBlock/Election.ts",
+    "./src/Client.ts",
+    "./src/types/RateLimitData.ts"
+  ],
   "out": "./docs/api",
   "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
   "readme": "none",
@@ -13,19 +24,10 @@
   "exclude": ["**/node_modules/**"],
   "docsRoot": "./docs",
   "intentionallyNotExported": [
-    "SkyBlockProfileMember",
     "ResultObject",
     "FlatResultArray",
     "ResultArray",
-    "SkyBlockAuction",
-    "Player",
-    "Guild",
-    "SkyBlockProfile",
-    "ClientEvents",
     "OmitRespectingRemapping",
-    "RateLimitData",
-    "ElectionCurrent",
-    "ElectionMayor",
-    "SkyBlockMuseumMember"
+    "ClientEvents"
   ]
 }
