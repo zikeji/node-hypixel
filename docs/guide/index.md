@@ -43,9 +43,10 @@ const client = new Client("YOUR_API_KEY");
 
 To use this library, you'll need a Hypixel API key:
 
-1. Join the Hypixel Minecraft server at `mc.hypixel.net`
-2. Run the command `/api new` in-game
-3. Copy your new API key and use it to initialize the client
+1. Visit [https://developer.hypixel.net/](https://developer.hypixel.net/)
+2. Sign in with your Hypixel forum account
+3. Generate a development key (requires periodic recreation) or apply for an app key for production use
+4. Use your API key to initialize the client
 
 ## TypeScript Usage
 
