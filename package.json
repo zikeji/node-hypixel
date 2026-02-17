@@ -24,8 +24,9 @@
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
     "coverage:ci": "nyc npm run test:ci",
-    "docs:dev": "npm run build && typedoc && vitepress dev docs",
-    "docs:build": "typedoc && vitepress build docs",
+    "docs:predoc": "npm run build && typedoc",
+    "docs:dev": "npm run docs:predoc && vitepress dev docs",
+    "docs:build": "npm run docs:predoc && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage"
   },
@@ -278,6 +279,7 @@
     "ts-node": "^10.9.2",
     "typedoc": "^0.28.17",
     "typedoc-plugin-markdown": "^4.10.0",
+    "typedoc-vitepress-theme": "^1.1.2",
     "typescript": "^5.6.2",
     "vitepress": "^1.5.2"
   },

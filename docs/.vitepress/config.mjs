@@ -6,6 +6,14 @@ import { fileURLToPath } from 'url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const pkg = JSON.parse(readFileSync(resolve(__dirname, '../../package.json'), 'utf-8'))
 
+// Load TypeDoc sidebar
+let typedocSidebar = []
+try {
+  typedocSidebar = JSON.parse(readFileSync(resolve(__dirname, '../api/typedoc-sidebar.json'), 'utf-8'))
+} catch (e) {
+  console.warn('TypeDoc sidebar not found. Run docs:predoc to generate it.')
+}
+
 export default defineConfig({
   title: pkg.name,
   description: pkg.description,
@@ -24,12 +32,12 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
       { text: 'API Reference', link: '/api/' },
+      { text: 'Changelog', link: '/changelog' },
       {
         text: 'Links',
         items: [
           { text: 'NPM Package', link: `https://www.npmjs.com/package/${pkg.name}` },
           { text: 'GitHub', link: 'https://github.com/zikeji/node-hypixel' },
-          { text: 'Changelog', link: 'https://github.com/zikeji/node-hypixel/blob/main/CHANGELOG.md' }
         ]
       }
     ],
@@ -62,7 +70,8 @@ export default defineConfig({
             { text: 'Skyblock Profile Skills', link: '/guide/helpers/skyblock-profile-skills' }
           ]
         }
-      ]
+      ],
+      '/api/': typedocSidebar
     },
 
     socialLinks: [

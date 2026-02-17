@@ -1,7 +1,7 @@
 {
   "entryPoints": ["./src/index.ts"],
   "out": "./docs/api",
-  "plugin": ["typedoc-plugin-markdown"],
+  "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
   "readme": "none",
   "excludePrivate": true,
   "excludeProtected": true,
@@ -10,8 +10,5 @@
   "hideGenerator": true,
   "categorizeByGroup": true,
   "categoryOrder": ["Public", "API", "*", "Custom", "Other"],
-  "exclude": ["**/node_modules/**"],
-  "outputFileStrategy": "modules",
-  "flattenOutputFiles": false,
-  "entryFileName": "index"
+  "exclude": ["**/node_modules/**"]
 }
