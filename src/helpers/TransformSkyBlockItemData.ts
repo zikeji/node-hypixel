@@ -58,7 +58,7 @@ const SKYBLOCK_INVENTORIES: [
 ];
 
 /**
- * This helper will loop over all the possible inventories on a profile and run the {@link transformSkyBlockItemData} helper on them, returning the member object with the transformed properties.
+ * This helper will loop over all the possible inventories on a profile and run the {@link transformItemData} helper on them, returning the member object with the transformed properties.
  * @param member The profile member object that you want to transform the inventory data of.
  * @category Helper
  */

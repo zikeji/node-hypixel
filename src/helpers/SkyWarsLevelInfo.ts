@@ -66,12 +66,6 @@ export function totalExpToSkyWarsLevel(level: number): number {
           skyWarsLevelConstants.expPerLevel;
 }
 
-/**
- * Get SkyWars level information from a player object or raw experience value.
- * @param data A player object or the raw experience value.
- * @param includePrestige Whether or not to return the {@link SkyWarsPrestige} object.
- * @category Helper
- */
 export function getSkyWarsLevelInfo(
   data: PlayerResponse["player"] | number,
 ): SkyWarsLevelInfo;
@@ -83,6 +77,12 @@ export function getSkyWarsLevelInfo(
   data: PlayerResponse["player"] | number,
   includePrestige: false,
 ): SkyWarsLevelInfo;
+/**
+ * Get SkyWars level information from a player object or raw experience value.
+ * @param data A player object or the raw experience value.
+ * @param includePrestige Whether or not to return the {@link SkyWarsPrestige} object.
+ * @category Helper
+ */
 export function getSkyWarsLevelInfo(
   data: PlayerResponse["player"] | number,
   includePrestige?: boolean,
