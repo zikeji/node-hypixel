@@ -32,4 +32,5 @@ export * from "./methods/housing/index";
 export * from "./methods/housing/houses";
 export * from "./methods/status";
 export * from "./types/api";
+export * from "./types/AugmentedTypes";
 export * from "./types/DefaultMeta";

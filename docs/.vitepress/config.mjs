@@ -37,12 +37,12 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/' },
       { text: 'API Reference', link: '/api/' },
-      { text: 'Changelog', link: '/changelog' },
       {
         text: 'Links',
         items: [
           { text: 'NPM Package', link: `https://www.npmjs.com/package/${pkg.name}` },
           { text: 'GitHub', link: 'https://github.com/zikeji/node-hypixel' },
+          { text: 'Changelog', link: 'https://github.com/zikeji/node-hypixel/blob/main/CHANGELOG.md' }
         ]
       }
     ],
