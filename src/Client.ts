@@ -28,7 +28,9 @@ export interface ActionableCall<T> {
   includeApiKey: boolean;
 }
 
-/** @hidden */
+/**
+ * Rate limit data returned in the meta property of API responses.
+ */
 export interface RateLimitData {
   /**
    * Remaining API calls until the limit resets.

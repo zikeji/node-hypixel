@@ -16,7 +16,6 @@
     "SkyBlockProfileMember",
     "ResultObject",
     "BoostersResponse",
-    "DefaultMeta",
     "CountsResponse",
     "PunishmentStatsResponse",
     "GuildResponse",
@@ -56,6 +55,7 @@
     "SkyblockGardenResponse",
     "SkyblockMuseumResponse",
     "ResourcesSkyblockItemsResponse",
-    "StatusResponse"
+    "StatusResponse",
+    "RateLimitData"
   ]
 }
