@@ -34,3 +34,21 @@ export * from "./methods/status";
 export * from "./types/api";
 export * from "./types/AugmentedTypes";
 export * from "./types/DefaultMeta";
+export type {
+  Player as PlayerData,
+  PlayerStats,
+} from "./types/Augmented/Player";
+export type { Guild as GuildData } from "./types/Augmented/Guild";
+export type { SkyBlockProfile } from "./types/Augmented/SkyBlock/Profile";
+export type { SkyBlockProfileMember } from "./types/Augmented/SkyBlock/ProfileMember";
+export type {
+  SkyBlockAuction as SkyBlockAuctionData,
+} from "./types/Augmented/SkyBlock/Auction";
+export type {
+  SkyBlockMuseumMember,
+  SkyBlockMuseumItem,
+} from "./types/Augmented/SkyBlock/Museum";
+export type {
+  ElectionCurrent,
+  ElectionMayor,
+} from "./types/Augmented/Resources/SkyBlock/Election";
