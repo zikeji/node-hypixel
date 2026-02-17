@@ -24,9 +24,10 @@
     "test:lint": "eslint --ext ts src",
     "coverage": "nyc npm t",
     "coverage:ci": "nyc npm run test:ci",
-    "docs:predoc": "npm run build && typedoc",
-    "docs:dev": "npm run docs:predoc && vitepress dev docs",
-    "docs:build": "npm run docs:predoc && vitepress build docs",
+    "predocs:dev": "npm run build && typedoc",
+    "predocs:build": "npm run build && typedoc",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "test:build": "npm run test:lint && npm run build && npm run test && npm run coverage"
   },
