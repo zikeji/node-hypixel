@@ -266,6 +266,7 @@ export type SkyBlockProfileMemberPlayerData = {
     vermin_vaporize?: number;
     [key: string]: number | undefined;
   };
+  reaper_peppers_eaten?: number;
 };
 
 export type SkyBlockProfilePetsData = {
