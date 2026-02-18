@@ -253,6 +253,19 @@ export type SkyBlockProfileMemberPlayerData = {
   unlocked_coll_tiers?: string[];
   visited_modes?: string[];
   visited_zones?: string[];
+  garden_chips?: {
+    cropshot?: number;
+    mechamind?: number;
+    overdrive?: number;
+    quickdraw?: number;
+    sowledge?: number;
+    hypercharge?: number;
+    rarefinder?: number;
+    synthesis?: number;
+    evergreen?: number;
+    vermin_vaporize?: number;
+    [key: string]: number | undefined;
+  };
 };
 
 export type SkyBlockProfilePetsData = {
