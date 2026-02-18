@@ -158,6 +158,7 @@ export type SkyBlockProfileMember = NonNullable<
     slayer?: SkyBlockProfileMemberSlayer;
     trophy_fish?: SkyBlockProfileMemberTrophyFish;
     skill_trees?: SkyBlockProfileMemberSkillTrees;
+    foraging?: SkyBlockProfileMemberForaging;
   };
 
 export type SkyBlockProfileMemberPlayerData = {
@@ -1280,4 +1281,104 @@ export type SkyBlockProfileMemberSkillTrees = {
     [key: string]: number | undefined;
   };
   refund_ability_free?: boolean;
+};
+
+export type SkyBlockProfileMemberForaging = {
+  hina?: {
+    tasks?: {
+      task_progress?: {
+        FIG_GIFTS?: number;
+        MANGROVE_GIFTS?: number;
+        SHARD_FROM_HUNTRAP?: number;
+        REACH_SWEEP?: number;
+        CATCH_AZURE_5?: number;
+        CATCH_VERDANT_5?: number;
+        KILL_CHILLSHOTS_10?: number;
+        CATCH_INVISIBUG_1?: number;
+        COLLECT_50_BERRIES?: number;
+        AGATHA_CONTEST_POINTS?: number;
+        CATCH_MOSSYBIT_5?: number;
+        OBTAIN_SHARD_WITH_LUSHLILAC_BONBON?: number;
+        COLLECT_50_SEA_LUMIES?: number;
+        CATCH_COD_5?: number;
+        CATCH_SALMON_5?: number;
+        CATCH_HIDEONLEAF_5?: number;
+        CATCH_CORALOT_5?: number;
+        CATCH_DREADWING_3?: number;
+        CATCH_MUDWORM_1?: number;
+        KILL_25_DROWNED?: number;
+        CATCH_STRIDER_SURFER_10?: number;
+        FUSE_5_ELEMENTAL_SHARDS?: number;
+        CATCH_JOYDIVE_10?: number;
+        CATCH_LUMISQUID_10?: number;
+        CATCH_SHELLWISE_10?: number;
+        CATCH_SPIKE_10?: number;
+        [key: string]: number | undefined;
+      };
+      completed_tasks?: string[];
+      claimed_rewards?: string[];
+      tier_claimed?: number;
+    };
+  };
+  tree_gifts?: {
+    FIG?: number;
+    MANGROVE?: number;
+    [key: string]: number | undefined;
+  } & {
+    milestone_tier_claimed?: {
+      FIG?: number;
+      MANGROVE?: number;
+      [key: string]: number | undefined;
+    };
+  };
+  songs?: {
+    harp?: {
+      song_joy_world_completions?: number;
+      song_jeopardy_best_completion?: number;
+      song_joy_world_perfect_completions?: number;
+      song_pure_imagination_completions?: number;
+      song_fire_and_flames_perfect_completions?: number;
+      song_happy_birthday_perfect_completions?: number;
+      song_minuet_completions?: number;
+      selected_song_epoch?: number;
+      song_fire_and_flames_completions?: number;
+      song_amazing_grace_completions?: number;
+      song_greensleeves_perfect_completions?: number;
+      song_greensleeves_completions?: number;
+      song_vie_en_rose_perfect_completions?: number;
+      song_jeopardy_perfect_completions?: number;
+      song_amazing_grace_best_completion?: number;
+      claimed_talisman?: boolean;
+      song_brahms_best_completion?: number;
+      song_minuet_perfect_completions?: number;
+      song_happy_birthday_best_completion?: number;
+      song_jeopardy_completions?: number;
+      song_amazing_grace_perfect_completions?: number;
+      song_frere_jacques_perfect_completions?: number;
+      song_pure_imagination_best_completion?: number;
+      selected_song?: string;
+      song_hymn_joy_completions?: number;
+      song_frere_jacques_best_completion?: number;
+      song_pachelbel_completions?: number;
+      song_greensleeves_best_completion?: number;
+      song_vie_en_rose_best_completion?: number;
+      song_frere_jacques_completions?: number;
+      song_brahms_completions?: number;
+      song_fire_and_flames_best_completion?: number;
+      song_pachelbel_perfect_completions?: number;
+      song_vie_en_rose_completions?: number;
+      song_pure_imagination_perfect_completions?: number;
+      song_minuet_best_completion?: number;
+      song_pachelbel_best_completion?: number;
+      song_hymn_joy_perfect_completions?: number;
+      song_hymn_joy_best_completion?: number;
+      song_happy_birthday_completions?: number;
+      song_brahms_perfect_completions?: number;
+      song_joy_world_best_completion?: number;
+      [
+        key: `song_${string}_completions` | `song_${string}_perfect_completions` | `song_${string}_best_completion`
+      ]: number | undefined;
+    };
+  };
+  fish_family?: string[];
 };
