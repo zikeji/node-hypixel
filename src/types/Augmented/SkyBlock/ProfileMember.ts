@@ -1376,7 +1376,10 @@ export type SkyBlockProfileMemberForaging = {
       song_brahms_perfect_completions?: number;
       song_joy_world_best_completion?: number;
       [
-        key: `song_${string}_completions` | `song_${string}_perfect_completions` | `song_${string}_best_completion`
+        key:
+          | `song_${string}_completions`
+          | `song_${string}_perfect_completions`
+          | `song_${string}_best_completion`
       ]: number | undefined;
     };
   };
