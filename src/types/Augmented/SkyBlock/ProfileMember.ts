@@ -159,6 +159,7 @@ export type SkyBlockProfileMember = NonNullable<
     trophy_fish?: SkyBlockProfileMemberTrophyFish;
     skill_trees?: SkyBlockProfileMemberSkillTrees;
     foraging?: SkyBlockProfileMemberForaging;
+    foraging_core?: SkyBlockProfileMemberForagingCore;
   };
 
 export type SkyBlockProfileMemberPlayerData = {
@@ -1382,3 +1383,15 @@ export type SkyBlockProfileMemberForaging = {
   };
   fish_family?: string[];
 };
+
+export type SkyBlockProfileMemberForagingCore = {
+  daily_trees_cut_day?: number;
+  daily_trees_cut?: number;
+  daily_gifts?: number;
+  daily_log_cut_day?: number;
+  daily_log_cut?: unknown[];
+  forests_whispers?: number;
+  forests_whispers_spent?: number;
+  current_daily_effect?: string;
+  current_daily_effect_last_changed?: number;
+}
