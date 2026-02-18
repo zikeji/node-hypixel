@@ -70,6 +70,8 @@ export type SkyBlockProfileMember = NonNullable<
     garden_player_data?: {
       copper?: number;
       larva_consumed?: number;
+      analyzed_greenhouse_crops?: string[];
+      discovered_greenhouse_crops?: string[];
     };
     glacite_player_data?: {
       fossils_donated?: Array<string>;
