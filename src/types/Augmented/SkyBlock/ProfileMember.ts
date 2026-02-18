@@ -892,12 +892,6 @@ export type SkyBlockProfileMemberMiningCore = {
 };
 
 export type SkyBlockProfileMemberQuests = {
-  harp_quest?: {
-    selected_song?: string;
-    selected_song_epoch?: number;
-    claimed_talisman?: boolean;
-    [key: `song_${string}`]: number;
-  };
   trapper_quest?: {
     last_task_time: number;
     pelt_count?: number;
