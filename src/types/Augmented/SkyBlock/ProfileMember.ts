@@ -160,6 +160,7 @@ export type SkyBlockProfileMember = NonNullable<
     skill_trees?: SkyBlockProfileMemberSkillTrees;
     foraging?: SkyBlockProfileMemberForaging;
     foraging_core?: SkyBlockProfileMemberForagingCore;
+    shards?: SkyBlockProfileMemberShards;
   };
 
 export type SkyBlockProfileMemberPlayerData = {
@@ -1394,4 +1395,29 @@ export type SkyBlockProfileMemberForagingCore = {
   forests_whispers_spent?: number;
   current_daily_effect?: string;
   current_daily_effect_last_changed?: number;
-}
+};
+
+export type SkyBlockProfileMemberShards = {
+  traps?: {
+    active_traps?: {
+      trap_item?: string;
+      capture_time?: number;
+      mode?: string;
+      location?: string;
+      placed_at?: number;
+      shard?: string;
+      captured?: boolean;
+      uuid?: string;
+      hunting_toolkit?: boolean;
+      hunting_toolkit_index?: number;
+    }[];
+  };
+  owned?: {
+    type?: string;
+    amount_owned?: number;
+    captured?: number;
+  }[];
+  shard_sort?: string;
+  fused?: number;
+  fusion_result_sort?: string;
+};
