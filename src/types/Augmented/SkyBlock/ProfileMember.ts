@@ -161,6 +161,9 @@ export type SkyBlockProfileMember = NonNullable<
     foraging?: SkyBlockProfileMemberForaging;
     foraging_core?: SkyBlockProfileMemberForagingCore;
     shards?: SkyBlockProfileMemberShards;
+    temples?: {
+      unlocked_temples?: string[];
+    };
   };
 
 export type SkyBlockProfileMemberPlayerData = {
