@@ -176,6 +176,7 @@ export type SkyBlockProfileMemberPlayerData = {
     SKILL_FISHING?: number;
     SKILL_ALCHEMY?: number;
     SKILL_RUNECRAFTING?: number;
+    SKILL_HUNTING?: number;
     SKILL_MINING?: number;
     SKILL_FARMING?: number;
     SKILL_ENCHANTING?: number;
