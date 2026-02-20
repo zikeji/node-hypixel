@@ -5,6 +5,23 @@ on:
   pull_request:
 
 jobs:
+  docs_changes:
+    runs-on: ubuntu-latest
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    outputs:
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Detect docs changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            docs:
+              - 'docs/**'
+
   test_lint:
     runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
@@ -16,6 +33,22 @@ jobs:
       - run: npm ci
       - name: Don't continue if lint fails.
         run: npm run test:lint
+
+  test_docs:
+    runs-on: ubuntu-latest
+    needs:
+      - test_lint
+      - docs_changes
+    if: needs.docs_changes.outputs.docs == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - run: npm ci
+      - name: Build documentation
+        run: npm run docs:build
+
   test_node:
     runs-on: ubuntu-latest
     needs: test_lint
@@ -24,41 +57,43 @@ jobs:
       matrix:
         node-version: [20.x, 22.x, 23.x, 24.x]
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build
-    - name: Run tests
-      run: npm run coverage:ci
-      env:
-        CI: true
-    - name: Coveralls Parallel
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: run-${{ matrix.test_number }}
-        parallel: true
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Run tests
+        run: npm run coverage:ci
+        env:
+          CI: true
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: run-${{ matrix.test_number }}
+          parallel: true
+
   finish:
     needs: test_node
     runs-on: ubuntu-latest
     steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN  }}
-        parallel-finished: true
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN  }}
+          parallel-finished: true
+
   trigger_release:
     needs:
       - finish
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(toJSON(github.event.commits.*.message), '[skip ci]')
     steps:
-    - name: Dispatch
-      run: |
-        curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GH_TOKEN" https://api.github.com/repos/zikeji/node-hypixel/dispatches -d '{"event_type":"release"}' >/dev/null 2>&1
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Dispatch
+        run: |
+          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GH_TOKEN" https://api.github.com/repos/zikeji/node-hypixel/dispatches -d '{"event_type":"release"}' >/dev/null 2>&1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
