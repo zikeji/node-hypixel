@@ -11,7 +11,7 @@ let typedocSidebar = []
 try {
   typedocSidebar = JSON.parse(readFileSync(resolve(__dirname, '../api/typedoc-sidebar.json'), 'utf-8'))
 } catch (e) {
-  console.warn('TypeDoc sidebar not found. Run docs:predoc to generate it.')
+  console.warn('TypeDoc sidebar not found.')
 }
 
 export default defineConfig({
@@ -23,6 +23,7 @@ export default defineConfig({
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     ['meta', { name: 'theme-color', content: '#9941d3' }],
+    ['script', { src: 'https://ryb.zynados.com/api/script.js', 'data-site-id': '3e462c521411', defer: '' }]
   ],
 
   themeConfig: {
