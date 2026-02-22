@@ -59,9 +59,9 @@ export class SkyBlock extends Method {
   > {
     return getResultArray(
       await this.client.call<SkyblockAuctionsEndedResponse>(
-        "skyblock/auctions_ended"
+        "skyblock/auctions_ended",
       ),
-      "auctions"
+      "auctions",
     );
   }
 
@@ -78,7 +78,7 @@ export class SkyBlock extends Method {
   > {
     return getResultObject(
       await this.client.call<SkyblockBazaarResponse>("skyblock/bazaar"),
-      ["products"]
+      ["products"],
     );
   }
 
@@ -105,7 +105,7 @@ export class SkyBlock extends Method {
   > {
     return getResultArray(
       await this.client.call<SkyblockFiresalesResponse>("skyblock/bazaar"),
-      "sales"
+      "sales",
     );
   }
 
@@ -140,7 +140,7 @@ export class SkyBlock extends Method {
   public async news(): Promise<ResultArray<SkyblockNewsResponse, "items">> {
     return getResultArray(
       await this.client.call<SkyblockNewsResponse>("skyblock/news"),
-      "items"
+      "items",
     );
   }
 
@@ -153,13 +153,13 @@ export class SkyBlock extends Method {
    * @category API
    */
   public async profile(
-    profile: Paths.V2SkyblockProfile.Get.Parameters.Profile
+    profile: Paths.V2SkyblockProfile.Get.Parameters.Profile,
   ): Promise<ResultObject<SkyblockProfileResponse, ["profile"]>> {
     return getResultObject(
       await this.client.call<SkyblockProfileResponse>("skyblock/profile", {
         profile,
       }),
-      ["profile"]
+      ["profile"],
     );
   }
 

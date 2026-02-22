@@ -17,13 +17,13 @@ export class Status extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Paths.V2Status.Get.Parameters.Uuid
+    uuid: Paths.V2Status.Get.Parameters.Uuid,
   ): Promise<ResultObject<StatusResponse, ["session"]>> {
     return getResultObject(
       await this.client.call<StatusResponse>("status", {
         uuid,
       }),
-      ["session"]
+      ["session"],
     );
   }
 }

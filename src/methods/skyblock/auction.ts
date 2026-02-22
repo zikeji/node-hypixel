@@ -20,13 +20,13 @@ export class SkyBlockAuction extends Method {
    * @category API
    */
   public async player(
-    player: Paths.V2SkyblockAuction.Get.Parameters.Player
+    player: Paths.V2SkyblockAuction.Get.Parameters.Player,
   ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
       await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
         player,
       }),
-      "auctions"
+      "auctions",
     );
   }
 
@@ -39,13 +39,13 @@ export class SkyBlockAuction extends Method {
    * @category API
    */
   public async profile(
-    profile: Paths.V2SkyblockAuction.Get.Parameters.Profile
+    profile: Paths.V2SkyblockAuction.Get.Parameters.Profile,
   ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
       await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
         profile,
       }),
-      "auctions"
+      "auctions",
     );
   }
 
@@ -58,13 +58,13 @@ export class SkyBlockAuction extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Paths.V2SkyblockAuction.Get.Parameters.Uuid
+    uuid: Paths.V2SkyblockAuction.Get.Parameters.Uuid,
   ): Promise<ResultArray<SkyblockAuctionResponse, "auctions">> {
     return getResultArray(
       await this.client.call<SkyblockAuctionResponse>("skyblock/auction", {
         uuid,
       }),
-      "auctions"
+      "auctions",
     );
   }
 }

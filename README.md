@@ -15,7 +15,7 @@
 [docs]: https://node-hypixel.zikeji.com
 [hypixel]: https://api.hypixel.net/
 
-With **[IntelliSense](https://code.visualstudio.com/docs/editor/intellisense)** support, this is an unopinionated async/await API wrapper for [Hypixel's Public API][hypixel]. It is developed in TypeScript complete with [documentation][docs], [typed interfaces](https://node-hypixel.zikeji.com/ts-api/) for all API responses, built-in rate-limit handling, [flexible cache support](https://node-hypixel.zikeji.com/guide/advanced/cache/), and some [helper functions](https://node-hypixel.zikeji.com/guide/helpers/player-ranks/).
+With **[IntelliSense](https://code.visualstudio.com/docs/editor/intellisense)** support, this is an unopinionated async/await API wrapper for [Hypixel's Public API][hypixel]. It is developed in TypeScript complete with [documentation][docs], [typed interfaces](https://node-hypixel.zikeji.com/api/) for all API responses, built-in rate-limit handling, [flexible cache support](https://node-hypixel.zikeji.com/guide/advanced/cache), and some [helper functions](https://node-hypixel.zikeji.com/guide/helpers/player-ranks).
 
 ## 4.0.0 Information
 
@@ -50,7 +50,7 @@ const client = new Client("API_KEY");
 
 ## Helpers
 
-This library adds multiple helpers to facilitate using the Hypixel API. You can find documentation on each helper [here](https://node-hypixel.zikeji.com/guide/helpers/player-ranks/). If you would like to request a helper that doesn't exist, please open an issue. Otherwise if you would like to contribute one refer to the below section.
+This library adds multiple helpers to facilitate using the Hypixel API. You can find documentation on each helper [here](https://node-hypixel.zikeji.com/guide/helpers/player-ranks). If you would like to request a helper that doesn't exist, please open an issue. Otherwise if you would like to contribute one refer to the below section.
 
 ## Contributing
 

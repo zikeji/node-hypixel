@@ -10,7 +10,7 @@ tags:
 
 ## Introduction
 
-The [<code class="language-javascript"><span class="token function">getBedwarsLevelInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/ts-api/#getbedwarslevelinfo) helper allows you to easily extract Bedwars level & prestige info from the [`/api/player`](/ts-api/classes/player/#uuid) endpoint. If provided a player object, will throw an error if no Bedwars stats are found.
+The [<code class="language-javascript"><span class="token function">getBedwarsLevelInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code>](/api/functions/getBedwarsLevelInfo) helper allows you to easily extract Bedwars level & prestige info from the [`/api/player`](https://api.hypixel.net/#tag/Player-Data/paths/~1v2~1player/get) endpoint. If provided a player object, will throw an error if no Bedwars stats are found.
 
 ## Example
 
