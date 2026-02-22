@@ -12,7 +12,7 @@ const CACHE_CONTROL_REGEX = /s-maxage=(\d+)/;
 export function request<
   T extends Record<string, unknown> & {
     cause?: string;
-  } & { cloudflareCache?: DefaultMeta["cloudflareCache"] }
+  } & { cloudflareCache?: DefaultMeta["cloudflareCache"] },
 >(options: RequestOptions): Promise<T> {
   return new Promise((resolve, reject) => {
     const clientRequest = httpsRequest(
@@ -35,7 +35,7 @@ export function request<
         incomingMessage.on("end", () => {
           if (!options.noRateLimit) {
             options.getRateLimitHeaders(
-              incomingMessage.headers as Record<string, string>
+              incomingMessage.headers as Record<string, string>,
             );
           }
 
@@ -50,7 +50,7 @@ export function request<
           let responseObject: T | undefined;
           try {
             responseObject = JSON.parse(responseBody);
-          } catch (_) {
+          } catch (_error) {
             // noop
           }
 
@@ -72,8 +72,8 @@ export function request<
               return reject(
                 new GenericHTTPError(
                   incomingMessage.statusCode,
-                  responseObject.cause
-                )
+                  responseObject.cause,
+                ),
               );
             }
 
@@ -83,8 +83,8 @@ export function request<
             /* istanbul ignore next */
             return reject(
               new Error(
-                `${incomingMessage.statusCode} ${incomingMessage.statusMessage}. Response: ${responseBody}`
-              )
+                `${incomingMessage.statusCode} ${incomingMessage.statusMessage}. Response: ${responseBody}`,
+              ),
             );
           }
 
@@ -92,8 +92,8 @@ export function request<
           if (typeof responseObject === "undefined") {
             return reject(
               new Error(
-                `Invalid JSON response received. Response: ${responseBody}`
-              )
+                `Invalid JSON response received. Response: ${responseBody}`,
+              ),
             );
           }
 
@@ -101,7 +101,7 @@ export function request<
           if (incomingMessage.headers["cf-cache-status"]) {
             const age = parseInt(incomingMessage.headers.age as string, 10);
             const maxAge = CACHE_CONTROL_REGEX.exec(
-              incomingMessage.headers["cache-control"] as string
+              incomingMessage.headers["cache-control"] as string,
             );
             responseObject.cloudflareCache = {
               status: incomingMessage.headers["cf-cache-status"] as never,
@@ -120,7 +120,7 @@ export function request<
 
           return resolve(responseObject);
         });
-      }
+      },
     );
 
     let abortError: Error;

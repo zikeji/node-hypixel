@@ -20,13 +20,13 @@ export class SkyBlockProfiles extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Paths.V2SkyblockProfiles.Get.Parameters.Uuid
+    uuid: Paths.V2SkyblockProfiles.Get.Parameters.Uuid,
   ): Promise<ResultArray<SkyblockProfilesResponse, "profiles">> {
     return getResultArray(
       await this.client.call<SkyblockProfilesResponse>("skyblock/profiles", {
         uuid,
       }),
-      "profiles"
+      "profiles",
     );
   }
 }

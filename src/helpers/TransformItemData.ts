@@ -146,58 +146,52 @@ export interface NBTCustomPotionEffect {
  * @category Helper
  */
 export async function transformItemData(
-  value: Parameters<typeof parse>[number]
+  value: Parameters<typeof parse>[number],
 ): Promise<NBTInventory> {
   const data = await parse(value);
   return Promise.all(
-    data.map(
-      async (item): Promise<NBTInventory[number]> => {
-        if (Object.entries(item).length === 0) {
-          return null;
+    data.map(async (item): Promise<NBTInventory[number]> => {
+      if (Object.entries(item).length === 0) {
+        return null;
+      }
+      /* istanbul ignore else */
+      if (item.tag) {
+        if (item.tag.SkullOwner) {
+          const skullOwner: {
+            Properties: { textures: { Value: string }[] };
+          } = item.tag.SkullOwner as never;
+          const propertiesData = skullOwner.Properties.textures.shift();
+          /* istanbul ignore else */
+          if (propertiesData) {
+            item.tag.SkullOwner.Properties = JSON.parse(
+              Buffer.from(propertiesData.Value, "base64").toString(),
+            );
+            /* istanbul ignore if */
+            if (skullOwner.Properties.textures.length > 0) {
+              item.tag.SkullOwner.ExtraProperties =
+                skullOwner.Properties.textures.map(({ Value }) =>
+                  JSON.parse(Buffer.from(Value, "base64").toString()),
+                );
+            }
+          } else {
+            item.tag.SkullOwner.Properties = null;
+          }
         }
-        /* istanbul ignore else */
-        if (item.tag) {
-          if (item.tag.SkullOwner) {
-            const skullOwner: {
-              Properties: { textures: { Value: string }[] };
-            } = item.tag.SkullOwner as never;
-            const propertiesData = skullOwner.Properties.textures.shift();
-            /* istanbul ignore else */
-            if (propertiesData) {
-              item.tag.SkullOwner.Properties = JSON.parse(
-                Buffer.from(propertiesData.Value, "base64").toString()
-              );
+        if (item.tag.ExtraAttributes) {
+          const extraAttributes = item.tag.ExtraAttributes;
+          await Promise.all(
+            Object.keys(extraAttributes).map(async (key) => {
               /* istanbul ignore if */
-              if (skullOwner.Properties.textures.length > 0) {
-                item.tag.SkullOwner.ExtraProperties = skullOwner.Properties.textures.map(
-                  ({ Value }) =>
-                    JSON.parse(Buffer.from(Value, "base64").toString())
+              if (key.endsWith("_backpack_data") || key.endsWith("_bag_data")) {
+                extraAttributes[key] = await transformItemData(
+                  extraAttributes[key] as number[],
                 );
               }
-            } else {
-              item.tag.SkullOwner.Properties = null;
-            }
-          }
-          if (item.tag.ExtraAttributes) {
-            const extraAttributes = item.tag
-              .ExtraAttributes as NBTExtraAttributes;
-            await Promise.all(
-              Object.keys(extraAttributes).map(async (key) => {
-                /* istanbul ignore if */
-                if (
-                  key.endsWith("_backpack_data") ||
-                  key.endsWith("_bag_data")
-                ) {
-                  extraAttributes[key] = await transformItemData(
-                    extraAttributes[key] as number[]
-                  );
-                }
-              })
-            );
-          }
+            }),
+          );
         }
-        return item;
       }
-    )
+      return item;
+    }),
   );
 }

@@ -21,13 +21,13 @@ export class Player extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Paths.V2Player.Get.Parameters.Uuid
+    uuid: Paths.V2Player.Get.Parameters.Uuid,
   ): Promise<ResultObject<PlayerResponse, ["player"]>> {
     return getResultObject(
       await this.client.call<PlayerResponse>("player", {
         uuid,
       }),
-      ["player"]
+      ["player"],
     );
   }
 }

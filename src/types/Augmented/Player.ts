@@ -1957,7 +1957,6 @@ export type PlayerStatsWalls3StatType =
   | "time_played"
   | "total_deaths"
   | "total_final_kills"
-  | "total_final_kills"
   | "total_kills"
   | "treasures_found"
   | "ultra_pasteurized_drank"
@@ -1969,22 +1968,19 @@ export type PlayerStatsWalls3Full = {
   [key in `${PlayerStatsWalls3Type}_${PlayerStatsWalls3Letter}_${PlayerStatsWalls3StatType}`]:
     | number
     | undefined;
-} &
-  {
-    [key in `${PlayerStatsWalls3Type}_${PlayerStatsWalls3Letter}_${PlayerStatsWalls3StatType}_${string}`]:
-      | number
-      | undefined;
-  } &
-  {
-    [key in `${PlayerStatsWalls3Letter}_${PlayerStatsWalls3StatType}`]:
-      | number
-      | undefined;
-  } &
-  {
-    [key in `${PlayerStatsWalls3Letter}_${PlayerStatsWalls3StatType}_${string}`]:
-      | number
-      | undefined;
-  };
+} & {
+  [key in `${PlayerStatsWalls3Type}_${PlayerStatsWalls3Letter}_${PlayerStatsWalls3StatType}_${string}`]:
+    | number
+    | undefined;
+} & {
+  [key in `${PlayerStatsWalls3Letter}_${PlayerStatsWalls3StatType}`]:
+    | number
+    | undefined;
+} & {
+  [key in `${PlayerStatsWalls3Letter}_${PlayerStatsWalls3StatType}_${string}`]:
+    | number
+    | undefined;
+};
 
 export type PlayerStatsWalls = {
   adrenaline?: number;

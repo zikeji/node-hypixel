@@ -63,13 +63,10 @@ jobs:
           node-version: latest
       - run: npm ci
       - name: Build documentation
-        env:
-          NODE_ENV: production
-          NODE_OPTIONS: --max-old-space-size=4096 --openssl-legacy-provider
         run: npm run docs:build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/.vuepress/dist
+          publish_dir: ./docs/.vitepress/dist
           cname: node-hypixel.zikeji.com
