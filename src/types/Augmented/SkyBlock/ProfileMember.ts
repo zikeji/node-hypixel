@@ -76,6 +76,8 @@ export type SkyBlockProfileMember = NonNullable<
       fossil_dust?: number;
       corpses_looted?: {
         lapis?: number;
+        umber?: number;
+        tungsten?: number;
         vanguard?: number;
       };
       mineshafts_entered?: number;
