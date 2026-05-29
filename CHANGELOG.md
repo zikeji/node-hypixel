@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.10](https://github.com/zikeji/node-hypixel/compare/v4.1.9...v4.1.10) (2026-05-29)
+
+### API Type Coverage
+
+* Add trophy_frog property to ProfileMember type ([#476](https://github.com/zikeji/node-hypixel/issues/476)) ([7d6c0f2](https://github.com/zikeji/node-hypixel/commit/7d6c0f27279812c1874f8b514d3be002c86c5ff7))
+
 ## [4.1.9](https://github.com/zikeji/node-hypixel/compare/v4.1.8...v4.1.9) (2026-02-22)
 
 ### Bug Fixes
