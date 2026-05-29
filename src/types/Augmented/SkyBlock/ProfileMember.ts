@@ -594,6 +594,7 @@ export type SkyBlockProfileMemberPlayerStats = {
     treasure?: number;
     large_treasure?: number;
     trophy_fish?: number;
+    trophy_frog?: number;
   };
   auctions?: {
     bids?: number;
