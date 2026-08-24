@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.11](https://github.com/zikeji/node-hypixel/compare/v4.1.10...v4.1.11) (2026-08-24)
+
+### API Type Coverage
+
+* **skyblock:** add skill_tree, foraging, shards, attributes, and other API additions to ProfileMember ([#474](https://github.com/zikeji/node-hypixel/issues/474)) ([3c114cb](https://github.com/zikeji/node-hypixel/commit/3c114cbadbb5a0c7ff3f54f552e9ed8b2bd25690))
+
 ## [4.1.10](https://github.com/zikeji/node-hypixel/compare/v4.1.9...v4.1.10) (2026-05-29)
 
 ### API Type Coverage

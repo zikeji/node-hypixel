@@ -1262,9 +1262,11 @@ export type SkyBlockProfileMemberSkillTree = {
     } & {
       [key: string]: number | boolean;
     };
-    [key: string]: {
-      [key: string]: number | boolean;
-    } | undefined;
+    [key: string]:
+      | {
+          [key: string]: number | boolean;
+        }
+      | undefined;
   };
   selected_ability?: {
     mining?: string;
@@ -1431,15 +1433,17 @@ export type SkyBlockProfileMemberForagingCore = {
           }
         | undefined;
     };
-    [key: string]: {
-      total?: number;
-      [key: `${number}`]:
-        | {
-            spent?: number;
-          }
-        | undefined;
-    } | undefined
-  }
+    [key: string]:
+      | {
+          total?: number;
+          [key: `${number}`]:
+            | {
+                spent?: number;
+              }
+            | undefined;
+        }
+      | undefined;
+  };
 };
 
 export type SkyBlockProfileMemberShards = {
