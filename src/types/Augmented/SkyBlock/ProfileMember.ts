@@ -157,7 +157,7 @@ export type SkyBlockProfileMember = NonNullable<
     shared_inventory: SkyBlockProfileMemberSharedInventory;
     slayer?: SkyBlockProfileMemberSlayer;
     trophy_fish?: SkyBlockProfileMemberTrophyFish;
-    skill_trees?: SkyBlockProfileMemberSkillTrees;
+    skill_tree?: SkyBlockProfileMemberSkillTree;
     foraging?: SkyBlockProfileMemberForaging;
     foraging_core?: SkyBlockProfileMemberForagingCore;
     shards?: SkyBlockProfileMemberShards;
@@ -273,7 +273,7 @@ export type SkyBlockProfileMemberPlayerData = {
     rarefinder?: number;
     synthesis?: number;
     evergreen?: number;
-    vermin_vaporize?: number;
+    vermin_vaporizer?: number;
     [key: string]: number | undefined;
   };
   reaper_peppers_eaten?: number;
@@ -1109,9 +1109,9 @@ export type SkyBlockProfileMemberRift = {
   [key: string]: unknown;
 };
 
-export type SkyBlockProfileMemberSkillTrees = {
+export type SkyBlockProfileMemberSkillTree = {
   nodes?: {
-    mining?: {
+    [key: `mining` | `mining_${number}`]?: {
       core_of_the_mountain?: number;
       toggle_core_of_the_mountain?: boolean;
       mining_madness?: number;
@@ -1210,7 +1210,7 @@ export type SkyBlockProfileMemberSkillTrees = {
     } & {
       [key: string]: number | boolean;
     };
-    foraging?: {
+    [key: `foraging` | `foraging_${number}`]?: {
       center_of_the_forest?: number;
       toggle_center_of_the_forest?: boolean;
       sweep?: number;
@@ -1261,13 +1261,13 @@ export type SkyBlockProfileMemberSkillTrees = {
     };
   };
   selected_ability?: {
-    mining?: string;
-    foraging?: string;
+    [key: `mining` | `mining_${number}`]?: string;
+    [key: `foraging` | `foraging_${number}`]?: string;
     [key: string]: string | undefined;
   };
   tokens_spent?: {
-    mountain?: number;
-    forest?: number;
+    [key: `mountain` | `mountain_${number}`]?: number;
+    [key: `forest` | `forest_${number}`]?: number;
     [key: string]: number | undefined;
   };
   experience?: {
@@ -1276,8 +1276,8 @@ export type SkyBlockProfileMemberSkillTrees = {
     [key: string]: number | undefined;
   };
   last_reset?: {
-    mining?: number;
-    foraging?: number;
+    [key: `mining` | `mining_${number}`]?: number;
+    [key: `foraging` | `foraging_${number}`]?: number;
     [key: string]: number | undefined;
   };
   refund_ability_free?: boolean;
