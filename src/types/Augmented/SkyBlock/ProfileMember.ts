@@ -1289,9 +1289,11 @@ export type SkyBlockProfileMemberSkillTree = {
     [key: string]: number | undefined;
   };
   refund_ability_free?: boolean;
-  [key: `mining${string}` | `foraging${string}`]: {
-      custom_name?: string;
-  } | undefined;
+  [key: `mining${string}` | `foraging${string}`]:
+    | {
+        custom_name?: string;
+      }
+    | undefined;
 };
 
 export type SkyBlockProfileMemberForaging = {
@@ -1412,21 +1414,27 @@ export type SkyBlockProfileMemberForagingCore = {
   whispers?: {
     forest?: {
       total?: number;
-      [key: `${number}`]: {
-        spent?: number;
-      } | undefined
+      [key: `${number}`]:
+        | {
+            spent?: number;
+          }
+        | undefined;
     };
     desert?: {
       total?: number;
-      [key: `${number}`]: {
-        spent?: number;
-      } | undefined
+      [key: `${number}`]:
+        | {
+            spent?: number;
+          }
+        | undefined;
     };
     [key: string]: {
       total?: number;
-      [key: `${number}`]: {
-        spent?: number;
-      } | undefined
+      [key: `${number}`]:
+        | {
+            spent?: number;
+          }
+        | undefined;
     } | undefined
   }
 };
