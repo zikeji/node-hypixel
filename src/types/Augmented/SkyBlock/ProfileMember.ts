@@ -1111,7 +1111,7 @@ export type SkyBlockProfileMemberRift = {
 
 export type SkyBlockProfileMemberSkillTree = {
   nodes?: {
-    [key: `mining` | `mining_${number}`]?: {
+    mining?: {
       core_of_the_mountain?: number;
       toggle_core_of_the_mountain?: boolean;
       mining_madness?: number;
@@ -1210,7 +1210,7 @@ export type SkyBlockProfileMemberSkillTree = {
     } & {
       [key: string]: number | boolean;
     };
-    [key: `foraging` | `foraging_${number}`]?: {
+    foraging?: {
       center_of_the_forest?: number;
       toggle_center_of_the_forest?: boolean;
       sweep?: number;
@@ -1259,15 +1259,23 @@ export type SkyBlockProfileMemberSkillTree = {
     } & {
       [key: string]: number | boolean;
     };
+    [key: string]: {
+      [key: string]: number | boolean;
+    } | undefined;
   };
   selected_ability?: {
-    [key: `mining` | `mining_${number}`]?: string;
-    [key: `foraging` | `foraging_${number}`]?: string;
+    mining?: string;
+    foraging?: string;
     [key: string]: string | undefined;
   };
+  selected_skill_tree_slot?: {
+    mining?: number;
+    foraging?: number;
+    [key: string]: number | undefined;
+  };
   tokens_spent?: {
-    [key: `mountain` | `mountain_${number}`]?: number;
-    [key: `forest` | `forest_${number}`]?: number;
+    mountain?: number;
+    forest?: number;
     [key: string]: number | undefined;
   };
   experience?: {
@@ -1276,11 +1284,14 @@ export type SkyBlockProfileMemberSkillTree = {
     [key: string]: number | undefined;
   };
   last_reset?: {
-    [key: `mining` | `mining_${number}`]?: number;
-    [key: `foraging` | `foraging_${number}`]?: number;
+    mining?: number;
+    foraging?: number;
     [key: string]: number | undefined;
   };
   refund_ability_free?: boolean;
+  [key: `mining${string}` | `foraging${string}`]: {
+      custom_name?: string;
+  } | undefined;
 };
 
 export type SkyBlockProfileMemberForaging = {
@@ -1323,11 +1334,13 @@ export type SkyBlockProfileMemberForaging = {
   tree_gifts?: {
     FIG?: number;
     MANGROVE?: number;
+    HELIX?: number;
     [key: string]: number | undefined;
   } & {
     milestone_tier_claimed?: {
       FIG?: number;
       MANGROVE?: number;
+      HELIX?: number;
       [key: string]: number | undefined;
     };
   };
@@ -1399,22 +1412,22 @@ export type SkyBlockProfileMemberForagingCore = {
   whispers?: {
     forest?: {
       total?: number;
-      [key: number]?: {
+      [key: `${number}`]?: {
         spent?: number;
       }
     };
     desert?: {
       total?: number;
-      [key: number]?: {
+      [key: `${number}`]?: {
         spent?: number;
       }
     };
-    [key: string]?: {
+    [key: string]: {
       total?: number;
-      [key: number]?: {
+      [key: `${number}`]?: {
         spent?: number;
       }
-    }
+    } | undefined
   }
 };
 
