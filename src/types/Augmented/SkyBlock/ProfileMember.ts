@@ -1412,21 +1412,21 @@ export type SkyBlockProfileMemberForagingCore = {
   whispers?: {
     forest?: {
       total?: number;
-      [key: `${number}`]?: {
+      [key: `${number}`]: {
         spent?: number;
-      }
+      } | undefined
     };
     desert?: {
       total?: number;
-      [key: `${number}`]?: {
+      [key: `${number}`]: {
         spent?: number;
-      }
+      } | undefined
     };
     [key: string]: {
       total?: number;
-      [key: `${number}`]?: {
+      [key: `${number}`]: {
         spent?: number;
-      }
+      } | undefined
     } | undefined
   }
 };
