@@ -1396,6 +1396,26 @@ export type SkyBlockProfileMemberForagingCore = {
   forests_whispers_spent?: number;
   current_daily_effect?: string;
   current_daily_effect_last_changed?: number;
+  whispers?: {
+    forest?: {
+      total?: number;
+      [key: number]?: {
+        spent?: number;
+      }
+    };
+    desert?: {
+      total?: number;
+      [key: number]?: {
+        spent?: number;
+      }
+    };
+    [key: string]?: {
+      total?: number;
+      [key: number]?: {
+        spent?: number;
+      }
+    }
+  }
 };
 
 export type SkyBlockProfileMemberShards = {
