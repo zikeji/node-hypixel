@@ -1428,6 +1428,7 @@ export type SkyBlockProfileMemberShards = {
       placed_at?: number;
       shard?: string;
       captured?: boolean;
+      museum?: boolean;
       uuid?: string;
       hunting_toolkit?: boolean;
       hunting_toolkit_index?: number;
