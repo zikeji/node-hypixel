@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.12](https://github.com/zikeji/node-hypixel/compare/v4.1.11...v4.1.12) (2026-09-04)
+
+### API Type Coverage
+
+* **skyblock:** update mining_core and add foraging_core ([#479](https://github.com/zikeji/node-hypixel/issues/479)) ([9685b16](https://github.com/zikeji/node-hypixel/commit/9685b166dda86363cf81c79fdfc8479020df4017))
+
 ## [4.1.11](https://github.com/zikeji/node-hypixel/compare/v4.1.10...v4.1.11) (2026-08-24)
 
 ### API Type Coverage
