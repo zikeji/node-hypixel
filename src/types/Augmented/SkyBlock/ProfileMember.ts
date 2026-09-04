@@ -919,51 +919,32 @@ export type SkyBlockProfileMemberForagingCore = {
   daily_trees_cut?: number;
   daily_gifts?: number;
   daily_log_cut_day?: number;
-  daily_log_cut?: string[],
+  daily_log_cut?: unknown[];
   forests_whispers?: number;
   forests_whispers_spent?: number;
   whispers?: {
-    [key in
-      | "forest"
-      | "desert"]: {
+    forest?: {
       total?: number;
-      [key in
-        | "1"
-        | "2"
-        | "3"
-        | "4"
-        | "5"]: {
+      [key: `${number}`]: {
         spent?: number;
-      } & {
-        [key: string]:
-          | {
-              spent
-            }
-          | unknown;
-      };
-    } & {
-      [key: string]:
-        | {
-            state?: string;
-            [key in
-              | "1"
-              | "2"
-              | "3"
-              | "4"
-              | "5"]: {
-              spent?: number;
-            } & {
-              [key: string]:
-                | {
-                    spent
-                  }
-                | unknown;
-            };
-          }
-        | unknown;
+      } | undefined;
     };
-  }
-}
+    desert?: {
+      total?: number;
+      [key: `${number}`]: {
+        spent?: number;
+      } | undefined;
+    };
+    [key: string]:
+      | {
+          total?: number;
+          [key: `${number}`]: {
+            spent?: number;
+          } | undefined;
+        }
+      | undefined;
+  };
+};
 
 export type SkyBlockProfileMemberQuests = {
   trapper_quest?: {
