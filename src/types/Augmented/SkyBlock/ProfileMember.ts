@@ -856,13 +856,32 @@ export type SkyBlockProfileMemberExperimentation = {
 };
 
 export type SkyBlockProfileMemberMiningCore = {
-  nodes: {
+  nodes?: {
     [key: string]: number | boolean;
   };
   received_free_tier?: boolean;
   last_reset?: number;
   experience?: number;
+  tokens?: number;
   tokens_spent?: number;
+  greater_mines_last_access?: number;
+  powder_mithril?: number;
+  powder_mithril_total?: number;
+  powder_spent_mithril?: number;
+  powder_gemstone?: number;
+  powder_gemstone_total?: number;
+  powder_spent_gemstone?: number;
+  powder_glacite?: number;
+  powder_glacite_total?: number;
+  powder_spent_glacite?: number;
+  daily_ores_mined_day_mithril_ore?: number;
+  daily_ores_mined_mithril_ore?: number;
+  daily_ores_mined_day_gemstone?: number;
+  daily_ores_mined_gemstone?: number;
+  daily_ores_mined_day_glacite?: number;
+  daily_ores_mined_glacite?: number;
+  daily_ores_mined_day?: number;
+  daily_ores_mined?: number;
   crystals?: {
     [key in
       | "amber_crystal"
