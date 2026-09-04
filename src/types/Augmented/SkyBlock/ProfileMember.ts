@@ -129,6 +129,7 @@ export type SkyBlockProfileMember = NonNullable<
       [key: string]: string | string[] | boolean | number | unknown;
     };
     mining_core?: SkyBlockProfileMemberMiningCore;
+    foraging_core?: SkyBlockProfileMemberForagingCore;
     nether_island_player_data?: SkyBlockProfileMemberNetherIslandPlayerData;
     objectives?: SkyBlockProfileMemberObjectives;
     pets_data?: SkyBlockProfilePetsData;
@@ -884,6 +885,57 @@ export type SkyBlockProfileMemberMiningCore = {
   biomes?: unknown;
   [key: string]: string | number | boolean | unknown;
 };
+
+export type SkyBlockProfileMemberForagingCore = {
+  daily_trees_cut_day?: number;
+  daily_trees_cut?: number;
+  daily_gifts?: number;
+  daily_log_cut_day?: number;
+  daily_log_cut?: string[],
+  forests_whispers?: number;
+  forests_whispers_spent?: number;
+  whispers?: {
+    [key in
+      | "forest"
+      | "desert"]: {
+      total?: number;
+      [key in
+        | "1"
+        | "2"
+        | "3"
+        | "4"
+        | "5"]: {
+        spent?: number;
+      } & {
+        [key: string]:
+          | {
+              spent
+            }
+          | unknown;
+      };
+    } & {
+      [key: string]:
+        | {
+            state?: string;
+            [key in
+              | "1"
+              | "2"
+              | "3"
+              | "4"
+              | "5"]: {
+              spent?: number;
+            } & {
+              [key: string]:
+                | {
+                    spent
+                  }
+                | unknown;
+            };
+          }
+        | unknown;
+    };
+  }
+}
 
 export type SkyBlockProfileMemberQuests = {
   harp_quest?: {
