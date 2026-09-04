@@ -216,6 +216,6 @@ export function getSkyWarsPrestigeForLevel(level: number): SkyWarsPrestige {
   return SkyWarsPrestiges.reduceRight(
     (acc, prestige) =>
       acc.id === "NONE" && level >= prestige.minimumLevel ? prestige : acc,
-    SkyWarsPrestiges[0]
+    SkyWarsPrestiges[0],
   );
 }

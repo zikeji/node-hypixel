@@ -13,7 +13,7 @@ import { DefaultMeta } from "../types/DefaultMeta";
  */
 export type ResultArray<
   T extends Record<string, unknown>,
-  K extends keyof T
+  K extends keyof T,
 > = T[K] & {
   meta: Omit<T, K> & DefaultMeta;
 };
@@ -21,7 +21,7 @@ export type ResultArray<
 /** @hidden */
 export function getResultArray<
   T extends Record<string, unknown>,
-  K extends keyof T
+  K extends keyof T,
 >(response: T & DefaultMeta, key: K): ResultArray<T, K> {
   const clonedResponse: typeof response = JSON.parse(JSON.stringify(response));
   if (!(key in clonedResponse)) {
@@ -32,7 +32,7 @@ export function getResultArray<
   if (!Array.isArray(items)) {
     if (items !== null) {
       throw new TypeError(
-        `Key "${String(key)}" has an unexpected type ${typeof items}.`
+        `Key "${String(key)}" has an unexpected type ${typeof items}.`,
       );
     }
     items = [] as never;
@@ -69,7 +69,7 @@ export type FlatResultArray<T> = T & {
 
 /** @hidden */
 export function getFlatResultArray<T>(
-  response: T & DefaultMeta
+  response: T & DefaultMeta,
 ): FlatResultArray<T> {
   if (!Array.isArray(response)) {
     throw new TypeError(`Response was not an array!`);

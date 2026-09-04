@@ -20,13 +20,13 @@ export class SkyBlockMuseum extends Method {
    * @category API
    */
   public async profile(
-    uuid: Paths.V2SkyblockMuseum.Get.Parameters.Profile
+    uuid: Paths.V2SkyblockMuseum.Get.Parameters.Profile,
   ): Promise<ResultObject<SkyblockMuseumResponse, ["profile"]>> {
     return getResultObject(
       await this.client.call<SkyblockMuseumResponse>("skyblock/museum", {
         uuid,
       }),
-      ["profile"]
+      ["profile"],
     );
   }
 }

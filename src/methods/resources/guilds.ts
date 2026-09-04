@@ -23,9 +23,9 @@ export class GuildsResources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesGuildsAchievementsResponse>(
-        "resources/guilds/achievements"
+        "resources/guilds/achievements",
       ),
-      ["achievements"]
+      ["achievements"],
     );
   }
 }

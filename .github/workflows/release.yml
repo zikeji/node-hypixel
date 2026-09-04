@@ -24,7 +24,7 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
       - uses: actions/setup-node@v4
         with:
-          node-version: latest
+          node-version: 22.x
           registry-url: https://registry.npmjs.org
           always-auth: true
       - name: Install dependencies
@@ -60,16 +60,13 @@ jobs:
           ref: main
       - uses: actions/setup-node@v4
         with:
-          node-version: latest
+          node-version: 22.x
       - run: npm ci
       - name: Build documentation
-        env:
-          NODE_ENV: production
-          NODE_OPTIONS: --max-old-space-size=4096 --openssl-legacy-provider
         run: npm run docs:build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/.vuepress/dist
+          publish_dir: ./docs/.vitepress/dist
           cname: node-hypixel.zikeji.com

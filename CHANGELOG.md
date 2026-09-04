@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.11](https://github.com/zikeji/node-hypixel/compare/v4.1.10...v4.1.11) (2026-08-24)
+
+### API Type Coverage
+
+* **skyblock:** add skill_tree, foraging, shards, attributes, and other API additions to ProfileMember ([#474](https://github.com/zikeji/node-hypixel/issues/474)) ([3c114cb](https://github.com/zikeji/node-hypixel/commit/3c114cbadbb5a0c7ff3f54f552e9ed8b2bd25690))
+
+## [4.1.10](https://github.com/zikeji/node-hypixel/compare/v4.1.9...v4.1.10) (2026-05-29)
+
+### API Type Coverage
+
+* Add trophy_frog property to ProfileMember type ([#476](https://github.com/zikeji/node-hypixel/issues/476)) ([7d6c0f2](https://github.com/zikeji/node-hypixel/commit/7d6c0f27279812c1874f8b514d3be002c86c5ff7))
+
+## [4.1.9](https://github.com/zikeji/node-hypixel/compare/v4.1.8...v4.1.9) (2026-02-22)
+
+### Bug Fixes
+
+* **docs:** fix docs build, upgrade deps ([6e489c9](https://github.com/zikeji/node-hypixel/commit/6e489c978afac866b40ee35b2e72dbae28163fcc))
+
 ## <small>4.1.8 (2026-02-16)</small>
 
 * chore(ci): support NPM trusted publisher ([89a7bf2](https://github.com/zikeji/node-hypixel/commit/89a7bf2))

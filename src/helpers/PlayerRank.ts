@@ -83,7 +83,7 @@ export interface PlayerRank {
  */
 export function getPlayerRank(
   player: NonNullable<PlayerResponse["player"]>,
-  onlyPackages = false
+  onlyPackages = false,
 ): PlayerRank {
   let foundRank: PlayerRanks = PlayerRanks.NON_DONOR;
   if (onlyPackages) {

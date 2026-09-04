@@ -31,9 +31,9 @@ export class Resources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesAchievementsResponse>(
-        "resources/achievements"
+        "resources/achievements",
       ),
-      ["achievements"]
+      ["achievements"],
     );
   }
 
@@ -50,9 +50,9 @@ export class Resources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesChallengesResponse>(
-        "resources/challenges"
+        "resources/challenges",
       ),
-      ["challenges"]
+      ["challenges"],
     );
   }
 
@@ -69,7 +69,7 @@ export class Resources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesGamesResponse>("resources/games"),
-      ["games"]
+      ["games"],
     );
   }
 
@@ -92,7 +92,7 @@ export class Resources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesQuestsResponse>("resources/quests"),
-      ["quests"]
+      ["quests"],
     );
   }
 

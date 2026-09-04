@@ -59,7 +59,7 @@ export function getExpFromNetworkLevel(level: number): number {
  * @category Helper
  */
 export function getNetworkLevel(
-  data: PlayerResponse["player"] | number
+  data: PlayerResponse["player"] | number,
 ): NetworkLevel {
   let currentExp = 0;
   if (typeof data === "number") {
@@ -73,8 +73,8 @@ export function getNetworkLevel(
       NETWORK_LEVEL_CONSTANTS.RPQP +
       Math.sqrt(
         NETWORK_LEVEL_CONSTANTS.IPQP +
-          (2 / NETWORK_LEVEL_CONSTANTS.GROWTH) * currentExp
-      )
+          (2 / NETWORK_LEVEL_CONSTANTS.GROWTH) * currentExp,
+      ),
   );
   const expToLevel = getExpFromNetworkLevel(level);
   const nextLevelExp = getExpFromNetworkLevel(level + 1);

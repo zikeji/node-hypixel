@@ -30,9 +30,9 @@ export class SkyBlockResources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesSkyblockBingoResponse>(
-        "resources/skyblock/bingo"
+        "resources/skyblock/bingo",
       ),
-      ["success", "lastUpdated"]
+      ["success", "lastUpdated"],
     );
   }
 
@@ -50,9 +50,9 @@ export class SkyBlockResources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesSkyblockCollectionsResponse>(
-        "resources/skyblock/collections"
+        "resources/skyblock/collections",
       ),
-      ["collections"]
+      ["collections"],
     );
   }
 
@@ -69,9 +69,9 @@ export class SkyBlockResources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesSkyblockElectionResponse>(
-        "resources/skyblock/election"
+        "resources/skyblock/election",
       ),
-      ["success", "lastUpdated"]
+      ["success", "lastUpdated"],
     );
   }
 
@@ -88,9 +88,9 @@ export class SkyBlockResources extends Method {
   > {
     return getResultArray(
       await this.client.call<ResourcesSkyblockItemsResponse>(
-        "resources/skyblock/items"
+        "resources/skyblock/items",
       ),
-      "items"
+      "items",
     );
   }
 
@@ -107,9 +107,9 @@ export class SkyBlockResources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesSkyblockSkillsResponse>(
-        "resources/skyblock/skills"
+        "resources/skyblock/skills",
       ),
-      ["skills"]
+      ["skills"],
     );
   }
 }

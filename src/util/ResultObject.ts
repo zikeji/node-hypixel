@@ -23,12 +23,12 @@ export type ResultObject<
   T extends Record<string, unknown>,
   K extends (keyof T)[],
   // if this is true, the object won't omit/pick anything
-  B extends true | void = void
+  B extends true | void = void,
 > = (B extends true
   ? T
   : T[K[number]] extends string | number | boolean | undefined
-  ? OmitRespectingRemapping<T, K[number]>
-  : T[K[number]]) & {
+    ? OmitRespectingRemapping<T, K[number]>
+    : T[K[number]]) & {
   meta: B extends true
     ? DefaultMeta
     : (T[K[number]] extends string | number | boolean | undefined
@@ -41,25 +41,22 @@ export type ResultObject<
 export function getResultObject<
   T,
   K extends (keyof T)[],
-  B extends true | void = void
+  B extends true | void = void,
 >(
   response: T & DefaultMeta,
-  keys?: K
+  keys?: K,
 ): ResultObject<T & Record<string, unknown>, K, B> {
   const clonedResponse: typeof response = JSON.parse(JSON.stringify(response));
   if (!(keys ?? []).every((key) => key in clonedResponse)) {
     throw new TypeError(
       `One or more key in "${(keys ?? []).join(
-        '"," '
-      )}" was not in the response.`
+        '"," ',
+      )}" was not in the response.`,
     );
   }
 
-  const obj: ResultObject<
-    T & Record<string, unknown>,
-    K,
-    B
-  > = {} as ResultObject<T & Record<string, unknown>, K, B>;
+  const obj: ResultObject<T & Record<string, unknown>, K, B> =
+    {} as ResultObject<T & Record<string, unknown>, K, B>;
   const { ratelimit, cached, cloudflareCache } = clonedResponse;
   const meta: DefaultMeta & Record<string | number | symbol, unknown> = {};
   if (cached) {

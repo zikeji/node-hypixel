@@ -38,15 +38,16 @@ export interface BedwarsLevelInfo {
  * @category Helper
  */
 export function getBedwarsLevelInfo(
-  data: PlayerResponse["player"] | number
+  data: PlayerResponse["player"] | number,
 ): BedwarsLevelInfo {
   const currentExp =
     typeof data === "number"
       ? data
-      : data.stats?.Bedwars?.Experience ?? data.stats?.Bedwars?.Experience_new;
+      : (data.stats?.Bedwars?.Experience ??
+        data.stats?.Bedwars?.Experience_new);
   if (typeof currentExp !== "number" || Number.isNaN(currentExp)) {
     throw new TypeError(
-      "Data supplied does not contain player Bedwars experience."
+      "Data supplied does not contain player Bedwars experience.",
     );
   }
   const prestiges = Math.floor(currentExp / BEDWARS_LEVEL_CONSTANTS.XPP);

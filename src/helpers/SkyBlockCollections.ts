@@ -81,7 +81,7 @@ export type SkyBlockProfileCollections = SkyBlockProfileCollectionGroup[];
  */
 export function getSkyBlockProfileMemberCollections(
   profile: Pick<NonNullable<SkyBlockProfile>, "members">,
-  collections: ResourcesSkyblockCollectionsResponse["collections"]
+  collections: ResourcesSkyblockCollectionsResponse["collections"],
 ): SkyBlockProfileCollections | false {
   const profileCollectionValues = Object.values(profile.members).reduce(
     (acc, member) => {
@@ -105,7 +105,7 @@ export function getSkyBlockProfileMemberCollections(
     {
       unlockedCollTiers: new Set(),
       collectionQuantities: {},
-    } as ProfileCollectionValues
+    } as ProfileCollectionValues,
   );
   if (profileCollectionValues.unlockedCollTiers.size === 0) {
     return false;
@@ -129,13 +129,13 @@ export function getSkyBlockProfileMemberCollections(
             tier: collection.tiers.reduce((tier, tierInfo) => {
               if (
                 profileCollectionValues.unlockedCollTiers.has(
-                  `${collectionId}_${tierInfo.tier}`
+                  `${collectionId}_${tierInfo.tier}`,
                 ) ||
                 (profileCollectionValues.collectionQuantities[collectionId] ??
                   0) > (tierInfo.amountRequired /* istanbul ignore next */ || 0)
               ) {
                 // eslint-disable-next-line no-param-reassign
-                tier = tierInfo.tier as number;
+                tier = tierInfo.tier;
               }
               return tier;
             }, 0),
@@ -164,13 +164,13 @@ export function getSkyBlockProfileMemberCollections(
               100;
           }
           group.children.push(child);
-        }
+        },
       );
       group.progress =
         (group.maxedChildCollections / group.totalCollections) * 100;
       acc.push(group);
       return acc;
     },
-    [] as SkyBlockProfileCollections
+    [] as SkyBlockProfileCollections,
   );
 }

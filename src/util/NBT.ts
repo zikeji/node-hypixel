@@ -4,7 +4,7 @@ import type { NBTInventoryItem } from "../helpers/TransformItemData";
 let nbt: typeof prismarineNbt;
 
 export async function parse(
-  value: number[] | string | Buffer
+  value: number[] | string | Buffer,
 ): Promise<NBTInventoryItem[]> {
   let buffer: Buffer;
   if (Buffer.isBuffer(value)) {
@@ -17,7 +17,7 @@ export async function parse(
   if (!nbt) {
     try {
       nbt = await import("prismarine-nbt");
-    } catch (e) {
+    } catch (_e) {
       /* istanbul ignore next */
       throw new Error("prismarine-nbt must be installed to use this helper");
     }

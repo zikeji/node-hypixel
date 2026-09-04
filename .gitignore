@@ -2,7 +2,10 @@
 .vscode/
 docs/.vuepress/dist
 docs/.vuepress/public/oembed.json
+docs/.vitepress/cache
+docs/.vitepress/dist
 docs/ts-api
+docs/api
 coverage/
 .nyc_output/
 dist/

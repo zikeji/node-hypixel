@@ -20,12 +20,12 @@ export class HousingHouses extends Method {
    * @category API
    */
   public async player(
-    player: Paths.V2HousingHouses.Get.Parameters.Player
+    player: Paths.V2HousingHouses.Get.Parameters.Player,
   ): Promise<FlatResultArray<HousingHousesResponse>> {
     return getFlatResultArray(
       await this.client.call<never>("housing/houses", {
         player,
-      })
+      }),
     );
   }
 }

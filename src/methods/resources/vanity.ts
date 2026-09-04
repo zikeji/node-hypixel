@@ -26,9 +26,9 @@ export class VanityResources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesVanityCompanionsResponse>(
-        "resources/vanity/companions"
+        "resources/vanity/companions",
       ),
-      ["success", "lastUpdated"]
+      ["success", "lastUpdated"],
     );
   }
 
@@ -45,9 +45,9 @@ export class VanityResources extends Method {
   > {
     return getResultObject(
       await this.client.call<ResourcesVanityPetsResponse>(
-        "resources/vanity/pets"
+        "resources/vanity/pets",
       ),
-      ["success", "lastUpdated"]
+      ["success", "lastUpdated"],
     );
   }
 }

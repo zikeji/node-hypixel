@@ -36,12 +36,12 @@ export class Housing extends Method {
    * @category API
    */
   public async house(
-    house: Paths.V2HousingHouse.Get.Parameters.House
+    house: Paths.V2HousingHouse.Get.Parameters.House,
   ): Promise<ResultObject<HousingHouseResponse, [], true>> {
     return getResultObject(
       await this.client.call<never>("housing/house", {
         house,
-      })
+      }),
     );
   }
 

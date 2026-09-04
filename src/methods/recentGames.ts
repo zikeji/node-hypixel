@@ -21,13 +21,13 @@ export class Recentgames extends Method {
    * @category API
    */
   public async uuid(
-    uuid: Paths.V2Recentgames.Get.Parameters.Uuid
+    uuid: Paths.V2Recentgames.Get.Parameters.Uuid,
   ): Promise<ResultArray<RecentGamesResponse, "games">> {
     return getResultArray(
       await this.client.call<RecentGamesResponse>("recentgames", {
         uuid,
       }),
-      "games"
+      "games",
     );
   }
 }
