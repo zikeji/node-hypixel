@@ -3,6 +3,7 @@
  */
 
 import type { Components, Paths } from "./api";
+import type { ResourcePack } from "./Augmented/Resources/Packs";
 import type { Guild } from "./Augmented/Guild";
 import type { Player } from "./Augmented/Player";
 import type {
@@ -62,6 +63,11 @@ export type ResourcesVanityCompanionsResponse =
 
 export type ResourcesVanityPetsResponse =
   Paths.V2ResourcesVanityPets.Get.Responses.$200 & Record<string, unknown>;
+
+export type ResourcesPacksResponse = Paths.V2ResourcesPacks.Get.Responses.$200 &
+  Record<string, unknown> & {
+    packs: ResourcePack[];
+  };
 
 export type ResourcesSkyblockBingoResponse =
   Paths.V2ResourcesSkyblockBingo.Get.Responses.$200 & Record<string, unknown>;
