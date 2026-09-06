@@ -3,6 +3,7 @@
  */
 
 import type { Components, Paths } from "./api";
+import type { ResourcePack } from "./Augmented/Resources/Packs";
 import type { Guild } from "./Augmented/Guild";
 import type { Player } from "./Augmented/Player";
 import type {
@@ -63,6 +64,11 @@ export type ResourcesVanityCompanionsResponse =
 export type ResourcesVanityPetsResponse =
   Paths.V2ResourcesVanityPets.Get.Responses.$200 & Record<string, unknown>;
 
+export type ResourcesPacksResponse = Paths.V2ResourcesPacks.Get.Responses.$200 &
+  Record<string, unknown> & {
+    packs: ResourcePack[];
+  };
+
 export type ResourcesSkyblockBingoResponse =
   Paths.V2ResourcesSkyblockBingo.Get.Responses.$200 & Record<string, unknown>;
 
@@ -117,7 +123,10 @@ export type ResourcesSkyblockElectionResponse =
       current: ElectionCurrent | null;
     };
 
-export type SkyBlockItem = Omit<Components.Schemas.SkyBlockItem, "tier"> & {
+export type SkyBlockItem = Omit<
+  Components.Schemas.SkyBlockItem,
+  "tier" | "skin"
+> & {
   tier?:
     | "COMMON"
     | "UNCOMMON"
@@ -129,6 +138,13 @@ export type SkyBlockItem = Omit<Components.Schemas.SkyBlockItem, "tier"> & {
     | "SPECIAL"
     | "VERY_SPECIAL"
     | "UNOBTAINABLE";
+  category?: string;
+  durability?: number;
+  npc_sell_price?: number;
+  skin?: {
+    value: string;
+    signature: string;
+  };
 };
 
 export type ResourcesSkyblockItemsResponse = Omit<

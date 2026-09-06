@@ -1430,7 +1430,7 @@ export type SkyBlockProfileMemberForagingCore = {
   daily_trees_cut?: number;
   daily_gifts?: number;
   daily_log_cut_day?: number;
-  daily_log_cut?: unknown[];
+  daily_log_cut?: string[];
   forests_whispers?: number;
   forests_whispers_spent?: number;
   current_daily_effect?: string;
@@ -1441,6 +1441,7 @@ export type SkyBlockProfileMemberForagingCore = {
       [key: `${number}`]:
         | {
             spent?: number;
+            spent_non_refundable?: number;
           }
         | undefined;
     };
@@ -1449,6 +1450,7 @@ export type SkyBlockProfileMemberForagingCore = {
       [key: `${number}`]:
         | {
             spent?: number;
+            spent_non_refundable?: number;
           }
         | undefined;
     };
@@ -1458,11 +1460,13 @@ export type SkyBlockProfileMemberForagingCore = {
           [key: `${number}`]:
             | {
                 spent?: number;
+                spent_non_refundable?: number;
               }
             | undefined;
         }
       | undefined;
   };
+  [key: string]: string | number | boolean | unknown;
 };
 
 export type SkyBlockProfileMemberShards = {

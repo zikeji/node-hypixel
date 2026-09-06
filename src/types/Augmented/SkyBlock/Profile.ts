@@ -9,6 +9,7 @@ export type SkyBlockProfile = Omit<
   members: {
     [key: string]: SkyBlockProfileMember;
   };
+  created_at?: number;
   community_upgrades?: {
     created_at?: number;
     currently_upgrading: {

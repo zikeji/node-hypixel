@@ -873,6 +873,16 @@ export declare namespace Paths {
       }
     }
   }
+  namespace V2ResourcesPacks {
+    namespace Get {
+      namespace Responses {
+        export interface $200 {
+          success?: boolean;
+          packs?: unknown[];
+        }
+      }
+    }
+  }
   namespace V2ResourcesQuests {
     namespace Get {
       namespace Responses {
@@ -1391,8 +1401,6 @@ export declare namespace Paths {
           success?: boolean;
           items?: unknown;
         }
-        export type $403 = Components.Responses.InvalidKey;
-        export type $429 = Components.Responses.RateLimited;
       }
     }
   }

@@ -7,6 +7,7 @@ import type {
   ResourcesAchievementsResponse,
   ResourcesChallengesResponse,
   ResourcesGamesResponse,
+  ResourcesPacksResponse,
   ResourcesQuestsResponse,
 } from "../../types/AugmentedTypes";
 
@@ -78,6 +79,24 @@ export class Resources extends Method {
    * @category API
    */
   public guilds: GuildsResources = new GuildsResources(this.client);
+
+  /**
+   * Returns the active resource packs used with content for the latest
+   * versions of Minecraft, including download URLs.
+   * @example
+   * ```typescript
+   * const packs = await client.resources.packs();
+   * ```
+   * @category API
+   */
+  public async packs(): Promise<
+    ResultObject<ResourcesPacksResponse, ["success"]>
+  > {
+    return getResultObject(
+      await this.client.call<ResourcesPacksResponse>("resources/packs"),
+      ["success"],
+    );
+  }
 
   /**
    * Returns all the quests for each gamemode on the Hypixel network.

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.0](https://github.com/zikeji/node-hypixel/compare/v4.1.12...v4.2.0) (2026-09-06)
+
+### Features
+
+* **resources:** add packs endpoint ([474d362](https://github.com/zikeji/node-hypixel/commit/474d3625dcdf1f3291fb43389a4fbc39c16565c8))
+
+### API Type Coverage
+
+* **skyblock:** correct auction, profile, and item shapes from live data ([c73b789](https://github.com/zikeji/node-hypixel/commit/c73b78952011a942e84e954ba73bd21019e045f6))
+* **skyblock:** refine foraging_core shape from live data ([7f326c1](https://github.com/zikeji/node-hypixel/commit/7f326c1c9d402d2591e485c6081bc9faf3b8538d))
+
 ## [4.1.12](https://github.com/zikeji/node-hypixel/compare/v4.1.11...v4.1.12) (2026-09-04)
 
 ### API Type Coverage
