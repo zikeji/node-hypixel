@@ -123,7 +123,10 @@ export type ResourcesSkyblockElectionResponse =
       current: ElectionCurrent | null;
     };
 
-export type SkyBlockItem = Omit<Components.Schemas.SkyBlockItem, "tier"> & {
+export type SkyBlockItem = Omit<
+  Components.Schemas.SkyBlockItem,
+  "tier" | "skin"
+> & {
   tier?:
     | "COMMON"
     | "UNCOMMON"
@@ -135,6 +138,13 @@ export type SkyBlockItem = Omit<Components.Schemas.SkyBlockItem, "tier"> & {
     | "SPECIAL"
     | "VERY_SPECIAL"
     | "UNOBTAINABLE";
+  category?: string;
+  durability?: number;
+  npc_sell_price?: number;
+  skin?: {
+    value: string;
+    signature: string;
+  };
 };
 
 export type ResourcesSkyblockItemsResponse = Omit<
